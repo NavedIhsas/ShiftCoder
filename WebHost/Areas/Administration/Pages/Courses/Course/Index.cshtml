@@ -1,0 +1,121 @@
+﻿@page
+@model WebHost.Areas.Administration.Pages.Courses.Course.IndexModel
+@{
+    ViewData["Title"] = "مدیریت دوره ها";
+}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1 class="page-header">@ViewData["Title"]</h1>
+        </div>
+        <div dir="ltr" class="col-lg-6 mr-3">
+            <h1 class="page-header">
+                <a class="btn btn-success btn-lg" href="#showmodal=@Url.Page("./Index", "Create")">افزودن دوره جدید</a>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    لیست دوره ها (@Model.Course.Count)
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+
+                            <div class="row col col-md-12">
+                                <label style="margin-right: 30px"> <strong>جستجو...</strong></label>
+                                <form method="get">
+
+                                    <div class=" col-md-3">
+                                        <input asp-for="SearchModel.Name" type="text" class="form-control" placeholder="نام آموزش..." />
+                                    </div>
+
+                                    <div class=" col-md-3">
+                                        <input asp-for="SearchModel.Code" type="text" class="form-control" placeholder="کد آموزش..." />
+                                    </div>
+
+                                    <div class=" col-md-3">
+                                        <select asp-for="SearchModel.CourseGroupId" asp-items="@(Model.SelectList)" type="text" class="form-control">
+                                            <option value="0" selected> انتخاب گروه...</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-info">جستجو</button>
+                                        <a class="btn btn-success" asp-page="./Index">مشاهده همه</a>
+                                    </div>
+                                </form>
+                            </div>
+                            <hr />
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+                                <thead>
+                                    <tr role="row" class="text-center">
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending"> # </th>
+
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"
+                                            aria-sort="ascending">تصویر </th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">نام</th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">کد</th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">گروه آموزشی</th>
+
+
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">قیمت</th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">آخرین بروزرسانی</th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">عملیات</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    @foreach (var course in Model.Course)
+                                    {
+                                        <tr class="gradeU odd">
+                                            <td>@course.Id</td>
+                                            <td>
+                                                <img src="/FileUploader/@course.Picture" style="max-width: 70px" alt="" />
+                                            </td>
+                                            <td>@course.Name</td>
+                                            <td>@course.Code</td>
+                                            <td>@course.CourseGroup</td>
+                                            <td>
+                                                @if (course.Price <= 0)
+                                                {
+                                                    <span class="text-success">رایگان</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>@course.Price</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (course.UpdateDate != "")
+                                                {
+                                                    <span>@course.UpdateDate</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>ایجاد(@course.CreationDate)</span>
+                                                }
+                                            </td>
+                                            <td class="center ">
+                                                <a class="btn btn-warning fa fa-edit text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = course.Id})">ویرایش</a>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

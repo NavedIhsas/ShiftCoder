@@ -1,0 +1,40 @@
+﻿<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+           
+    <div class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="sidebar-search">
+                    <div class="input-group custom-search-form">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <a asp-page="/Index"><i class="fa fa-dashboard fa-fw"></i> داشبورد</a>
+                </li>
+                <li>
+                    <a><i class="fa fa-book fa-fw"></i> کورس ها<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="~/Administration/Courses/CourseGroup/Index">گروه دوره ها </a>
+                        </li>
+                        <li>
+                            <a href="~/Administration/Courses/Course/Index">دوره ها</a>
+                        </li>
+                        <li>
+                            <a href="~/Administration/Courses/CourseStatus/Index">وضعیت دوره ها </a>
+                        </li>
+                        <li>
+                            <a href="~/Administration/Courses/CourseLevel/Index">سطح دوره ها</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+

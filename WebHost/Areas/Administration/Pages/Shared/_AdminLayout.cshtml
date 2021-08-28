@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>شیفت کدر | @ViewData["Title"]</title>
+
+  <partial name="Styles_Partial_View"/>
+
+    <link href="~/AdminTemplate/font-awesome/css/font-awesome.css" rel="stylesheet">
+    
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <partial name="Menu_Partial_View" />
+        @RenderBody()
+    </div>
+
+<div id="MainModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content" id="ModalContent">
+
+
+
+        </div>
+    </div>
+</div>
+
+    <partial name="Scripts_Partial_View" />
+
+    @await RenderSectionAsync("Scripts", false)
+</body>
+
+</html>

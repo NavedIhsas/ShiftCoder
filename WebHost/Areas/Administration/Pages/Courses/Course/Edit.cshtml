@@ -1,0 +1,166 @@
+﻿@model Shop.Management.Application.Contract.Course.EditCourseViewModel
+@{
+    ViewData["Title"] = "ویرایش آموزش";
+}
+
+<div class="container">
+    <partial name="Shared/_Create_View_Header" />
+
+    <form asp-page="./Index" asp-page-handler="Edit"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">نام<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Name">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label">قیمت</label>
+                        <input type="text" class="form-control" asp-for="Price">
+                        <span class="text-danger" asp-validation-for="Price"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="CourseGroupId" class="control-label">گروه آموزشی<span class="text-danger">*</span></label>
+                        <Select asp-for="CourseGroupId" asp-Items="@(new SelectList(Model.CourseGroupSelectList, "Id", "Title"));" type="file" class="form-control">
+                            <option value="0">--انتخاب کنید--</option>
+                        </Select>
+                        <span class="text-danger" asp-validation-for="CourseGroupId"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CourseLevelId" class="control-label">سطح دوره<span class="text-danger">*</span></label>
+                        <Select asp-for="CourseLevelId" asp-Items="@(new SelectList(Model.CourseLevelSelectList, "Id", "Title"));" type="file" class="form-control">
+                            <option value="0">--انتخاب کنید--</option>
+                        </Select>
+                        <span class="text-danger" asp-validation-for="CourseLevelId"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CourseStatusId" class="control-label">وضعیت دوره<span class="text-danger">*</span></label>
+                        <Select asp-for="CourseStatusId" asp-Items="@(new SelectList(Model.CourseStatusSelectList, "Id", "Title"));" type="file" class="form-control">
+                            <option value="0">--انتخاب کنید--</option>
+                        </Select>
+                        <span class="text-danger" asp-validation-for="CourseStatusId"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Picture" class="control-label">عکس</label>
+                        <input type="file" asp-for="Picture" class="form-control" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="File" class="control-label">فایل دمو</label>
+                        <input type="file" asp-for="File" class="form-control" accept="video/*">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PictureAlt" class="control-label">Alt<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="PictureAlt">
+                        <span class="text-danger" asp-validation-for="PictureAlt" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PictureTitle" class="control-label">عنوان<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="PictureTitle">
+                        <span class="text-danger" asp-validation-for="PictureTitle"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ShortDescription" class="control-label">توضیح کوتاه<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="ShortDescription" asp-for="ShortDescription" onchange="fillField('ShortDescription', 'MetaDescription')">
+                        <span class="text-danger" asp-validation-for="ShortDescription" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Code" class="control-label">کد محصول<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Code">
+                        <span class="text-danger" asp-validation-for="Code"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="KeyWords" class="control-label">کلمات کلیدی<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="KeyWords">
+                        <span class="text-danger" asp-validation-for="KeyWords"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Slug" class="control-label">اسلاگ<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Slug" disabled>
+                        <span class="text-danger" asp-validation-for="Slug"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group no-margin">
+                        <label asp-for="Description" class="control-label">توضیحات</label>
+                        <textarea class="form-control autogrow" asp-for="Description"
+                                  style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group no-margin">
+                        <label asp-for="MetaDescription" class="control-label">توضیحات متا<span class="text-danger">*</span></label>
+                        <textarea class="form-control autogrow" id="MetaDescription" asp-for="MetaDescription"
+                                  style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                        <span class="text-danger" asp-validation-for="MetaDescription"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input asp-for="Id" value="@Model.Id" type="hidden" />
+        <input asp-for="Slug" value="@Model.Slug" type="hidden" />
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+            <button type="submit" class="btn btn-info waves-effect waves-light">ویرایش</button>
+        </div>
+    </form>
+</div>

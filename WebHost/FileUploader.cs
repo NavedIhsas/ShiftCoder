@@ -1,0 +1,36 @@
+﻿using System;
+using System.IO;
+using _0_Framework.Application;
+using _0_FrameWork.Application;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+
+namespace WebHost
+{
+    public class FileUploader : IFileUploader
+    {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public FileUploader(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
+        public string Uploader(IFormFile file, string path)
+        {
+            var pathDirectory = $"{_webHostEnvironment.WebRootPath}//FileUploader//{path}";
+            if (!Directory.Exists(pathDirectory))
+                Directory.CreateDirectory(pathDirectory);
+
+            if (file == null) return null;
+
+            var fileName = $"{DateTime.Now.ToFileName()}-{file.FileName}";
+            var filePath = $"{pathDirectory}//{fileName}";
+
+            using var stream = File.Create(filePath);
+            file.CopyTo(stream);
+            return $"{path}/{fileName}";
+
+        }
+    }
+}

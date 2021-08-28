@@ -1,0 +1,463 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "خانه";
+   
+}
+
+<div class="row justify-content-center" id="custom-container-fluid-header">
+    <div class="col-12 col-md-8">
+        <h3 id="header-top-text">لرن هاب منبعی مملو از آموزشات</h3>
+        <h4 id="header-bottom-text">بدون هزینه برنامه نویس و طراح گرافیست شو</h4>
+        <form action="post" id="container-searchbox-header">
+            <input type="text" name="searchbox" id="searchbox-header" placeholder="دنبال چی میگردی ...">
+            <button id="container-icon-search-header">
+                <img src="~/icons/search.png" alt="search" id="search-img-header">
+            </button>
+        </form>
+        <div class="col-6" id="container-signin-login">
+            <a class="white" href="/Register" id="anchor-btn-signin">
+                <p><span class="bg"></span><span class="base"></span><span class="text">ثبت نام</span></p>
+            </a>
+            <a class="white" href="/Login" id="anchor-btn-signin">
+                <p><span class="bg"></span><span class="base"></span><span class="text">ورود</span></p>
+            </a>
+        </div>
+        <div id="container-meta-section">
+            <div class="meta-section-header">
+                <img src="~/icons/student.png" alt="Student" class="img-meta-section">
+                <span class="span-meta-section">500</span>
+                <span class="span-meta-section">نفر دانشجو</span>
+            </div>
+            <div class="meta-section-header" id="meta-section-teacher">
+                <img src="~/icons/teacher.png" alt="teacher" class="img-meta-section">
+                <span class="span-meta-section">5</span>
+                <span class="span-meta-section">مدرس</span>
+            </div>
+            <div class="meta-section-header">
+                <img src="~/icons/video.png" alt="video" class="img-meta-section">
+                <span class="span-meta-section">5000</span>
+                <span class="span-meta-section">دقیقه ویدئو</span>
+            </div>
+            <div class="meta-section-header" id="meta-section-article">
+                <img src="~/icons/article-2.png" alt="article" class="img-meta-section">
+                <span class="span-meta-section">50</span>
+                <span class="span-meta-section">مقاله</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div id="container-section-bottom-header">
+                <div class="section-bottom-header">
+                    <img src="~/images/img-login.png" alt="moshavere" class="img-section-bottom-header">
+                    <div class="cotainer-p-bottom-header">
+                        <a href="#" class="anchor-section-bottom-header">
+                            <p class="p-section-top-header">مشاوره و رفع اشکال</p>
+                        </a>
+                        <a href="#" class="anchor-section-bottom-header">
+                            <p class="p-section-bottom-header">به صورت کاملا رایگان</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="section-bottom-header">
+                    <img src="~/images/img-marketing.png" alt="moshavere" class="img-section-bottom-header">
+                    <div class="cotainer-p-bottom-header">
+                        <a href="#" class="anchor-section-bottom-header">
+                            <p class="p-section-top-header">همکاری با لرن هاب</p>
+                        </a>
+                        <a href="#" class="anchor-section-bottom-header">
+                            <p class="p-section-bottom-header">بدون هیچ گونه شرایط خاصی</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="section-bottom-header" id="section-bottom-header-video">
+                    <img src="~/images/img-learning.png" alt="moshavere" class="img-section-bottom-header">
+                    <div class="cotainer-p-bottom-header">
+                        <a href="#" class="anchor-section-bottom-header">
+                            <p class="p-section-top-header">دوره ها ، مقالات و ویدئو ها</p>
+                        </a>
+                        <a href="#" class="anchor-section-bottom-header">
+                            <p class="p-section-bottom-header">آپدیت روزانه و بدون محدودیت</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="container-name-section-content">
+                <h2 class="name-section-content">
+                    <a href="#" class="link-section-content">جدیدترین دوره های لرن هاب</a>
+                </h2>
+                <div class="line-section-content"></div>
+                <a class="container-full-packages">
+                    <p>مشاهده تمامی دوره ها</p>
+                    <img src="~/icons/double-left-arrows-symbol.png" alt="arrow" class="img-arrow-full-packages">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("LatestCourses")
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="container-name-section-content">
+                <h2 class="name-section-content">
+                    <a href="#" class="link-section-content">محبوب ترین دوره های لرن هاب</a>
+                </h2>
+                <div class="line-section-content" id="line-section-content-blue"></div>
+                <a class="container-full-packages">
+                    <p>مشاهده تمامی دوره ها</p>
+                    <img src="~/icons/double-left-arrows-symbol.png" alt="arrow" class="img-arrow-full-packages">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card container-card">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-1.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card">آموزش رایگان html و css پروژه محور</h5>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card">مدرس</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                        <div class="container-time-payment-card">
+                            <div>
+                                <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
+                                <span class="time-p-card">00,00,00</span>
+                            </div>
+                            <div>
+                                <span class="payment-card">رایگان</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card container-card">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-7.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card">دوره آموزشی رایگان Dreamweaver</h5>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card">مدرس</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                        <div class="container-time-payment-card">
+                            <div>
+                                <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
+                                <span class="time-p-card">00,00,00</span>
+                            </div>
+                            <div>
+                                <span class="payment-card">رایگان</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card container-card">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-5.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card">آموزش رایگان sass پروژه محور</h5>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card">مدرس</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                        <div class="container-time-payment-card">
+                            <div>
+                                <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
+                                <span class="time-p-card">00,00,00</span>
+                            </div>
+                            <div>
+                                <span class="payment-card">رایگان</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card container-card">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-10.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card">آموزش رایگان Less پروژه محور</h5>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card">مدرس</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                        <div class="container-time-payment-card">
+                            <div>
+                                <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
+                                <span class="time-p-card">00,00,00</span>
+                            </div>
+                            <div>
+                                <span class="payment-card">رایگان</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="container-name-section-content">
+                <h2 class="name-section-content">
+                    <a href="#" class="link-section-content">آخرین مقالات لرن هاب</a>
+                </h2>
+                <div class="line-section-content" id="line-section-content-yellow"></div>
+                <a class="container-full-packages">
+                    <p>مشاهده تمامی مقالات</p>
+                    <img src="~/icons/double-left-arrows-symbol.png" alt="arrow" class="img-arrow-full-packages">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row container-article">
+        <div class="col-10 col-md-6 col-lg-4">
+            <div class="card container-card-article">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-11.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card-article">نام مقاله</h5>
+                        <div>
+                            <p class="p-card-article">
+                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                استفاده از طراحان گرافیک است.
+                            </p>
+                        </div>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-3.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card span-item-card-article">نویسنده</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat-2.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/view.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-10 col-md-6 col-lg-4">
+            <div class="card container-card-article">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-12.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card-article">نام مقاله</h5>
+                        <div>
+                            <p class="p-card-article">
+                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                استفاده از طراحان گرافیک است.
+                            </p>
+                        </div>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-3.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card span-item-card-article">نویسنده</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat-2.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/view.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-10 col-md-6 col-lg-4">
+            <div class="card container-card-article">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-13.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card-article">نام مقاله</h5>
+                        <div>
+                            <p class="p-card-article">
+                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                استفاده از طراحان گرافیک است.
+                            </p>
+                        </div>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-3.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card span-item-card-article">نویسنده</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat-2.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/view.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-10 col-md-6 col-lg-4">
+            <div class="card container-card-article">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-14.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card-article">نام مقاله</h5>
+                        <div>
+                            <p class="p-card-article">
+                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                استفاده از طراحان گرافیک است.
+                            </p>
+                        </div>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-3.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card span-item-card-article">نویسنده</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat-2.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/view.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-10 col-md-6 col-lg-4">
+            <div class="card container-card-article">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-15.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card-article">نام مقاله</h5>
+                        <div>
+                            <p class="p-card-article">
+                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                استفاده از طراحان گرافیک است.
+                            </p>
+                        </div>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-3.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card span-item-card-article">نویسنده</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat-2.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/view.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-10 col-md-6 col-lg-4">
+            <div class="card container-card-article">
+                <a href="#" class="anchor-cards">
+                    <img src="~/images/img-2.jpg" class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title title-card-article">نام مقاله</h5>
+                        <div>
+                            <p class="p-card-article">
+                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                استفاده از طراحان گرافیک است.
+                            </p>
+                        </div>
+                        <div class="container-items-card">
+                            <div>
+                                <img src="~/icons/teacher-3.png" alt="Teacher" class="img-teacher-card">
+                                <span class="span-item-card span-item-card-article">نویسنده</span>
+                            </div>
+                            <div class="chat-display-item-none">
+                                <img src="~/icons/chat-2.png" alt="chat" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                            <div>
+                                <img src="~/icons/view.png" alt="student" class="img-teacher-card">
+                                <span class="span-item-card">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]-ShiftCoder</title>
+
+    <link href="~/frameworks/bootstrap/bootstrap.rtl.css" rel="stylesheet" />
+    <script src="frameworks/bootstrap/bootstrap.js"></script>
+    <script src="~/scripts/jquery.min.js"></script>
+    <link href="~/style/main.min.css" rel="stylesheet" />
+    <link href="~/style/style-userPanel.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid" id="custom-container-fluid-header">
+        <div class="row">
+            <div class="col-6">
+                <div id="top-title">
+                    <div class="news">
+                        <span id="news-span">اخبار جدید</span>
+                        <ul>
+                            <li><a href="#">انجام پروژه های برنامه نویسی و وبسایت</a></li>
+                            <li><a href="#">آموزش برنامه نویسی و طراحی وبسایت</a></li>
+                            @*<a href="#">
+                                </a>*@
+                            <li><a href="#"></a><a href="#">برگزاری دوره های اموزشی رایگان</a></li>
+                            <li><a href="#">آموزش گرافیک از صفر تا صد</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div id="social-container-header" class="float-start">
+                    <a href="#">
+                        <img src="~/icons/youtube.png" alt="youtube" class="social-media-header" title="youtube">
+                    </a>
+                    <a href="#">
+                        <img src="~/icons/telegram.png" alt="telegram" class="social-media-header" title="telegram">
+                    </a>
+                    <a href="#">
+                        <img src="~/icons/linkedin.png" alt="linkedin" class="social-media-header" title="linkedin">
+                    </a>
+                    <a href="#">
+                        <img src="~/icons/instagram.png" alt="instagram" class="social-media-header" title="instagram">
+                    </a>
+                </div>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-dark" id="custom-navbar-header">
+                <div class="container-fluid">
+                    <h1>
+                        <a class="navbar-brand text-su" href="#">Learn <span class="text-danger">hub</span></a>
+                    </h1>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">خانه</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    آموزش ها
+                                </a>
+
+                                <div class="dropdown-menu bgcolo-ul-header" id="megamenu-dropdown" aria-labelledby="navbarDropdown">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12 col-md-3 text-center">
+                                                <ul>
+                                                    <li>
+                                                        <a class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius"
+                                                           href="#">برنامه نویسی</a>
+                                                    </li>
+                                                    <li>
+                                                        <img src="~/icons/arrow-down.png" alt="arrow down"
+                                                             class="arrow-down-header my-3">
+                                                    </li>
+                                                    <li>
+                                                        <ul class="ul-item-megamenu">
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">جاوا اسکریپت</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">سی شارپ</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">پی اچ پی</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">go lang</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">ruby</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="col-12 col-md-3 text-center">
+                                                <ul>
+                                                    <li>
+                                                        <a class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius"
+                                                           href="#">برنامه نویسی</a>
+                                                    </li>
+                                                    <li>
+                                                        <img src="~/icons/arrow-down.png" alt="arrow down"
+                                                             class="arrow-down-header my-3">
+                                                    </li>
+                                                    <li>
+                                                        <ul class="ul-item-megamenu">
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">جاوا اسکریپت</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">سی شارپ</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">پی اچ پی</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">go lang</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">ruby</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="col-12 col-md-3 text-center">
+                                                <ul>
+                                                    <li>
+                                                        <a class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius"
+                                                           href="#">برنامه نویسی</a>
+                                                    </li>
+                                                    <li>
+                                                        <img src="~/icons/arrow-down.png" alt="arrow down"
+                                                             class="arrow-down-header my-3">
+                                                    </li>
+                                                    <li>
+                                                        <ul class="ul-item-megamenu">
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">جاوا اسکریپت</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">سی شارپ</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">پی اچ پی</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">go lang</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">ruby</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="col-12 col-md-3 text-center">
+                                                <ul>
+                                                    <li>
+                                                        <a class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius"
+                                                           href="#">برنامه نویسی</a>
+                                                    </li>
+                                                    <li>
+                                                        <img src="~/icons/arrow-down.png" alt="arrow down"
+                                                             class="arrow-down-header my-3">
+                                                    </li>
+                                                    <li>
+                                                        <ul class="ul-item-megamenu">
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">جاوا اسکریپت</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">سی شارپ</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">پی اچ پی</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">go lang</a>
+                                                            </li>
+                                                            <li class="li-item-megamenu my-2">
+                                                                <a href="#"
+                                                                   class="text-white">ruby</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-navbar-header" href="#">وبلاگ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-navbar-header" href="#">درباره ما</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-navbar-header" href="#">تماس با ما</a>
+                            </li>
+                            <hr>
+                        </ul>
+
+                        <li class="nav-item dropdown list-style-li-header" id="setting-list-item-header">
+                            <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span id="span-profile">
+                                    <img src="~/icons/settings.png" alt="settings" width="28">
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
+                                <li>
+                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                        <img src="~/icons/settings-3.png" alt="settings" class="icons-img-header">
+                                        تنظیمات حساب
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                        <img src="~/icons/edit.png" alt="send article" class="icons-img-header">
+                                        ارسال مطالب
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                        <img src="~/icons/conversation.png" alt="comments" class="icons-img-header">
+                                        نظرات
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                        <img src="~/icons/notification.png" alt="notification" class="icons-img-header">
+                                        اعلان ها
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" href="#">
+                                        <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
+                                        تنظیمات بیشتر
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown list-style-li-header">
+                            <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/images/logo-icon-150px-shiftcoder.png" alt="پروفایل" id="profile-header">
+                                <span id="span-profile">پروفایل</span>
+                            </a>
+                            <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
+                                <li>
+                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                        <img src="~/icons/control-panel.png" alt="control panel" class="icons-img-header">
+                                        پنل مدیریت
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                        <img src="~/icons/profile.png" alt="profile" class="icons-img-header">
+                                        دوره های شما
+                                    </a>
+                                </li>
+                                <li>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                        <img src="~/icons/invoice.png" alt="invoice" class="icons-img-header">
+                                        ارسال تیکت
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" href="/login">
+                                        <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
+                                        خروج از سایت
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    @RenderBody()
+    <footer class="container-fluid" id="footer">
+        <div class="row">
+            <div class="col-10 col-md-6 col-lg-4" id="container-title-footer">
+                <h4 id="title-info-footer">لورم ایپسوم</h4>
+                <p id="title-p-footer">
+                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                    گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.
+                </p>
+            </div>
+            <div class="col-10 col-md-6 col-lg-4" id="container-newsletters-footer">
+                <input type="email" id="newsletters-footer-email" placeholder="آدرس ایمیل">
+                <input type="number" id="newsletters-footer-number" placeholder="شماره موبایل">
+                <input type="submit" id="newsletters-footer-submit" value="عضویت در خبرنامه">
+            </div>
+            <div class="col-10 col-md-6 col-lg-4" id="container-app-footer">
+                <div>
+                    <a href="#"><img src="~/images/GooglePlay.png" alt="GooglePlay" class="img-app-footer"></a>
+                    <a href="#"><img src="~/images/SibApp.png" alt="SibApp" class="img-app-footer"></a>
+                </div>
+
+            </div>
+        </div>
+        <div id="container-footer-bottom">
+            <div class="col-6" id="container-copyright-footer">
+                <p id="p-copyright-footer">
+                    استفاده از مطالب وبسایت آموزشی لرن هاب فقط برای مقاصد غیرتجاری و با
+                    ذکر منبع بلامانع است.
+                </p>
+            </div>
+            <div class="col-6" id="container-social-footer">
+                <a href="#"><img src="~/icons/youtube-2.png" alt="youtube" title="youtube" class="img-social-footer"></a>
+                <a href="#">
+                    <img src="~/icons/telegram-2.png" alt="telegram" title="telegram"
+                         class="img-social-footer">
+                </a>
+                <a href="#">
+                    <img src="~/icons/linkedin-2.png" alt="linkedin" title="linkedin"
+                         class="img-social-footer">
+                </a>
+                <a href="#">
+                    <img src="~/icons/instagram-2.png" alt="instagram" title="instagram"
+                         class="img-social-footer">
+                </a>
+            </div>
+        </div>
+    </footer>
+<section id="hero">
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+         viewBox="0 24 150 28 " preserveAspectRatio="none">
+        <defs>
+            <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+            </path>
+        </defs>
+        <g class="">
+            <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+            </use>
+        </g>
+        <g class="wave2">
+            <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+            </use>
+        </g>
+        <g class="wave3">
+            <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+            </use>
+        </g>
+    </svg>
+</section>
+@RenderSectionAsync("Scripts", required:false)
+</body>
+
+</html>
+
