@@ -1,16 +1,24 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ShiftCoderQuery.Contract.Course;
 
 namespace WebHost.Pages
 {
     public class CoursesModel : PageModel
     {
-        public void OnGet()
+        private readonly ICourseQuery _course;
+
+        public CoursesModel(ICourseQuery course)
         {
+            _course = course;
+        }
+
+        public List<CourseQueryModel> Courses;
+        public CourseQuerySearchModel SearchModel;
+        public void OnGet(CourseQuerySearchModel searchModel)
+        {
+            Courses = _course.GetAllCourse(searchModel);
+          
         }
     }
 }

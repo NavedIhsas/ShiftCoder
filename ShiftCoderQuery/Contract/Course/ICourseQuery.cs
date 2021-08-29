@@ -8,9 +8,9 @@ namespace ShiftCoderQuery.Contract.Course
 {
     public interface ICourseQuery
     {
-        List<CourseQueryModel> GetAllCourse();
+        List<CourseQueryModel> GetAllCourse(CourseQuerySearchModel searchQuery);
         List<CourseQueryModel> LatestCourses();
-
+       
 
     }
 }
