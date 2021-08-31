@@ -31,13 +31,21 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="CourseGroupId" class="control-label">گروه آموزشی<span class="text-danger">*</span></label>
                         <Select asp-for="CourseGroupId" asp-Items="@(new SelectList(Model.CourseGroupSelectList, "Id", "Title"));" type="file" class="form-control">
                             <option value="0">--انتخاب کنید--</option>
                         </Select>
                         <span class="text-danger" asp-validation-for="CourseGroupId"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DemoPoster" class="control-label">عکس پشت زمینه دمو</label>
+                        <input type="file" asp-for="DemoPoster" class="form-control" accept="image/*" >
+                        <span class="text-danger" asp-validation-for="DemoPoster"></span>
                     </div>
                 </div>
             </div>

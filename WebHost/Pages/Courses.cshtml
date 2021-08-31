@@ -3,16 +3,18 @@
 @model WebHost.Pages.CoursesModel
 @{
     ViewData["Title"] = "دوره های آموزشی";
+    var courseGroup = ViewData["checked"] as List<long>;
+    
 }
 
 <div class="container">
     <div class="row">
         <main>
-            <form method="get">
+            <form method="get" id="submitSearch">
                 <div id="header-body">
                     <h1 id="title-main">دوره های آموزشی <span>(@Model.Courses.Count)</span></h1>
-                    <div id="container-search">
-                        <i class="fal fa-search search-icon"></i>
+                    <div id="container-search" >
+                      <i class="fal fa-search search-icon"></i>
                         <input asp-for="SearchModel.Name" type="text" placeholder="دنبال چه دوره ای میگردی ..." id="input-search">
                     </div>
                 </div>
@@ -33,7 +35,7 @@
 
                                                 <button @*name="SearchModel.Filter" value="all"*@ class="btn-first-accordion active-btn-accordion">همه</button>
                                                 <button  class="btn-first-accordion">رایگان</button>
-                                                <button  class="btn-first-accordion">خریدنی</button>
+                                                <button type="button" class="btn-first-accordion">خریدنی</button>
                                             </div>
                                         </div>
                                     </div>
@@ -51,32 +53,32 @@
                                             <div class="content-first-accordion">
 
                                               
-                                                    <div id="content-second-accordion">
-                                                        <div class="form-check">
-                                                            <input asp-for="SearchModel.Filter" value="newest" class="form-check-input" type="radio" id="flexRadioDefault1" >
-                                                            <label class="form-check-label" for="flexRadioDefault1">
-                                                                جدید ترین
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                                            <label class="form-check-label" for="flexRadioDefault2">
-                                                                پربازدید ترین
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input asp-for="SearchModel.Filter" value="minPrice"  class="form-check-input" type="radio" id="flexRadioDefault3">
-                                                            <label class="form-check-label" for="flexRadioDefault3">
-                                                                ارزان ترین
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input asp-for="SearchModel.Filter" value="maxPrice" class="form-check-input" type="radio" id="flexRadioDefault4">
-                                                            <label class="form-check-label" for="flexRadioDefault4">
-                                                                گران ترین
-                                                            </label>
-                                                        </div>
+                                                <div id="content-second-accordion">
+                                                    <div class="form-check">
+                                                        <input  asp-for="SearchModel.Filter" value="newest" onchange="Search()" class="form-check-input" type="radio" id="flexRadioDefault1" >
+                                                        <label class="form-check-label" for="flexRadioDefault1">
+                                                            جدید ترین
+                                                        </label>
                                                     </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" onchange="Search()" type="radio"  id="flexRadioDefault2">
+                                                        <label class="form-check-label" for="flexRadioDefault2">
+                                                            پربازدید ترین
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input asp-for="SearchModel.Filter"  value="minPrice" onchange="Search()" class="form-check-input" type="radio" id="flexRadioDefault3">
+                                                        <label class="form-check-label" for="flexRadioDefault3">
+                                                            ارزان ترین
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input asp-for="SearchModel.Filter"  value="maxPrice" class="form-check-input" type="radio" id="flexRadioDefault4">
+                                                        <label class="form-check-label" for="flexRadioDefault4">
+                                                            گران ترین
+                                                        </label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -88,33 +90,19 @@
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                             <span class="span-title-btn-accordion">فیلتر دسته بندی ها</span>
                                         </button>
-                                    </h2>
+                                     </h2>
                                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="programming-checkbox" checked>
-                                                <label class="form-check-label" for="programming-checkbox">
-                                                    برنامه نویسی
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="framework-library-checkbox">
-                                                <label class="form-check-label" for="framework-library-checkbox">
-                                                    فریمورک و کتابخانه
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="web-design-checkbox">
-                                                <label class="form-check-label" for="web-design-checkbox">
-                                                    طراحی وب
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="graphic-checkbox">
-                                                <label class="form-check-label" for="graphic-checkbox">
-                                                    گرافیک
-                                                </label>
-                                            </div>
+                                            @foreach (var group in Model.CourseGroups)
+                                            {
+                                                <div class="form-check">
+                                                    <input name="groupId" onchange="Search()" @(courseGroup != null && courseGroup.Any(x=>x==@group.Id)?"checked":"") class="form-check-input" type="checkbox" value="@group.Id" id="programming-checkbox">
+                                                    <label class="form-check-label" for="programming-checkbox">
+                                                      @group.Title
+                                                    </label>
+                                                </div>
+                                            }
+
                                         </div>
                                     </div>
                                 </div>
@@ -124,50 +112,7 @@
                         <section id="container" class="card col-12 col-lg-9">
                             <div class="container" id="container-cards">
                                 <div class="row" id="row-container-cards">
-                                    @foreach (var course in Model.Courses)
-                                    {
-                                        <div class="col-10 col-md-6 col-lg-4 col-card">
-                                            <div class="card container-card">
-                                                <a asp-page="SingleCourse" asp-route-id="@course.Slug" class="anchor-cards">
-                                                    <img src="~/FileUploader/@course.Picture" class="card-img-top img-card" alt="@course.PictureAlt" title="@course.PictureTitle">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title title-card">@course.Name</h5>
-                                                        <div class="container-items-card">
-                                                            <div>
-                                                                <img src="icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
-                                                                <span class="span-item-card">مدرس</span>
-                                                            </div>
-                                                            <div class="chat-display-item-none">
-                                                                <img src="icons/chat.png" alt="chat" class="img-teacher-card">
-                                                                <span class="span-item-card">0</span>
-                                                            </div>
-                                                            <div>
-                                                                <img src="icons/student-2.png" alt="student" class="img-teacher-card">
-                                                                <span class="span-item-card">0</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="container-time-payment-card">
-                                                            <div>
-                                                                <img src="icons/clock.png" alt="clock" class="img-teacher-card">
-                                                                <span class="time-p-card">00,00,00</span>
-                                                            </div>
-                                                            <div>
-                                                                @if (course.Price > 0)
-                                                                {
-                                                                    <span class="payment-card">@course.Price.ToMoney()</span>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <span class="payment-card">رایگان</span>
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    }
-
+                                    <partial name="Shared/_Courses" model="Model.Courses"/>
                                     <div class="col-12" id="pagination">
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination">
@@ -198,3 +143,11 @@
         </main>
     </div>
 </div>
+@section Scripts
+{
+    <script>
+        function Search() {
+            $("#submitSearch").submit();
+        }
+    </script>
+}

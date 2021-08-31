@@ -1,6 +1,6 @@
 ﻿<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-           
-    <div class="navbar-default navbar-static-side" role="navigation">
+
+    <div class="navbar-default navbar-static-side" role="navigation" >
         <div class="sidebar-collapse">
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
@@ -17,21 +17,48 @@
                     <a asp-page="/Index"><i class="fa fa-dashboard fa-fw"></i> داشبورد</a>
                 </li>
                 <li>
-                    <a><i class="fa fa-book fa-fw"></i> کورس ها<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
+
+                <li class="active">
+                    <a><i class="fa fa-book "></i> مدیریت دوره ها<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse in" style="height: auto;">
                         <li>
-                            <a href="~/Administration/Courses/CourseGroup/Index">گروه دوره ها </a>
+                            <a asp-page="/Courses/CourseGroup/Index">گروه ها </a>
                         </li>
+                        
                         <li>
-                            <a href="~/Administration/Courses/Course/Index">دوره ها</a>
+                            <a asp-page="/Courses/Course/Index">کورس ها </a>
                         </li>
-                        <li>
-                            <a href="~/Administration/Courses/CourseStatus/Index">وضعیت دوره ها </a>
-                        </li>
-                        <li>
-                            <a href="~/Administration/Courses/CourseLevel/Index">سطح دوره ها</a>
+
+                        <li class="active">
+                            <a asp-page="/Courses/Course/Index">کورس ها <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               
+                                <li>
+                                    <a asp-page="/Courses/CourseEpisode/Index">فایل های دوره </a>
+                                </li>
+
+                                <li>
+                                    <a asp-page="/Courses/CourseStatus/Index">وضعیت دوره ها </a>
+                                </li>
+                                <li>
+                                    <a asp-page="/Courses/CourseLevel/Index">سطح دوره ها</a>
+                                </li>
+                                <li>
+                                    <a asp-page="/Courses/CourseSuitable/Index">دوره مناسب چی افرادی است؟</a>
+                                </li>
+                                <li>
+                                    <a asp-page="/Courses/CoursePrerequisite/Index">پیش نیاز های دوره</a>
+                                </li>
+                                <li>
+                                    <a asp-page="/Courses/AfterCourse/Index">توقعات بعد از تماشای دوره</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-third-level -->
                         </li>
                     </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
                 </li>
             </ul>
         </div>

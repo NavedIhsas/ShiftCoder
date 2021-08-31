@@ -21,13 +21,31 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="KeyWords" class="control-label">کلمات کلیدی <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" asp-for="KeyWords" placeholder="کلمات کلیدی برای SEO">
-                            <span class="text-danger" asp-validation-for="KeyWords"></span>
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="SubGroupId" class="control-label">گروه اصلی <span class="text-danger">*</span></label>
+                        <select type="text" class="form-control" asp-for="SubGroupId" asp-items="@(new SelectList(Model.CourseGroupSelectList, "Id", "Title"))">
+                            <option >ندارد</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="SubGroupId"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Slug" class="control-label"> اسلاگ<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Slug">
+                        <span class="text-danger" asp-validation-for="Slug"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="KeyWords" class="control-label">کلمات کلیدی <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="KeyWords" placeholder="کلمات کلیدی برای SEO">
+                        <span class="text-danger" asp-validation-for="KeyWords"></span>
                     </div>
                 </div>
             </div>
@@ -43,25 +61,20 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group no-margin">
                         <label asp-for="MetaDescription" class="control-label">توضیحات متا <span class="text-danger">*</span></label>
-                        <textarea class="form-control autogrow" asp-for="MetaDescription"></textarea>
+                        <textarea class="form-control autogrow" asp-for="MetaDescription" rows="3"></textarea>
                         <span class="text-danger" asp-validation-for="MetaDescription"></span>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Slug" class="control-label"> اسلاگ<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Slug">
-                        <span class="text-danger" asp-validation-for="Slug"></span>
-                    </div>
-                </div>
             </div>
-            <input type="hidden" asp-for="Id" value="@Model.Id"/>
+
+
         </div>
+
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
         <div class="modal-footer">
             <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
             <button type="submit" class="btn btn-info waves-effect waves-light">ویرایش</button>

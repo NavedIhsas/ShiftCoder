@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\FileUploader\" />
-    <Folder Include="wwwroot\FileUploader\asp-net\DemoFile\" />
   </ItemGroup>
 
 </Project>

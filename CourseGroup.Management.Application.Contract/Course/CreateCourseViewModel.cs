@@ -22,6 +22,8 @@ namespace Shop.Management.Application.Contract.Course
         public string FileName { get; set; }
         public double Price { get; set; }
 
+        public IFormFile DemoPoster { get; set; }
+
         [Required(ErrorMessage = Validate.Required)]
         [MaxLength(20, ErrorMessage = Validate.MaxLength)]
         public string Code { get; set; }

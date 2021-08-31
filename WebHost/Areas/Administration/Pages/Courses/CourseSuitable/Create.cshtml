@@ -1,0 +1,53 @@
+﻿
+@model Shop.Management.Application.Contract.CourseSuitable.CreateSuitableViewModel
+@{
+    ViewData["Title"] = "ایجاد آیتیم ها برای دوره";
+
+}
+
+<div class="container">
+    <partial name="Shared/_Create_View_Header" />
+
+    <form asp-page="./Index" asp-page-handler="Create"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label">متن <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Title" >
+                        <span class="text-danger" asp-validation-for="Title"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="CourseId" class="control-label">دوره <span class="text-danger">*</span></label>
+                        <select type="text" class="form-control" asp-for="CourseId" asp-items="@(new SelectList(Model.SelectList,"Id","Name"))"></select>
+                        <span class="text-danger" asp-validation-for="CourseId"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+            <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

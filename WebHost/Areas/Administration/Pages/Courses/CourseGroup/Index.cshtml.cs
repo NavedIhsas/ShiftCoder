@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Shop.Management.Application.Contract.CourseGroup;
 
 namespace WebHost.Areas.Administration.Pages.Courses.CourseGroup
@@ -15,16 +16,22 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseGroup
         }
 
         [TempData] public string Message { get; set; }
+
         public CourseGroupSearchModel SearchModel;
         public List<CourseGroupViewModel> CourseGroup;
         public void OnGet(CourseGroupSearchModel searchModel)
         {
+
             CourseGroup = _course.Search(searchModel);
         }
 
         public IActionResult OnGetCreate()
         {
-            return Partial("./Create",new CreateCourseGroupViewModel());
+            var selectGroup = new CreateCourseGroupViewModel()
+            {
+                CourseGroupSelectList = _course.SelectList()
+            };
+            return Partial("./Create", selectGroup);
         }
 
         public JsonResult OnPostCreate(CreateCourseGroupViewModel command)
@@ -37,6 +44,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseGroup
         public IActionResult OnGetEdit(long id)
         {
             var courseGroup = _course.GetDetails(id);
+            courseGroup.CourseGroupSelectList = _course.SelectList();
             return Partial("./Edit", courseGroup);
         }
 
@@ -52,7 +60,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseGroup
             if (removeCourseGroup.IsSucceeded)
                 return RedirectToPage("./Index");
 
-            Message  = "خطایی در عملیات رخ داده است";
+            Message = "خطایی در عملیات رخ داده است";
             return RedirectToPage("./Index");
         }
 

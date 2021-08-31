@@ -1,33 +1,39 @@
-﻿using _0_FrameWork.Domain;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using _0_FrameWork.Domain;
 
 namespace ShopManagement.Domain.CourseGroupAgg
 {
    public class CourseGroup:EntityBase
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public bool IsRemove { get; set; }
-        public string KeyWords { get; set; }
-        public string MetaDescription { get; set; }
-        public string Slug { get; set; }
-
-        public CourseGroup(string title, string description,  string keyWords, string metaDescription, string slug)
+        public string Title { get; private set; }
+        public string Description { get; private set; }
+        public bool IsRemove { get; private set; }
+        public string KeyWords { get; private set; }
+        public string MetaDescription { get; private set; }
+        public string Slug { get; private set; }
+        public long? SubGroupId { get; private set; }
+        public CourseGroup SubGroup { get; private set; }
+        public List<CourseGroup> Groups { get; set; }
+        public CourseGroup(string title, string description,  string keyWords, string metaDescription, string slug, long? subGroupId)
         {
             Title = title;
             Description = description;
             KeyWords = keyWords;
             MetaDescription = metaDescription;
             Slug = slug;
+            SubGroupId = subGroupId;
             IsRemove = false;
         }
 
-        public void Edit(string title, string description, string keyWords, string metaDescription, string slug)
+        public void Edit(string title, string description, string keyWords, string metaDescription, string slug, long? subGroupId)
         {
             Title = title;
             Description = description;
             KeyWords = keyWords;
             MetaDescription = metaDescription;
             Slug = slug;
+            SubGroupId = subGroupId;
         }
 
         public void Remove()

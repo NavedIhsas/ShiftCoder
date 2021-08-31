@@ -23,6 +23,8 @@ namespace Shop.Management.Application.Contract.CourseGroup
         [Required(ErrorMessage = Validate.Required)]
         [MaxLength(200, ErrorMessage = Validate.MaxLength)]
         public string Slug { get; set; }
+
+        public long? SubGroupId { get; set; }
         public List<CourseGroupViewModel> CourseGroupSelectList { get; set; }
     }
 }

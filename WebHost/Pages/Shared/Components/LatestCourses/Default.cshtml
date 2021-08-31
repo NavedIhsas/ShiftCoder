@@ -1,52 +1,7 @@
-﻿@using _0_Framework.Application
+﻿
 @model List<ShiftCoderQuery.Contract.Course.CourseQueryModel>
 <div class="container container-cards">
     <div class="row">
-        @foreach (var course in Model)
-        {
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="card container-card">
-                    <a href="#" class="anchor-cards">
-                        <img src="~/FileUploader/@course.Picture" class="card-img-top img-card" alt="@course.PictureAlt" title="@course.PictureTitle">
-                        <div class="card-body">
-                            <h5 class="card-title title-card">@course.Name</h5>
-                            <div class="container-items-card">
-                                <div>
-                                    <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
-                                    <span class="span-item-card">مدرس</span>
-                                </div>
-                                <div class="chat-display-item-none">
-                                    <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
-                                    <span class="span-item-card">0</span>
-                                </div>
-                                <div>
-                                    <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
-                                    <span class="span-item-card">0</span>
-                                </div>
-                            </div>
-                            <div class="container-time-payment-card">
-                                <div>
-                                    <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
-                                    <span class="time-p-card">00,00,00 </span>
-
-
-                                </div>
-                                <div>
-                                    @if (course.Price <= 0)
-                                    {
-                                        <span class="payment-card">رایگان</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="payment-card">@course.Price.ToMoney() تومان</span>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        }
-
+        <partial name="Shared/_Courses" model="Model"/>
     </div>
 </div>

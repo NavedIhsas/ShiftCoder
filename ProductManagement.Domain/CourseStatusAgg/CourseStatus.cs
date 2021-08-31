@@ -23,5 +23,6 @@ namespace ShopManagement.Domain.CourseStatusAgg
         {
             Title = title;
         }
+
     }
 }

@@ -29,10 +29,11 @@ namespace ShopManagement.Application
 
             var pictureName = _fileUploader.Uploader(command.Picture, courseGroupSlug);
             var fileName = _fileUploader.Uploader(command.File, courseGroupSlug + "/DemoFile");
+            var poster = _fileUploader.Uploader(command.DemoPoster, courseGroupSlug + "/DemoFile");
 
             var course = new Course(command.Name, command.Description, command.ShortDescription, fileName,
                  command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
-                 command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId);
+                 command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId,poster);
 
             _course.Create(course);
             _course.SaveChanges();
@@ -49,10 +50,11 @@ namespace ShopManagement.Application
             var courseGroupSlug = _courseGroup.GetSlug(command.CourseGroupId);
             var pictureName = _fileUploader.Uploader(command.Picture, courseGroupSlug);
             var fileName = _fileUploader.Uploader(command.File, courseGroupSlug + "/DemoFile");
+            var poster = _fileUploader.Uploader(command.DemoPoster, courseGroupSlug + "/DemoFile");
 
             course.Edit(command.Name, command.Description, command.ShortDescription, fileName,
                 command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
-                command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId);
+                command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId,poster);
 
             if (_course.IsExist(x => x.Name == command.Name.Trim() && x.CourseGroupId == command.CourseGroupId &&x.Id!=command.Id))
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);

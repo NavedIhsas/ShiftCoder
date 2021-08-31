@@ -26,19 +26,22 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 KeyWords = x.KeyWords,
                 MetaDescription = x.MetaDescription,
                 Slug = x.Slug,
-                Id = x.Id
+                Id = x.Id,
+                SubGroupId = x.SubGroupId
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
             return getDetails;
         }
 
         public List<CourseGroupViewModel> Search(CourseGroupSearchModel searchModel)
         {
-            var query = _context.CourseGroups.Select(x => new CourseGroupViewModel
+            var query = _context.CourseGroups.Include(x=>x.SubGroup).Select(x => new CourseGroupViewModel
             {
                 Id = x.Id,
                 Title = x.Title,
                 IsRemove = x.IsRemove,
                 CreationDate = x.CreationDate.ToFarsi(),
+               SubGroup = x.SubGroup.Title,
+             SubGroupId = x.SubGroup.Id,
                 CourseCount = 0
             }).AsNoTracking().ToList();
 

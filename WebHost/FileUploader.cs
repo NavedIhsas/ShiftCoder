@@ -33,4 +33,30 @@ namespace WebHost
 
         }
     }
+
+    public class EpisodeUploadFile : IEpisodeFileUploader
+    {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public EpisodeUploadFile(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
+        public string Uploader(IFormFile file, string path)
+        {
+            var pathDirectory = $"{_webHostEnvironment.WebRootPath}//FileUploader//{path}";
+            if (!Directory.Exists(pathDirectory))
+                Directory.CreateDirectory(pathDirectory);
+
+            if (file == null) return null;
+
+            var fileName = file.FileName;
+            var filePath = $"{pathDirectory}//{fileName}";
+
+            using var stream = File.Create(filePath);
+            file.CopyTo(stream);
+            return fileName;
+        }
+    }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShiftCoderQuery.Contract.CourseGroup
 {
@@ -10,9 +6,19 @@ namespace ShiftCoderQuery.Contract.CourseGroup
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public bool IsRemove { get; set; }
         public string KeyWords { get; set; }
         public string MetaDescription { get; set; }
         public string Slug { get; set; }
+        public long? SubGroupId { get; set; }
+        public string SubGroup { get; set; }
+        public long Id { get; set; }
+        public DateTime CreationDate { get; internal set; }
+    }
+
+   public class CourseGroupSearchQuery
+    {
+        public string Title { get; set; }
+        public long Id { get; set; }
+
     }
 }

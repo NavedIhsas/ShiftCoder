@@ -29,6 +29,7 @@ namespace WebHost
 
             var connectionString = Configuration.GetConnectionString("ShiftCoderConnection");
             services.AddTransient<IFileUploader, FileUploader>();
+            services.AddTransient<IEpisodeFileUploader, EpisodeUploadFile>();
             ShopManagementBootstrapper.Configure(services, connectionString);
             InventoryManagementBootstrapper.Configure(services, connectionString);
 

@@ -1,0 +1,98 @@
+﻿
+@model Shop.Management.Application.Contract.CourseEpisode.CreateCourseEpisodeViewModel
+@{
+    ViewData["Title"] = "افزودن فایل جدید به دوره";
+}
+
+<div class="container">
+    <partial name="Shared/_Create_View_Header" />
+
+    <form asp-page="./Index" asp-page-handler="Create"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label">عنوان <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Title">
+                        <span class="text-danger" asp-validation-for="Title"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CourseId" class="control-label">دوره <span class="text-danger">*</span></label>
+                        <select type="text" class="form-control" asp-for="CourseId" asp-items="@(new SelectList(Model.CoursesSelectList,"Id","Name"))"></select>
+                        <span class="text-danger" asp-validation-for="CourseId"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="File" class="control-label">فایل <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" asp-for="File" accept="video">
+                        <span class="text-danger" asp-validation-for="File"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Time" class="control-label">زمان <span class="text-danger">*</span></label>
+                        <input type="TimeSpan" class="form-control" asp-for="Time">
+                        <span class="text-danger" asp-validation-for="Time"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="KeyWords" class="control-label">کلمات کلیدی <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="KeyWords">
+                        <span class="text-danger" asp-validation-for="KeyWords"></span>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="IsFree" class="checkbox-inline control-label">ایا رایگان است؟ <span class="text-danger">*</span></label>
+                        <input  type="checkbox" class="checkbox-inline" asp-for="IsFree" >
+                        <span class="text-danger" asp-validation-for="IsFree"></span>
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="MetaDescription" class="control-label">توضیحات میتا <span class="text-danger">*</span></label>
+                        <textarea type="text" class="form-control" asp-for="MetaDescription" rows="2"></textarea>
+                        <span class="text-danger" asp-validation-for="MetaDescription"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+            <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

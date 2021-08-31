@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Shop.Management.Application.Contract.AfterCourse;
+using Shop.Management.Application.Contract.CourseEpisode;
+using Shop.Management.Application.Contract.CoursePrerequisite;
+using Shop.Management.Application.Contract.CourseSuitable;
 
 namespace ShiftCoderQuery.Contract.Course
 {
@@ -21,6 +22,18 @@ namespace ShiftCoderQuery.Contract.Course
         public string KeyWords { get; set; }
         public string MetaDescription { get; set; }
         public string Slug { get; set; }
+        public string PosterImg { get; set; }
+        public string CourseGroup { get; set; }
+        public long CourseGroupId { get; set; }
+        public TimeSpan TotalTime { get; set; }
+        public string CourseLevel { get; set; }
+        public string CourseStatus { get; set; }
+        public List<CourseSuitableViewModel> SuitableCourse { get; set; }
+        public List<AfterCourseViewModel> AfterCourse { get; set; }
+        public List<CoursePrerequisiteViewModel> PrerequisiteCourse { get; set; }
+        public  List<CourseEpisodeViewModel> EpisodeCourse { get; set; }
+        public List<ShopManagement.Domain.CourseGroupAgg.CourseGroup> CourseGroups { get; set; }
         public DateTime CreationDate { get; internal set; }
+        public int EpisodeCount { get; internal set; }
     }
 }

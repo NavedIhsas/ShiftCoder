@@ -21,6 +21,26 @@ namespace ShopManagement.Infrastructure.EfCore.Mapping
             builder.Property(x => x.Slug).HasMaxLength(200).IsRequired();
             builder.HasOne(x => x.CourseStatus).WithMany(x => x.Courses).HasForeignKey(x => x.CourseStatusId);
             builder.HasOne(x => x.CourseLevel).WithMany(x => x.Courses).HasForeignKey(x => x.CourseLevelId);
+            //builder.OwnsMany(x => x.AfterTheCourses, navigationBuilder =>
+            //{
+            //    navigationBuilder.HasKey(x => x.Id);
+            //    navigationBuilder.Property(x => x.Title).HasMaxLength(1000).IsRequired();
+            //    navigationBuilder.WithOwner(x => x.Courses).HasForeignKey(x => x.CourseId);
+            //});
+
+            //builder.OwnsMany(x => x.CourseSuitableList, navigationBuilder =>
+            //{
+            //    navigationBuilder.HasKey(x => x.Id);
+            //    navigationBuilder.Property(x => x.Title).HasMaxLength(1000).IsRequired();
+            //    navigationBuilder.WithOwner(x => x.Courses).HasForeignKey(x => x.CourseId);
+            //});
+
+            //builder.OwnsMany(x => x.CoursePrerequisites, navigationBuilder =>
+            //{
+            //    navigationBuilder.HasKey(x => x.Id);
+            //    navigationBuilder.Property(x => x.Title).HasMaxLength(1000).IsRequired();
+            //    navigationBuilder.WithOwner(x => x.Courses).HasForeignKey(x => x.CourseId);
+            //});
 
         }
     }

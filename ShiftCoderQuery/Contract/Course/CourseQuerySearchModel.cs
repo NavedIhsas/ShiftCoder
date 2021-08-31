@@ -10,7 +10,6 @@ namespace ShiftCoderQuery.Contract.Course
         public double Price { get; set; }
         public string CreationDate { get; set; }
         public string Filter { get; set; }
-        public long CourseGroupId { get; set; }
 
     }
 }
