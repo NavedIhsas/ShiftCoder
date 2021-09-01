@@ -69,12 +69,12 @@ namespace ShopManagement.Application
             return _course.GetDetails(id);
         }
 
-        public List<CourseViewModel> Search(CourseSearchModel searchModel)
+        public List<ArticleViewModel> Search(CourseSearchModel searchModel)
         {
             return _course.Search(searchModel);
         }
 
-        public List<CourseViewModel> SelectCourses()
+        public List<ArticleViewModel> SelectCourses()
         {
             return _course.SelectCourses();
         }

@@ -1,0 +1,77 @@
+﻿@model BlogManagement.Application.Contract.ArticleCategory.CreateArticleCategoryViewModel
+@{
+    ViewData["Title"] = "ایجاد گروه مقاله جدید";
+}
+
+<div class="container">
+    <partial name="Shared/_Create_View_Header" />
+    <form asp-page="./Index" asp-page-handler="Create"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">عنوان <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Name" placeholder="" onchange="makeSlug('Title', 'Slug')">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CanonicalAddress" class="control-label"> CanonicalAddress</label>
+                        <input type="text" class="form-control" asp-for="CanonicalAddress" placeholder="برای سئو">
+                        <span class="text-danger" asp-validation-for="CanonicalAddress"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Keyword" class="control-label">کلمات کلیدی <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Keyword" placeholder="کلمات کلیدی برای SEO">
+                        <span class="text-danger" asp-validation-for="Keyword"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group no-margin">
+                        <label asp-for="ShowOrder" class="control-label">ترتیب نمایش </label>
+                        <input type="number" class="form-control autogrow" asp-for="ShowOrder" />
+
+                        <span class="text-danger" asp-validation-for="ShowOrder"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group no-margin">
+                        <label asp-for="MetaDescription" class="control-label">توضیحات متا <span class="text-danger">*</span></label>
+                        <textarea class="form-control autogrow" asp-for="MetaDescription" rows="3"></textarea>
+                        <span class="text-danger" asp-validation-for="MetaDescription"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+            <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

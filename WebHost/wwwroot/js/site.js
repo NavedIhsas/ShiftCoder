@@ -143,3 +143,7 @@ function checkSlugDuplication(url, dist) {
         }
     });
 }
+function fillField(source, dist) {
+    const value = $('#' + source).val();
+    $('#' + dist).val(value);
+}

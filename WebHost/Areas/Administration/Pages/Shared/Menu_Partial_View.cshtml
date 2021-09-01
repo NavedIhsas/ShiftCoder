@@ -24,15 +24,15 @@
                         <li>
                             <a asp-page="/Courses/CourseGroup/Index">گروه ها </a>
                         </li>
-                        
+
                         <li>
                             <a asp-page="/Courses/Course/Index">کورس ها </a>
                         </li>
 
-                        <li class="active">
+                        <li >
                             <a asp-page="/Courses/Course/Index">کورس ها <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                               
+
                                 <li>
                                     <a asp-page="/Courses/CourseEpisode/Index">فایل های دوره </a>
                                 </li>
@@ -55,6 +55,21 @@
                             </ul>
                             <!-- /.nav-third-level -->
                         </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
+                <li >
+                    <a><i class="fa fa-book "></i> مدیریت مقاله ها<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse in" style="height: auto;">
+                        <li>
+                            <a asp-page="/Blog/ArticleCategory/Index">گروه ها </a>
+                        </li>
+
+                        <li>
+                            <a asp-page="/Blog/Article/Index">مقاله ها </a>
+                        </li>
+
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>

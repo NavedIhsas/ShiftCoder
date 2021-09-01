@@ -26,7 +26,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.Course
 
         public SelectList SelectList;
         public CourseSearchModel SearchModel;
-        public List<CourseViewModel> Course;
+        public List<ArticleViewModel> Course;
         public void OnGet(CourseSearchModel searchModel)
         {
             SelectList = new SelectList(_courseGroup.SelectList(), "Id", "Title");

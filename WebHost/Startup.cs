@@ -1,4 +1,5 @@
 using _0_FrameWork.Application;
+using BlogManagement.Infrastructure;
 using InventoryManagement.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShiftCoderQuery.Contract.Article;
+using ShiftCoderQuery.Query;
 using ShopManagement.Configuration;
 using ShopManagement.Infrastructure.EfCore;
 
@@ -32,6 +35,8 @@ namespace WebHost
             services.AddTransient<IEpisodeFileUploader, EpisodeUploadFile>();
             ShopManagementBootstrapper.Configure(services, connectionString);
             InventoryManagementBootstrapper.Configure(services, connectionString);
+            BlogManagementBootstrapper.Configure(services, connectionString);
+
 
 
             #endregion

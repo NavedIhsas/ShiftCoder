@@ -13,6 +13,6 @@ namespace InventoryManagement.Application.Contract.Inventory
         [Range(0, int.MaxValue, ErrorMessage = Validate.Required)]
         public double UnitPrice { get; set; }
 
-        public List<CourseViewModel> SelectCourses { get; set; }
+        public List<ArticleViewModel> SelectCourses { get; set; }
     }
 }

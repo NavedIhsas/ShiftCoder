@@ -30,7 +30,8 @@ namespace ShiftCoderQuery.Query
         public List<CourseQueryModel> GetAllCourse(CourseQuerySearchModel searchQuery, List<long> group)
 
         {
-            var query = _context.Courses.Select(x => new CourseQueryModel
+            var query = _context.Courses.Include(x => x.CourseEpisodes).
+                AsNoTracking().AsEnumerable().Select(x => new CourseQueryModel
             {
                 Name = x.Name,
                 Description = x.Description,
@@ -47,7 +48,9 @@ namespace ShiftCoderQuery.Query
                 Slug = x.Slug,
                 CreationDate = x.CreationDate,
                 CourseGroupId = x.CourseGroupId,
-            }).AsNoTracking().ToList();
+                TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
+
+                }).ToList();
 
 
             if (!string.IsNullOrWhiteSpace(searchQuery.Name))
@@ -105,7 +108,7 @@ namespace ShiftCoderQuery.Query
                     MetaDescription = x.MetaDescription,
                     Slug = x.Slug,
                     CreationDate = x.CreationDate,
-                    TotalTime = new TimeSpan(x.CourseEpisodes.Sum(x => x.Time.Ticks))
+                    TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
 
                 }).OrderByDescending(x => x.CreationDate).Take(8).ToList();
         }

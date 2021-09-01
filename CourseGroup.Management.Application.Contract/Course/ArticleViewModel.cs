@@ -1,6 +1,6 @@
 ﻿namespace Shop.Management.Application.Contract.Course
 {
-    public class CourseViewModel
+    public class ArticleViewModel
     {
         public string Name { get; set; }
         public string Picture { get; set; }

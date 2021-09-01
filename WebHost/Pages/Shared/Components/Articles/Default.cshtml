@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ShiftCoderQuery.Contract.Article.LatestArticleQueryModel>
+
+    <div class="container">
+        <div class="row container-article">
+            @foreach (var article in Model)
+            {
+                <div class="col-10 col-md-6 col-lg-4">
+                    <div class="card container-card-article">
+                        <a asp-page="SingleArticle" asp-route-id="@article.Slug" class="anchor-cards">
+                            <img src="~/FileUploader/@article.Picture" class="card-img-top img-card" alt="@article.PictureAtl" title="@article.PictureTitle">
+                            <div class="card-body">
+                                <h5 class="card-title title-card-article">@article.Title</h5>
+                                <div>
+                                    <p class="p-card-article">
+                                       @article.ShortDescription
+                                    </p>
+                                </div>
+                                <div class="container-items-card">
+                                    <div>
+                                        <img src="~/icons/teacher-3.png" alt="Teacher" class="img-teacher-card">
+                                        <span class="span-item-card span-item-card-article">نویسنده</span>
+                                    </div>
+                                    <div class="chat-display-item-none">
+                                        <img src="~/icons/chat-2.png" alt="chat" class="img-teacher-card">
+                                        <span class="span-item-card">0</span>
+                                    </div>
+                                    <div>
+                                        <img src="~/icons/view.png" alt="student" class="img-teacher-card">
+                                        <span class="span-item-card">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>

@@ -14,6 +14,6 @@ namespace Shop.Management.Application.Contract.AfterCourse
         [Range(0,long.MaxValue,ErrorMessage = Validate.Required)]
         public long CourseId { get; set; }
 
-        public List<CourseViewModel> SelectList { get; set; }
+        public List<ArticleViewModel> SelectList { get; set; }
     }
 }
