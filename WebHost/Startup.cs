@@ -1,5 +1,6 @@
 using _0_FrameWork.Application;
 using BlogManagement.Infrastructure;
+using CommentManagement.Infrastructure;
 using InventoryManagement.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +37,8 @@ namespace WebHost
             ShopManagementBootstrapper.Configure(services, connectionString);
             InventoryManagementBootstrapper.Configure(services, connectionString);
             BlogManagementBootstrapper.Configure(services, connectionString);
+            CommentManagementBootstrapper.Configure(services, connectionString);
+
 
 
 

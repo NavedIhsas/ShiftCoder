@@ -18,8 +18,8 @@
                 </li>
                 <li>
 
-                <li class="active">
-                    <a><i class="fa fa-book "></i> مدیریت دوره ها<span class="fa arrow"></span></a>
+                <li>
+                    <a asp-page=""><i class="fa fa-book "></i> مدیریت دوره ها<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse in" style="height: auto;">
                         <li>
                             <a asp-page="/Courses/CourseGroup/Index">گروه ها </a>
@@ -29,9 +29,9 @@
                             <a asp-page="/Courses/Course/Index">کورس ها </a>
                         </li>
 
-                        <li >
-                            <a asp-page="/Courses/Course/Index">کورس ها <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                        <li>
+                            <a asp-page="/Courses/Course/Index">جزئیات دوره ها <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level text-danger">
 
                                 <li>
                                     <a asp-page="/Courses/CourseEpisode/Index">فایل های دوره </a>
@@ -59,11 +59,11 @@
                     <!-- /.nav-second-level -->
                 </li>
 
-                <li >
-                    <a><i class="fa fa-book "></i> مدیریت مقاله ها<span class="fa arrow"></span></a>
+                <li>
+                    <a asp-page=""><i class="fa fa-book-open"></i> مدیریت مقاله ها<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse in" style="height: auto;">
                         <li>
-                            <a asp-page="/Blog/ArticleCategory/Index">گروه ها </a>
+                            <a asp-page="/Blog/ArticleCategory/Index">گروه مقاله ها </a>
                         </li>
 
                         <li>
@@ -74,6 +74,8 @@
                     <!-- /.nav-second-level -->
                 </li>
 
+                <li>
+                    <a asp-page="/Comment/Index"><i class="fa fa-comment fa-fw"></i> کامنت ها</a>
                 </li>
             </ul>
         </div>

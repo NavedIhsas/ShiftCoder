@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlogManagement.Infrastructure\BlogManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\CommentManagement.Infrastructure\CommentManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\CommnetManagement.Application.Contract\CommentManagement.Application.Contract.csproj" />
     <ProjectReference Include="..\InventoryManagement.Infrastracture\InventoryManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\ShiftCoderQuery\ShiftCoderQuery.csproj" />
     <ProjectReference Include="..\ShopManagement.Configuration\ShopManagement.Configuration.csproj" />

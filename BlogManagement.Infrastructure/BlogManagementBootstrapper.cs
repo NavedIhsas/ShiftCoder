@@ -8,6 +8,7 @@ using BlogManagement.Domain.ArticleAgg;
 using BlogManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Article;
+using ShiftCoderQuery.Contract.ArticleCategory;
 using ShiftCoderQuery.Query;
 
 namespace BlogManagement.Infrastructure
@@ -23,6 +24,8 @@ namespace BlogManagement.Infrastructure
             service.AddTransient<IArticleApplication, ArticleApplication>();
 
             service.AddTransient<IArticleQuery, ArticleQuery>();
+            service.AddTransient<IArticleCategoryQuery, ArticleCategoryQuery>();
+
 
             service.AddDbContext<BlogContext>(option =>
             {
