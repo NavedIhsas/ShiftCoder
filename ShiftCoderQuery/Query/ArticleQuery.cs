@@ -1,19 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
+using _0_FrameWork.Application;
 using BlogManagement.Infrastructure.EfCore;
+using CommentManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Article;
+using ShiftCoderQuery.Contract.Comment;
 
 namespace ShiftCoderQuery.Query
 {
     public class ArticleQuery : IArticleQuery
     {
         private readonly BlogContext _context;
+        private readonly CommentContext _comment;
 
-        public ArticleQuery(BlogContext context)
+        public ArticleQuery(BlogContext context, CommentContext comment)
         {
             _context = context;
+            _comment = comment;
         }
 
         public List<LatestArticleQueryModel> LatestArticle()
@@ -71,8 +76,9 @@ namespace ShiftCoderQuery.Query
 
         public SinglePageArticleQueryModel GetSingleArticleBy(string slug)
         {
-           return _context.Articles.Include(x=>x.ArticleCategory).Select(x => new SinglePageArticleQueryModel
+           var article= _context.Articles.Include(x=>x.ArticleCategory).Select(x => new SinglePageArticleQueryModel
             {
+                Id=x.Id,
                 Title = x.Title,
                 Description = x.Description,
                 ShortDescription = x.ShortDescription,
@@ -88,6 +94,54 @@ namespace ShiftCoderQuery.Query
                 PublishDate = x.PublishDate.ToFarsi(),
                 CategoryName = x.ArticleCategory.Name
             }).AsNoTracking().FirstOrDefault(x => x.Slug == slug);
+
+           if (article == null) return null;
+
+           var comment = _comment.Comments.
+             
+               Where(x => x.Type == CommentType.Article && x.ParentId == null)
+               .Where(x=>x.OwnerRecordId==article.Id)
+               .Select(x => new CommentQueryModel
+           {
+               Name = x.Name,
+               Email = x.Email,
+               Message = x.Message,
+               Id = x.Id,
+               ParentName = x.Parent.Name,
+               ParentId = x.ParentId,
+               CreationDate = x.CreationDate.ToFarsi(),
+               OwnerRecordId = x.OwnerRecordId,
+           }).ToList();
+
+           foreach (var item in comment)
+                MapChildren(item);
+
+           article.Comments = comment;
+           return article;
+
+        }
+
+        private void MapChildren(CommentQueryModel parent)
+        {
+            var sub= _comment.Comments
+                .Where(x=>x.Type==CommentType.Article && x.ParentId==parent.Id)
+                .Select(x => new CommentQueryModel
+            {
+                Name = x.Name,
+                Email = x.Email,
+                Message = x.Message,
+                Id = x.Id,
+                ParentName = x.Parent.Name,
+                ParentId = x.ParentId,
+                CreationDate = x.CreationDate.ToFarsi(),
+                OwnerRecordId = x.OwnerRecordId,
+            }).ToList();
+
+            foreach (var item in sub)
+            {
+                MapChildren(item);
+                parent.SubComment.Add(item);
+            }
         }
     }
 }

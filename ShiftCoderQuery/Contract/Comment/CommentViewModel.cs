@@ -9,10 +9,15 @@ namespace ShiftCoderQuery.Contract.Comment
         public string Message { get; set; }
         public long Id { get; set; }
         public long? ParentId { get; set; }
-        public string ParentName { get; set; }
         public string CreationDate { get; set; }
-        public long OwnerId { get; set; }
+        public long OwnerRecordId { get; set; }
         public List<CommentQueryModel> SubComment { get; set; }
+        public string ParentName { get; internal set; }
+
+        public CommentQueryModel()
+        {
+            SubComment = new List<CommentQueryModel>();
+        }
 
     }
 }

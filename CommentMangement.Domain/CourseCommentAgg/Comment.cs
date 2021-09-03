@@ -13,11 +13,10 @@ namespace CommentManagement.Domain.CourseCommentAgg
         public long OwnerRecordId { get; private set; }
         public int Type { get; private set; }
         public long? ParentId { get; private set; }
-        public long? PrId { get;private set; }
         public Comment Parent { get; private set; }
         public List<Comment> Children { get; private set; }
 
-        public Comment(string name, string email, string message, long ownerRecordId, int type, long? parentId, long? prId)
+        public Comment(string name, string email, string message, long ownerRecordId, int type, long? parentId)
         {
             Name = name;
             Email = email;
@@ -25,7 +24,6 @@ namespace CommentManagement.Domain.CourseCommentAgg
             OwnerRecordId = ownerRecordId;
             Type = type;
             ParentId = parentId;
-            PrId = prId;
             IsConfirmed = false;
             IsCanceled = true;
         }

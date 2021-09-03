@@ -33,7 +33,7 @@ namespace ShiftCoderQuery.Query
                Email = x.Parent.Email,
                ParentId = x.Parent.ParentId,
                ParentName = x.Parent.Parent.Name,
-               OwnerId = x.Parent.OwnerRecordId,
+               OwnerRecordId = x.Parent.OwnerRecordId,
                SubComment = MapChildren(x.Children),
                    CreationDate = x.Parent.CreationDate.ToFarsi()
            }).AsNoTracking().ToList();

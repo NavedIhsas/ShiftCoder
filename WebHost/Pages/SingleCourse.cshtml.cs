@@ -22,12 +22,11 @@ namespace WebHost.Pages
             _aaApplication = aaApplication;
         }
 
-        public List<CommentQueryModel> SubComment;
+
         public CourseQueryModel Course;
         public void OnGet(string id)
         {
             Course = _course.GetCourseBySlug(id);
-          
         }
 
         public IActionResult OnPost(CreateCommentViewModel command,string productSlug)

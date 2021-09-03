@@ -1,4 +1,7 @@
-﻿namespace ShiftCoderQuery.Contract.Article
+﻿using System.Collections.Generic;
+using ShiftCoderQuery.Contract.Comment;
+
+namespace ShiftCoderQuery.Contract.Article
 {
     public class SinglePageArticleQueryModel
     {
@@ -16,5 +19,7 @@
         public bool IsPublish { get; set; }
         public string PublishDate { get; set; }
         public string CategoryName { get; set; }
+        public List<CommentQueryModel> Comments { get; set; }
+        public long Id { get; set; }
     }
 }

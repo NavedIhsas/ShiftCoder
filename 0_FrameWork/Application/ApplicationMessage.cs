@@ -10,7 +10,11 @@
   {
       public const string Required = "پر کردن این فیلد اجباری میباشد";
       public const string MaxLength = "کاراکتر های {0} بیشتر از حد مجاز {1} میباشد";
-      
-      
+  }
+
+  public class CommentType
+  {
+      public const int Course = 1;
+      public const int Article = 2;
   }
 }

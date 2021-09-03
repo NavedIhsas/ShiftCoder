@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
-using CommentManagement.Domain.CourseCommentAgg;
 using CommentManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Comment;
@@ -12,6 +11,7 @@ using Shop.Management.Application.Contract.CourseEpisode;
 using Shop.Management.Application.Contract.CoursePrerequisite;
 using Shop.Management.Application.Contract.CourseSuitable;
 using ShopManagement.Domain.AfterTheCourseAgg;
+using ShopManagement.Domain.CourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.CoursePrerequisiteAgg;
 using ShopManagement.Domain.CourseSuitableAgg;
@@ -66,7 +66,7 @@ namespace ShiftCoderQuery.Query
                     "maxPrice" => query.OrderByDescending(x => x.Price).ToList(),
                     "newest" => query.OrderByDescending(x => x.CreationDate).ToList(),
                     "minPrice" => query.OrderBy(x => x.Price).ToList(),
-                    //"price"=>query.Where(x=>x.Price>0).ToList(),
+                    //"price"=>query.Where(x=>x.Price>0).ToList(), 
                     "free" => query.Where(x => x.Price == 0).ToList(),
                     //"all"=>query,
                     _ => query
@@ -80,11 +80,8 @@ namespace ShiftCoderQuery.Query
             {
                 query = @group.Aggregate(query, (current, courseGroup) => current.Where(x => x.CourseGroupId == courseGroup).ToList());
             }
-
-
             return query;
         }
-
 
         public List<CourseQueryModel> LatestCourses()
         {
@@ -146,40 +143,55 @@ namespace ShiftCoderQuery.Query
                     EpisodeCount = x.CourseEpisodes.Count
                 }).AsNoTracking().FirstOrDefault(x => x.Slug == slug);
 
-            if (course == null) return null;
-            {
-                course.Comments = _comment.Comments.Include(x => x.Children).
-                    ThenInclude(x => x.Parent)
-                    .Where(x => x.Type == 1).Select(x => new CommentQueryModel
-                    {
-                        Name = x.Name,
-                        Email = x.Email,
-                        Message = x.Message,
-                        OwnerId = x.OwnerRecordId,
-                        Id = x.Id,
-                        ParentId = x.ParentId,
-                        SubComment = MapChildren(x.Children),
-                        ParentName = x.Parent.Name,
-                        CreationDate = x.CreationDate.ToFarsi()
-                    }).Where(x => x.ParentId == null && x.OwnerId==course.Id).AsNoTracking().ToList();
-            }
 
+            var comment = _comment.Comments
+                .Where(x => x.Type == 1).Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
+                .Select(x => new CommentQueryModel
+                {
+                    Name = x.Name,
+                    Email = x.Email,
+                    Message = x.Message,
+                    OwnerRecordId = x.OwnerRecordId,
+                    Id = x.Id,
+                    ParentId = x.ParentId,
+                    ParentName = x.Parent.Name,
+                    CreationDate = x.CreationDate.ToFarsi()
+                }).ToList();
+
+            foreach (var item in comment)
+                MapChildren(item);
+
+
+            if (course == null) return null;
+            course.CommentCount = comment.Count;
+            course.Comments = comment;
             return course;
         }
 
-        private static List<CommentQueryModel> MapChildren(IEnumerable<Comment> children)
+        private void MapChildren(CommentQueryModel parent)
         {
-            var child= children.Where(x=>x.PrId==x.Id).Select(x => new CommentQueryModel()
+            var subComment = _comment.Comments
+                .Where(x => x.Type == 1).Where(x => x.ParentId == parent.Id)
+                .Select(x => new CommentQueryModel
+                {
+                    Name = x.Name,
+                    Email = x.Email,
+                    Message = x.Message,
+                    OwnerRecordId = x.OwnerRecordId,
+                    Id = x.Id,
+                    ParentId = x.ParentId,
+                    ParentName = x.Parent.Name,
+                    CreationDate = x.CreationDate.ToFarsi()
+                }).ToList();
+
+            foreach (var item in subComment)
             {
-                Name = x.Name,
-                Message = x.Message,
-                Email = x.Email,
-                ParentId = x.ParentId,
-                ParentName = x.Parent.Name,
-            }).ToList();
-            return child;
+                MapChildren(item);
+                parent.SubComment.Add(item);
+            }
         }
 
+        
         private static List<CourseEpisodeViewModel> MapEpisodeCourse(IEnumerable<CourseEpisode> courseEpisodes)
         {
             return courseEpisodes.Select(x => new CourseEpisodeViewModel

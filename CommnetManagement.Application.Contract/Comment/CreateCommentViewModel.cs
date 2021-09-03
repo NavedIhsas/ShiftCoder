@@ -9,7 +9,6 @@
         public bool IsConfirmed { get; set; }
         public long OwnerRecordId { get; set; }
         public int Type { get; set; }
-        public long? PrId { get; set; }
 
         public long? ParentId { get; set; }
     }
