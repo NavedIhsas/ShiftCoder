@@ -29,7 +29,7 @@ namespace Shop.Management.Application.Contract.CourseEpisode
 
         [Range(0,long.MaxValue,ErrorMessage = Validate.Required)]
         public long CourseId { get; set; }
-        public List<ArticleViewModel> CoursesSelectList { get; set; }
+        public List<CourseViewModel> CoursesSelectList { get; set; }
 
     }
 }

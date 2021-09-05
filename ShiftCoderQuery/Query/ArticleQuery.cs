@@ -101,6 +101,7 @@ namespace ShiftCoderQuery.Query
              
                Where(x => x.Type == CommentType.Article && x.ParentId == null)
                .Where(x=>x.OwnerRecordId==article.Id)
+               .OrderByDescending(x => x.CreationDate)
                .Select(x => new CommentQueryModel
            {
                Name = x.Name,
@@ -111,7 +112,7 @@ namespace ShiftCoderQuery.Query
                ParentId = x.ParentId,
                CreationDate = x.CreationDate.ToFarsi(),
                OwnerRecordId = x.OwnerRecordId,
-           }).ToList();
+           }).AsNoTracking().ToList();
 
            foreach (var item in comment)
                 MapChildren(item);

@@ -145,7 +145,7 @@ namespace ShiftCoderQuery.Query
 
 
             var comment = _comment.Comments
-                .Where(x => x.Type == 1).Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
+                .Where(x => x.Type == 1).Where(x=>x.IsConfirmed).Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
                 .Select(x => new CommentQueryModel
                 {
                     Name = x.Name,
@@ -156,7 +156,7 @@ namespace ShiftCoderQuery.Query
                     ParentId = x.ParentId,
                     ParentName = x.Parent.Name,
                     CreationDate = x.CreationDate.ToFarsi()
-                }).ToList();
+                }).AsNoTracking().ToList();
 
             foreach (var item in comment)
                 MapChildren(item);
@@ -172,6 +172,7 @@ namespace ShiftCoderQuery.Query
         {
             var subComment = _comment.Comments
                 .Where(x => x.Type == 1).Where(x => x.ParentId == parent.Id)
+                .Where(x => x.IsConfirmed)
                 .Select(x => new CommentQueryModel
                 {
                     Name = x.Name,
@@ -182,7 +183,7 @@ namespace ShiftCoderQuery.Query
                     ParentId = x.ParentId,
                     ParentName = x.Parent.Name,
                     CreationDate = x.CreationDate.ToFarsi()
-                }).ToList();
+                }).AsNoTracking().ToList();
 
             foreach (var item in subComment)
             {

@@ -1,5 +1,4 @@
 using _0_FrameWork.Application;
-using CommentManagement.Application;
 using CommentManagement.Application.Contract.Comment;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -23,11 +22,12 @@ namespace WebHost.Pages
         {
             Article = _article.GetSingleArticleBy(id);
         }
-        public IActionResult OnPost(CreateCommentViewModel command,string articleSlug)
+        public IActionResult OnPost(CreateCommentViewModel command, string articleSlug)
         {
             command.Type = CommentType.Article;
-          var post=  _comment.Create(command);
-          return RedirectToPage("SingleArticle", new { id = articleSlug });
+            var post = _comment.Create(command);
+            ViewData["IsSuccess"] = true;
+            return RedirectToPage(new{id=articleSlug});
         }
 
     }

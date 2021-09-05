@@ -41,9 +41,9 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
             return course;
         }
 
-        public List<ArticleViewModel> Search(CourseSearchModel searchModel)
+        public List<CourseViewModel> Search(CourseSearchModel searchModel)
         {
-            var query = _context.Courses.Include(x=>x.CourseGroup).Select(x => new ArticleViewModel
+            var query = _context.Courses.Include(x=>x.CourseGroup).Select(x => new CourseViewModel
             {
                 Name = x.Name,
                 Picture = x.Picture,
@@ -69,9 +69,9 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
             return orderly;
         }
 
-        public List<ArticleViewModel> SelectCourses()
+        public List<CourseViewModel> SelectCourses()
         {
-            return _context.Courses.Select(x => new ArticleViewModel()
+            return _context.Courses.Select(x => new CourseViewModel()
             {
                 Name = x.Name,
                 Id = x.Id,

@@ -8,7 +8,7 @@ namespace Shop.Management.Application.Contract.Course
         OperationResult Create(CreateCourseViewModel command);
         OperationResult Edit(EditCourseViewModel command);
         EditCourseViewModel GetDetails(long id);
-        List<ArticleViewModel> Search(CourseSearchModel searchModel);
-        List<ArticleViewModel> SelectCourses();
+        List<CourseViewModel> Search(CourseSearchModel searchModel);
+        List<CourseViewModel> SelectCourses();
     }
 }

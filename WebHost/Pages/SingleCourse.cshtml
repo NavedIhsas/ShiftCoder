@@ -451,22 +451,29 @@
                         <div id="container-send-comment">
                             <p id="text-comment-write">دیدگاه خود را بنویسید ...</p>
                             <div id="inputs-comment" class="container">
+                              
                                 <div class="row">
                                     <div class="col-12 col-md-6 container-email-name">
                                         <label for="name-input" class="label-email-name-text">نام *</label>
-                                        <input type="text" id="name-input" name="name" class="col-12 input-name-email">
+                                        <input type="text" id="name-input" name="name" class="col-12 input-name-email"
+                                               required oninvalid="this.setCustomValidity('وارد کردن نام الزامی میباشد!')"
+                                               oninput="setCustomValidity('')">
                                     </div>
                                     <div class="col-12 col-md-6 container-email-name">
                                         <label for="email-input" class="label-email-name-text">ایمیل *</label>
-                                        <input type="email" id="email-input" name="email" class="col-12 input-name-email">
+                                        <input type="email" id="email-input" name="email" class="col-12 input-name-email"
+                                               required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
+                                               oninput="setCustomValidity('')">
                                     </div>
                                     <div class="col-12 container-email-name">
                                         <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
-                                        <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"></textarea>
+                                        <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"
+                                                  required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                           oninput="setCustomValidity('')"></textarea>
                                     </div>
-                                    <input type="hidden" name="ownerRecordId" value="@Model.Course.Id" />
-                                    <input type="hidden" name="productSlug" value="@Model.Course.Slug" />
-                                    <input type="hidden" name="parentId" id="commentParenId" value="" />
+                                    <input type="hidden" name="ownerRecordId" value="@Model.Course.Id"/>
+                                    <input type="hidden" name="productSlug" value="@Model.Course.Slug"/>
+                                    <input type="hidden" name="parentId" id="commentParenId" value=""/>
 
                                     <input type="submit" id="submit-comment" value="ارسال">
                                 </div>

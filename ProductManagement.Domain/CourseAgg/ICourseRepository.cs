@@ -7,7 +7,7 @@ namespace ShopManagement.Domain.CourseAgg
     public interface ICourseRepository:IRepository<long,Course>
     {
         EditCourseViewModel GetDetails(long id);
-        List<ArticleViewModel> Search(CourseSearchModel searchModel);
-        List<ArticleViewModel> SelectCourses();
+        List<CourseViewModel> Search(CourseSearchModel searchModel);
+        List<CourseViewModel> SelectCourses();
     }
 }

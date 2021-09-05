@@ -1,17 +1,14 @@
 using _0_FrameWork.Application;
 using BlogManagement.Infrastructure;
 using CommentManagement.Infrastructure;
+using DiscountManagement.Infrastructure;
 using InventoryManagement.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ShiftCoderQuery.Contract.Article;
-using ShiftCoderQuery.Query;
 using ShopManagement.Configuration;
-using ShopManagement.Infrastructure.EfCore;
 
 namespace WebHost
 {
@@ -38,6 +35,7 @@ namespace WebHost
             InventoryManagementBootstrapper.Configure(services, connectionString);
             BlogManagementBootstrapper.Configure(services, connectionString);
             CommentManagementBootstrapper.Configure(services, connectionString);
+            DiscountManagementBootstrapper.Configure(services, connectionString);
 
 
 

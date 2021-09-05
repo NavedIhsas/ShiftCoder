@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using _0_FrameWork.Application;
-using _0_FrameWork.Domain.Infrastructure;
 
 namespace Shop.Management.Application.Contract.CoursePrerequisite
 {
