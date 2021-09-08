@@ -1,0 +1,70 @@
+﻿@model AccountManagement.Application.Contract.Account.EditAccountViewModel
+@{
+    ViewData["Title"] = "ویرایش کاربر";
+}
+
+<div class="container">
+    <partial name="Shared/_Create_View_Header" />
+
+    <form asp-page="./Index" asp-page-handler="Edit"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FullName" class="control-label">نام کامل<span class="text-danger">*</span></label>
+                        <input type="text" asp-for="FullName" class="form-control">
+                        <span class="text-danger" asp-validation-for="FullName"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">ایمیل<span class="text-danger">*</span></label>
+                        <input type="email" asp-for="Email" class="form-control " required>
+                        <span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label">موبایل</label>
+                        <input type="tel" asp-for="Phone" class="form-control " required>
+                        <span class="text-danger" asp-validation-for="Phone"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Avatar" class="control-label">آواتار</label>
+                        <input type="file" asp-for="Avatar" class="form-control" accept="image">
+                        <span class="text-danger" asp-validation-for="Avatar"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="RoleId" class="control-label">انتخاب نقش...<span class="text-danger">*</span></label>
+                        <Select asp-for="RoleId" asp-Items="@(new SelectList(Model.SelectList, "Id", "Name"));" type="file" class="form-control">
+                            <option value="0">--انتخاب کنید--</option>
+                        </Select>
+                        <span class="text-danger" asp-validation-for="RoleId"></span>
+                    </div>
+                </div>
+
+              
+            </div>
+        </div>
+        <input type="hidden" asp-for="Id" value="@Model.Id"/>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+            <button type="submit" class="btn btn-info waves-effect waves-light">ویرایش</button>
+        </div>
+    </form>
+</div>

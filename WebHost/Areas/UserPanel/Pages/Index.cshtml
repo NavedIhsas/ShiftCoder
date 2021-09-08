@@ -1,0 +1,136 @@
+﻿@page
+@model WebHost.Areas.UserPanel.Pages.IndexModel
+@{
+    ViewData["Title"] = "مدریت حساب کاربری";
+}
+
+<div class="account-page">
+<div class="row">
+    <div class="col-md-3 col-sm-12 col-xs-12">
+            <!-- right side -->
+            <aside class="sidebar box-shadow">
+                <div class="headline">
+                    <div class="img-layer">
+                        <form action="/Acount/ChangeAvatar" enctype="multipart/form-data" id="form" method="post">
+                            <a href="javascript:void(0)" class="change-image">
+                                <input type="file" id="upImgAvatar" name="avatar" class="ProfileAvatarInput">
+                                <i class="zmdi zmdi-edit"></i>
+                            </a>
+                            <img id="imgAvatar" class="imgAvatar" src="https://www.gravatar.com/avatar/eb4157f5a95ea356e94656f68dd0a3cd?s=185&amp;d=identicon&amp;r;=PG">
+                            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8P23wt0jyNtGrHO_3AuPEH6EzEdOMGE59OvQ94j4y4aY8f1xIfSA49mfrBCrMVTsbkXTDjVGNZHkeptN-JLD9XMNnGBGxk8hW9i0WBYXCV5nyhwFmJ6D8p_mYlOIZOKb2Fmcc0qWZ_GtZRfOxl8vop5oVaFuM-htbwyKhTRWKU2fr7cw8ui59pLBJGSvyrpSfg">
+                        </form>
+                    </div>
+                    <h1> Mahdimaroufi </h1>
+                    <a data-toggle="tooltip" data-placement="right" title="" class="exit-link" href="/logOut" data-original-title=" خروج از حساب "><i class="zmdi zmdi-power"></i></a>
+                </div>
+
+                <section class="access-menu">
+                    <ul>
+                        <li><a href="/Acount/DashBoard">داشبورد  </a></li>
+                        <li><a href="/Acount/EditProfile"> ویرایش حساب کاربری </a></li>
+                        <li><a href="/Acount/EditAccountSetting"> ویرایش تنظیمات حساب کاربری </a></li>
+                    </ul>
+                </section>
+            </aside>
+
+            <!-- /right side -->
+        </div>
+
+        <!-- left side -->
+        <div class="col-md-9 col-sm-12 col-xs-12">
+            <div class="left-content">
+
+                <section class="section-style box-shadow">
+                    <header><h2>اکانت اعضای ویژه سایت </h2></header>
+                    <div class="inner">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-warning">
+                                    درحال حاضر شما عضو ویژه سایت نمی باشید ! درصورت تمایل برای استفاده از امکانات اعضای ویژه باید اشتراک خریداری نمایید
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <a class="button-st green pull-left" href="/Acount/VIP/BecomeVip"> همین الانـ عضو ویژه شو </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                <section class="section-style box-shadow">
+                    <header><h2> اطلاعات حساب کاربری </h2></header>
+                    <div class="inner">
+
+                        <form action="" method="" class="form-style">
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="input-layer">
+                                        <label><i class="zmdi zmdi-account"></i>  نام و نام خانوادگی یا نام کاربری : Mahdimaroufi </label>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="input-layer">
+                                        <label><i class="zmdi zmdi-globe-alt"></i>  آدرس وبسایت : </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="input-layer">
+                                        <label><i class="zmdi zmdi-phone-in-talk"></i>  شماره تماس : 09164872022</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <!-- input -->
+                                    <div class="input-layer">
+                                        <label><i class="zmdi zmdi-email"></i>  ایمیل : mahdimaroufi.it@gmail.com</label>
+                                    </div>
+                                    <!--/ input -->
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <!-- textarea -->
+                                    <div class="textarea-layer">
+                                        <label><i class="zmdi zmdi-assignment"></i>  بیوگرافی </label>
+
+                                    </div>
+                                    <!-- /textarea -->
+                                </div>
+                            </div>
+                            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8P23wt0jyNtGrHO_3AuPEH6EzEdOMGE59OvQ94j4y4aY8f1xIfSA49mfrBCrMVTsbkXTDjVGNZHkeptN-JLD9XMNnGBGxk8hW9i0WBYXCV5nyhwFmJ6D8p_mYlOIZOKb2Fmcc0qWZ_GtZRfOxl8vop5oVaFuM-htbwyKhTRWKU2fr7cw8ui59pLBJGSvyrpSfg">
+                        </form>
+                    </div>
+                </section>
+
+
+
+
+
+
+
+
+                <section class="section-style box-shadow">
+                    <header><h2> دوره های مورد علاقه شما </h2></header>
+                    <div class="inner">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </section>
+
+
+
+            </div>
+        </div>
+        <!-- /left side -->
+
+    </div>
+
+</div>

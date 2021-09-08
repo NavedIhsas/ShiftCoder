@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AccountManagement.Infrastructure\AccountManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\BlogManagement.Infrastructure\BlogManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\CommentManagement.Infrastructure\CommentManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\CommnetManagement.Application.Contract\CommentManagement.Application.Contract.csproj" />

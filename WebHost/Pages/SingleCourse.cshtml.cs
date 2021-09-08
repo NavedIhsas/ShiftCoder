@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CommentManagement.Application.Contract.Comment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShiftCoderQuery.Contract.Comment;
@@ -8,6 +9,7 @@ using ShiftCoderQuery.Query;
 
 namespace WebHost.Pages
 {
+    [Authorize]
     public class SingleCourseModel : PageModel
     {
         private readonly ICourseQuery _course;

@@ -15,14 +15,16 @@
                 <img src="~/icons/search.png" alt="search" id="search-img-header">
             </button>
         </form>
-        <div class="col-6" id="container-signin-login">
-            <a class="white" href="/Register" id="anchor-btn-signin">
-                <p><span class="bg"></span><span class="base"></span><span class="text">ثبت نام</span></p>
-            </a>
-            <a class="white" href="/Login" id="anchor-btn-signin">
-                <p><span class="bg"></span><span class="base"></span><span class="text">ورود</span></p>
-            </a>
-        </div>
+    
+           <div class="col-6" id="container-signin-login">
+               <a asp-page="Register" class="white"  id="anchor-btn-signin">
+                   <p><span class="bg"></span><span class="base"></span><span class="text">ثبت نام</span></p>
+               </a>
+               <a asp-page="Login" class="white" id="anchor-btn-signin">
+                   <p><span class="bg"></span><span class="base"></span><span class="text">ورود</span></p>
+               </a>
+           </div>
+     
         <div id="container-meta-section">
             <div class="meta-section-header">
                 <img src="~/icons/student.png" alt="Student" class="img-meta-section">

@@ -1,0 +1,44 @@
+﻿
+@model AccountManagement.Application.Contract.Role.CreateRoleViewModel
+@{
+    ViewData["Title"] = "ایجاد کابر جدید";
+
+}
+
+<div class="container">
+    <partial name="Shared/_Create_View_Header" />
+
+    <form asp-page="./Index" asp-page-handler="Create"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">عنوان نقش<span class="text-danger">*</span></label>
+                        <input type="text" asp-for="Name" class="form-control" >
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+            <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

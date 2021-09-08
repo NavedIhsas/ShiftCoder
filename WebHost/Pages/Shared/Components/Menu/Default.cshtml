@@ -56,7 +56,7 @@
                                                             @foreach (var sub2 in Model.Where(x => x.SubGroupId == sub.Id))
                                                             {
                                                                 <li class="li-item-megamenu my-2">
-                                                                    <a href="#"
+                                                                    <a asp-page="Courses" asp-route-SearchModel.Name="@sub2.Title"
                                                                        class="text-white">@sub2.Title</a>
                                                                 </li>
                                                             }

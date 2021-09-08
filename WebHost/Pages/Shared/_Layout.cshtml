@@ -78,87 +78,89 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         @await Component.InvokeAsync("Menu")
+                       
+                            <li class="nav-item dropdown list-style-li-header" id="setting-list-item-header">
+                                <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="span-profile">
+                                        <img src="~/icons/settings.png" alt="settings" width="28">
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
+                                    <li>
+                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                            <img src="~/icons/settings-3.png" alt="settings" class="icons-img-header">
+                                            تنظیمات حساب
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                            <img src="~/icons/edit.png" alt="send article" class="icons-img-header">
+                                            ارسال مطالب
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                            <img src="~/icons/conversation.png" alt="comments" class="icons-img-header">
+                                            نظرات
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                            <img src="~/icons/notification.png" alt="notification" class="icons-img-header">
+                                            اعلان ها
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" href="#">
+                                            <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
+                                            تنظیمات بیشتر
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown list-style-li-header">
+                                <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/images/logo-icon-150px-shiftcoder.png" alt="پروفایل" id="profile-header">
+                                    <span id="span-profile">پروفایل</span>
+                                </a>
+                                <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
+                                    <li>
+                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                            <img src="~/icons/control-panel.png" alt="control panel" class="icons-img-header">
+                                            پنل مدیریت
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                            <img src="~/icons/profile.png" alt="profile" class="icons-img-header">
+                                            دوره های شما
+                                        </a>
+                                    </li>
+                                    <li>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                            <img src="~/icons/invoice.png" alt="invoice" class="icons-img-header">
+                                            ارسال تیکت
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a asp-page="Login" asp-page-handler="Logout" class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown">
+                                            <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
+                                            خروج از سایت
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
 
-                        <li class="nav-item dropdown list-style-li-header" id="setting-list-item-header">
-                            <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span id="span-profile">
-                                    <img src="~/icons/settings.png" alt="settings" width="28">
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
-                                <li>
-                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                        <img src="~/icons/settings-3.png" alt="settings" class="icons-img-header">
-                                        تنظیمات حساب
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                        <img src="~/icons/edit.png" alt="send article" class="icons-img-header">
-                                        ارسال مطالب
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                        <img src="~/icons/conversation.png" alt="comments" class="icons-img-header">
-                                        نظرات
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                        <img src="~/icons/notification.png" alt="notification" class="icons-img-header">
-                                        اعلان ها
-                                    </a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" href="#">
-                                        <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
-                                        تنظیمات بیشتر
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown list-style-li-header">
-                            <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="~/images/logo-icon-150px-shiftcoder.png" alt="پروفایل" id="profile-header">
-                                <span id="span-profile">پروفایل</span>
-                            </a>
-                            <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
-                                <li>
-                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                        <img src="~/icons/control-panel.png" alt="control panel" class="icons-img-header">
-                                        پنل مدیریت
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                        <img src="~/icons/profile.png" alt="profile" class="icons-img-header">
-                                        دوره های شما
-                                    </a>
-                                </li>
-                                <li>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                        <img src="~/icons/invoice.png" alt="invoice" class="icons-img-header">
-                                        ارسال تیکت
-                                    </a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" href="/login">
-                                        <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
-                                        خروج از سایت
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
+                     
+                       
                     </div>
                 </div>
             </nav>
