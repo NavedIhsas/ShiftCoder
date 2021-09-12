@@ -12,6 +12,7 @@
     <ProjectReference Include="..\DiscountManagement.Application\DiscountManagement.Application.csproj" />
     <ProjectReference Include="..\DiscountManagement.Domain\DiscountManagement.Domain.csproj" />
     <ProjectReference Include="..\DiscountManagementInfrastructure.EfCore\DiscountManagementInfrastructure.EfCore.csproj" />
+    <ProjectReference Include="..\ShiftCoderQuery\ShiftCoderQuery.csproj" />
   </ItemGroup>
 
 </Project>

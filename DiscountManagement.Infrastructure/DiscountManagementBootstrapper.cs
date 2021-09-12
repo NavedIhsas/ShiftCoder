@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using DiscountManagement.Domain.ColleagueDiscountAgg;
 using DiscountManagement.Application;
 using ColleagueDiscountManagementApplication.Contract.CustomerDiscount;
+using ColleagueDiscountManagementApplication.Contract.DiscountCode;
+using DiscountManagement.Domain.DiscountCode;
+using ShiftCoderQuery.Contract.Discount;
+using ShiftCoderQuery.Query;
 
 namespace DiscountManagement.Infrastructure
 {
@@ -20,6 +24,11 @@ namespace DiscountManagement.Infrastructure
 
             services.AddTransient<IColleagueRepository, ColleagueRepository>();
             services.AddTransient<IColleagueApplication, ColleagueApplication>();
+
+            services.AddTransient<IDiscountCodeApplication, DiscountCodeApplication>();
+            services.AddTransient<IDiscountCodeRepository, DiscountCodeRepository>();
+
+            services.AddTransient<IDiscountQuery, DiscountQuery>();
 
             services.AddDbContext<DiscountContext>(option =>
             {

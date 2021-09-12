@@ -1,8 +1,16 @@
 ﻿@page "{id}"
 @using _0_Framework.Application
+@using ShiftCoderQuery.Contract.Course
 @model WebHost.Pages.SingleCourseModel
+@inject ICourseQuery _course;
 @{
     ViewData["Title"] = Model.Course.Name;
+
+    var userInCourse = false;
+    if (User.Identity.IsAuthenticated)
+        userInCourse = _course.UserInCourse(User.Identity.Name, Model.Course.Id);
+   
+
 }
 
 
@@ -36,7 +44,7 @@
                                 <p class="paragraph-info-aside">مدرس :</p>
                             </div>
                             <div class="container-title-line-aside">
-                                <h2 class="value-info-aside">ماهان فروزنده نیک</h2>
+                                <h2 class="value-info-aside">@Model.Course.TeacherName</h2>
                             </div>
                         </div>
                         <div class="container-info-aside">
@@ -45,7 +53,7 @@
                                 <p class="paragraph-info-aside">تعداد دانشجویان :</p>
                             </div>
                             <div class="container-title-line-aside">
-                                <h5 class="value-info-aside">817 نفر</h5>
+                                <h5 class="value-info-aside">@Model.Course.UserCourse.Count نفر</h5>
                             </div>
                         </div>
                         <div class="container-info-aside">
@@ -105,10 +113,29 @@
                             </div>
                         </div>
                         <div id="container-register-course">
-                            <button id="btn-register-course">
+                            @if (Model.Course.Price > 0 && !userInCourse)
+                            {
+                            <a asp-page="BuyCourse" asp-route-id="@Model.Course.Id" id="btn-register-course">
                                 <i class="fas fa-shopping-basket icon-register"></i>
-                                <span id="span-text-register">ثبت نام رایگان در دوره</span>
-                            </button>
+                                <span id="span-text-register">شرکت در دوره @Model.Course.Price.ToMoney() تومان</span>
+                            </a>
+                            }
+                            
+                           else if (userInCourse)
+                            {
+                                <a id="btn-register-course">
+                                    <i class="fas fa-shopping-basket icon-register"></i>
+                                    <span id="span-text-register">شما قبلا این دوره را خریده اید.</span>
+                                </a>
+                            }
+                            
+                            else
+                            {
+                                <a asp-page="BuyCourse" asp-route-id="@Model.Course.Id" id="btn-register-course">
+                                    <i class="fas fa-shopping-basket icon-register"></i>
+                                    <span id="span-text-register">شرکت رایگان در دوره.</span>
+                                </a>
+                            }
                         </div>
                     </div>
                     <div class="condition-course condition-course-mb">
@@ -120,7 +147,7 @@
                             <div id="line-y-aside"></div>
                             <div id="comment-aside">
                                 <i class="fa fa-comments icon-view-comment-number"></i>
-                                <p class="paragraph-view-comment-number">@Model.Course.CommentCount کامنت</p>
+                                <p class="paragraph-view-comment-number">@Model.Course.CommentList.Count کامنت</p>
                             </div>
                         </div>
                         <div id="container-share-media">
@@ -144,10 +171,10 @@
                     <div class="condition-course condition-course-mb">
                         <div id="container-profile-teacher">
                             <div id="container-img-name-job-teacher">
-                                <img src="~/images/profile-1.jpg" alt="Photo Teacher" id="img-info-teacher">
+                                <img src="~/FileUploader/@Model.Course.Picture" alt="profile picture" id="img-info-teacher">
                                 <div id="container-name-job-teacher">
-                                    <h2 id="name-info-teacher">ماهان فروزنده نیک</h2>
-                                    <h4 id="job-info-teacher">برنامه نویس و طراح کرافیک</h4>
+                                    <h2 id="name-info-teacher">@Model.Course.TeacherName</h2>
+                                    <h4 id="job-info-teacher">@Model.Course.TeacherSkills</h4>
                                 </div>
                             </div>
                             <div id="container-profile-job">
@@ -160,29 +187,20 @@
                                 <div class="line-info-aside"></div>
                                 <p class="title-info-teacher">درباره مدرس</p>
                             </div>
-                            <p class="paragraph-info-teacher">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است ...</p>
-                        </div>
+                            <p class="paragraph-info-teacher">@Model.Course.TeacherBio
                         <div class="container-info-teacher">
                             <div class="container-line-info-line margin-container-line-info-line">
                                 <div class="line-info-aside"></div>
                                 <p class="title-info-teacher">دوره های مدرس</p>
                             </div>
                             <ul id="ul-courses-teacher">
-                                <li class="listitem-courses-teacher">
-                                    <a href="#" class="anchor-courses-teacher">آموزش رایگان GitLab , GitHub , Git</a>
-                                </li>
-                                <li class="listitem-courses-teacher">
-                                    <a href="#" class="anchor-courses-teacher">دوره آموزشی رایگان Dreamweaver</a>
-                                </li>
-                                <li class="listitem-courses-teacher">
-                                    <a href="#" class="anchor-courses-teacher">دوره آموزشی رایگان Photoshop</a>
-                                </li>
-                                <li class="listitem-courses-teacher">
-                                    <a href="#" class="anchor-courses-teacher">آموزش رایگان Less پروژه محور</a>
-                                </li>
-                                <li class="listitem-courses-teacher">
-                                    <a href="#" class="anchor-courses-teacher">دوره آموزشی رایگان VS Code</a>
-                                </li>
+                                @foreach (var item in Model.Course.CourseTeacher)
+                                {
+                                    <li class="listitem-courses-teacher">
+                                        <a  asp-page="SingleCourse" asp-route-id="@item.Slug" class="anchor-courses-teacher">@item.Name</a>
+                                    </li>
+                                }
+
                             </ul>
                         </div>
                     </div>
@@ -206,6 +224,7 @@
                                 دایرکت اینستاگرام <strong class="bold-text-support">shiftcoder</strong>
                             </p>
                         </div>
+                    </div>
                     </div>
                 </aside>
 
@@ -270,6 +289,11 @@
                                         </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
+                                                @if (!userInCourse)
+                                                {
+                                                    <p class=" text-success mt-2 text-center"><b>بعد از ثبت نام در دوره و تایید فاکتور،  لینک های دانلود برای شما فعال خواهد شد</b></p>
+                                                    <hr />
+                                                }
                                                 @foreach (var episode in Model.Course.EpisodeCourse)
                                                 {
                                                     <div class="container-Section">
@@ -278,10 +302,43 @@
                                                             <h4 class="title-section">@episode.Title</h4>
                                                             <div class="line-section"></div>
                                                             <p class="video-time">@episode.Time</p>
+                                                            <div class="line-section"></div>
+                                                         
+                                                              @if (!userInCourse)
+                                                              {
+                                                                  @if (episode.IsFree)
+                                                                  {
+                                                                      <a class="text-success">رایگان</a>
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                      <p class="text-info">نقدی</p>
+
+                                                                  }
+                                                              }
+
                                                         </div>
                                                         <div class="container-left-section">
-                                                            <a href="#"><i class="fas fa-play icon-left-section"></i></a>
-                                                            <a href="#"><i class="fas fa-download icon-left-section"></i></a>
+
+                                                            @if (!userInCourse)
+                                                            {
+                                                                @if (episode.IsFree)
+                                                                {
+                                                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a ><i class="fas fa-play icon-left-section"></i></a>
+                                                                    <a ><i class="fas fa-download icon-left-section"></i></a>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                                <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                            }
+                                                           
                                                         </div>
                                                     </div>
                                                 }
@@ -329,6 +386,11 @@
                                         </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
+                                                @if (!userInCourse)
+                                                {
+                                                    <p class=" text-success mt-2 text-center"><b>بعد از ثبت نام در دوره و تایید فاکتور،  لینک های دانلود برای شما فعال خواهد شد</b></p>
+                                                    <hr />
+                                                }
                                                 @foreach (var episode in Model.Course.EpisodeCourse)
                                                 {
                                                     <div class="container-Section">
@@ -337,10 +399,43 @@
                                                             <h4 class="title-section">@episode.Title</h4>
                                                             <div class="line-section"></div>
                                                             <p class="video-time">@episode.Time</p>
+                                                            <div class="line-section"></div>
+
+                                                            @if (!userInCourse)
+                                                            {
+                                                                @if (episode.IsFree)
+                                                                {
+                                                                    <a class="text-success">رایگان</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p class="text-info">نقدی</p>
+
+                                                                }
+                                                            }
+
                                                         </div>
                                                         <div class="container-left-section">
-                                                            <a href="#"><i class="fas fa-play icon-left-section"></i></a>
-                                                            <a href="#"><i class="fas fa-download icon-left-section"></i></a>
+
+                                                            @if (!userInCourse)
+                                                            {
+                                                                @if (episode.IsFree)
+                                                                {
+                                                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a><i class="fas fa-play icon-left-section"></i></a>
+                                                                    <a><i class="fas fa-download icon-left-section"></i></a>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                                <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                            }
+
                                                         </div>
                                                     </div>
                                                 }
@@ -364,6 +459,11 @@
                                         </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
+                                                @if (!userInCourse)
+                                                {
+                                                    <p class=" text-success mt-2 text-center"><b>بعد از ثبت نام در دوره و تایید فاکتور،  لینک های دانلود برای شما فعال خواهد شد</b></p>
+                                                    <hr />
+                                                }
                                                 @foreach (var episode in Model.Course.EpisodeCourse)
                                                 {
                                                     <div class="container-Section">
@@ -372,10 +472,43 @@
                                                             <h4 class="title-section">@episode.Title</h4>
                                                             <div class="line-section"></div>
                                                             <p class="video-time">@episode.Time</p>
+                                                            <div class="line-section"></div>
+
+                                                            @if (!userInCourse)
+                                                            {
+                                                                @if (episode.IsFree)
+                                                                {
+                                                                    <a class="text-success">رایگان</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p class="text-info">نقدی</p>
+
+                                                                }
+                                                            }
+
                                                         </div>
                                                         <div class="container-left-section">
-                                                            <a href="#"><i class="fas fa-play icon-left-section"></i></a>
-                                                            <a href="#"><i class="fas fa-download icon-left-section"></i></a>
+
+                                                            @if (!userInCourse)
+                                                            {
+                                                                @if (episode.IsFree)
+                                                                {
+                                                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a><i class="fas fa-play icon-left-section"></i></a>
+                                                                    <a><i class="fas fa-download icon-left-section"></i></a>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                                <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                            }
+
                                                         </div>
                                                     </div>
                                                 }
@@ -412,6 +545,11 @@
                                         </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
+                                                @if (!userInCourse)
+                                                {
+                                                    <p class=" text-success mt-2 text-center"><b>بعد از ثبت نام در دوره و تایید فاکتور،  لینک های دانلود برای شما فعال خواهد شد</b></p>
+                                                    <hr />
+                                                }
                                                 @foreach (var episode in Model.Course.EpisodeCourse)
                                                 {
                                                     <div class="container-Section">
@@ -420,10 +558,43 @@
                                                             <h4 class="title-section">@episode.Title</h4>
                                                             <div class="line-section"></div>
                                                             <p class="video-time">@episode.Time</p>
+                                                            <div class="line-section"></div>
+
+                                                            @if (!userInCourse)
+                                                            {
+                                                                @if (episode.IsFree)
+                                                                {
+                                                                    <a class="text-success">رایگان</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p class="text-info">نقدی</p>
+
+                                                                }
+                                                            }
+
                                                         </div>
                                                         <div class="container-left-section">
-                                                            <a href="#"><i class="fas fa-play icon-left-section"></i></a>
-                                                            <a href="#"><i class="fas fa-download icon-left-section"></i></a>
+
+                                                            @if (!userInCourse)
+                                                            {
+                                                                @if (episode.IsFree)
+                                                                {
+                                                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a><i class="fas fa-play icon-left-section"></i></a>
+                                                                    <a><i class="fas fa-download icon-left-section"></i></a>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                                <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                            }
+
                                                         </div>
                                                     </div>
                                                 }
@@ -444,7 +615,7 @@
                         <h5>
                             <i class="fas fa-comments-alt icon-comment"></i>
                             نظرات دوره
-                            <small id="number-all-comment">(@Model.Course.CommentCount)</small>
+                            <small id="number-all-comment">(@Model.Course.CommentList.Count)</small>
                         </h5>
                     </div>
                     <form method="post" id="formPost">

@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ShiftCoderQuery.Contract.Comment;
+﻿using System.Collections.Generic;
+using ShopManagement.Domain.CourseEpisodeAgg;
 
 namespace ShiftCoderQuery.Contract.Course
 {
     public interface ICourseQuery
     {
-        List<CourseQueryModel> GetAllCourse(CourseQuerySearchModel searchQuery, List<long> groupId);
-        List<CourseQueryModel> LatestCourses();
+        List<GetAllCourseQueryModel> GetAllCourse(CourseQuerySearchModel searchQuery, List<long> groupId);
+        List<GetAllCourseQueryModel> LatestCourses();
+        List<GetAllCourseQueryModel> PopularCourses();
         CourseQueryModel GetCourseBySlug(string slug);
+
+        bool UserInCourse(string email, long courseId);
+
+        CourseEpisode GetEpisodeFile(long episodeId);
 
 
     }

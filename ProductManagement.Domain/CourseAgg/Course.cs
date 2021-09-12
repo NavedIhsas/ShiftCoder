@@ -8,6 +8,9 @@ using ShopManagement.Domain.CourseLevelAgg;
 using ShopManagement.Domain.CoursePrerequisiteAgg;
 using ShopManagement.Domain.CourseStatusAgg;
 using ShopManagement.Domain.CourseSuitableAgg;
+using ShopManagement.Domain.OrderAgg;
+using ShopManagement.Domain.OrderDetailAgg;
+using ShopManagement.Domain.UserCoursesAgg;
 
 namespace ShopManagement.Domain.CourseAgg
 {
@@ -30,23 +33,28 @@ namespace ShopManagement.Domain.CourseAgg
         public long CourseGroupId { get; private set; }
         public long CourseLevelId { get; private set; }
         public long CourseStatusId { get; private set; }
-       
+        public long TeacherId { get;private set; }
+
         public CourseGroup CourseGroup { get; private set; }
+        public List<OrderDetail> OrderDetails { get; private set; }
         public CourseLevel CourseLevel { get; private set; }
         public CourseStatus CourseStatus { get; private set; }
         public List<CoursePrerequisite> CoursePrerequisites { get; private set; }
         public List<CourseSuitable> CourseSuitableList { get; private set; }
         public List<AfterTheCourse> AfterTheCourses { get; private set; }
-        public List<CourseEpisode> CourseEpisodes { get; set; }
+        public List<CourseEpisode> CourseEpisodes { get;private set; }
+        public List<UserCourse> UserCourses { get; set; }
 
-        public Course(string name, string description, string shortDescription, string file, double price, string picture, string pictureAlt, string pictureTitle, string keyWords, string metaDescription, string slug, string code, long courseGroupId, long courseLevelId, long courseStatusId, string demoVideoPoster)
+        public Course(string name, string description, string shortDescription, string file, double price, string picture, string pictureAlt, string pictureTitle, string keyWords, string metaDescription, string slug, string code, long courseGroupId, long courseLevelId, long courseStatusId, string demoVideoPoster, long teacherId)
         {
             Name = name;
             Description = description;
             ShortDescription = shortDescription;
-            File = file;
+            if(!string.IsNullOrWhiteSpace(file))
+                File = file;
             Price = price;
-            Picture = picture;
+            if(!string.IsNullOrWhiteSpace(picture))
+               Picture = picture;
             PictureAlt = pictureAlt;
             PictureTitle = pictureTitle;
             KeyWords = keyWords;
@@ -56,16 +64,19 @@ namespace ShopManagement.Domain.CourseAgg
             CourseGroupId = courseGroupId;
             CourseLevelId = courseLevelId;
             CourseStatusId = courseStatusId;
-            DemoVideoPoster = demoVideoPoster;
+            if(!string.IsNullOrWhiteSpace(demoVideoPoster))
+              DemoVideoPoster = demoVideoPoster;
+            TeacherId = teacherId;
             UpdateDate = null;
         }
 
-        public Course(string demoVideoPoster)
+        public Course(string demoVideoPoster, long teacherId)
         {
             DemoVideoPoster = demoVideoPoster;
+            TeacherId = teacherId;
         }
        
-        public void Edit(string name, string description, string shortDescription, string file, double price, string picture, string pictureAlt, string pictureTitle, string keyWords, string metaDescription, string slug, string code, long courseGroupId, long courseLevelId, long courseStatusId, string demoVideoPoster)
+        public void Edit(string name, string description, string shortDescription, string file, double price, string picture, string pictureAlt, string pictureTitle, string keyWords, string metaDescription, string slug, string code, long courseGroupId, long courseLevelId, long courseStatusId, string demoVideoPoster,long teacherId)
         {
             Name = name;
             Description = description;
@@ -90,6 +101,7 @@ namespace ShopManagement.Domain.CourseAgg
             if (!string.IsNullOrWhiteSpace(picture))
                 DemoVideoPoster = demoVideoPoster;
             UpdateDate=DateTime.Now;
+            TeacherId = teacherId;
         }
     }
 }

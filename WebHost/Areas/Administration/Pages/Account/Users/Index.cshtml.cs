@@ -44,18 +44,6 @@ namespace WebHost.Areas.Administration.Pages.Account.Users
         }
 
 
-        public IActionResult OnGetEdit(long id)
-        {
-            var getDetails = _application.GetDetails(id);
-            getDetails.SelectList = _role.GetAll();
-            return Partial("./Edit", getDetails);
-        }
-        public JsonResult OnPostEdit(EditAccountViewModel command)
-        {
-            var edit = _application.Edit(command);
-            return new JsonResult(edit);
-        }
-
         public IActionResult OnGetChangePassword(long id)
         {
             var password = new ChangePasswordViewModel()

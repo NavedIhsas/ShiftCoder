@@ -1,136 +1,97 @@
 ﻿@page
+@using _0_Framework.Application
 @model WebHost.Areas.UserPanel.Pages.IndexModel
 @{
     ViewData["Title"] = "مدریت حساب کاربری";
 }
-
-<div class="account-page">
-<div class="row">
-    <div class="col-md-3 col-sm-12 col-xs-12">
-            <!-- right side -->
-            <aside class="sidebar box-shadow">
-                <div class="headline">
-                    <div class="img-layer">
-                        <form action="/Acount/ChangeAvatar" enctype="multipart/form-data" id="form" method="post">
-                            <a href="javascript:void(0)" class="change-image">
-                                <input type="file" id="upImgAvatar" name="avatar" class="ProfileAvatarInput">
-                                <i class="zmdi zmdi-edit"></i>
-                            </a>
-                            <img id="imgAvatar" class="imgAvatar" src="https://www.gravatar.com/avatar/eb4157f5a95ea356e94656f68dd0a3cd?s=185&amp;d=identicon&amp;r;=PG">
-                            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8P23wt0jyNtGrHO_3AuPEH6EzEdOMGE59OvQ94j4y4aY8f1xIfSA49mfrBCrMVTsbkXTDjVGNZHkeptN-JLD9XMNnGBGxk8hW9i0WBYXCV5nyhwFmJ6D8p_mYlOIZOKb2Fmcc0qWZ_GtZRfOxl8vop5oVaFuM-htbwyKhTRWKU2fr7cw8ui59pLBJGSvyrpSfg">
-                        </form>
-                    </div>
-                    <h1> Mahdimaroufi </h1>
-                    <a data-toggle="tooltip" data-placement="right" title="" class="exit-link" href="/logOut" data-original-title=" خروج از حساب "><i class="zmdi zmdi-power"></i></a>
-                </div>
-
-                <section class="access-menu">
-                    <ul>
-                        <li><a href="/Acount/DashBoard">داشبورد  </a></li>
-                        <li><a href="/Acount/EditProfile"> ویرایش حساب کاربری </a></li>
-                        <li><a href="/Acount/EditAccountSetting"> ویرایش تنظیمات حساب کاربری </a></li>
-                    </ul>
-                </section>
-            </aside>
-
-            <!-- /right side -->
-        </div>
-
-        <!-- left side -->
-        <div class="col-md-9 col-sm-12 col-xs-12">
-            <div class="left-content">
-
-                <section class="section-style box-shadow">
-                    <header><h2>اکانت اعضای ویژه سایت </h2></header>
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="alert alert-warning">
-                                    درحال حاضر شما عضو ویژه سایت نمی باشید ! درصورت تمایل برای استفاده از امکانات اعضای ویژه باید اشتراک خریداری نمایید
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <a class="button-st green pull-left" href="/Acount/VIP/BecomeVip"> همین الانـ عضو ویژه شو </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </section>
-                <section class="section-style box-shadow">
-                    <header><h2> اطلاعات حساب کاربری </h2></header>
-                    <div class="inner">
-
-                        <form action="" method="" class="form-style">
-
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12 col-xs-12">
-                                    <div class="input-layer">
-                                        <label><i class="zmdi zmdi-account"></i>  نام و نام خانوادگی یا نام کاربری : Mahdimaroufi </label>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-12 col-xs-12">
-                                    <div class="input-layer">
-                                        <label><i class="zmdi zmdi-globe-alt"></i>  آدرس وبسایت : </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-12 col-xs-12">
-                                    <div class="input-layer">
-                                        <label><i class="zmdi zmdi-phone-in-talk"></i>  شماره تماس : 09164872022</label>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12">
-                                    <!-- input -->
-                                    <div class="input-layer">
-                                        <label><i class="zmdi zmdi-email"></i>  ایمیل : mahdimaroufi.it@gmail.com</label>
-                                    </div>
-                                    <!--/ input -->
-                                </div>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <!-- textarea -->
-                                    <div class="textarea-layer">
-                                        <label><i class="zmdi zmdi-assignment"></i>  بیوگرافی </label>
-
-                                    </div>
-                                    <!-- /textarea -->
-                                </div>
-                            </div>
-                            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8P23wt0jyNtGrHO_3AuPEH6EzEdOMGE59OvQ94j4y4aY8f1xIfSA49mfrBCrMVTsbkXTDjVGNZHkeptN-JLD9XMNnGBGxk8hW9i0WBYXCV5nyhwFmJ6D8p_mYlOIZOKb2Fmcc0qWZ_GtZRfOxl8vop5oVaFuM-htbwyKhTRWKU2fr7cw8ui59pLBJGSvyrpSfg">
-                        </form>
-                    </div>
-                </section>
-
-
-
-
-
-
-
-
-                <section class="section-style box-shadow">
-                    <header><h2> دوره های مورد علاقه شما </h2></header>
-                    <div class="inner">
-
-                        <div class="row">
-
-                            <div class="col-md-12">
-                            </div>
-
-
-                        </div>
-
-                    </div>
-                </section>
-
-
-
+<link href="~/style/style-userPanel.css" rel="stylesheet" />
+<main id="main-container" class="container">
+    <div class="row">
+        <header>
+            <div>
+                <h1 id="head-title">
+                    مدیریت حساب کاربری
+                </h1>
+                <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-page="Index">خانه</a></li>
+                        <li class="breadcrumb-item"><a asp-page="Articles">مقالات</a></li>
+                    </ol>
+                </nav>
             </div>
-        </div>
-        <!-- /left side -->
+        </header>
+        <section id="body-container" class="container" >
+            <div class="row">
+                <partial name="Shared/_Left-bar-menu" />
+                <section id="content-container"  class="col-12 col-lg-8 ">
+                    <div id="container-body">
+                     
+                    </div>
+                    <div class="container-info-aside price-course ">
+                        <h3 id="text-price">اطلاعات مقاله</h3>
+                    </div>
+                    <div class="line-aside"></div>
 
+                    <div class="col col-md-12">
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <div class="container-info-user">
+                                    <div class="container-title-line-aside">
+                                        <i class="fas fa-user-alt icon-title-aside icon-title-aside-mr"></i>
+                                        <p class="paragraph-info-aside">نام و نام خانوادگی :</p>
+                                    </div>
+                                    <div class="container-title-line-aside">
+                                        <h2 class="value-info-aside">@Model.AccountList.FullName</h2>
+                                    </div>
+                                </div>
+                                <div class="container-info-user">
+                                    <div class="container-title-line-aside">
+                                        <i class="fa fa-phone-alt  icon-title-aside"></i>
+                                        <p class="paragraph-info-aside">موبایل :</p>
+                                    </div>
+                                    <div class="container-title-line-aside">
+                                        <h5 class="value-info-aside">@Model.AccountList.Phone</h5>
+                                    </div>
+                                </div>
+                                <div class="container-info-user">
+                                    <div class="container-title-line-aside">
+                                        <i class="fa fa-envelope icon-title-aside"></i>
+                                        <p class="paragraph-info-aside">ایمیل :</p>
+                                    </div>
+                                    <div class="container-title-line-aside">
+                                        <h5 class="value-info-aside">@Model.AccountList.Email</h5>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col col-md-6">
+
+                                <div class="container-info-user">
+                                    <div class="container-title-line-aside">
+                                        <i class="fas fa-times-circle icon-title-aside icon-title-aside-mr"></i>
+                                        <p class="paragraph-info-aside">تاریخ ثبت نام :</p>
+                                    </div>
+                                    <div class="container-title-line-aside">
+                                        <h2 class="value-info-aside">@Model.AccountList.CreationDate.ToFarsi()</h2>
+                                    </div>
+                                </div>
+                                <div class="container-info-user">
+                                    <div class="container-title-line-aside">
+                                        <i class="fas fa-wallet icon-title-aside icon-title-aside-mr"></i>
+                                        <p class="paragraph-info-aside">موجودی کیف پول :</p>
+                                    </div>
+                                    <div class="container-title-line-aside">
+                                        <h2 class="value-info-aside">120,000 تومان</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 <br/>
+                </section>
+                <aside class="col-12 col-lg-4"></aside>
+            </div>
+        </section>
     </div>
-
-</div>
+</main>

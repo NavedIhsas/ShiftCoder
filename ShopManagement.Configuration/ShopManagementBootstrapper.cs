@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections.Specialized;
+using Microsoft.Extensions.DependencyInjection;
 using Shop.Management.Application.Contract.CourseGroup;
 using ShopManagement.Application;
 using ShopManagement.Infrastructure.EfCore.Repository;
@@ -18,10 +19,13 @@ using Shop.Management.Application.Contract.AfterCourse;
 using Shop.Management.Application.Contract.CourseEpisode;
 using Shop.Management.Application.Contract.CoursePrerequisite;
 using Shop.Management.Application.Contract.CourseSuitable;
+using Shop.Management.Application.Contract.Order;
 using ShopManagement.Domain.AfterTheCourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.CoursePrerequisiteAgg;
 using ShopManagement.Domain.CourseSuitableAgg;
+using ShopManagement.Domain.OrderAgg;
+using ShopManagement.Domain.OrderDetailAgg;
 
 namespace ShopManagement.Configuration
 {
@@ -56,6 +60,13 @@ namespace ShopManagement.Configuration
 
             service.AddTransient<ICourseEpisodeApplication, CourseEpisodeApplication>();
             service.AddTransient<ICourseEpisodeRepository, CourseEpisodeRepository>();
+
+            service.AddTransient<IOrderRepository, OrderRepository>();
+            service.AddTransient<IOrderApplication, OrderApplication>();
+
+            service.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
+
+
 
 
             service.AddDbContext<ShopContext>(option =>

@@ -1,5 +1,5 @@
-﻿@page
-@model WebHost.Pages.LoginModel
+﻿
+@model AccountManagement.Application.Contract.Account.LoginViewModel
 @{
     ViewData["Title"] = "ورود به سایت";
     Layout = "Shared/_AccountLayout";
@@ -24,13 +24,16 @@
                             daley);
                     </script>
                 }
-                @Model.Message =<p class="text-center text-danger">رمز عبور ویا ایمیل شما درست نمیباشد</p>
-                <form method="post" id="form">
+               @if (ViewData["Message"] != null)
+               {
+                   <p class="text-center text-danger">رمز عبور ویا ایمیل شما درست نمیباشد</p>
+               }
+                <form method="post" asp-page="Account" asp-page-handler="Login" id="form">
                     <label for="email-input" class="label-input">ایمیل :</label>
-                    <input type="email" asp-for="Login.Email" name="email" placeholder="example@domain.com" autofocus autocomplete="on" required
+                    <input type="email"  name="email" placeholder="example@domain.com" autofocus autocomplete="on" required
                            id="email-input" class="inputs">
                     <label for="password-input" class="label-input">گذرواژه :</label>
-                    <input type="password" asp-for="Login.Password" name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                    <input type="password"  name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
                            autofocus autocomplete="on" required id="password-input" class="inputs">
                     <div id="container-submit">
                         <input type="submit" value="ورود" id="submit">

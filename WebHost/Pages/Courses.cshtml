@@ -111,7 +111,49 @@
                         <section id="container" class="card col-12 col-lg-9">
                             <div class="container" id="container-cards">
                                 <div class="row" id="row-container-cards">
-                                    <partial name="Shared/_Courses" model="Model.Courses"/>
+                                    @foreach (var course in Model.Courses)
+                                    {
+                                        <div class="col-10 col-md-6 col-lg-4 col-card">
+                                            <div class="card container-card">
+                                                <a asp-page="SingleCourse" asp-route-id="@course.Slug" class="anchor-cards">
+                                                    <img src="~/FileUploader/@course.Picture" class="card-img-top img-card" alt="@course.PictureAlt" title="@course.PictureTitle">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title title-card">@course.Name</h5>
+                                                        <div class="container-items-card">
+                                                            <div>
+                                                                <img src="icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
+                                                                <span class="span-item-card">@course.TeacherName</span>
+                                                            </div>
+                                                            <div class="chat-display-item-none">
+                                                                <img src="icons/chat.png" alt="chat" class="img-teacher-card">
+                                                                <span class="span-item-card">@course.Comments.Count</span>
+                                                            </div>
+                                                            <div>
+                                                                <img src="icons/student-2.png" alt="student" class="img-teacher-card">
+                                                                <span class="span-item-card">@course.UserCourse.Count</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container-time-payment-card">
+                                                            <div>
+                                                                <img src="icons/clock.png" alt="clock" class="img-teacher-card">
+                                                                <span class="time-p-card">@course.TotalTime</span>
+                                                            </div>
+                                                            <div>
+                                                                @if (course.Price > 0)
+                                                                {
+                                                                    <span class="payment-card">@course.Price.ToMoney()</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="payment-card">رایگان</span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
                                     <div class="col-12" id="pagination">
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination">

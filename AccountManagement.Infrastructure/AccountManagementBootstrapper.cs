@@ -1,7 +1,6 @@
 ﻿using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Infrastructure.EfCore.Repository;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Application;
 using AccountManagement.Application.Contract.Role;
@@ -17,6 +16,7 @@ namespace AccountManagement.Infrastructure
         {
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IAccountApplication, AccountApplication>();
+            services.AddTransient<ITeacherRepository,TeacherRepository>();
 
             services.AddTransient<IRoleApplication, RoleApplication>();
             services.AddTransient<IRoleRepository, RoleRepository>();

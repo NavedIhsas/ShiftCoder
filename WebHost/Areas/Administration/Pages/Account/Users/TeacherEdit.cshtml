@@ -1,0 +1,62 @@
+﻿@model AccountManagement.Application.Contract.Account.EditTeacherViewModel
+@{
+    ViewData["Title"] = "ویرایش حساب کاربری استاد";
+}
+
+<div class="container">
+    <partial name="Shared/_Create_View_Header" />
+
+    <form asp-page="./Teacher" asp-page-handler="TeacherEdit"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Bio" class="control-label">بیو<span class="text-danger">*</span></label>
+                            <textarea type="text" asp-for="Bio" class="form-control" rows="3"></textarea>
+                            <span class="text-danger" asp-validation-for="Bio"></span>
+                        </div>
+                    </div>
+                </div>
+                <div calss="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Resumes" class="control-label">رزومه<span class="text-danger">*</span></label>
+                            <textarea type="text" asp-for="Resumes" class="form-control " row="3" required></textarea>
+                            <span class="text-danger" asp-validation-for="Resumes"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Skills" class="control-label">مهارت ها</label>
+                            <input type="text" asp-for="Skills" class="form-control " required>
+                            <span class="text-danger" asp-validation-for="Skills"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="AccountId" class="control-label">حساب کاربری<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" asp-for="AccountName" value="@Model.AccountName" disabled>
+                            <p class="help-block"> حساب کاربری قابل ویرایش نمیباشد.</p>
+                            <span class="text-danger" asp-validation-for="AccountId"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input asp-for="Id" value="@Model.Id" type="hidden" />
+       <input asp-for="AccountId" value="@Model.AccountId" type="hidden"/>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+            <button type="submit" class="btn btn-info waves-effect waves-light">ویرایش</button>
+        </div>
+    </form>
+</div>

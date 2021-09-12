@@ -11,22 +11,20 @@
 
     <link href="~/frameworks/bootstrap/bootstrap.rtl.css" rel="stylesheet" />
     <link href="~/frameworks/bootstrap/bootstrap-reboot.rtl.min.css" rel="stylesheet" />
-
-
-    <link href="~/style/main.min.css" rel="stylesheet" />
+    <link href="~/style/account.css" rel="stylesheet" />
     <link href="~/style/style-userPanel.css" rel="stylesheet" />
+    <link href="~/style/main.min.css" rel="stylesheet" />
     <link href="~/style/courses.css" rel="stylesheet" />
     <link rel="~/stylesheet" href="style/artiles.css">
-
+    <link href="~/style/edit-profile.css" rel="stylesheet" />
     <link href="~/style/course-single-page.css" rel="stylesheet" />
     <link href="~/style/article-single-page.css" rel="stylesheet" />
 
     <link href="~/AdminTemplate/css/custom.css" rel="stylesheet" />
     <link href="~/library/plyr/plyr.css" rel="stylesheet" />
-
     <link href="~/frameworks/FontAwesome/css/all.min.css" rel="stylesheet" />
     <link href="~/frameworks/FontAwesome/css/all.css" rel="stylesheet" />
-
+  
     <style>
         :root {
             --plyr-color-main: #eb3233;
@@ -78,7 +76,9 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         @await Component.InvokeAsync("Menu")
-                       
+
+                        @if (!User.Identity.IsAuthenticated)
+                        {
                             <li class="nav-item dropdown list-style-li-header" id="setting-list-item-header">
                                 <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span id="span-profile">
@@ -158,9 +158,16 @@
                                     </li>
                                 </ul>
                             </li>
+                        }
+                        else
+                        {
+                            <p>
+                                <a asp-page="Account" asp-page-handler="Logout">خروج</a>
+                            </p>
+                        }
 
-                     
-                       
+
+
                     </div>
                 </div>
             </nav>
@@ -238,7 +245,7 @@
     <script src="~/scripts/jquery.min.js"></script>
     <script src="~/scripts/courses.js"></script>
     <script src="~/scripts/course-single-page.js"></script>
-
+  
     <script src="~/scripts/article-single-page.js"></script>
     <script src="~/frameworks/bootstrap/bootstrap.min.js"></script>
     <script src="~/scripts/text.js"></script>

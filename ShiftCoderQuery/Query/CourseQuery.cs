@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
+using _0_FrameWork.Application;
+using AccountManagement.Domain.Account.Agg;
+using AccountManagement.Infrastructure.EfCore;
 using CommentManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Comment;
@@ -10,30 +13,41 @@ using Shop.Management.Application.Contract.AfterCourse;
 using Shop.Management.Application.Contract.CourseEpisode;
 using Shop.Management.Application.Contract.CoursePrerequisite;
 using Shop.Management.Application.Contract.CourseSuitable;
+using Shop.Management.Application.Contract.OrderDetail;
+using Shop.Management.Application.Contract.UserCourse;
 using ShopManagement.Domain.AfterTheCourseAgg;
-using ShopManagement.Domain.CourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.CoursePrerequisiteAgg;
 using ShopManagement.Domain.CourseSuitableAgg;
+using ShopManagement.Domain.OrderDetailAgg;
+using ShopManagement.Domain.UserCoursesAgg;
 using ShopManagement.Infrastructure.EfCore;
 
 namespace ShiftCoderQuery.Query
 {
+    // ReSharper disable  CommentTypo
     public class CourseQuery : ICourseQuery
     {
         private readonly ShopContext _context;
         private readonly CommentContext _comment;
+        private readonly AccountContext _account;
+        private readonly IAccountRepository _accountRepository;
 
-        public CourseQuery(ShopContext context, CommentContext comment)
+
+        public CourseQuery(ShopContext context, CommentContext comment, AccountContext account, IAccountRepository accountRepository)
         {
             _context = context;
             _comment = comment;
+            _account = account;
+            _accountRepository = accountRepository;
         }
 
-        public List<CourseQueryModel> GetAllCourse(CourseQuerySearchModel searchQuery, List<long> group)
+        public List<GetAllCourseQueryModel> GetAllCourse(CourseQuerySearchModel searchQuery, List<long> group)
         {
-            var query = _context.Courses.Include(x => x.CourseEpisodes).
-                AsNoTracking().AsEnumerable().Select(x => new CourseQueryModel
+            var query = _context.Courses
+                .Include(x => x.UserCourses)
+                .Include(x => x.CourseEpisodes).
+                AsNoTracking().AsEnumerable().Select(x => new GetAllCourseQueryModel
                 {
                     Name = x.Name,
                     Description = x.Description,
@@ -48,12 +62,24 @@ namespace ShiftCoderQuery.Query
                     KeyWords = x.KeyWords,
                     MetaDescription = x.MetaDescription,
                     Slug = x.Slug,
+                    Id = x.Id,
+                    TeacherId = x.TeacherId,
+                    UserCourse = MapUserCourse(x.UserCourses),
                     CreationDate = x.CreationDate,
                     CourseGroupId = x.CourseGroupId,
                     TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
-
                 }).ToList();
 
+            foreach (var item in query)
+            {
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == CommentType.Course).ToList();
+                item.Comments = comments;
+
+                var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
+                if (teacher == null) return null;
+                item.TeacherName = teacher.Account.FullName;
+
+            }
 
             if (!string.IsNullOrWhiteSpace(searchQuery.Name))
                 query = query.Where(x => x.Name.ToLower().Trim().Contains(searchQuery.Name.ToLower().Trim())).ToList();
@@ -83,11 +109,12 @@ namespace ShiftCoderQuery.Query
             return query;
         }
 
-        public List<CourseQueryModel> LatestCourses()
+        public List<GetAllCourseQueryModel> LatestCourses()
         {
-            return _context.Courses.Include(x => x.CourseEpisodes).
+            var course = _context.Courses.Include(x => x.CourseEpisodes).
+                Include(x => x.UserCourses).
                 AsNoTracking().AsEnumerable().
-                Select(x => new CourseQueryModel
+                Select(x => new GetAllCourseQueryModel
                 {
                     Name = x.Name,
                     Description = x.Description,
@@ -102,17 +129,76 @@ namespace ShiftCoderQuery.Query
                     KeyWords = x.KeyWords,
                     MetaDescription = x.MetaDescription,
                     Slug = x.Slug,
+                    Id = x.Id,
                     CreationDate = x.CreationDate,
-                    TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
+                    TeacherId = x.TeacherId,
+                    TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks)),
+                    UserCourse = MapUserCourse(x.UserCourses),
 
                 }).OrderByDescending(x => x.CreationDate).Take(8).ToList();
+
+            foreach (var item in course)
+            {
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == CommentType.Course).ToList();
+                item.Comments = comments;
+                var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
+                if (teacher == null) return null;
+                item.TeacherName = teacher.Account.FullName;
+
+            }
+
+            return course;
         }
 
+        public List<GetAllCourseQueryModel> PopularCourses()
+        {
+            var popular = _context.Courses.Include(x => x.CourseEpisodes)
+                .Include(x => x.UserCourses)
+                .Include(x => x.OrderDetails).
+                AsNoTracking().AsEnumerable().
+                Select(x => new GetAllCourseQueryModel
+                {
+                    TeacherId = x.TeacherId,
+                    Name = x.Name,
+                    Description = x.Description,
+                    ShortDescription = x.ShortDescription,
+                    File = x.File,
+                    Price = x.Price,
+                    Code = x.Code,
+                    UpdateDate = x.UpdateDate.ToFarsi(),
+                    Picture = x.Picture,
+                    PictureAlt = x.PictureAlt,
+                    PictureTitle = x.PictureTitle,
+                    KeyWords = x.KeyWords,
+                    MetaDescription = x.MetaDescription,
+                    Slug = x.Slug,
+                    Id = x.Id,
+                    OrderDetails = x.OrderDetails,
+                    CreationDate = x.CreationDate,
+                    UserCourse = MapUserCourse(x.UserCourses),
+                    TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
+
+                }).OrderByDescending(x => x.OrderDetails.Count).Take(4).ToList();
+
+            foreach (var item in popular)
+            {
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == CommentType.Course).ToList();
+                item.Comments = comments;
+
+                var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
+                if (teacher == null) return null;
+                item.TeacherName = teacher.Account.FullName;
+
+            }
+
+            return popular;
+        }
 
 
         public CourseQueryModel GetCourseBySlug(string slug)
         {
-            var course = _context.Courses.Include(x => x.CourseLevel).Include(x => x.CourseStatus).Include(x => x.CourseGroup)
+            var course = _context.Courses.Include(x => x.CourseLevel).Include(x => x.CourseStatus)
+                .Include(x => x.CourseGroup).Include(x => x.UserCourses)
                 .Include(x => x.CourseEpisodes)
                 .Select(x => new CourseQueryModel
                 {
@@ -131,11 +217,13 @@ namespace ShiftCoderQuery.Query
                     MetaDescription = x.MetaDescription,
                     Slug = x.Slug,
                     CourseGroupId = x.CourseGroupId,
+                    TeacherId = x.TeacherId,
                     PosterImg = x.DemoVideoPoster,
                     CreationDate = x.CreationDate,
                     CourseGroup = x.CourseGroup.Title,
                     CourseStatus = x.CourseStatus.Title,
                     CourseLevel = x.CourseLevel.Title,
+                    UserCourse = MapUserCourse(x.UserCourses),
                     SuitableCourse = MapSuitable(x.CourseSuitableList),
                     AfterCourse = MapAfterCourse(x.AfterTheCourses),
                     PrerequisiteCourse = MapPrerequisiteCourse(x.CoursePrerequisites),
@@ -143,9 +231,23 @@ namespace ShiftCoderQuery.Query
                     EpisodeCount = x.CourseEpisodes.Count
                 }).AsNoTracking().FirstOrDefault(x => x.Slug == slug);
 
+            if (course == null) return null;
+
+
+
+            var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == course.TeacherId);
+            course.TeacherBio = teacher?.Bio;
+            course.TeacherName = teacher?.Account.FullName;
+            course.TeacherResume = teacher?.Resumes;
+            course.TeacherSkills = teacher?.Skills;
+
+            //barrase kon k en rahe dorst ast ya na?
+            course.CourseTeacher = _context.Courses.Where(x => x.TeacherId == teacher.Id).Select(selector: x => new { x.Name, x.Slug }).
+                Select(x => new CourseQueryModel() { Name = x.Name, Slug = x.Slug }).ToList();
+
 
             var comment = _comment.Comments
-                .Where(x => x.Type == 1).Where(x=>x.IsConfirmed).Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
+                .Where(x => x.Type == 1).Where(x => x.IsConfirmed).Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
                 .Select(x => new CommentQueryModel
                 {
                     Name = x.Name,
@@ -162,11 +264,32 @@ namespace ShiftCoderQuery.Query
                 MapChildren(item);
 
 
-            if (course == null) return null;
-            course.CommentCount = comment.Count;
             course.Comments = comment;
+            var comments = _comment.Comments.Where(x => x.OwnerRecordId == course.Id && x.Type == CommentType.Course).ToList();
+            course.CommentList = comments;
+
             return course;
         }
+
+        private static List<UserCourseViewModel> MapUserCourse(IEnumerable<UserCourse> userCourses)
+        {
+            return userCourses.Select(x => new UserCourseViewModel()
+            {
+                CourseId = x.CourseId,
+                AccountId = x.AccountId,
+            }).ToList();
+        }
+
+        public bool UserInCourse(string email, long courseId)
+        {
+            var userId = _accountRepository.GetUserIdBy(email);
+            return _context.UserCourses.Any(x => x.AccountId == userId && x.CourseId == courseId);
+        }
+
+        public CourseEpisode GetEpisodeFile(long episodeId)
+       => _context.CourseEpisodes.FirstOrDefault(x => x.Id == episodeId);
+
+
 
         private void MapChildren(CommentQueryModel parent)
         {
@@ -192,7 +315,7 @@ namespace ShiftCoderQuery.Query
             }
         }
 
-        
+
         private static List<CourseEpisodeViewModel> MapEpisodeCourse(IEnumerable<CourseEpisode> courseEpisodes)
         {
             return courseEpisodes.Select(x => new CourseEpisodeViewModel
@@ -202,6 +325,7 @@ namespace ShiftCoderQuery.Query
                 Title = x.Title,
                 IsFree = x.IsFree,
                 CourseId = x.CourseId,
+                Id = x.Id
             }).ToList();
         }
 

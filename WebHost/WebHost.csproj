@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Administration\Pages\Discount\NewFolder\" />
     <Folder Include="wwwroot\FileUploader\" />
   </ItemGroup>
 

@@ -23,12 +23,15 @@ namespace AccountManagement.Application.Contract.Account
         [MaxLength(250,ErrorMessage = Validate.MaxLength)]
         public string Password { get; set; }
 
-        [Compare("OldPassword",ErrorMessage = "رمز عبور با تکرار آن مطابقت ندارد.")]
+        [Compare("Password ", ErrorMessage = "رمز عبور با تکرار آن مطابقت ندارد.")]
         public string RePassword { get; set; }
 
         [MaxLength(200,ErrorMessage = Validate.MaxLength)]
         public IFormFile Avatar { get; set; }
         public long RoleId { get; set; }
         public List<RoleViewModel> SelectList { get; set; }
+        public TeacherViewModel Teacher { get; set; }
+        public long Id { get; set; }
+       
     }
 }

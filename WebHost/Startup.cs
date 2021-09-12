@@ -1,11 +1,15 @@
+using System;
+using _0_Framework.Application;
 using _0_FrameWork.Application;
 using AccountManagement.Infrastructure;
 using BlogManagement.Infrastructure;
 using CommentManagement.Infrastructure;
 using DiscountManagement.Infrastructure;
 using InventoryManagement.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,6 +38,7 @@ namespace WebHost
             services.AddTransient<IFileUploader, FileUploader>();
             services.AddTransient<IEpisodeFileUploader, EpisodeUploadFile>();
             services.AddTransient<IAuthHelper, AuthHelper>();
+            services.AddTransient<IPasswordHasher,PasswordHasher>();
             ShopManagementBootstrapper.Configure(services, connectionString);
             InventoryManagementBootstrapper.Configure(services, connectionString);
             BlogManagementBootstrapper.Configure(services, connectionString);
@@ -44,6 +49,23 @@ namespace WebHost
 
 
 
+            #endregion
+
+            #region Authentication
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+                {
+                    o.LoginPath = new PathString($"/Account");
+                    o.LogoutPath = new PathString("/Account");
+                    o.AccessDeniedPath = new PathString("/AccessDenied");
+                });
             #endregion
         }
 
@@ -65,7 +87,8 @@ namespace WebHost
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseCookiePolicy();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

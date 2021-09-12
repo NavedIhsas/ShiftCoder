@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
 using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Domain.Account.Agg;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountManagement.Infrastructure.EfCore.Repository
@@ -14,10 +18,12 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
     {
         private readonly AccountContext _context;
         private readonly IAuthHelper _authHelper;
-        public AccountRepository(AccountContext dbContext, AccountContext context, IAuthHelper authHelper) : base(dbContext)
+        private readonly IPasswordHasher _passwordHasher;
+        public AccountRepository(AccountContext dbContext, AccountContext context, IAuthHelper authHelper, IPasswordHasher passwordHasher) : base(dbContext)
         {
             _context = context;
             _authHelper = authHelper;
+            _passwordHasher = passwordHasher;
         }
 
         public EditAccountViewModel GetDetails(long id)
@@ -29,8 +35,21 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
                 Phone = x.Phone,
                 Password = x.Password,
                 RoleId = x.RoleId,
-                Id = x.Id
-            }).FirstOrDefault(x => x.Id == id);
+                Id = x.Id,
+                //  Teacher = MapTeacher(x.Teachers)
+
+            }).AsNoTracking().FirstOrDefault(x => x.Id == id);
+        }
+
+        private static List<TeacherViewModel> MapTeacher(IEnumerable<Teacher> teachers)
+        {
+            return teachers.Select(x => new TeacherViewModel()
+            {
+                AccountId = x.AccountId,
+                Bio = x.Bio,
+                Resumes = x.Resumes,
+                Skills = x.Skills,
+            }).ToList();
         }
 
         public List<AccountViewModel> Search(AccountSearchModel searchModel)
@@ -61,37 +80,39 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
             return orderly;
         }
 
-        public Account GetUserBy(string email)
+        public long GetUserIdBy(string email)
         {
-            return _context.Accounts.FirstOrDefault(x => x.Email == email);
+            // ReSharper disable once PossibleNullReferenceException
+            return _context.Accounts.FirstOrDefault(x => x.Email == email).Id;
         }
+
+        public Account GetUserBy(string email)
+       => _context.Accounts.FirstOrDefault(x => x.Email == email);
 
         public OperationResult Login(LoginViewModel login)
         {
             var operation = new OperationResult();
 
-            var currentUser = GetUserBy(login.Email.ToLower().Trim());
-            if (currentUser == null) return operation.Failed(ApplicationMessage.LoginError);
+            var user = _context.Accounts.SingleOrDefault(x => x.Email == login.Email && x.Password == login.Password);
+            if (user == null) return operation.Failed(ApplicationMessage.LoginError);
 
-            var userLogin = _context.Accounts.Any(x => x.Email.ToLower().Trim()
-                == login.Email.ToLower().Trim() && x.Password == login.Password);
-            if (userLogin == false) return operation.Failed(ApplicationMessage.LoginError);
-
-            var authModel = new AuthHelperViewModel()
-            {
-                RoleId = currentUser.RoleId,
-                Email = currentUser.Email,
-                AccountId = currentUser.Id,
-                Fullname = currentUser.FullName,
-            };
+            var authModel = new AuthHelperViewModel(user.Id, user.RoleId, user.FullName, user.Email);
             _authHelper.Signin(authModel);
-
             return operation.Succeeded();
         }
 
         public void Logout()
         {
             _authHelper.SignOut();
+        }
+
+        public List<AccountViewModel> SelectList()
+        {
+            return _context.Accounts.Select(x => new AccountViewModel()
+            {
+                Id = x.Id,
+                FullName = x.FullName,
+            }).ToList();
         }
     }
 }

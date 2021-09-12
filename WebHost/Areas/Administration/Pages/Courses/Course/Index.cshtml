@@ -65,6 +65,7 @@
 
 
                                         <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">قیمت</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">استاد دوره</th>
 
                                         <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">آخرین بروزرسانی</th>
 
@@ -93,6 +94,7 @@
                                                     <span>@course.Price</span>
                                                 }
                                             </td>
+                                            <td>@course.TeacherName</td>
                                             <td>
                                                 @if (course.UpdateDate != "")
                                                 {

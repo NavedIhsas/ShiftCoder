@@ -6,6 +6,7 @@
         public const string RecordNotFount = " هیچ رکوردی با این مشخصات یافت نشد.";
         public const string PasswordNotFount = "رمز عبور فعلی شما درست نمیباشد";
         public const string LoginError = "رمز عبور ویا ایمیل شما درست نمیباشد";
+        public const string ExistUserCourse = "شما این دوره را قبلا خریداری کرده اید.";
 
     }
 

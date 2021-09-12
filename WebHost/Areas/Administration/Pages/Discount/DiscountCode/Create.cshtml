@@ -1,0 +1,86 @@
+﻿
+@model ColleagueDiscountManagementApplication.Contract.DiscountCode.CreateDiscountCodeViewModel
+@{
+    ViewData["Title"] = "ایجاد تخفیف جدید";
+
+}
+
+<div class="container">
+    <partial name="Shared/_Create_View_Header" />
+
+    <form asp-page="./Index" asp-page-handler="Create"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DiscountCode" class="control-label">کد تخفیف<span class="text-danger">*</span></label>
+                        <input type="text" asp-for="DiscountCode" class="form-control" >
+                        <span class="text-danger" asp-validation-for="DiscountCode"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DiscountRate" class="control-label">درصد تخفیف<span class="text-danger">*</span></label>
+                        <input type="number" asp-for="DiscountRate" class="form-control" >
+                        <span class="text-danger" asp-validation-for="DiscountRate"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="StartDate" class="control-label">تاریخ شروع<span class="text-danger">*</span></label>
+                        <input type="datetime" asp-for="StartDate" class="form-control PersianDateInput"  required>
+                        <span class="text-danger" asp-validation-for="StartDate"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="control-label">تاریخ پایان<span class="text-danger">*</span></label>
+                        <input type="datetime" asp-for="EndDate" class="form-control PersianDateInput"  required>
+                        <span class="text-danger" asp-validation-for="EndDate"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="UseableCount" class="control-label">UseableCount<span class="text-danger">*</span></label>
+                        <input type="number" asp-for="UseableCount" class="form-control">
+                        <span class="text-danger" asp-validation-for="UseableCount"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Reason" class="control-label">علت تخفیف</label>
+                        <input type="text" class="form-control" asp-for="Reason">
+                        <span class="text-danger" asp-validation-for="Reason" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+            <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

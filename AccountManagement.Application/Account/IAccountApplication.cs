@@ -12,5 +12,12 @@ namespace AccountManagement.Application.Contract.Account
         OperationResult Active(long id);
         OperationResult DeActive(long id);
         OperationResult ChangePassword(ChangePasswordViewModel command);
+        OperationResult Login(LoginViewModel command);
+        void Logout();
+
+      
+        OperationResult EditTeacher(EditTeacherViewModel edit);
+        EditTeacherViewModel GetTeacherDetails(long id);
+        List<TeacherViewModel> GetAllTeachers();
     }
 }

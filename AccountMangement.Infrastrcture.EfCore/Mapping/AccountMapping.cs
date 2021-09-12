@@ -8,6 +8,7 @@ namespace AccountManagement.Infrastructure.EfCore.Mapping
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {
+            builder.ToTable("Users");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.FullName).HasMaxLength(250).IsRequired();
             builder.Property(x => x.Email).HasMaxLength(250).IsRequired();
@@ -15,6 +16,7 @@ namespace AccountManagement.Infrastructure.EfCore.Mapping
             builder.Property(x => x.Password).HasMaxLength(250).IsRequired();
             builder.Property(x => x.Phone).HasMaxLength(20);
             builder.HasOne(x => x.Role).WithMany(x => x.Accounts).HasForeignKey(x => x.RoleId);
+            builder.HasMany(x => x.Teachers).WithOne(x => x.Account).HasForeignKey(x => x.AccountId);
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Role;
 using AccountManagement.Domain.RoleAgg;
-using Microsoft.EntityFrameworkCore;
 
 namespace AccountManagement.Infrastructure.EfCore.Repository
 {
@@ -36,5 +32,10 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
             }).OrderByDescending(x=>x.Id).ToList();
 
         }
-    }
+
+        public long GetRoleBy(long roleId)
+        {
+            return _context.Roles.Find(roleId).Id;
+        }
+   }
 }

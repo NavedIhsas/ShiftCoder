@@ -2,6 +2,8 @@
 using System.Linq;
 using _0_Framework.Application;
 using _0_FrameWork.Domain.Infrastructure;
+using AccountManagement.Domain.Account.Agg;
+using AccountManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using Shop.Management.Application.Contract.Course;
 using ShopManagement.Domain.CourseAgg;
@@ -11,10 +13,12 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
     public class CourseRepository : RepositoryBase<long, Course>, ICourseRepository
     {
         private readonly ShopContext _context;
+        private readonly AccountContext _teacher;
 
-        public CourseRepository(ShopContext dbContext, ShopContext context) : base(dbContext)
+        public CourseRepository(ShopContext dbContext, ShopContext context, AccountContext teacher) : base(dbContext)
         {
             _context = context;
+            _teacher = teacher;
         }
 
         public EditCourseViewModel GetDetails(long id)
@@ -36,7 +40,8 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 CourseGroupId = x.CourseGroupId,
                 CourseLevelId = x.CourseLevelId,
                 CourseStatusId = x.CourseStatusId,
-                Id = x.Id
+                Id = x.Id,
+                TeacherId = x.TeacherId,
             }).FirstOrDefault(x => x.Id == id);
             return course;
         }
@@ -54,6 +59,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 UpdateDate = x.UpdateDate.ToFarsi(),
                 CreationDate = x.CreationDate.ToFarsi(),
                 Price = x.Price,
+                TeacherId = x.TeacherId,
             }).AsNoTracking().ToList();
 
             if (!string.IsNullOrWhiteSpace(searchModel.Name))
@@ -64,6 +70,13 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
 
             if (searchModel.CourseGroupId > 0)
                 query = query.Where(x => x.CourseGroupId == searchModel.CourseGroupId).ToList();
+
+
+            var teacherName = _teacher.Teachers.Include(x => x.Account).Select(x => new { x.Id, x.Account.FullName }).ToList();
+
+            foreach (var item in query)
+                item.TeacherName = teacherName.FirstOrDefault(x => x.Id == item.TeacherId)?.FullName;
+            
 
             var orderly = query.OrderByDescending(x => x.Id).ToList();
             return orderly;
@@ -77,5 +90,8 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 Id = x.Id,
             }).AsNoTracking().ToList();
         }
+
+       public Course GetCourseBy(long courseId) =>_context.Courses.Find(courseId);
+       
     }
 }

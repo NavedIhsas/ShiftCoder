@@ -5,6 +5,7 @@ using _0_FrameWork.Application;
 using Shop.Management.Application.Contract.CourseGroup;
 using Shop.Management.Application.Contract.CourseLevel;
 using Shop.Management.Application.Contract.CourseStatus;
+using AccountManagement.Application.Contract.Account;
 
 namespace Shop.Management.Application.Contract.Course
 {
@@ -58,9 +59,13 @@ namespace Shop.Management.Application.Contract.Course
 
         [Range(1, int.MaxValue, ErrorMessage = Validate.Required)]
         public long CourseStatusId { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = Validate.Required)]
+        public long TeacherId { get; set; }
         public List<CourseGroupViewModel> CourseGroupSelectList { get; set; }
         public List<CourseStatusViewModel> CourseStatusSelectList { get; set; }
         public List<CourseLevelViewModel> CourseLevelSelectList { get; set; }
+        public List<TeacherViewModel> TeacherSelectList { get; set; }
 
 
     }

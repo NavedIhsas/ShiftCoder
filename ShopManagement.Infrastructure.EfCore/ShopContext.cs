@@ -6,6 +6,9 @@ using ShopManagement.Domain.CourseLevelAgg;
 using ShopManagement.Domain.CoursePrerequisiteAgg;
 using ShopManagement.Domain.CourseStatusAgg;
 using ShopManagement.Domain.CourseSuitableAgg;
+using ShopManagement.Domain.OrderAgg;
+using ShopManagement.Domain.OrderDetailAgg;
+using ShopManagement.Domain.UserCoursesAgg;
 using ShopManagement.Infrastructure.EfCore.Mapping;
 
 namespace ShopManagement.Infrastructure.EfCore
@@ -25,7 +28,9 @@ namespace ShopManagement.Infrastructure.EfCore
         public DbSet<CoursePrerequisite> CoursePrerequisites { get; set; }
         public DbSet<AfterTheCourse> AfterTheCourses { get; set; }
         public DbSet<CourseEpisode> CourseEpisodes { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<UserCourse> UserCourses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

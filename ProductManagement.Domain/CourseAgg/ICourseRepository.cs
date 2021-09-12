@@ -9,5 +9,6 @@ namespace ShopManagement.Domain.CourseAgg
         EditCourseViewModel GetDetails(long id);
         List<CourseViewModel> Search(CourseSearchModel searchModel);
         List<CourseViewModel> SelectCourses();
+        Course GetCourseBy(long courseId);
     }
 }

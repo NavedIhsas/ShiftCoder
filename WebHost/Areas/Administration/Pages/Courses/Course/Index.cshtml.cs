@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AccountManagement.Domain.Account.Agg;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,13 +16,15 @@ namespace WebHost.Areas.Administration.Pages.Courses.Course
         private readonly ICourseGroupApplication _courseGroup;
         private readonly ICourseLevelApplication _courseLevel;
         private readonly ICourseStatusApplication _courseStatus;
+        private readonly ITeacherRepository _teacher;
 
-        public IndexModel(ICourseApplication course, ICourseGroupApplication courseGroup, ICourseStatusApplication courseStatus, ICourseLevelApplication courseLevel)
+        public IndexModel(ICourseApplication course, ICourseGroupApplication courseGroup, ICourseStatusApplication courseStatus, ICourseLevelApplication courseLevel, ITeacherRepository teacher)
         {
             _course = course;
             _courseGroup = courseGroup;
             _courseStatus = courseStatus;
             _courseLevel = courseLevel;
+            _teacher = teacher;
         }
 
         public SelectList SelectList;
@@ -40,6 +43,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.Course
                 CourseGroupSelectList = _courseGroup.SelectList(),
                 CourseStatusSelectList=_courseStatus.SelectList(),
                 CourseLevelSelectList = _courseLevel.SelectList(),
+                TeacherSelectList = _teacher.SelectList(),
             };
             return Partial("./Create", course);
         }
@@ -53,7 +57,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.Course
         public IActionResult OnGetEdit(long id)
         {
             var course = _course.GetDetails(id);
-
+            course.TeacherSelectList = _teacher.SelectList();
             course.CourseStatusSelectList = _courseStatus.SelectList();
             course.CourseLevelSelectList = _courseLevel.SelectList();
             course.CourseGroupSelectList = _courseGroup.SelectList();

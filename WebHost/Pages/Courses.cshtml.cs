@@ -16,7 +16,7 @@ namespace WebHost.Pages
             _group = group;
         }
 
-        public List<CourseQueryModel> Courses;
+        public List<GetAllCourseQueryModel> Courses;
         public List<CourseGroupQueryModel> CourseGroups;
         public CourseQuerySearchModel SearchModel;
         public void OnGet(CourseQuerySearchModel searchModel,List<long> groupId)

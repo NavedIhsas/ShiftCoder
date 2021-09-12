@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Shop.Management.Application.Contract.CourseEpisode
 {
@@ -11,6 +12,7 @@ namespace Shop.Management.Application.Contract.CourseEpisode
         public string CourseName { get; set; }
         public long CourseId { get; set; }
         public TimeSpan TotalSpan { get; set; }
+        public IFormFile File { get; set; }
         public long Id { get; set; }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using ShiftCoderQuery.Contract.Course;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebHost.Pages
 {

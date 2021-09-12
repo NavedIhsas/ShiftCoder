@@ -80,6 +80,73 @@ namespace DiscountManagementInfrastructure.EfCore.Migrations
 
                     b.ToTable("CustomerDiscounts");
                 });
+
+            modelBuilder.Entity("DiscountManagement.Domain.DiscountCode.DiscountCode", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DiscountRate")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UseableCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DiscountCodes");
+                });
+
+            modelBuilder.Entity("DiscountManagement.Domain.DiscountCode.UserDiscount", b =>
+                {
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DiscountCodeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("AccountId", "DiscountCodeId");
+
+                    b.HasIndex("DiscountCodeId");
+
+                    b.ToTable("UserDiscounts");
+                });
+
+            modelBuilder.Entity("DiscountManagement.Domain.DiscountCode.UserDiscount", b =>
+                {
+                    b.HasOne("DiscountManagement.Domain.DiscountCode.DiscountCode", "DiscountCode")
+                        .WithMany("UserDiscounts")
+                        .HasForeignKey("DiscountCodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DiscountCode");
+                });
+
+            modelBuilder.Entity("DiscountManagement.Domain.DiscountCode.DiscountCode", b =>
+                {
+                    b.Navigation("UserDiscounts");
+                });
 #pragma warning restore 612, 618
         }
     }

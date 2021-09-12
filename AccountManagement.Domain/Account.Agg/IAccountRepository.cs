@@ -9,7 +9,9 @@ namespace AccountManagement.Domain.Account.Agg
     {
         EditAccountViewModel GetDetails(long id);
         List<AccountViewModel> Search(AccountSearchModel searchModel);
+        long GetUserIdBy(string email);
         Account GetUserBy(string email);
+        List<AccountViewModel> SelectList();
         OperationResult Login(LoginViewModel login);
         void Logout();
     }

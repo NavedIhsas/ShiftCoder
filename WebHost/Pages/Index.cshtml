@@ -7,7 +7,7 @@
 
 <div class="row justify-content-center" id="custom-container-fluid-header">
     <div class="col-12 col-md-8">
-        <h3 id="header-top-text">لرن هاب منبعی مملو از آموزشات</h3>
+        <h3 id="header-top-text">شیفت کدر منبعی مملو از آموزشات</h3>
         <h4 id="header-bottom-text">بدون هزینه برنامه نویس و طراح گرافیست شو</h4>
         <form action="post" id="container-searchbox-header">
             <input type="text" name="searchbox" id="searchbox-header" placeholder="دنبال چی میگردی ...">
@@ -17,10 +17,10 @@
         </form>
     
            <div class="col-6" id="container-signin-login">
-               <a asp-page="Register" class="white"  id="anchor-btn-signin">
+               <a asp-page="Account" asp-page-handler="Register" class="white"  id="anchor-btn-signin">
                    <p><span class="bg"></span><span class="base"></span><span class="text">ثبت نام</span></p>
                </a>
-               <a asp-page="Login" class="white" id="anchor-btn-signin">
+               <a asp-page="/Account" asp-page-handler="Login" class="white" id="anchor-btn-signin">
                    <p><span class="bg"></span><span class="base"></span><span class="text">ورود</span></p>
                </a>
            </div>
@@ -69,7 +69,7 @@
                     <img src="~/images/img-marketing.png" alt="moshavere" class="img-section-bottom-header">
                     <div class="cotainer-p-bottom-header">
                         <a href="#" class="anchor-section-bottom-header">
-                            <p class="p-section-top-header">همکاری با لرن هاب</p>
+                            <p class="p-section-top-header">همکاری با شیفت کدر</p>
                         </a>
                         <a href="#" class="anchor-section-bottom-header">
                             <p class="p-section-bottom-header">بدون هیچ گونه شرایط خاصی</p>
@@ -96,7 +96,7 @@
         <div class="col-12">
             <div class="container-name-section-content">
                 <h2 class="name-section-content">
-                    <a class="link-section-content">جدیدترین دوره های لرن هاب</a>
+                    <a class="link-section-content">جدیدترین دوره های شیفت کدر</a>
                 </h2>
                 <div class="line-section-content"></div>
                 <a asp-page="Courses" class="container-full-packages">
@@ -115,10 +115,10 @@
         <div class="col-12">
             <div class="container-name-section-content">
                 <h2 class="name-section-content">
-                    <a href="#" class="link-section-content">محبوب ترین دوره های لرن هاب</a>
+                    <a class="link-section-content">محبوب ترین دوره های شیفت کدر</a>
                 </h2>
                 <div class="line-section-content" id="line-section-content-blue"></div>
-                <a class="container-full-packages">
+                <a asp-page="Courses" class="container-full-packages">
                     <p>مشاهده تمامی دوره ها</p>
                     <img src="~/icons/double-left-arrows-symbol.png" alt="arrow" class="img-arrow-full-packages">
                 </a>
@@ -126,148 +126,13 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-6 col-md-4 col-lg-3">
-            <div class="card container-card">
-                <a href="#" class="anchor-cards">
-                    <img src="~/images/img-1.jpg" class="card-img-top img-card" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title title-card">آموزش رایگان html و css پروژه محور</h5>
-                        <div class="container-items-card">
-                            <div>
-                                <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
-                                <span class="span-item-card">مدرس</span>
-                            </div>
-                            <div class="chat-display-item-none">
-                                <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
-                                <span class="span-item-card">0</span>
-                            </div>
-                            <div>
-                                <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
-                                <span class="span-item-card">0</span>
-                            </div>
-                        </div>
-                        <div class="container-time-payment-card">
-                            <div>
-                                <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
-                                <span class="time-p-card">00,00,00</span>
-                            </div>
-                            <div>
-                                <span class="payment-card">رایگان</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-            <div class="card container-card">
-                <a href="#" class="anchor-cards">
-                    <img src="~/images/img-7.jpg" class="card-img-top img-card" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title title-card">دوره آموزشی رایگان Dreamweaver</h5>
-                        <div class="container-items-card">
-                            <div>
-                                <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
-                                <span class="span-item-card">مدرس</span>
-                            </div>
-                            <div class="chat-display-item-none">
-                                <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
-                                <span class="span-item-card">0</span>
-                            </div>
-                            <div>
-                                <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
-                                <span class="span-item-card">0</span>
-                            </div>
-                        </div>
-                        <div class="container-time-payment-card">
-                            <div>
-                                <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
-                                <span class="time-p-card">00,00,00</span>
-                            </div>
-                            <div>
-                                <span class="payment-card">رایگان</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-            <div class="card container-card">
-                <a href="#" class="anchor-cards">
-                    <img src="~/images/img-5.jpg" class="card-img-top img-card" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title title-card">آموزش رایگان sass پروژه محور</h5>
-                        <div class="container-items-card">
-                            <div>
-                                <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
-                                <span class="span-item-card">مدرس</span>
-                            </div>
-                            <div class="chat-display-item-none">
-                                <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
-                                <span class="span-item-card">0</span>
-                            </div>
-                            <div>
-                                <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
-                                <span class="span-item-card">0</span>
-                            </div>
-                        </div>
-                        <div class="container-time-payment-card">
-                            <div>
-                                <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
-                                <span class="time-p-card">00,00,00</span>
-                            </div>
-                            <div>
-                                <span class="payment-card">رایگان</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-            <div class="card container-card">
-                <a href="#" class="anchor-cards">
-                    <img src="~/images/img-10.jpg" class="card-img-top img-card" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title title-card">آموزش رایگان Less پروژه محور</h5>
-                        <div class="container-items-card">
-                            <div>
-                                <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
-                                <span class="span-item-card">مدرس</span>
-                            </div>
-                            <div class="chat-display-item-none">
-                                <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
-                                <span class="span-item-card">0</span>
-                            </div>
-                            <div>
-                                <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
-                                <span class="span-item-card">0</span>
-                            </div>
-                        </div>
-                        <div class="container-time-payment-card">
-                            <div>
-                                <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
-                                <span class="time-p-card">00,00,00</span>
-                            </div>
-                            <div>
-                                <span class="payment-card">رایگان</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+@await Component.InvokeAsync("PopularCourse")
 <div class="container">
     <div class="row">
         <div class="col-12">
             <div class="container-name-section-content">
                 <h2 class="name-section-content">
-                    <a href="#" class="link-section-content">آخرین مقالات لرن هاب</a>
+                    <a href="#" class="link-section-content">آخرین مقالات شیفت کدر</a>
                 </h2>
                 <div class="line-section-content" id="line-section-content-yellow"></div>
                 <a asp-page="Articles" class="container-full-packages">

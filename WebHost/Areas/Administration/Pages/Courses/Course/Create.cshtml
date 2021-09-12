@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -40,12 +40,14 @@
                         <span class="text-danger" asp-validation-for="CourseGroupId"></span>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="DemoPoster" class="control-label">عکس پشت زمینه دمو</label>
-                        <input type="file" asp-for="DemoPoster" class="form-control" accept="image/*" >
-                        <span class="text-danger" asp-validation-for="DemoPoster"></span>
+                    <div class="form-group no-margin">
+                        <label asp-for="TeacherId" class="control-label">استاد دوره<span class="text-danger">*</span></label>
+                        <select class="form-control autogrow" asp-for="TeacherId" asp-items="@(new SelectList(Model.TeacherSelectList, "Id", "AccountName"))">
+                            <option value="0">انتخاب کنید</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="TeacherId"></span>
                     </div>
                 </div>
             </div>
@@ -81,7 +83,6 @@
                         <span class="text-danger" asp-validation-for="Picture"></span>
                     </div>
                 </div>
-
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="File" class="control-label">فایل<span class="text-danger">*</span></label>
@@ -89,7 +90,24 @@
                         <span class="text-danger" asp-validation-for="File"></span>
                     </div>
                 </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DemoPoster" class="control-label">عکس پشت زمینه دمو</label>
+                        <input type="file" asp-for="DemoPoster" class="form-control" accept="image/*">
+                        <span class="text-danger" asp-validation-for="DemoPoster"></span>
+                    </div>
+                </div>
 
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Code" class="control-label">کد این دوره<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Code">
+                        <span class="text-danger" asp-validation-for="Code"></span>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
@@ -111,27 +129,10 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group no-margin">
-                            <label asp-for="ShortDescription" class="control-label">توضیحات کوتاه<span class="text-danger">*</span></label>
-                            <textarea class="form-control autogrow" id="ShortDescription" asp-for="ShortDescription" rows="2" onchange="fillField('ShortDescription', 'MetaDescription')"></textarea>
-                                
-                            <span class="text-danger" asp-validation-for="ShortDescription"></span>
-                        </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Code" class="control-label">کد محصول<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Code">
-                        <span class="text-danger" asp-validation-for="Code"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="KeyWords" class="control-label">کلمات کلیدی<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" asp-for="KeyWords">
+                        <p class="help-block">کلمات را با - از همدیگر جدا کنید</p>
                         <span class="text-danger" asp-validation-for="KeyWords"></span>
                     </div>
                 </div>
@@ -147,9 +148,20 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group no-margin">
+                        <label asp-for="ShortDescription" class="control-label">توضیحات کوتاه<span class="text-danger">*</span></label>
+                        <textarea class="form-control autogrow" id="ShortDescription" asp-for="ShortDescription" rows="2" onchange="fillField('ShortDescription', 'MetaDescription')"></textarea>
+                        <span class="text-danger" asp-validation-for="ShortDescription"></span>
+                    </div>
+                  
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group no-margin">
                         <label asp-for="Description" class="control-label">توضیحات</label>
-                        <textarea class="form-control autogrow" asp-for="Description" rows="4" ></textarea>
-                                 
+                        <textarea class="form-control autogrow" asp-for="Description" rows="4"></textarea>
+
                         <span class="text-danger" asp-validation-for="Description"></span>
                     </div>
                 </div>

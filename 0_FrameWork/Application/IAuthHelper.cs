@@ -29,23 +29,24 @@ namespace _0_FrameWork.Application
 
         public void Signin(AuthHelperViewModel account)
         {
-            var claim = new List<Claim>()
+            var claims = new List<Claim>
             {
-                new Claim("AccountId",account.AccountId.ToString()),
-                new Claim(ClaimTypes.Role,account.RoleId.ToString()),
-                new Claim(ClaimTypes.Email,account.Email),
-                new Claim(ClaimTypes.Name,account.Fullname)
+                new Claim("AccountId", account.AccountId.ToString()),
+                new Claim(ClaimTypes.Name, account.Email),
+                new Claim(ClaimTypes.Role, account.RoleId.ToString()),
+                new Claim("Email", account.Email), // Or Use ClaimTypes.NameIdentifier
             };
-            var identity = new ClaimsIdentity(claim, CookieAuthenticationDefaults.AuthenticationScheme);
-            var properties = new AuthenticationProperties()
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1),
+                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
             };
 
             _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(identity), properties);
-
-
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
         }
     }
 }

@@ -1,0 +1,62 @@
+﻿@page
+@model WebHost.Pages.AccountModel
+@{
+    Layout = "Shared/_AccountLayout";
+}
+
+<div id="main-container">
+    <div class="container">
+        <div class="row" id="row-container">
+            <img src="images/avatar-login.png" alt="Avatar" id="avatar-img">
+            <div class="col-9 col-md-7 col-lg-5 col-xl-4" id="container-form">
+                <h2 id="title-heading">فرم ثبت نام</h2>
+                @if (ViewData["IsSuccess"] != null)
+                {
+                    <div class="alert alert-success">
+                        <p>ثبت نام شما با موفقیت انجام شد</p>
+                    </div>
+
+                    <script>
+                        var delay = 2000;
+                        setTimeout(function() {
+                                window.location = "Login";
+                            },
+                            delay);
+                    </script>
+                }
+                <form  method="post" asp-page-handler="Register" id="form">
+                    <label   for="usersName" class="label-input">نام کاربری :</label>
+                    <input name="fullName" type="text" placeholder="yourName" autofocus autocomplete="on" required
+                           id="usersName" class="inputs validation">
+                    <div id="meesageName"></div>
+                    <label for="email-input" class="label-input">ایمیل :</label>
+                    <input type="email"  name="email" placeholder="example@domain.com" autofocus autocomplete="on" required
+                           id="email-input" class="inputs validation">
+                    <div id="meesageEmail"></div>
+                    <label for="phone" class="label-input">شماره موبایل :</label>
+                    <input type="tel"  name="phone" placeholder="09--------" autofocus autocomplete="on" required
+                           id="phone" class="inputs validation">
+                    <div id="meesagePhone"></div>
+                    <label for="password-input"  name="password" class="label-input">گذرواژه :</label>
+                    <input type="password"  name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                           autofocus autocomplete="on" required id="password-input" class="inputs validation">
+                    <div id="meesagePassword"></div>
+                    <label for="reapetPass" class="label-input">تکرار گذرواژه :</label>
+                    <input type="password"  name="repassword" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autofocus autocomplete="on" required
+                           id="reapetPass" class="inputs validation">
+                    <div id="meesageRepass"></div>
+                    <div id="container-submit">
+                        <input type="submit" value="ورود" id="submit" class="validation" >
+
+                    </div>
+
+                    <a asp-page="Login" class="anchor-form">من قبلا ثبت نام کردم !</a>
+                </form>
+                <div class="showSpiner">
+                    <img src="images/spiner.gif" alt="spiner" id="spiner">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,4 +1,5 @@
-﻿using _0_FrameWork.Domain;
+﻿using System.Collections.Generic;
+using _0_FrameWork.Domain;
 using AccountManagement.Domain.RoleAgg;
 
 namespace AccountManagement.Domain.Account.Agg
@@ -15,28 +16,52 @@ namespace AccountManagement.Domain.Account.Agg
         public bool IsDelete { get;private set; }
         public long RoleId { get;private set; }
         public Role Role { get;private set; }
+        public List<Teacher> Teachers { get;private set; }
+        
+        public Account()
+        {
+            
+        }
 
-
-        public Account(string fullName, string email, string phone, string password, string avatar, long roleId)
+        public Account(string fullName, string email, string phone, string password, 
+            string avatar, long roleId, List<Teacher> teachers)
         {
             FullName = fullName;
             Email = email;
             Phone = phone;
             Password = password;
-            Avatar = avatar;
+            if(!string.IsNullOrWhiteSpace(avatar))
+             Avatar = avatar;
+            Teachers = teachers;
             RoleId = roleId == 0 ? 3 : roleId;
             IsActive = false;
             EmailConfirm = false;
             IsDelete = false;
         }
 
-        public void Edit(string fullName, string email, string phone,  string avatar, long roleId)
+        public Account(string fullName, string email, string phone, string password,
+            string avatar, long roleId)
         {
             FullName = fullName;
             Email = email;
             Phone = phone;
-            if(!string.IsNullOrWhiteSpace(avatar))
-               Avatar = avatar;
+            Password = password;
+            if (!string.IsNullOrWhiteSpace(avatar))
+                Avatar = avatar;
+            RoleId = roleId == 0 ? 3 : roleId;
+            IsActive = false;
+            EmailConfirm = false;
+            IsDelete = false;
+        }
+
+
+        public void Edit(string fullName, string email, string phone, string avatar, long roleId)
+        {
+            FullName = fullName;
+            Email = email;
+            Phone = phone;
+            if (!string.IsNullOrWhiteSpace(avatar))
+                Avatar = avatar;
             RoleId = roleId;
         }
 
