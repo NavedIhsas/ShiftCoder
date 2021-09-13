@@ -41,9 +41,8 @@ namespace ShiftCoderQuery.Contract.Course
         public List<CourseQueryModel> CourseTeacher { get; set; }
         public long CourseGroupId { get; set; }
         public long Id { get; set; }
-        public TimeSpan TotalTime { get; set; }
         public string CourseLevel { get; set; }
-        public int CommentCount { get; set; }
+        public int? VisitCount { get; set; }
         public string CourseStatus { get; set; }
         public List<CourseSuitableViewModel> SuitableCourse { get; set; }
         public List<AfterCourseViewModel> AfterCourse { get; set; }

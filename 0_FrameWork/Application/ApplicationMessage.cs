@@ -21,4 +21,10 @@
         public const int Course = 1;
         public const int Article = 2;
     }
+
+    public class VisitType
+    {
+        public const int Course = 1;
+        public const int Article = 2;
+    }
 }

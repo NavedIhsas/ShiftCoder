@@ -1,0 +1,10 @@
+﻿@model List<Shop.Management.Application.Contract.CourseGroup.CourseGroupViewModel>
+@foreach (var course in Model)
+{
+    <span class="row text-primary" style="margin-right: 3px"> @course.Title 
+    
+        <a class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = course.Id})">ویرایش</a>
+    </span>
+    
+    
+}

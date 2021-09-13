@@ -6,6 +6,6 @@ namespace ShiftCoderQuery.Contract.Article
     {
         List<LatestArticleQueryModel> LatestArticle();
         List<GetAllArticleQueryModel> GetAllArticles(SearchArticleQueryModel search);
-        SinglePageArticleQueryModel GetSingleArticleBy(string slug);
+        SinglePageArticleQueryModel GetSingleArticleBy(string slug,string ipAddress);
     }
 }

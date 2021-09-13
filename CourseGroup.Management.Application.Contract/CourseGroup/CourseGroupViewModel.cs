@@ -1,4 +1,6 @@
-﻿namespace Shop.Management.Application.Contract.CourseGroup
+﻿using System.Collections.Generic;
+
+namespace Shop.Management.Application.Contract.CourseGroup
 {
     public class CourseGroupViewModel
     {
@@ -10,6 +12,11 @@
         public string SubGroup { get; set; }
         public long? SubGroupId { get; set; }
 
+        public List<CourseGroupViewModel> Sub { get; set; }
 
+        public CourseGroupViewModel()
+        {
+            Sub = new List<CourseGroupViewModel>();
+        }
     }
 }

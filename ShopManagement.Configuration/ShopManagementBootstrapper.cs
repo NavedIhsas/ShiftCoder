@@ -66,7 +66,7 @@ namespace ShopManagement.Configuration
 
             service.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
 
-
+           
 
 
             service.AddDbContext<ShopContext>(option =>

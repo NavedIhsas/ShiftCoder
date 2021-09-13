@@ -20,7 +20,8 @@ namespace WebHost.Pages
         public SinglePageArticleQueryModel Article;
         public void OnGet(string id)
         {
-            Article = _article.GetSingleArticleBy(id);
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            Article = _article.GetSingleArticleBy(id,ipAddress);
         }
         public IActionResult OnPost(CreateCommentViewModel command, string articleSlug)
         {

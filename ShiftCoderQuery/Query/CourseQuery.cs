@@ -5,6 +5,7 @@ using _0_Framework.Application;
 using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Infrastructure.EfCore;
+using CommentManagement.Domain.VisitAgg;
 using CommentManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Comment;
@@ -32,14 +33,16 @@ namespace ShiftCoderQuery.Query
         private readonly CommentContext _comment;
         private readonly AccountContext _account;
         private readonly IAccountRepository _accountRepository;
+        private readonly IVisitRepository _visit;
 
 
-        public CourseQuery(ShopContext context, CommentContext comment, AccountContext account, IAccountRepository accountRepository)
+        public CourseQuery(ShopContext context, CommentContext comment, AccountContext account, IAccountRepository accountRepository, IVisitRepository visit)
         {
             _context = context;
             _comment = comment;
             _account = account;
             _accountRepository = accountRepository;
+            _visit = visit;
         }
 
         public List<GetAllCourseQueryModel> GetAllCourse(CourseQuerySearchModel searchQuery, List<long> group)
@@ -195,7 +198,7 @@ namespace ShiftCoderQuery.Query
         }
 
 
-        public CourseQueryModel GetCourseBySlug(string slug)
+        public CourseQueryModel GetCourseBySlug(string slug, string ipAddress)
         {
             var course = _context.Courses.Include(x => x.CourseLevel).Include(x => x.CourseStatus)
                 .Include(x => x.CourseGroup).Include(x => x.UserCourses)
@@ -233,7 +236,27 @@ namespace ShiftCoderQuery.Query
 
             if (course == null) return null;
 
+            #region Visit
 
+            var visit = _visit.GetUsedBy(ipAddress,VisitType.Course,course.Id);
+
+            if (visit != null && visit.LastVisitDateTime.Date !=DateTime.Now)
+            {
+                visit.ReduceVisit(visit.NumberOfVisit);
+                visit.SetDateTime();
+                _visit.SaveChanges();
+            }
+            else if(visit==null)
+            {
+                visit = new Visit(VisitType.Course, ipAddress, DateTime.Now, 1,course.Id);
+                _visit.Create(visit);
+                _visit.SaveChanges();
+            }
+            course.VisitCount = _visit.GetNumberOfVisit(VisitType.Course, course.Id);
+
+            #endregion
+
+            #region Teacher
 
             var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == course.TeacherId);
             course.TeacherBio = teacher?.Bio;
@@ -245,6 +268,9 @@ namespace ShiftCoderQuery.Query
             course.CourseTeacher = _context.Courses.Where(x => x.TeacherId == teacher.Id).Select(selector: x => new { x.Name, x.Slug }).
                 Select(x => new CourseQueryModel() { Name = x.Name, Slug = x.Slug }).ToList();
 
+            #endregion
+
+            #region Comment
 
             var comment = _comment.Comments
                 .Where(x => x.Type == 1).Where(x => x.IsConfirmed).Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
@@ -263,13 +289,26 @@ namespace ShiftCoderQuery.Query
             foreach (var item in comment)
                 MapChildren(item);
 
-
             course.Comments = comment;
             var comments = _comment.Comments.Where(x => x.OwnerRecordId == course.Id && x.Type == CommentType.Course).ToList();
             course.CommentList = comments;
 
+            #endregion
+
             return course;
         }
+
+        public bool UserInCourse(string email, long courseId)
+        {
+            var userId = _accountRepository.GetUserIdBy(email);
+            return _context.UserCourses.Any(x => x.AccountId == userId && x.CourseId == courseId);
+        }
+
+        public CourseEpisode GetEpisodeFile(long episodeId)
+            => _context.CourseEpisodes.FirstOrDefault(x => x.Id == episodeId);
+
+
+        #region Mapping Single Course
 
         private static List<UserCourseViewModel> MapUserCourse(IEnumerable<UserCourse> userCourses)
         {
@@ -280,16 +319,7 @@ namespace ShiftCoderQuery.Query
             }).ToList();
         }
 
-        public bool UserInCourse(string email, long courseId)
-        {
-            var userId = _accountRepository.GetUserIdBy(email);
-            return _context.UserCourses.Any(x => x.AccountId == userId && x.CourseId == courseId);
-        }
-
-        public CourseEpisode GetEpisodeFile(long episodeId)
-       => _context.CourseEpisodes.FirstOrDefault(x => x.Id == episodeId);
-
-
+      
 
         private void MapChildren(CommentQueryModel parent)
         {
@@ -355,5 +385,7 @@ namespace ShiftCoderQuery.Query
                 Title = x.Title
             }).ToList();
         }
+
+        #endregion
     }
 }

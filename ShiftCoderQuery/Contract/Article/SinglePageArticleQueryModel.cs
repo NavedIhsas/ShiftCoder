@@ -17,6 +17,7 @@ namespace ShiftCoderQuery.Contract.Article
         public string MetaDescription { get; set; }
         public string CanonicalAddress { get; set; }
         public bool IsPublish { get; set; }
+        public int? VisitCount { get; set; }
         public string PublishDate { get; set; }
         public string CategoryName { get; set; }
         public List<CommentQueryModel> Comments { get; set; }

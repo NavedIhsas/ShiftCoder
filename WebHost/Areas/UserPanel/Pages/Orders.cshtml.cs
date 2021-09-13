@@ -1,4 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using _0_Framework.Application.ZarinPal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,14 +15,16 @@ namespace WebHost.Areas.UserPanel.Pages
     [Authorize]
     public class OrdersModel : PageModel
     {
-        
+
         private readonly IOrderRepository _order;
         private readonly IDiscountQuery _discount;
+        private readonly IZarinPalFactory _zarinPal;
 
-        public OrdersModel(IOrderRepository order, IDiscountQuery discount)
+        public OrdersModel(IOrderRepository order, IDiscountQuery discount, IZarinPalFactory zarinPal)
         {
             _order = order;
             _discount = discount;
+            _zarinPal = zarinPal;
         }
 
         public string Message;
@@ -28,21 +32,30 @@ namespace WebHost.Areas.UserPanel.Pages
         public void OnGet(long id, string type = "")
         {
             ViewData["discountType"] = type.ToString();
-            List = _order.GetOrderUser(User.Identity.Name,id);
+            List = _order.GetOrderUser(User.Identity.Name, id);
         }
 
         public IActionResult OnGetFinallyOrder(long id)
         {
-            
-            var order = _order.OrderFinally(User.Identity.Name, id);
+
+           _order.OrderFinally(User.Identity.Name, id);
             return RedirectToPage("Index");
         }
 
         public IActionResult OnPostUseDiscount(long orderId, string code)
         {
             DiscountUseType type = _discount.UseDiscount(orderId, code);
-            return Redirect("/UserPanel/Orders/"+ orderId +"?type=" + type.ToString());
+            return Redirect("/UserPanel/Orders/" + orderId + "?type=" + type.ToString());
+        }
+
+        public IActionResult OnGetPay(long id)
+        {
+            var order = _order.Pay(User.Identity.Name, id);
+            var paymentResponse = _zarinPal.CreatePaymentRequest(order.OrderSum.ToString(CultureInfo.InvariantCulture), "","","",id);
+            return Redirect($"https://{_zarinPal.Prefix}.zarintPal.com/pg/startPay/{paymentResponse.Authority}");
 
         }
+
+       
     }
 }

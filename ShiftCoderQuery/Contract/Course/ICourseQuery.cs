@@ -8,7 +8,7 @@ namespace ShiftCoderQuery.Contract.Course
         List<GetAllCourseQueryModel> GetAllCourse(CourseQuerySearchModel searchQuery, List<long> groupId);
         List<GetAllCourseQueryModel> LatestCourses();
         List<GetAllCourseQueryModel> PopularCourses();
-        CourseQueryModel GetCourseBySlug(string slug);
+        CourseQueryModel GetCourseBySlug(string slug,string ipAddress);
 
         bool UserInCourse(string email, long courseId);
 

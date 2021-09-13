@@ -2,47 +2,74 @@
 
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
-        <a asp-page="Index" class="nav-link active" aria-current="page" >خانه</a>
+        <a asp-page="Index" class="nav-link active" aria-current="page">خانه</a>
     </li>
     @foreach (var group in Model.Where(x => x.SubGroupId == null))
     {
         <li class="nav-item">
-            <a asp-page="Courses" asp-route-groupId="@group.Id" class="nav-link link-navbar-header" >@group.Title</a>
-        </li>
-        if (Model.Any(x => x.SubGroupId == group.Id))
-        {
-            @foreach (var group2 in Model.Where(x => x.SubGroupId == group.Id))
-            {
-                <li class="nav-item">
-                    <a asp-page="Courses" asp-route-groupId="@group.Id"  class="nav-link dropdown-toggle link-navbar-header"
-                       id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        @group2.Title
-                    </a>
-                    <div class="dropdown-menu bgcolo-ul-header" id="megamenu-dropdown" aria-labelledby="navbarDropdown">
-                        <div class="container-fluid">
-                            <div class="row">
-                                @if (Model.Any(x => x.SubGroupId == group2.Id))
+            <a asp-page="Courses" asp-route-groupId="@group.Id" class="nav-link @(Model.Any(x=>x.SubGroupId==group.Id)?"dropdown-toggle":"")  link-navbar-header"
+               id="@(Model.Any(x=>x.SubGroupId==group.Id)?"navbarDropdown":"") " role="button" data-bs-toggle="@(Model.Any(x=>x.SubGroupId==group.Id)?"dropdown":"")" aria-expanded="false" >
+                @group.Title
+            </a>
+            <div class="dropdown-menu bgcolo-ul-header" id="megamenu-dropdown" aria-labelledby="navbarDropdown">
+                <div class="container-fluid">
+                    <div class="row">
+                        @if (Model.Any(x => x.SubGroupId == group.Id))
+                        {
+                            @foreach (var sub in Model.Where(x => x.SubGroupId == group.Id))
+                            {
+                                <div class="col-12 col-md-3 text-center">
+                                    <ul>
+                                        <li>
+                                            @if (Model.Any(x => x.SubGroupId == sub.Id))
+                                            {
+                                                <span class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius">@sub.Title</span>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="Courses" asp-route-SearchModel.Name="@sub.Title" class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius">@sub.Title</a>
+                                            }
+                                        </li>
+                                        @if (Model.Any(x => x.SubGroupId == sub.Id))
+                                        {
+                                            <li>
+                                                <img src="~/icons/arrow-down.png" alt="arrow down"
+                                                     class="arrow-down-header my-3">
+                                            </li>
+                                        }
+                                        <li>
+                                            @if (Model.Any(x => x.SubGroupId == sub.Id))
+                                            {
+                                                <ul class="ul-item-megamenu">
+                                                    @foreach (var sub2 in Model.Where(x => x.SubGroupId == sub.Id))
+                                                    {
+                                                        <li class="li-item-megamenu my-2">
+                                                            <a asp-page="Courses" asp-route-SearchModel.Name="@sub2.Title"
+                                                               class="text-white">@sub2.Title</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
+                                @if (Model.Any(x => x.SubGroupId == sub.Id))
                                 {
-                                    @foreach (var sub in Model.Where(x => x.SubGroupId == group2.Id))
+                                    @foreach (var group2 in Model.Where(x => x.SubGroupId == sub.Id))
                                     {
                                         <div class="col-12 col-md-3 text-center">
-
                                             <ul>
                                                 <li>
-
-                                                    @if (Model.Any(x => x.SubGroupId == sub.Id))
+                                                    @if (Model.Any(x => x.SubGroupId == group2.Id))
                                                     {
-                                                        <span class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius">@sub.Title</span>
-
+                                                        <span class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius">@group2.Title</span>
                                                     }
                                                     else
                                                     {
-                                                        <a asp-page="Courses" asp-route-SearchModel.Name="@sub.Title" class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius">@sub.Title</a>
-
+                                                        <a asp-page="Courses" asp-route-SearchModel.Name="@group2.Title" class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius">@group2.Title</a>
                                                     }
-
                                                 </li>
-                                                @if (Model.Any(x => x.SubGroupId == sub.Id))
+                                                @if (Model.Any(x => x.SubGroupId == group2.Id))
                                                 {
                                                     <li>
                                                         <img src="~/icons/arrow-down.png" alt="arrow down"
@@ -50,10 +77,10 @@
                                                     </li>
                                                 }
                                                 <li>
-                                                    @if (Model.Any(x => x.SubGroupId == sub.Id))
+                                                    @if (Model.Any(x => x.SubGroupId == group2.Id))
                                                     {
                                                         <ul class="ul-item-megamenu">
-                                                            @foreach (var sub2 in Model.Where(x => x.SubGroupId == sub.Id))
+                                                            @foreach (var sub2 in Model.Where(x => x.SubGroupId == group2.Id))
                                                             {
                                                                 <li class="li-item-megamenu my-2">
                                                                     <a asp-page="Courses" asp-route-SearchModel.Name="@sub2.Title"
@@ -67,13 +94,14 @@
                                         </div>
                                     }
                                 }
+                            }
+                        }
 
-                            </div>
-                        </div>
                     </div>
-                </li>
-            }
-
-        }
+                </div>
+            </div>
+        </li>
     }
 </ul>
+
+

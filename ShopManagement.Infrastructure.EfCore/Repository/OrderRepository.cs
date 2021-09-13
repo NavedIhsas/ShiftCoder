@@ -59,12 +59,21 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 }).ToList();
         }
 
+        public Order Pay(string email, long orderId)
+        {
+            var userId = _account.GetUserIdBy(email);
+
+            var order = _context.Orders.Include(x => x.OrderDetails).ThenInclude(x => x.Course)
+                .FirstOrDefault(x => x.AccountId == userId && x.Id == orderId);
+          return order ?? null;
+        }
         public bool OrderFinally(string email, long orderId)
         {
             var userId = _account.GetUserIdBy(email);
 
             var order = _context.Orders.Include(x => x.OrderDetails).ThenInclude(x => x.Course)
                 .FirstOrDefault(x => x.AccountId == userId && x.Id == orderId);
+
             if (order == null || order.IsFinally) return false;
 
             //TODO wallet management

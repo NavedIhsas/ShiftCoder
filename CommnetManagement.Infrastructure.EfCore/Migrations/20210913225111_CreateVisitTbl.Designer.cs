@@ -4,14 +4,16 @@ using CommentManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CommentManagement.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(CommentContext))]
-    partial class CommentContextModelSnapshot : ModelSnapshot
+    [Migration("20210913225111_CreateVisitTbl")]
+    partial class CreateVisitTbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,9 +87,6 @@ namespace CommentManagement.Infrastructure.EfCore.Migrations
 
                     b.Property<int>("NumberOfVisit")
                         .HasColumnType("int");
-
-                    b.Property<long>("RecordOwnerId")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");

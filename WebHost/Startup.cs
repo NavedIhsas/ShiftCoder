@@ -1,7 +1,9 @@
 using System;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
+using _0_Framework.Application.ZarinPal;
 using AccountManagement.Infrastructure;
+using AutoMapper;
 using BlogManagement.Infrastructure;
 using CommentManagement.Infrastructure;
 using DiscountManagement.Infrastructure;
@@ -31,14 +33,14 @@ namespace WebHost
         {
             services.AddRazorPages();
             services.AddHttpContextAccessor();
-
+            
             #region IOC
-
             var connectionString = Configuration.GetConnectionString("ShiftCoderConnection");
             services.AddTransient<IFileUploader, FileUploader>();
             services.AddTransient<IEpisodeFileUploader, EpisodeUploadFile>();
             services.AddTransient<IAuthHelper, AuthHelper>();
             services.AddTransient<IPasswordHasher,PasswordHasher>();
+            services.AddTransient<IZarinPalFactory, ZarinPalFactory>();
             ShopManagementBootstrapper.Configure(services, connectionString);
             InventoryManagementBootstrapper.Configure(services, connectionString);
             BlogManagementBootstrapper.Configure(services, connectionString);

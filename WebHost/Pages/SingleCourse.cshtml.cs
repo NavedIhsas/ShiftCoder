@@ -32,19 +32,20 @@ namespace WebHost.Pages
         public CourseQueryModel Course;
         public void OnGet(string id)
         {
-            Course = _course.GetCourseBySlug(id);
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            Course = _course.GetCourseBySlug(id,ipAddress);
         }
 
         public IActionResult OnPost(CreateCommentViewModel command,string productSlug)
         {
             command.Type = 1;
-            var post = _aaApplication.Create(command);
+          _aaApplication.Create(command);
             return RedirectToPage("SingleCourse", new { id = productSlug });
         }
 
         public IActionResult OnGetDownloadFile(long id)
         {
-            var user = _account.GetUserBy(User.Identity.Name);
+           _account.GetUserBy(User.Identity.Name);
           
             var episode = _course.GetEpisodeFile(id);
             var userInCourse = _course.UserInCourse(User.Identity.Name, episode.CourseId);

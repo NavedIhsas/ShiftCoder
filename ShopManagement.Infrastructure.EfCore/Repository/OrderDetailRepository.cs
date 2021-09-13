@@ -27,7 +27,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
           }).ToList();
       }
 
-      public OrderDetail? GetOrderDetailBy(long orderId, long courseId)
+      public OrderDetail GetOrderDetailBy(long orderId, long courseId)
       {
           var orderDetail= _context.OrderDetails.FirstOrDefault(x => x.OrderId == orderId && x.CourseId == courseId);
           return orderDetail ?? null;
