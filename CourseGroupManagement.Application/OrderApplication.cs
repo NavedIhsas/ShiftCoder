@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
+using CommentManagement.Domain.Notification.Agg;
 using Shop.Management.Application.Contract.Order;
 using ShopManagement.Domain.CourseAgg;
 using ShopManagement.Domain.OrderAgg;
@@ -13,13 +15,15 @@ namespace ShopManagement.Application
         private readonly IAccountRepository _account;
         private readonly ICourseRepository _course;
         private readonly IOrderDetailRepository _orderDetail;
+        private readonly INotificationRepository _notification;
 
-        public OrderApplication(IOrderRepository order, IAccountRepository account, ICourseRepository course, IOrderDetailRepository orderDetail)
+        public OrderApplication(IOrderRepository order, IAccountRepository account, ICourseRepository course, IOrderDetailRepository orderDetail, INotificationRepository notification)
         {
             _order = order;
             _account = account;
             _course = course;
             _orderDetail = orderDetail;
+            _notification = notification;
         }
 
       
@@ -55,6 +59,11 @@ namespace ShopManagement.Application
             }
             _orderDetail.SaveChanges();
             _order.SaveChanges();
+
+            var notification = new Notification($"کاربر سفارشی را برای ({course.Name}) ثبت کرد.", OwnerType.Order,order.Id);
+            _notification.Create(notification);
+            _notification.SaveChanges();
+
             return order.Id;
         }
       

@@ -1,0 +1,126 @@
+﻿@page
+@using _0_FrameWork.Application
+@model WebHost.Areas.Administration.Pages.Notifications.IndexModel
+@{
+    ViewData["Title"] = "پنل اعلانات";
+}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <br />
+            <div class="row col col-md-12">
+                <label style="margin-right: 30px"> <strong>جستجو...</strong></label>
+                <form method="get">
+                    <div class=" col-md-3">
+                        <select asp-for="SearchModel.Type" asp-items="@Model.Types" type="text" class="form-control">
+                            <option value="0" selected> انتخاب گروه...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-info">جستجو</button>
+                        <a class="btn btn-success" asp-page="./Index">مشاهده همه</a>
+                    </div>
+                </form>
+            </div>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> پنل اعلانات
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        @foreach (var item in Model.List)
+                        {
+                            switch (item.Type)
+                            {
+                                case OwnerType.Comment:
+                                    <a class="list-group-item">
+                                        <i class="fa fa-comment fa-fw"></i> @item.Text
+                                        <span class="pull-left text-muted small">
+                                            <em>@item.CreationDate.TimeAgo()</em>
+                                        </span>
+                                    </a>
+                                    break;
+
+                                case OwnerType.Account:
+                                    <a class="list-group-item">
+                                        <i class="fa fa-user fa-fw"></i> @item.Text
+                                        <span class="pull-left text-muted small">
+                                            <em>@item.CreationDate.TimeAgo()</em>
+                                        </span>
+                                    </a>
+                                    break;
+
+                                case OwnerType.Order:
+                                    <a href="#" class="list-group-item">
+                                        <i class="fa fa-shopping-cart fa-fw"></i> @item.Text
+                                        <span class="pull-left text-muted small">
+                                            <em>@item.CreationDate.TimeAgo()</em>
+                                        </span>
+                                    </a>
+                                    break;
+
+                                case OwnerType.Course:
+                                    <a href="#" class="list-group-item">
+                                        <i class="fa fa-download fa-fw"></i> @item.Text
+                                        <span class="pull-left text-muted small">
+                                            <em>@item.CreationDate.TimeAgo()</em>
+                                        </span>
+                                    </a>
+                                    break;
+                            }
+
+
+
+
+
+                            @*<a href="#" class="list-group-item">
+                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                    <span class="pull-left text-muted small">
+                                        <em>27 minutes ago</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-tasks fa-fw"></i> New Task
+                                    <span class="pull-left text-muted small">
+                                        <em>43 minutes ago</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                    <span class="pull-left text-muted small">
+                                        <em>11:32 AM</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+                                    <span class="pull-left text-muted small">
+                                        <em>11:13 AM</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-warning fa-fw"></i> Server Not Responding
+                                    <span class="pull-left text-muted small">
+                                        <em>10:57 AM</em>
+                                    </span>
+                                </a>
+
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-money fa-fw"></i> Payment Received
+                                    <span class="pull-left text-muted small">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </a>*@
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

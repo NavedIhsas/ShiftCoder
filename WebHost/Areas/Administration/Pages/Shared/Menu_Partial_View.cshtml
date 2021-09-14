@@ -1,4 +1,4 @@
-﻿<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+﻿
 
     <div class="navbar-default navbar-static-side" role="navigation" >
         <div class="sidebar-collapse">
@@ -17,6 +17,15 @@
                     <a asp-page="/Index"><i class="fa fa-dashboard fa-fw"></i> داشبورد</a>
                 </li>
                 <li>
+                    <a asp-page=""><i class="fa fa-user-alt"></i> فعالیت ها (مدیر)<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" style="height: auto;">
+                        <li>
+                            <a asp-page="/Notifications/Index">اعلانات </a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
                     
                 
                 <li>
@@ -122,5 +131,5 @@
             </ul>
         </div>
     </div>
-</nav>
+
 

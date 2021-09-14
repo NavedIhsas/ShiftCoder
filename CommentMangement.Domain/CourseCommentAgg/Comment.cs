@@ -25,7 +25,7 @@ namespace CommentManagement.Domain.CourseCommentAgg
             Type = type;
             ParentId = parentId;
             IsConfirmed = false;
-            IsCanceled = true;
+            IsCanceled = false;
         }
 
         public void IsConfirm(long id)

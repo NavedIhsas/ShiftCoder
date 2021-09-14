@@ -79,5 +79,6 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
             return publishDate ?? null;
         }
 
-    }
+        public Article GetArticleBy(long articleId) => _context.Articles.Find(articleId);
+   }
 }

@@ -11,6 +11,7 @@ namespace BlogManagement.Domain.ArticleAgg
         List<ArticleViewModel> Search(ArticleSearchModel search);
         bool? GetPublishStatus(long articleId);
         DateTime? GetPublishDate(long articleId);
+        Article GetArticleBy(long articleId);
 
     }
 }

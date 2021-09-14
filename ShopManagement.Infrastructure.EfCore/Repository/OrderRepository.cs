@@ -44,6 +44,21 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
 
         }
 
+        public List<OrderViewModel> GetAllOrderForAdminPanel()
+        {
+           
+            return _context.Orders.Include(x => x.OrderDetails)
+                .ThenInclude(x => x.Course).Where(x => x.IsFinally).Select(x => new OrderViewModel
+                {
+                    AccountId = x.AccountId,
+                    IsFinally = x.IsFinally,
+                    OrderSum = x.OrderSum,
+                    Id = x.Id,
+                    CreationDate = x.CreationDate.ToFarsi(),
+                    OrderDetails = MapOrderDetail(x.OrderDetails),
+                }).ToList();
+        }
+
         public List<OrderViewModel> GetAllOrderUser(string email)
         {
             var userId = _account.GetUserIdBy(email);
@@ -67,6 +82,8 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 .FirstOrDefault(x => x.AccountId == userId && x.Id == orderId);
           return order ?? null;
         }
+
+
         public bool OrderFinally(string email, long orderId)
         {
             var userId = _account.GetUserIdBy(email);

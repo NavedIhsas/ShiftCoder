@@ -1,0 +1,77 @@
+﻿
+@using _0_FrameWork.Application
+@using CommentManagement.Domain.CourseCommentAgg
+@model IEnumerable<CommentManagement.Domain.Notification.Agg.Notification>
+@inject ICommentRepository _comment
+
+
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+
+    </a>
+    <ul class="dropdown-menu dropdown-alerts">
+        @foreach (var item in Model)
+        {
+
+            @if (item.Type == OwnerType.Comment)
+            {
+                var comments = _comment.GetCommentBy(item.RecordOwnerId).Take(3);
+                <li>
+                    <a asp-page="Comment/Index">
+                        <div>
+                            <i class="fa fa-comment fa-fw"></i> @item.Text.Replace(item.Text, "کمنت جدید ")
+                            @foreach (var comment in comments.Where(comment => !comment.IsConfirmed && !comment.IsCanceled))
+                            {
+                                <span style="font-size: 11px;" class="text-warning">در انتظار</span>
+                            }
+                            <span class="pull-left text-muted small">@item.CreationDate.TimeAgo()</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="divider"></li>
+            }
+
+            @if (item.Type == OwnerType.Order)
+            {
+                <li>
+                    <a asp-page="Comment/Index" class="list-group-item">
+                        <div>
+                            <i class="fa fa-shopping-cart fa-fw"></i> @item.Text.Replace(item.Text, "سفارشی ثبت شد ")
+
+                            <span class="pull-left text-muted small">@item.CreationDate.TimeAgo()</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="divider"></li>
+            }
+
+            @if (item.Type == OwnerType.Account)
+            {
+                <li>
+                    <a asp-page="Comment/Index" class="list-group-item">
+                        <div>
+                            <i class="fa fa-user fa-fw"></i> @item.Text.Replace(item.Text, "عضو جدید ")
+
+                            <span class="pull-left text-muted small">@item.CreationDate.TimeAgo()</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="divider"></li>
+            }
+        }
+        @if (!Model.Any())
+        {
+            <li>
+                <a>
+                    <div>
+                        <span>برای امروز هیچ اعلانی وجود ندارد</span>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+        }
+
+    </ul>
+    <!-- /.dropdown-alerts -->
+</li>

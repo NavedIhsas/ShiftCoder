@@ -17,18 +17,15 @@ namespace WebHost.Pages
         {
 
         }
-        public IActionResult OnPostRegister(RegisterUserViewModel command)
+        public IActionResult OnPost(RegisterUserViewModel command)
         {
-            if (!ModelState.IsValid) return Page();
+          
 
             var register = _account.Create(command);
-            if (register.IsSucceeded)
-            {
-                ViewData["IsSuccess"] = true;
-                return Page();
-            }
+            if (!register.IsSucceeded) return RedirectToPage("Index");
+            ViewData["IsSuccess"] = true;
+            return Page();
 
-            return RedirectToPage("Index");
         }
 
         public IActionResult OnGetLogin()
@@ -37,7 +34,7 @@ namespace WebHost.Pages
         }
         public IActionResult OnPostLogin(LoginViewModel login)
         {
-            var userLogin = _account.Login(login);
+            _account.Login(login);
             return RedirectToPage("Index");
         }
 

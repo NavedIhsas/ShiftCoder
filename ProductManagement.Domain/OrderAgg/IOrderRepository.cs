@@ -12,6 +12,7 @@ namespace ShopManagement.Domain.OrderAgg
        List<OrderViewModel> GetAllOrderUser(string email);
        bool OrderFinally(string email, long orderId);
        Order Pay(string email, long orderId);
+       List<OrderViewModel> GetAllOrderForAdminPanel();
 
 
    }

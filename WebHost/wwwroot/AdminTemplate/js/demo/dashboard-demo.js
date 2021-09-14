@@ -65,7 +65,7 @@ $(function() {
         element: 'morris-donut-chart',
         data: [{
             label: "Download Sales",
-            value: 12
+            value: 50
         }, {
             label: "In-Store Sales",
             value: 30
@@ -81,11 +81,11 @@ $(function() {
         data: [{
             y: '2006',
             a: 100,
-            b: 90
+            b: 100
         }, {
             y: '2007',
             a: 75,
-            b: 65
+            b: 100
         }, {
             y: '2008',
             a: 50,

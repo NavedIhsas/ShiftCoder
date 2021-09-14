@@ -7,15 +7,15 @@ using ShopManagement.Domain.CourseEpisodeAgg;
 
 namespace ShopManagement.Infrastructure.EfCore.Repository
 {
-   public class CourseEpisodeRepository:RepositoryBase<long, CourseEpisode>, ICourseEpisodeRepository
-   {
-       private readonly ShopContext _context;
+    public class CourseEpisodeRepository : RepositoryBase<long, CourseEpisode>, ICourseEpisodeRepository
+    {
+        private readonly ShopContext _context;
 
-       public CourseEpisodeRepository(ShopContext dbContext, ShopContext context) : base(dbContext)
-       {
-           _context = context;
-       }
-       
+        public CourseEpisodeRepository(ShopContext dbContext, ShopContext context) : base(dbContext)
+        {
+            _context = context;
+        }
+
         public EditCourseEpisodeViewModel GetDetails(long id)
         {
             return _context.CourseEpisodes.Select(x => new EditCourseEpisodeViewModel()
@@ -33,7 +33,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
 
         public List<CourseEpisodeViewModel> Search(CourseEpisodeSearchModel command)
         {
-            var query= _context.CourseEpisodes.Include(x => x.Course).Select(x => new CourseEpisodeViewModel()
+            var query = _context.CourseEpisodes.Include(x => x.Course).Select(x => new CourseEpisodeViewModel()
             {
 
                 Title = x.Title,
@@ -42,14 +42,14 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 CourseName = x.Course.Name,
                 FileName = x.FileName,
                 CourseId = x.CourseId,
-                Id=x.Id,
+                Id = x.Id,
             }).ToList();
 
             if (!string.IsNullOrWhiteSpace(command.Title))
                 query = query.Where(x => x.Title.Contains(command.Title.Trim())).ToList();
 
-            if(command.CourseId>0)
-                query = query.Where(x => x.CourseId==command.CourseId).ToList();
+            if (command.CourseId > 0)
+                query = query.Where(x => x.CourseId == command.CourseId).ToList();
 
             var orderly = query.OrderByDescending(x => x.Id).ToList();
 
@@ -58,9 +58,21 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
 
         public string GetCourseGroupSlugBy(long courseId)
         {
-            return _context.CourseEpisodes.Include(x => x.Course).ThenInclude(x => x.CourseGroup)
+            var course = _context.CourseEpisodes.Include(x => x.Course).ThenInclude(x => x.CourseGroup)
                 .FirstOrDefault(x => x.Course.Id == courseId)?.Course.CourseGroup.Slug;
+            return course;
         }
-        
-   }
+
+        public CourseEpisodeViewModel GetEpisodeIdBy(long courseId)
+        {
+            return _context.CourseEpisodes.
+                Include(x => x.Course).
+                Select(x => new CourseEpisodeViewModel()
+                {
+                    Id = x.Id,
+                    CourseId = x.CourseId,
+                })
+                .FirstOrDefault(x => x.CourseId == courseId);
+        }
+    }
 }

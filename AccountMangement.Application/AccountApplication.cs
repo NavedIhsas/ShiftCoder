@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Domain.RoleAgg;
+using CommentManagement.Domain.Notification.Agg;
 
 namespace AccountManagement.Application
 {
@@ -11,12 +12,14 @@ namespace AccountManagement.Application
         private readonly IAccountRepository _repository;
         private readonly ITeacherRepository _teacher;
         private readonly IFileUploader _fileUploader;
+        private readonly INotificationRepository _notification;
 
-        public AccountApplication(IAccountRepository repository, IFileUploader fileUploader, ITeacherRepository teacher)
+        public AccountApplication(IAccountRepository repository, IFileUploader fileUploader, ITeacherRepository teacher, INotificationRepository notification)
         {
             _repository = repository;
             _fileUploader = fileUploader;
             _teacher = teacher;
+            _notification = notification;
         }
         public OperationResult Create(RegisterUserViewModel command)
         {
@@ -40,6 +43,10 @@ namespace AccountManagement.Application
                     command.RoleId);
                 _repository.Create(create);
             }
+
+            var notification = new Notification($"کاربری جدید با نام ({command.FullName}) در سایت ثبت نام کرد",OwnerType.Account,command.Id);
+            _notification.Create(notification);
+            _notification.SaveChanges();
 
             _repository.SaveChanges();
             return operation.Succeeded();

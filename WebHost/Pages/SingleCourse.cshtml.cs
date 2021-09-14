@@ -1,7 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
 using CommentManagement.Application.Contract.Comment;
+using CommentManagement.Domain.Notification.Agg;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -19,13 +21,15 @@ namespace WebHost.Pages
         private readonly ICommentApplication _aaApplication;
         private readonly IAccountRepository _account;
         private readonly ICourseEpisodeRepository _episode;
+        private readonly INotificationRepository _notification;
 
-        public SingleCourseModel(ICourseQuery course, ICommentApplication aaApplication, IAccountRepository account, ICourseEpisodeRepository episode)
+        public SingleCourseModel(ICourseQuery course, ICommentApplication aaApplication, IAccountRepository account, ICourseEpisodeRepository episode, INotificationRepository notification)
         {
             _course = course;
             _aaApplication = aaApplication;
             _account = account;
             _episode = episode;
+            _notification = notification;
         }
 
 
@@ -45,10 +49,10 @@ namespace WebHost.Pages
 
         public IActionResult OnGetDownloadFile(long id)
         {
-           _account.GetUserBy(User.Identity.Name);
+          var user= _account.GetUserBy(User.Identity.Name);
           
             var episode = _course.GetEpisodeFile(id);
-            var userInCourse = _course.UserInCourse(User.Identity.Name, episode.CourseId);
+        
             var getGroupSlug = _episode.GetCourseGroupSlugBy(episode.CourseId);
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/{getGroupSlug}/EpisodeFiles",
@@ -57,11 +61,21 @@ namespace WebHost.Pages
             if (episode.IsFree)
             {
                 byte[] file = System.IO.File.ReadAllBytes(filePath);
-                return File(file, "application/force-download", episode.FileName);
+               var downloadFile= File(file, "application/force-download", episode.FileName);
+
+                var notification = new Notification($"دانلود فایل رایگان از دورۀ( {episode.Course.Name}).",
+                    OwnerType.Course, episode.Id);
+                _notification.Create(notification);
+                _notification.SaveChanges();
+
+                return downloadFile;
+
             }
 
             if (!User.Identity.IsAuthenticated) return Forbid();
             {
+                var userInCourse = _course.UserInCourse(User.Identity.Name, episode.CourseId);
+
                 if (!userInCourse) return Forbid();
 
                 byte[] file = System.IO.File.ReadAllBytes(filePath);

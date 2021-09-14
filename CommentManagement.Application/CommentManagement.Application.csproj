@@ -5,8 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ArticleManaagement.Domain\BlogManagement.Domain.csproj" />
     <ProjectReference Include="..\CommentMangement.Domain\CommentManagement.Domain.csproj" />
     <ProjectReference Include="..\CommnetManagement.Application.Contract\CommentManagement.Application.Contract.csproj" />
+    <ProjectReference Include="..\ProductManagement.Domain\ShopManagement.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -75,7 +75,7 @@ namespace ShiftCoderQuery.Query
 
             foreach (var item in query)
             {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == CommentType.Course).ToList();
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == OwnerType.Course).ToList();
                 item.Comments = comments;
 
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
@@ -142,7 +142,7 @@ namespace ShiftCoderQuery.Query
 
             foreach (var item in course)
             {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == CommentType.Course).ToList();
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == OwnerType.Course).ToList();
                 item.Comments = comments;
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
                 if (teacher == null) return null;
@@ -185,7 +185,7 @@ namespace ShiftCoderQuery.Query
 
             foreach (var item in popular)
             {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == CommentType.Course).ToList();
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == OwnerType.Course).ToList();
                 item.Comments = comments;
 
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
@@ -238,7 +238,7 @@ namespace ShiftCoderQuery.Query
 
             #region Visit
 
-            var visit = _visit.GetUsedBy(ipAddress,VisitType.Course,course.Id);
+            var visit = _visit.GetUsedBy(ipAddress, OwnerType.Course,course.Id);
 
             if (visit != null && visit.LastVisitDateTime.Date !=DateTime.Now)
             {
@@ -248,11 +248,11 @@ namespace ShiftCoderQuery.Query
             }
             else if(visit==null)
             {
-                visit = new Visit(VisitType.Course, ipAddress, DateTime.Now, 1,course.Id);
+                visit = new Visit(OwnerType.Course, ipAddress, DateTime.Now, 1,course.Id);
                 _visit.Create(visit);
                 _visit.SaveChanges();
             }
-            course.VisitCount = _visit.GetNumberOfVisit(VisitType.Course, course.Id);
+            course.VisitCount = _visit.GetNumberOfVisit(OwnerType.Course, course.Id);
 
             #endregion
 
@@ -273,7 +273,8 @@ namespace ShiftCoderQuery.Query
             #region Comment
 
             var comment = _comment.Comments
-                .Where(x => x.Type == 1).Where(x => x.IsConfirmed).Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
+                .OrderByDescending(x => x.CreationDate).
+                Where(x => x.Type == 1).Where(x => x.IsConfirmed).Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
                 .Select(x => new CommentQueryModel
                 {
                     Name = x.Name,
@@ -290,7 +291,7 @@ namespace ShiftCoderQuery.Query
                 MapChildren(item);
 
             course.Comments = comment;
-            var comments = _comment.Comments.Where(x => x.OwnerRecordId == course.Id && x.Type == CommentType.Course).ToList();
+            var comments = _comment.Comments.Where(x => x.OwnerRecordId == course.Id && x.Type == OwnerType.Course).ToList();
             course.CommentList = comments;
 
             #endregion

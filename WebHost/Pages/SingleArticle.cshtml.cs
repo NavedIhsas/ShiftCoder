@@ -25,7 +25,7 @@ namespace WebHost.Pages
         }
         public IActionResult OnPost(CreateCommentViewModel command, string articleSlug)
         {
-            command.Type = CommentType.Article;
+            command.Type = OwnerType.Article;
             var post = _comment.Create(command);
             ViewData["IsSuccess"] = true;
             return RedirectToPage(new{id=articleSlug});

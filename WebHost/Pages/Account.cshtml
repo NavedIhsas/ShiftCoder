@@ -24,7 +24,7 @@
                             delay);
                     </script>
                 }
-                <form  method="post" asp-page-handler="Register" id="form">
+                <form  method="post" id="form">
                     <label   for="usersName" class="label-input">نام کاربری :</label>
                     <input name="fullName" type="text" placeholder="yourName" autofocus autocomplete="on" required
                            id="usersName" class="inputs validation">
@@ -47,7 +47,6 @@
                     <div id="meesageRepass"></div>
                     <div id="container-submit">
                         <input type="submit" value="ورود" id="submit" class="validation" >
-
                     </div>
 
                     <a asp-page="Login" class="anchor-form">من قبلا ثبت نام کردم !</a>

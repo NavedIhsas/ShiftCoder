@@ -43,7 +43,7 @@ namespace ShiftCoderQuery.Query
 
             foreach (var item in article)
             {
-                item.VisitCount = _visit.GetNumberOfVisit(VisitType.Article, item.Id);
+                item.VisitCount = _visit.GetNumberOfVisit(OwnerType.Article, item.Id);
             }
 
             return article;
@@ -108,7 +108,7 @@ namespace ShiftCoderQuery.Query
             if (article == null) return null;
 
 
-            var visit = _visit.GetUsedBy(ipAddress, VisitType.Article, article.Id);
+            var visit = _visit.GetUsedBy(ipAddress, OwnerType.Article, article.Id);
 
             if (visit != null && visit.LastVisitDateTime.Date != DateTime.Now)
             {
@@ -118,7 +118,7 @@ namespace ShiftCoderQuery.Query
             }
             else if (visit == null)
             {
-                visit = new Visit(VisitType.Article, ipAddress, DateTime.Now, 1,article.Id);
+                visit = new Visit(OwnerType.Article, ipAddress, DateTime.Now, 1,article.Id);
                 _visit.Create(visit);
                 _visit.SaveChanges();
             }
@@ -126,7 +126,7 @@ namespace ShiftCoderQuery.Query
 
             var comment = _comment.Comments.
 
-               Where(x => x.Type == CommentType.Article && x.ParentId == null)
+               Where(x => x.Type == OwnerType.Article && x.ParentId == null)
                .Where(x => x.OwnerRecordId == article.Id)
                .OrderByDescending(x => x.CreationDate)
                .Select(x => new CommentQueryModel
@@ -152,7 +152,7 @@ namespace ShiftCoderQuery.Query
         private void MapChildren(CommentQueryModel parent)
         {
             var sub = _comment.Comments
-                .Where(x => x.Type == CommentType.Article && x.ParentId == parent.Id)
+                .OrderByDescending(x=>x.CreationDate).Where(x => x.Type == OwnerType.Article && x.ParentId == parent.Id)
                 .Select(x => new CommentQueryModel
                 {
                     Name = x.Name,

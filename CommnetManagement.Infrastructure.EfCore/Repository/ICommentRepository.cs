@@ -42,5 +42,15 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
             var orderly = query.OrderByDescending(x => x.Id).ToList();
             return orderly;
         }
+
+        public List<CommentViewModel> GetCommentBy(long ownerId)
+        {
+            var comment= _context.Comments.Where(x =>x.Id == ownerId).Select(x=>new CommentViewModel()
+            {
+                IsCanceled = x.IsCanceled,
+                IsConfirmed = x.IsConfirmed,
+            }).ToList();
+            return comment;
+        }
     }
 }

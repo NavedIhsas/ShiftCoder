@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommentMangement.Domain\CommentManagement.Domain.csproj" />
     <ProjectReference Include="..\CourseGroup.Management.Application.Contract\Shop.Management.Application.Contract.csproj" />
     <ProjectReference Include="..\ProductManagement.Domain\ShopManagement.Domain.csproj" />
   </ItemGroup>

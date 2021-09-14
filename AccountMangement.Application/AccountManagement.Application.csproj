@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AccountManagement.Application\AccountManagement.Application.Contract.csproj" />
     <ProjectReference Include="..\AccountManagement.Domain\AccountManagement.Domain.csproj" />
+    <ProjectReference Include="..\CommentMangement.Domain\CommentManagement.Domain.csproj" />
   </ItemGroup>
 
 </Project>

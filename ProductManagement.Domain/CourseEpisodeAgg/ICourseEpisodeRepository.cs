@@ -9,5 +9,6 @@ namespace ShopManagement.Domain.CourseEpisodeAgg
         EditCourseEpisodeViewModel GetDetails(long id);
         List<CourseEpisodeViewModel> Search(CourseEpisodeSearchModel command);
         string GetCourseGroupSlugBy(long courseId);
+        CourseEpisodeViewModel GetEpisodeIdBy(long courseId);
     }
 }
