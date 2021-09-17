@@ -15,6 +15,7 @@ namespace AccountManagement.Infrastructure.EfCore
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

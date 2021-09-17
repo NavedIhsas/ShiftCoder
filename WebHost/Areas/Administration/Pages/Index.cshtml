@@ -88,7 +88,7 @@
                                             <th>#</th>
                                             <th>تاریخ</th>
                                             <th>مبلغ</th>
-                                          
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -102,10 +102,10 @@
                                                 <td>@item.OrderSum.ToMoney() تومان</td>
                                             </tr>
                                         }
-                                    <tr>
-                                        <th >مجموع</th>
-                                        <th colspan="2">@Model.List.Sum(x => x.OrderSum).ToMoney() تومان</th>
-                                    </tr>
+                                        <tr>
+                                            <th>مجموع</th>
+                                            <th colspan="2">@Model.List.Sum(x => x.OrderSum).ToMoney() تومان</th>
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -252,17 +252,18 @@
         <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bell fa-fw"></i> Notifications Panel
+                    <i class="fa fa-bell fa-fw"></i> آخرین اعلانات این هفته
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-comment fa-fw"></i> New Comment
-                            <span class="pull-left text-muted small">
-                                <em>4 minutes ago</em>
-                            </span>
-                        </a>
+                            <a asp-page="/Comment/Index" class="list-group-item">
+                               <i class="fa fa-comment fa-fw"></i> @Model.CommentList.Count(x => DateTime.Now.Subtract(x.CreationDate).TotalDays<7) کمنت جدید
+                               <span class="pull-left text-muted small">
+                                  
+                               </span>
+                           </a>
+                    
                         <a href="#" class="list-group-item">
                             <i class="fa fa-twitter fa-fw"></i> 3 New Followers
                             <span class="pull-left text-muted small">
@@ -455,3 +456,4 @@
     </div>
     <!-- /.row -->
 </div>
+

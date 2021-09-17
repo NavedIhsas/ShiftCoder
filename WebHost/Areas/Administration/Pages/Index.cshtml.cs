@@ -1,27 +1,34 @@
 using System.Collections.Generic;
 using CommentManagement.Domain.Notification.Agg;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ShiftCoderQuery.Contract.Comment;
 using Shop.Management.Application.Contract.Order;
 using ShopManagement.Domain.OrderAgg;
 
 namespace WebHost.Areas.Administration.Pages
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly INotificationRepository _notification;
         private readonly IOrderRepository _order;
+        private readonly ICommentQuery _comment;
 
-        public IndexModel(INotificationRepository notification, IOrderRepository order)
+        public IndexModel( IOrderRepository order, ICommentQuery comment)
         {
-            _notification = notification;
             _order = order;
+            _comment = comment;
         }
 
         public List<OrderViewModel> List;
+        public List<CommentManagement.Domain.CourseCommentAgg.Comment> CommentList;
 
         public void OnGet()
         {
-            List = _order.GetAllOrderForAdminPanel();
+            var email = User.Identity.Name;
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            List = _order.GetAllOrderForAdminPanel(ipAddress, email);
+            CommentList = _comment.GetAll();
         }
     }
 }

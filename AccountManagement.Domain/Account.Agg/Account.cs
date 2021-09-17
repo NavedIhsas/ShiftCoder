@@ -17,7 +17,6 @@ namespace AccountManagement.Domain.Account.Agg
         public long RoleId { get;private set; }
         public Role Role { get;private set; }
         public List<Teacher> Teachers { get;private set; }
-        
         public Account()
         {
             
@@ -33,7 +32,7 @@ namespace AccountManagement.Domain.Account.Agg
             if(!string.IsNullOrWhiteSpace(avatar))
              Avatar = avatar;
             Teachers = teachers;
-            RoleId = roleId == 0 ? 3 : roleId;
+            RoleId = roleId == 0 ? 10005 : roleId;
             IsActive = false;
             EmailConfirm = false;
             IsDelete = false;
@@ -48,12 +47,23 @@ namespace AccountManagement.Domain.Account.Agg
             Password = password;
             if (!string.IsNullOrWhiteSpace(avatar))
                 Avatar = avatar;
-            RoleId = roleId == 0 ? 3 : roleId;
+            RoleId = roleId == 0 ? 10005 : roleId;
             IsActive = false;
             EmailConfirm = false;
             IsDelete = false;
         }
 
+
+        public void Edit(string fullName, string email, string phone, string avatar, long roleId, List<Teacher> teachers)
+        {
+            FullName = fullName;
+            Email = email;
+            Phone = phone;
+            if (!string.IsNullOrWhiteSpace(avatar))
+                Avatar = avatar;
+            RoleId = roleId;
+            Teachers = teachers;
+        }
 
         public void Edit(string fullName, string email, string phone, string avatar, long roleId)
         {

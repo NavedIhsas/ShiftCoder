@@ -8,5 +8,6 @@ namespace DiscountManagement.Domain.DiscountCode
     {
         EditDiscountCodeViewModel GetDetails(long id);
         List<DiscountCodeViewModel> SearchModel(DiscountCodeSearchModel searchModel);
+        DiscountCode GetDiscountBy(long id);
     }
 }

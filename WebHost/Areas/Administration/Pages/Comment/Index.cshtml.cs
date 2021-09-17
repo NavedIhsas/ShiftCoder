@@ -13,7 +13,7 @@ namespace WebHost.Areas.Administration.Pages.Comment
         public SelectList SelectList;
         public SearchCommentViewModel SearchModel;
         public List<CommentViewModel> Comment;
-
+        public bool CheckList;
         private readonly ICommentApplication _comment;
 
         public IndexModel(ICommentApplication comment)
@@ -24,6 +24,7 @@ namespace WebHost.Areas.Administration.Pages.Comment
         public void OnGet(SearchCommentViewModel searchModel)
         {
             Comment = _comment.Search(searchModel);
+           
         }
 
         public IActionResult OnGetCancel(long id)

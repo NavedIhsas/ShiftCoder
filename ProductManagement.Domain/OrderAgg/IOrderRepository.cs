@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _0_FrameWork.Domain;
+using DiscountManagement.Domain.DiscountCode;
 using Shop.Management.Application.Contract.Order;
 
 namespace ShopManagement.Domain.OrderAgg
@@ -12,7 +13,11 @@ namespace ShopManagement.Domain.OrderAgg
        List<OrderViewModel> GetAllOrderUser(string email);
        bool OrderFinally(string email, long orderId);
        Order Pay(string email, long orderId);
-       List<OrderViewModel> GetAllOrderForAdminPanel();
+       List<OrderViewModel> GetAllOrderForAdminPanel(string ipAddress,string email);
+    
+
+
+
 
 
    }

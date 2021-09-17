@@ -74,7 +74,6 @@
                                 <h5 class="value-info-aside">
                                     @{
                                         var time = new TimeSpan(Model.Course.EpisodeCourse.Sum(t => t.Time.Ticks));
-
                                     }
                                     @time
                                 </h5>
@@ -171,7 +170,7 @@
                     <div class="condition-course condition-course-mb">
                         <div id="container-profile-teacher">
                             <div id="container-img-name-job-teacher">
-                                <img src="~/FileUploader/@Model.Course.Picture" alt="profile picture" id="img-info-teacher">
+                                <img src="~/FileUploader/@Model.Course.TeacherAvatar" alt="@Model.Course.TeacherName" title="@Model.Course.TeacherName" id="img-info-teacher">
                                 <div id="container-name-job-teacher">
                                     <h2 id="name-info-teacher">@Model.Course.TeacherName</h2>
                                     <h4 id="job-info-teacher">@Model.Course.TeacherSkills</h4>
@@ -622,42 +621,61 @@
                         <div id="container-send-comment">
                             <p id="text-comment-write">دیدگاه خود را بنویسید ...</p>
                             <div id="inputs-comment" class="container">
-                              
-                                <div class="row">
-                                    <div class="col-12 col-md-6 container-email-name">
-                                        <label for="name-input" class="label-email-name-text">نام *</label>
-                                        <input type="text" id="name-input" name="name" class="col-12 input-name-email"
-                                               required oninvalid="this.setCustomValidity('وارد کردن نام الزامی میباشد!')"
-                                               oninput="setCustomValidity('')">
-                                    </div>
-                                    <div class="col-12 col-md-6 container-email-name">
-                                        <label for="email-input" class="label-email-name-text">ایمیل *</label>
-                                        <input type="email" id="email-input" name="email" class="col-12 input-name-email"
-                                               required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
-                                               oninput="setCustomValidity('')">
-                                    </div>
-                                    <div class="col-12 container-email-name">
-                                        <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
-                                        <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"
-                                                  required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
-                           oninput="setCustomValidity('')"></textarea>
-                                    </div>
-                                    <input type="hidden" name="ownerRecordId" value="@Model.Course.Id"/>
-                                    <input type="hidden" name="productSlug" value="@Model.Course.Slug"/>
-                                    <input type="hidden" name="parentId" id="commentParenId" value=""/>
 
-                                    <input type="submit" id="submit-comment" value="ارسال">
-                                </div>
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 container-email-name">
+                                            <label for="name-input" class="label-email-name-text">نام *</label>
+                                            <input type="text" id="name-input" name="name" class="col-12 input-name-email"
+                                                   required oninvalid="this.setCustomValidity('وارد کردن نام الزامی میباشد!')"
+                                                   oninput="setCustomValidity('')">
+                                        </div>
+                                        <div class="col-12 col-md-6 container-email-name">
+                                            <label for="email-input" class="label-email-name-text">ایمیل *</label>
+                                            <input type="email" id="email-input" name="email" class="col-12 input-name-email"
+                                                   required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
+                                                   oninput="setCustomValidity('')">
+                                        </div>
+                                        <div class="col-12 container-email-name">
+                                            <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
+                                            <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"
+                                                      required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                                                      oninput="setCustomValidity('')"></textarea>
+                                        </div>
+                                        <input type="hidden" name="ownerRecordId" value="@Model.Course.Id" />
+                                        <input type="hidden" name="productSlug" value="@Model.Course.Slug" />
+                                        <input type="hidden" name="parentId" id="commentParenId" value="" />
+
+                                        <input type="submit" id="submit-comment" value="ارسال">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-12 container-email-name">
+                                            <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
+                                            <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"
+                                                      required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                                                      oninput="setCustomValidity('')"></textarea>
+                                        </div>
+                                        <input type="hidden" name="ownerRecordId" value="@Model.Course.Id" />
+                                        <input type="hidden" name="productSlug" value="@Model.Course.Slug" />
+                                        <input type="hidden" name="parentId" id="commentParenId" value="" />
+
+                                        <input type="submit" id="submit-comment" value="ارسال">
+                                    </div>
+                                }
                             </div>
                           
                         
                             @foreach (var comment in Model.Course.Comments)
                             {
                                     <div class="container-answer-question">
-                                        <div class="box-comment-question" id="comment-@comment.Id">
+                                        <div id="comment-@comment.Id" class="box-comment-question" id="comment-@comment.Id">
                                             <div class="container-photo-comment-answer-btn">
                                                 <img src="~/images/profile-8.jpg" alt="profile user" class="img-profile-user">
-                                                <a href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
+                                                <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
                                                     پاسخ
                                                     <i class="fas fa-reply icon-answer"></i>
                                                 </a>
@@ -680,10 +698,10 @@
                                        {
                                            @foreach (var sub in comment.SubComment)
                                            {
-                                               <div class="box-comment-answer">
+                                               <div id="comment-@sub.Id" class="box-comment-answer">
                                                    <div class="container-photo-comment-answer-btn">
                                                        <img src="~/images/profile-2.jpg" alt="profile user" class="img-profile-user">
-                                                       <a href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
+                                                       <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
                                                            پاسخ
                                                            <i class="fas fa-reply icon-answer"></i>
                                                        </a>
@@ -707,14 +725,7 @@
 
                                         <div class="line-end-comment-box"></div>
                                     </div>
-
-                               
                             }
-
-
-
-
-
                             <button id="more-comment-btn" disabled>شماهده نظرات بیشتر ...</button>
                         </div>
                     </form>

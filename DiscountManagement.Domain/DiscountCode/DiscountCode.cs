@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _0_FrameWork.Domain;
+using DiscountManagement.Domain.UserDiscountAgg;
 
 namespace DiscountManagement.Domain.DiscountCode
 {

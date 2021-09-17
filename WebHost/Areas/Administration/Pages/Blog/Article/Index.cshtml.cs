@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using AccountManagement.Application.Contract.Account;
+using AccountManagement.Domain.Account.Agg;
 using BlogManagement.Application.Contract.Article;
 using BlogManagement.Application.Contract.ArticleCategory;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +17,12 @@ namespace WebHost.Areas.Administration.Pages.Blog.Article
 
         private readonly IArticleApplication _article;
         private readonly IArticleCategoryApplication _categoryApplication;
-        public IndexModel(IArticleApplication article, IArticleCategoryApplication categoryApplication)
+        private readonly ITeacherRepository _teacher;
+        public IndexModel(IArticleApplication article, IArticleCategoryApplication categoryApplication, ITeacherRepository teacher)
         {
             this._article = article;
             this._categoryApplication = categoryApplication;
+            _teacher = teacher;
         }
 
         public void OnGet(ArticleSearchModel searchModel)
@@ -32,7 +36,7 @@ namespace WebHost.Areas.Administration.Pages.Blog.Article
             var course = new CreateArticleViewModel()
             {
                 SelectList = _categoryApplication.SelectList(),
-               
+               BloggerSelectList = _teacher.SelectListForArticles(),
             };
             return Partial("./Create", course);
         }
@@ -48,7 +52,7 @@ namespace WebHost.Areas.Administration.Pages.Blog.Article
             var course = _article.GetDetails(id);
 
             course.SelectList = _categoryApplication.SelectList();
-
+            course.BloggerSelectList = _teacher.SelectListForArticles();
             return Partial("./Edit", course);
 
         }

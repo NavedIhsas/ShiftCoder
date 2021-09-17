@@ -1,6 +1,7 @@
 ﻿
 @using _0_FrameWork.Application
 @using CommentManagement.Domain.CourseCommentAgg
+@using Type = _0_FrameWork.Application.ThisType
 @model IEnumerable<CommentManagement.Domain.Notification.Agg.Notification>
 @inject ICommentRepository _comment
 
@@ -8,18 +9,20 @@
 <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-
+     
     </a>
     <ul class="dropdown-menu dropdown-alerts">
+        <br />
+        <p class=" alert-info text-center">آخرین گزارشات امروز</p>
         @foreach (var item in Model)
         {
-
-            @if (item.Type == OwnerType.Comment)
+            @if (item.Type == Type.Comment)
             {
                 var comments = _comment.GetCommentBy(item.RecordOwnerId).Take(3);
                 <li>
                     <a asp-page="Comment/Index">
                         <div>
+
                             <i class="fa fa-comment fa-fw"></i> @item.Text.Replace(item.Text, "کمنت جدید ")
                             @foreach (var comment in comments.Where(comment => !comment.IsConfirmed && !comment.IsCanceled))
                             {
@@ -32,10 +35,11 @@
                 <li class="divider"></li>
             }
 
-            @if (item.Type == OwnerType.Order)
+            @if (item.Type == Type.Order)
             {
+
                 <li>
-                    <a asp-page="Comment/Index" class="list-group-item">
+                    <a asp-page="Comment/Index">
                         <div>
                             <i class="fa fa-shopping-cart fa-fw"></i> @item.Text.Replace(item.Text, "سفارشی ثبت شد ")
 
@@ -46,7 +50,7 @@
                 <li class="divider"></li>
             }
 
-            @if (item.Type == OwnerType.Account)
+            @if (item.Type == Type.Account)
             {
                 <li>
                     <a asp-page="Comment/Index" class="list-group-item">
@@ -58,8 +62,15 @@
                     </a>
                 </li>
                 <li class="divider"></li>
+
             }
         }
+        <li>
+            <a class="text-center" asp-page="/Notification/Index">
+                <strong>همه اعلان ها</strong>
+                <i class="fa fa-angle-left"></i>
+            </a>
+        </li>
         @if (!Model.Any())
         {
             <li>

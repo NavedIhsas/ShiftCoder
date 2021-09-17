@@ -1,4 +1,5 @@
 ﻿@page
+@using Type = _0_FrameWork.Application.ThisType
 @model WebHost.Areas.Administration.Pages.Account.Users.TeacherModel
 @{
     ViewData["Title"] = "افزودن استاد";
@@ -27,29 +28,41 @@
                             <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
                                 <thead>
                                     <tr role="row" class="text-center">
-                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 50px;"> # </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 200px;" aria-sort="ascending"><strong>نام و نام خانوادگی</strong> </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 200px;" aria-sort="ascending"><strong>مهارت</strong> </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 170px;" aria-sort="ascending"><strong>رزومه</strong> </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 170px;" aria-sort="ascending"><strong>بیو</strong> </th>
-                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 500px;">عملیات</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" > # </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"aria-sort="ascending"><strong>نام و نام خانوادگی</strong> </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"aria-sort="ascending">نقش </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"aria-sort="ascending"><strong>مهارت</strong> </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"aria-sort="ascending"><strong>رزومه</strong> </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"aria-sort="ascending"><strong>بیو</strong> </th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">عملیات</th>
                                     </tr>
 
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model.List)
                                     {
-                                        <tr class="gradeU odd">
-                                            <td class="">@item.Id</td>
-                                            <td class="sorting_1">@item.AccountName</td>
-                                            <td class="sorting_1">@item.Skills</td>
-                                            <td class="sorting_1">@item.Resumes</td>
-                                            <td class="sorting_1">@item.Bio</td>
+                                        <tr >
+                                            <td >@item.Id</td>
+                                            <td >@item.AccountName</td>
+                                            <td>
+                                                @if (item.Type == Type.Blogger)
+                                                {
+                                                    <span>نویسنده (بلاگر)</span>
+
+                                                }
+                                                else
+                                                {
+                                                    <span>استاد</span>
+                                                }
+
+                                            </td>
+                                            <td>@item.Skills</td>
+                                            <td>@item.Resumes</td>
+                                            <td>@item.Bio</td>
                                            
                                             <td class="center ">
-
                                                 <a class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Teacher", "TeacherEdit", new { id = item.Id})">ویرایش</a>
-                                            </td>
+                                                <a class="btn btn-danger text-center" href="#showmodal=@Url.Page("./Teacher", "Delete", new { id = item.Id})">حذف</a>
                                         </tr>
                                     }
                                 </tbody>

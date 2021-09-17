@@ -1,19 +1,24 @@
 ﻿@page
 @using _0_Framework.Application
+@using ReflectionIT.Mvc.Paging
+@addTagHelper*,ReflectionIT.Mvc.Paging
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using ShiftCoderQuery.Contract.Course
 @model WebHost.Pages.CoursesModel
 @{
     ViewData["Title"] = "دوره های آموزشی";
     var courseGroup = ViewData["checked"] as List<long>;
-    
+    var searchModel = ViewData["SearchModel"] as CourseQuerySearchModel;
+
 }
 <div class="container">
     <div class="row">
         <main>
             <form method="get" id="submitSearch">
                 <div id="header-body">
-                    <h1 id="title-main">دوره های آموزشی <span>(@Model.Courses.Count)</span></h1>
-                    <div id="container-search" >
-                      <i class="fal fa-search search-icon"></i>
+                    <h1 id="title-main">دوره های آموزشی <span>(@Model.Course.Courses.Count)</span></h1>
+                    <div id="container-search">
+                        <i class="fal fa-search search-icon"></i>
                         <input asp-for="SearchModel.Name" type="text" placeholder="دنبال چه دوره ای میگردی ..." id="input-search">
                     </div>
                 </div>
@@ -31,10 +36,9 @@
                                     <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <div id="content-first-accordion">
-
-                                                <button @*name="SearchModel.Filter" value="all"*@ class="btn-first-accordion active-btn-accordion">همه</button>
-                                                <button  class="btn-first-accordion">رایگان</button>
-                                                <button type="button" class="btn-first-accordion">خریدنی</button>
+                                                <a asp-page="Courses" style="padding: 10px; color:black" class="text-center btn-first-accordion @(searchModel != null && searchModel.Filter==null?"active-btn-accordion":"")"><span class="mt-5">همه</span></a>
+                                                <button name="SearchModel.Filter" class="btn-first-accordion @(searchModel is {Filter: "free" }?"active-btn-accordion":"")" value="free">رایگان</button>
+                                                <button name="SearchModel.Filter" class="btn-first-accordion @(searchModel!=null && searchModel.Filter=="price"?"active-btn-accordion":"")" value="price">خریدنی</button>
                                             </div>
                                         </div>
                                     </div>
@@ -51,28 +55,27 @@
                                         <div class="accordion-body">
                                             <div class="content-first-accordion">
 
-                                              
                                                 <div id="content-second-accordion">
                                                     <div class="form-check">
-                                                        <input  asp-for="SearchModel.Filter" value="newest" onchange="Search()" class="form-check-input" type="radio" id="flexRadioDefault1" >
+                                                        <input asp-for="SearchModel.Filter" value="newest" onchange="Search()" class="form-check-input" type="radio" id="flexRadioDefault1">
                                                         <label class="form-check-label" for="flexRadioDefault1">
                                                             جدید ترین
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" onchange="Search()" type="radio"  id="flexRadioDefault2">
+                                                        <input asp-for="SearchModel.Filter" value="mustVisit" class="form-check-input" onchange="Search()" type="radio" id="flexRadioDefault2">
                                                         <label class="form-check-label" for="flexRadioDefault2">
                                                             پربازدید ترین
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input asp-for="SearchModel.Filter"  value="minPrice" onchange="Search()" class="form-check-input" type="radio" id="flexRadioDefault3">
+                                                        <input asp-for="SearchModel.Filter" value="minPrice" onchange="Search()" class="form-check-input" type="radio" id="flexRadioDefault3">
                                                         <label class="form-check-label" for="flexRadioDefault3">
                                                             ارزان ترین
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input asp-for="SearchModel.Filter"  value="maxPrice" onchange="Search()" class="form-check-input" type="radio" id="flexRadioDefault4">
+                                                        <input asp-for="SearchModel.Filter" value="maxPrice" onchange="Search()" class="form-check-input" type="radio" id="flexRadioDefault4">
                                                         <label class="form-check-label" for="flexRadioDefault4">
                                                             گران ترین
                                                         </label>
@@ -89,15 +92,15 @@
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                             <span class="span-title-btn-accordion">فیلتر دسته بندی ها</span>
                                         </button>
-                                     </h2>
+                                    </h2>
                                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             @foreach (var group in Model.CourseGroups)
                                             {
                                                 <div class="form-check">
-                                                    <input name="groupId" onchange="Search()" @(courseGroup != null && courseGroup.Any(x=>x==@group.Id)?"checked":"") class="form-check-input" type="checkbox" value="@group.Id" id="programming-checkbox">
+                                                    <input name="groupId" onchange="Search()" @(courseGroup != null && courseGroup.Any(x => x == @group.Id) ? "checked" : "") class="form-check-input" type="checkbox" value="@group.Id" id="programming-checkbox">
                                                     <label class="form-check-label" for="programming-checkbox">
-                                                      @group.Title
+                                                        @group.Title
                                                     </label>
                                                 </div>
                                             }
@@ -111,7 +114,7 @@
                         <section id="container" class="card col-12 col-lg-9">
                             <div class="container" id="container-cards">
                                 <div class="row" id="row-container-cards">
-                                    @foreach (var course in Model.Courses)
+                                    @foreach (var course in Model.Course.Courses)
                                     {
                                         <div class="col-10 col-md-6 col-lg-4 col-card">
                                             <div class="card container-card">
@@ -157,18 +160,19 @@
                                     <div class="col-12" id="pagination">
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination">
-                                                <li class="page-item disabled">
-                                                    <a class="page-link" href="#" aria-label="Previous">
+                                                <li class="page-item @(Model.Course.CurrentPage<2?"disabled":"")">
+                                                    <a class="page-link" href="Courses?pageId=@(Model.Course.CurrentPage-1)" aria-label="Previous">
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </a>
                                                 </li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Next">
+                                                @for (var i = 1; i <= Model.Course.PageCount; i++)
+                                                {
+                                                    <li class="page-item"><a class="page-link" href="Courses?pageId=@i">@i</a></li>
+
+                                                }
+
+                                                <li class="page-item @(Model.Course.CurrentPage>=Model.Course.PageCount?"disabled":"")">
+                                                    <a class="page-link" href="Courses?pageId=@(Model.Course.CurrentPage+1)" aria-label="Next">
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </a>
                                                 </li>

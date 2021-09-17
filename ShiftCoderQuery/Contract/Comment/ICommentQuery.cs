@@ -6,7 +6,9 @@ namespace ShiftCoderQuery.Contract.Comment
 {
   public  interface ICommentQuery
   {
-       List<CommentQueryModel> GetAll();
+       List<CommentQueryModel> GetAllCommentCourse();
+       List<CommentManagement.Domain.CourseCommentAgg.Comment> GetAll();
+       List<CommentModelForUserPanel> GetUserComment(string email);
        OperationResult Create(CommentQueryModel command);
   }
 }

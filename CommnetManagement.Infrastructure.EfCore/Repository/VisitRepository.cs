@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using _0_FrameWork.Application;
 using _0_FrameWork.Domain.Infrastructure;
 using CommentManagement.Domain.VisitAgg;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +21,9 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
 
         public int? GetNumberOfVisit(int type, long ownerId)
             => _context.Visits.FirstOrDefault(x => x.Type == type && x.RecordOwnerId == ownerId)?.NumberOfVisit;
-       
+
+        public List<Visit> GetAllVisit() => _context.Visits.ToList();
+
+        
    }
 }

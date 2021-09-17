@@ -9,6 +9,9 @@ namespace AccountManagement.Domain.Account.Agg
         EditTeacherViewModel GetTeacherDetails(long id);
         List<TeacherViewModel> GetAllTeachers();
         List<TeacherViewModel> SelectList();
-
+        List<TeacherViewModel> SelectListForArticles();
+        Teacher GetTeacherBy(long id);
+        Teacher GetBloggerBy(long id);
+        void DeleteTeacher(long id);
     }
 }

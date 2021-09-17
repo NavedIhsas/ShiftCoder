@@ -15,16 +15,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="checkbox" class="checkbox-inline" asp-for="IsPublish" >
+                        <input type="checkbox" class="checkbox-inline" asp-for="IsPublish">
                         <label asp-for="IsPublish" class="checkbox-inline">آیا این مقاله بعد از ایجاد در سایت منتشر شود؟</label>
                     </div>
-                    
-                    <p class="help-block">در صورت انتخاب نکردن این گزینه مقاله شما در در سایت منتشر نشده
-                        و فقط در پنل ادمین میباشد، بعدا میتوانید وضعیت را تغییر دهید </p>
+
+                    <p class="help-block">
+                        در صورت انتخاب نکردن این گزینه مقاله شما در در سایت منتشر نشده
+                        و فقط در پنل ادمین میباشد، بعدا میتوانید وضعیت را تغییر دهید
+                    </p>
                 </div>
             </div>
             <br />
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -35,6 +36,15 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label asp-for="Slug" class="control-label">اسلاگ<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="Slug">
+                        <span class="text-danger" asp-validation-for="Slug"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label asp-for="CategoryId" class="control-label">گروه مقاله<span class="text-danger">*</span></label>
                         <Select asp-for="CategoryId" asp-Items="@(new SelectList(Model.SelectList, "Id", "Name"));" type="file" class="form-control">
                             <option value="0">--انتخاب کنید--</option>
@@ -42,12 +52,21 @@
                         <span class="text-danger" asp-validation-for="CategoryId"></span>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group no-margin">
+                        <label asp-for="BloggerId" class="control-label">استاد دوره<span class="text-danger">*</span></label>
+                        <select class="form-control autogrow" asp-for="BloggerId" asp-items="@(new SelectList(Model.BloggerSelectList, "Id", "AccountName"))">
+                            <option value="0">انتخاب کنید</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="BloggerId"></span>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Picture" class="control-label">عکس<span class="text-danger">*</span></label>
+                        <label asp-for="Picture" class="control-label">عکس<span class="text-danger"></span></label>
                         <input type="file" asp-for="Picture" class="form-control" accept="image/*" >
                         <span class="text-danger" asp-validation-for="Picture"></span>
                     </div>
@@ -119,19 +138,11 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group no-margin">
                         <label asp-for="MetaDescription" class="control-label">توضیحات متا<span class="text-danger">*</span></label>
                         <textarea class="form-control autogrow" id="MetaDescription" asp-for="MetaDescription" rows="2" placeholder="حداکثر 150 کاراکتر"></textarea>
                         <span class="text-danger" asp-validation-for="MetaDescription"></span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Slug" class="control-label">اسلاگ<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Slug">
-                        <span class="text-danger" asp-validation-for="Slug"></span>
                     </div>
                 </div>
             </div>

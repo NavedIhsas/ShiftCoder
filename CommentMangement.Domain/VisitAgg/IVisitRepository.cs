@@ -1,4 +1,5 @@
-﻿using _0_FrameWork.Domain;
+﻿using System.Collections.Generic;
+using _0_FrameWork.Domain;
 
 namespace CommentManagement.Domain.VisitAgg
 {
@@ -6,5 +7,7 @@ namespace CommentManagement.Domain.VisitAgg
     {
         Visit GetUsedBy(string ipAddress, int type,long recordOwnerId);
         int? GetNumberOfVisit(int type, long ownerId);
+        List<Visit> GetAllVisit();
+     
     }
 }

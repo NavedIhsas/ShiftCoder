@@ -6,6 +6,7 @@ using CommentManagement.Domain.CourseCommentAgg;
 using CommentManagement.Domain.Notification.Agg;
 using ShopManagement.Domain.CourseAgg;
 using BlogManagement.Domain.ArticleAgg;
+using Microsoft.AspNetCore.Authentication;
 
 namespace CommentManagement.Application
 {
@@ -25,10 +26,10 @@ namespace CommentManagement.Application
         public OperationResult Create(CreateCommentViewModel command)
         {
             var operation = new OperationResult();
-
+          
             var comment = new Comment(command.Name, command.Email, command.Message, command.OwnerRecordId
                 , command.Type, command.ParentId);
-
+            
             _repository.Create(comment);
             _repository.SaveChanges();
 
@@ -37,7 +38,7 @@ namespace CommentManagement.Application
                 var course = _course.GetCourseBy(comment.OwnerRecordId);
 
                 var notification =
-                    new Notification($"{comment.Name} کمنتی را در دورۀ ( {course.Name} ) ارسال کرد",OwnerType.Comment,comment.Id);
+                    new Notification($"{comment.Name} نظری را در دورۀ ( {course.Name} ) ارسال کرد", ThisType.Comment,comment.Id);
                       
                 _notification.Create(notification);
                 _notification.SaveChanges();
@@ -46,7 +47,7 @@ namespace CommentManagement.Application
             {
                 var article = _article.GetArticleBy(comment.OwnerRecordId);
                 var notification =
-                    new Notification($"{comment.Name} کمنتی را در مقالۀ ( {article.Title} ) ارسال کرد",OwnerType.Comment, comment.Id);
+                    new Notification($"{comment.Name} نظری را در مقالۀ ( {article.Title} ) ارسال کرد", ThisType.Comment, comment.Id);
                        
                 _notification.Create(notification);
                 _notification.SaveChanges();

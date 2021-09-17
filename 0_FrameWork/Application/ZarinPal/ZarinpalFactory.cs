@@ -29,7 +29,7 @@ namespace _0_Framework.Application.ZarinPal
 
             var client = new RestClient($"https://{Prefix}.zarinpal.com/pg/rest/WebGate/PaymentRequest.json");
             var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Content-ThisType", "application/json");
             var body = new PaymentRequest
             {
                 Mobile = mobile,
@@ -49,7 +49,7 @@ namespace _0_Framework.Application.ZarinPal
         {
             var client = new RestClient($"https://{Prefix}.zarinpal.com/pg/rest/WebGate/PaymentVerification.json");
             var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Content-ThisType", "application/json");
 
             amount = amount.Replace(",", "");
             var finalAmount = int.Parse(amount);

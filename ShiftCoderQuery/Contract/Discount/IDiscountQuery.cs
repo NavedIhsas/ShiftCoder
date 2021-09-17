@@ -7,5 +7,6 @@ namespace ShiftCoderQuery.Contract.Discount
     {
         DiscountUseType UseDiscount(long orderId, string code);
         bool? GetAllUserDiscount(long accountId, long discountCodeId);
+       
     }
 }

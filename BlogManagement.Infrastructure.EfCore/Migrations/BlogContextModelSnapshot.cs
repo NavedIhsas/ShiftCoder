@@ -26,6 +26,9 @@ namespace BlogManagement.Infrastructure.EfCore.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long>("BloggerId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("CanonicalAddress")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");

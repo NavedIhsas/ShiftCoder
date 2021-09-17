@@ -4,6 +4,7 @@ using AccountManagement.Application.Contract.Role;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebHost.Areas.Administration.Pages.Account.Users
 {
@@ -58,9 +59,22 @@ namespace WebHost.Areas.Administration.Pages.Account.Users
             var password = _application.ChangePassword(change);
             return new JsonResult(password);
         }
-        public IActionResult OnGetActive(long id)
+       
+        public IActionResult OnGetBlockedUserList()
         {
-            var getDetails = _application.Active(id);
+            var user = _application.ShowBlockedUser();
+            return Partial("BlockedUserList", user);
+        }
+
+        public IActionResult OnGetBlockUser(long id)
+        {
+            var user = _application.GetUserForBlock(id);
+            return Partial("BlockUser",user);
+        }
+
+        public IActionResult OnGetConfirmBlockUser(long id)
+        {
+            var getDetails = _application.DeActive(id);
 
             if (getDetails.IsSucceeded)
                 return RedirectToPage("./Index");
@@ -68,15 +82,17 @@ namespace WebHost.Areas.Administration.Pages.Account.Users
             return RedirectToPage("./Index");
         }
 
-        public IActionResult OnGetDeActive(long id)
+        public IActionResult OnGetUnblockUser(long id)
         {
-            var getDetails = _application.DeActive(id);
-
-            if (getDetails.IsSucceeded)
-                return RedirectToPage("./Index");
-            Message = getDetails.Message;
-            return  RedirectToPage("./Index");
+            var user = _application.GetUserForUnblock(id);
+            return Partial("UnblockUser", user);
         }
 
+        public IActionResult OnGetConfirmUnblockUser(long id)
+        {
+           _application.ConfirmUnblockUser(id);
+            return RedirectToPage("./BlockedUserList");
+        
+        }
     }
 }

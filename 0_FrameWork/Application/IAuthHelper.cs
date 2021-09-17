@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,8 @@ namespace _0_FrameWork.Application
     {
         void SignOut();
         void Signin(AuthHelperViewModel account);
+        bool IsAuthenticated();
+        string CurrentAccountFullName();
     }
 
     public class AuthHelper : IAuthHelper
@@ -26,11 +29,17 @@ namespace _0_FrameWork.Application
         {
             _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
-
+        public string CurrentAccountFullName()
+        {
+            if (!IsAuthenticated()) return null;
+            return _httpContextAccessor.HttpContext.User.Claims.
+                FirstOrDefault(x => x.Type == "FullName")?.Value;
+        }
         public void Signin(AuthHelperViewModel account)
         {
             var claims = new List<Claim>
             {
+                new Claim("FullName",account.Fullname),
                 new Claim("AccountId", account.AccountId.ToString()),
                 new Claim(ClaimTypes.Name, account.Email),
                 new Claim(ClaimTypes.Role, account.RoleId.ToString()),
@@ -48,5 +57,8 @@ namespace _0_FrameWork.Application
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
         }
+
+        public bool IsAuthenticated()
+            => _httpContextAccessor.HttpContext.User.Identity is { IsAuthenticated: true };
     }
 }

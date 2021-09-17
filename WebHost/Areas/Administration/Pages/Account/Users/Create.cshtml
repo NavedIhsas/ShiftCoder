@@ -52,6 +52,7 @@
                             <Select asp-for="Command.RoleId" asp-Items="@Model.SelectList" type="file" class="form-control">
                                 <option value="0">--انتخاب کنید--</option>
                             </Select>
+                            <p class="help-block">لطفا با دقت انتخاب کنید ممکن است بعداً بعضی نقش ها قابل ویراش نباشد</p>
                             <span class="text-danger" asp-validation-for="Command.RoleId"></span>
                         </div>
                     </div>

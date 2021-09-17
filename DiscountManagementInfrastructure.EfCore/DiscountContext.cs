@@ -1,6 +1,7 @@
 ﻿using DiscountManagement.Domain.ColleagueDiscountAgg;
 using DiscountManagement.Domain.CustomerDiscountAgg;
 using DiscountManagement.Domain.DiscountCode;
+using DiscountManagement.Domain.UserDiscountAgg;
 using DiscountManagementInfrastructure.EfCore.Mapping;
 using Microsoft.EntityFrameworkCore;
 

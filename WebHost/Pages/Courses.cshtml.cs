@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ReflectionIT.Mvc.Paging;
 using ShiftCoderQuery.Contract.Course;
 using ShiftCoderQuery.Contract.CourseGroup;
 
@@ -16,14 +17,15 @@ namespace WebHost.Pages
             _group = group;
         }
 
-        public List<GetAllCourseQueryModel> Courses;
+        public CoursePaginationViewModel Course;
         public List<CourseGroupQueryModel> CourseGroups;
         public CourseQuerySearchModel SearchModel;
-        public void OnGet(CourseQuerySearchModel searchModel,List<long> groupId)
+        public void OnGet(CourseQuerySearchModel searchModel,List<long> groupId,int pageId=1)
         {
-            Courses = _course.GetAllCourse(searchModel,groupId);
+            Course = _course.GetAllCourse(searchModel,groupId,pageId);
             CourseGroups = _group.GetAllCourseGroup();
             ViewData["checked"] = groupId;
+            ViewData["SearchModel"] = searchModel;
 
         }
     }

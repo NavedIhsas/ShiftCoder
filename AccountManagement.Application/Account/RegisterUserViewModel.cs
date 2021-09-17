@@ -26,7 +26,6 @@ namespace AccountManagement.Application.Contract.Account
         [Compare("Password ", ErrorMessage = "رمز عبور با تکرار آن مطابقت ندارد.")]
         public string RePassword { get; set; }
 
-        [MaxLength(200,ErrorMessage = Validate.MaxLength)]
         public IFormFile Avatar { get; set; }
         public long RoleId { get; set; }
         public List<RoleViewModel> SelectList { get; set; }

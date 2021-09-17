@@ -10,6 +10,8 @@ namespace BlogManagement.Application.Contract.Article
        public string CreationDate { get; set; }
        public long CategoryId { get; set; }
        public string CategoryName { get; set; }
+       public long BloggerId { get; set; }
+       public string BloggerName { get; set; }
        public bool IsPublish { get; set; }
         public long Id { get; set; }
     }

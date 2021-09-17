@@ -18,12 +18,13 @@ namespace BlogManagement.Domain.ArticleAgg
         public string Keywords { get; private set; }
         public string MetaDescription { get;private set; }
         public string CanonicalAddress { get; private set; }
+        public long BloggerId { get; private set; }
         public bool IsPublish { get;private set; }
         public DateTime? PublishDate { get; private set; }
         public long CategoryId { get; private set; }
         public ArticleCategory ArticleCategory { get; private set; }
 
-        public Article(string title, string description, string picture, string pictureTitle, string pictureAtl, string slug, string keywords, string canonicalAddress, DateTime? publishDate, long categoryId, string metaDescription, string shortDescription, int showOrder, bool isPublish)
+        public Article(string title, string description, string picture, string pictureTitle, string pictureAtl, string slug, string keywords, string canonicalAddress, DateTime? publishDate, long categoryId, string metaDescription, string shortDescription, int showOrder, bool isPublish, long bloggerId)
         {
             Title = title;
             Description = description;
@@ -39,9 +40,10 @@ namespace BlogManagement.Domain.ArticleAgg
             ShortDescription = shortDescription;
             ShowOrder = showOrder;
             IsPublish = isPublish;
+            BloggerId = bloggerId;
         }
 
-        public void Edit(string title, string description, string picture, string pictureTitle, string pictureAtl, string slug, string keywords, string canonicalAddress, DateTime? publishDate, long categoryId, string metaDescription, string shortDescription, int showOrder,bool isPublish)
+        public void Edit(string title, string description, string picture, string pictureTitle, string pictureAtl, string slug, string keywords, string canonicalAddress, DateTime? publishDate, long categoryId, string metaDescription, string shortDescription, int showOrder,bool isPublish, long bloggerId)
         {
             Title = title;
             Description = description;
@@ -58,6 +60,7 @@ namespace BlogManagement.Domain.ArticleAgg
             ShortDescription = shortDescription;
             ShowOrder = showOrder;
             IsPublish = isPublish;
+            BloggerId = bloggerId;
         }
 
     }

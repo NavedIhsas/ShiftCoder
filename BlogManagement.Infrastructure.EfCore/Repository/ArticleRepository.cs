@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
 using _0_FrameWork.Domain.Infrastructure;
+using AccountManagement.Domain.Account.Agg;
 using BlogManagement.Application.Contract.Article;
 using BlogManagement.Domain.ArticleAgg;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,11 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
    public class ArticleRepository:RepositoryBase<long, Article>,IArticleRepository
    {
        private readonly BlogContext _context;
-
-        public ArticleRepository(BlogContext dbContext, BlogContext context) : base(dbContext)
+       private readonly ITeacherRepository _blogger;
+        public ArticleRepository(BlogContext dbContext, BlogContext context, ITeacherRepository blogger) : base(dbContext)
         {
             _context = context;
+            _blogger = blogger;
         }
 
         public EditArticleViewModel GetDetails(long id)
@@ -52,8 +54,16 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
                 CategoryName = x.ArticleCategory.Name,
                 Id = x.Id,
                 IsPublish = x.IsPublish,
+                BloggerId = x.BloggerId,
                 CreationDate = x.CreationDate.ToFarsi()
             }).AsNoTracking().ToList();
+
+            foreach (var item in query)
+            {
+                var blogger = _blogger.GetBloggerBy(item.BloggerId);
+              if(blogger==null) continue;
+              item.BloggerName = blogger.Account.FullName;
+            }
 
             if (!string.IsNullOrWhiteSpace(search.Title))
                 query = query.Where(x => x.Title.Contains(search.Title)).ToList();
@@ -69,7 +79,6 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
         {
             return _context.Articles.Select(x => new { x.Id, x.IsPublish }).FirstOrDefault(x => x.Id == articleId)?
                 .IsPublish;
-            
         }
 
         public DateTime? GetPublishDate(long articleId)

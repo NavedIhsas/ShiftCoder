@@ -1,0 +1,29 @@
+﻿@model AccountManagement.Application.Contract.Account.BlockUserViewModel
+@{
+    ViewData["Title"] = "حذف رکورد";
+}
+
+<div class="container">
+   
+    <form asp-page="./Index" asp-page-handler="BlockUser"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh">
+        <div class="modal-body">
+            <p class="text-warning"><h2><i class=" text-danger fa fa-warning fa-1x">هشدار !</i></h2>
+                <br/>
+                آیا از مسدود کردن این کاربر مطمئنید؟
+                <br/>
+                در صورت تائید این کاربر تمامی دسترسی خود را در به پنل کاربری اش از دست داده
+                و نمیتواند با مشخصات جاری لاگین کند.
+                <br/>
+                بعداً میتوانید این گزینه را تغییر دهید.
+            </p>
+        </div>
+      
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بازگشت</button>
+            <a asp-page="./Index" asp-page-handler="ConfirmBlockUser" asp-route-id="@Model.Id" class="btn btn-info waves-effect waves-light">مسدود کن</a>
+        </div>
+    </form>
+</div>

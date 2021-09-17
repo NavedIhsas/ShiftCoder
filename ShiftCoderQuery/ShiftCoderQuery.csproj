@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ReflectionIT.Mvc.Paging" Version="5.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BlogManagement.Infrastructure.EfCore\BlogManagement.Infrastructure.EfCore.csproj" />
     <ProjectReference Include="..\CommnetManagement.Infrastructure.EfCore\CommentManagement.Infrastructure.EfCore.csproj" />
     <ProjectReference Include="..\DiscountManagementInfrastructure.EfCore\DiscountManagementInfrastructure.EfCore.csproj" />

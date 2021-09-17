@@ -14,7 +14,9 @@ namespace WebHost.Pages.ViewComponent
 
         public IViewComponentResult Invoke()
         {
-            var course = _courseQuery.LatestCourses();
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            if (ipAddress == null) return null;
+            var course = _courseQuery.LatestCourses(ipAddress);
             return View("Default", course);
         }
     }

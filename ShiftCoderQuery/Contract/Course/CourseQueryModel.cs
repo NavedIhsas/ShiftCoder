@@ -32,6 +32,7 @@ namespace ShiftCoderQuery.Contract.Course
         public string TeacherBio { get; set; }
         public string TeacherResume { get; set; }
         public string TeacherSkills { get; set; }
+        public string TeacherAvatar { get; set; }
 
         // ToDo check this for: reference form here to domain
         public List<CommentManagement.Domain.CourseCommentAgg.Comment> CommentList { get; set; }
@@ -74,11 +75,28 @@ namespace ShiftCoderQuery.Contract.Course
        public string CourseGroup { get; set; }
        public long CourseGroupId { get; set; }
        public string TeacherName { get; set; }
-       public TimeSpan TotalTime { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageCount { get; set; }
+        public TimeSpan TotalTime { get; set; }
        public DateTime CreationDate { get; internal set; }
        public List<OrderDetail> OrderDetails { get; set; }
         public List<UserCourseViewModel> UserCourse { get; set; }
         public List<CommentManagement.Domain.CourseCommentAgg.Comment> Comments { get; set; }
         public long TeacherId { get; internal set; }
+        public List<GetAllCourseQueryModel> Courses { get;  set; }
+
+        
+    }
+
+   public class CoursePaginationViewModel
+    {
+        public List<GetAllCourseQueryModel> Courses { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageCount { get; set; }
+
+        public CoursePaginationViewModel()
+        {
+            Courses = new List<GetAllCourseQueryModel>();
+        }
     }
 }

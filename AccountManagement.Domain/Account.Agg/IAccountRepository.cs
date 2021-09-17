@@ -11,8 +11,15 @@ namespace AccountManagement.Domain.Account.Agg
         List<AccountViewModel> Search(AccountSearchModel searchModel);
         long GetUserIdBy(string email);
         Account GetUserBy(string email);
+        Account GetUserBy(long id);
         List<AccountViewModel> SelectList();
+        List<AccountViewModel> ShowBlockedUser();
         OperationResult Login(LoginViewModel login);
+        BlockUserViewModel GetUserForBlock(long id);
+        BlockUserViewModel GetUserForUnblock(long id);
+        void ConfirmUnblockUser(long id);
         void Logout();
+
+      
     }
 }

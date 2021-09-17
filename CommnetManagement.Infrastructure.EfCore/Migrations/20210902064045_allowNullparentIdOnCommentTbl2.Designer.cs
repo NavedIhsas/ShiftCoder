@@ -61,7 +61,7 @@ namespace CommentManagement.Infrastructure.EfCore.Migrations
                     b.Property<long?>("PrId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("ThisType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

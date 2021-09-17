@@ -56,7 +56,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
             return orderly;
         }
 
-        public string GetCourseGroupSlugBy(long courseId)
+        public string  GetCourseGroupSlugBy(long courseId)
         {
             var course = _context.CourseEpisodes.Include(x => x.Course).ThenInclude(x => x.CourseGroup)
                 .FirstOrDefault(x => x.Course.Id == courseId)?.Course.CourseGroup.Slug;

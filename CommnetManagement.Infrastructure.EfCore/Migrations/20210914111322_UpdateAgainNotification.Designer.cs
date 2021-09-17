@@ -58,7 +58,7 @@ namespace CommentManagement.Infrastructure.EfCore.Migrations
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("ThisType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -82,7 +82,7 @@ namespace CommentManagement.Infrastructure.EfCore.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("ThisType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -113,7 +113,7 @@ namespace CommentManagement.Infrastructure.EfCore.Migrations
                     b.Property<long>("RecordOwnerId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("ThisType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

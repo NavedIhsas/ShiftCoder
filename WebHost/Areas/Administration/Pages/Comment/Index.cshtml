@@ -1,5 +1,7 @@
 ﻿@page
+@using System.Linq
 @using _0_Framework.Application
+@using CommentManagement.Application.Contract.Comment
 @model WebHost.Areas.Administration.Pages.Comment.IndexModel
 @{
     ViewData["Title"] = "مدیریت کامنت ها ها";
@@ -19,23 +21,52 @@
                 <div class="panel-body">
                     <div class="table-responsive">
                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-
                             <div class="row col col-md-12">
                                 <label style="margin-right: 30px"> <strong>جستجو...</strong></label>
-                                <form method="get">
-
-                                    <div class=" col-md-4">
+                                <form class="form-inline" role="form" method="get" id="submit-form">
+                                    <div class="form-group">
+                                        <label class="sr-only" asp-for="SearchModel.Name"></label>
                                         <input asp-for="SearchModel.Name" type="text" class="form-control" placeholder="نام ..." />
                                     </div>
 
-                                    <div class=" col-md-4">
+                                    <div class="form-group">
+                                        <label class="sr-only" asp-for="SearchModel.Email"></label>
                                         <input asp-for="SearchModel.Email" type="email" class="form-control" placeholder="ایمیل..." />
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-info">جستجو</button>
-                                        <a class="btn btn-success" asp-page="./Index">مشاهده همه</a>
+
+                                    <button type="submit" class="btn btn-success waves-effect waves-light m-l-10">جستجو</button>
+                                    <a class="btn btn-primary waves-effect waves-light m-l-10" asp-page="./Index">مشاهده همه</a>
+                                    
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <div style="margin-right:10px" class="form-group m-r-10">
+                                        <div class="checkbox checkbox-primary">
+                                            <input type="checkbox" onchange="SubmitForm()" asp-for="SearchModel.IsConfirm">
+                                            <label asp-for="SearchModel.IsConfirm">
+                                                تائید شده ها
+                                            </label>
+                                        </div>
                                     </div>
+                                    <div style="margin-right:10px" class="form-group">
+                                        <div class="checkbox checkbox-primary">
+                                            <input asp-for="SearchModel.IsWaite"  onchange="SubmitForm()"   >
+                                            <label asp-for="SearchModel.IsWaite">
+                                                در انتظار تائید
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group m-r-10">
+                                        <div style="margin-right:10px" class="checkbox checkbox-primary">
+                                            <input type="checkbox" onchange="SubmitForm()" asp-for="SearchModel.IsCancel">
+                                            <label asp-for="SearchModel.IsCancel">
+                                                کنسل شده ها
+                                            </label>
+                                        </div>
+                                    </div>
+
                                 </form>
                             </div>
                             <hr />
@@ -102,3 +133,12 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        function SubmitForm() {
+            $("#submit-form").submit();
+        }
+    </script>
+}

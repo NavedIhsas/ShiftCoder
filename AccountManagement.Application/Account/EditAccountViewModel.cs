@@ -12,7 +12,6 @@ namespace AccountManagement.Application.Contract.Account
         {
             Teacher = new TeacherViewModel();
         }
-      
-
+        
     }
 }

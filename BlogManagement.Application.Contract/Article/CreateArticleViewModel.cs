@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using _0_FrameWork.Application;
+using AccountManagement.Application.Contract.Account;
 using BlogManagement.Application.Contract.ArticleCategory;
 using Microsoft.AspNetCore.Http;
 
@@ -49,7 +50,10 @@ namespace BlogManagement.Application.Contract.Article
         [Range(0, int.MaxValue, ErrorMessage = Validate.Required)]
         public long CategoryId { get; set; }
 
+        [Range(1,Int32.MaxValue,ErrorMessage = Validate.Required)]
+        public long BloggerId { get; set; }
         public bool IsPublish { get; set; }
         public List<ArticleCategoryViewModel> SelectList { get; set; }
+        public List<TeacherViewModel> BloggerSelectList { get; set; }
     }
 }

@@ -39,6 +39,16 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
             if (!string.IsNullOrWhiteSpace(searchModel.Email))
                 query = query.Where(x => x.Email.ToLower().Trim().Contains(searchModel.Email.ToLower().Trim())).ToList();
 
+            if (searchModel.IsConfirm)
+                query = query.Where(x => x.IsConfirmed).ToList();
+
+            if (searchModel.IsWaite)
+                query = query.Where(x => !x.IsConfirmed && !x.IsCanceled).ToList();
+
+            if (searchModel.IsCancel)
+                query = query.Where(x => x.IsCanceled).ToList();
+
+
             var orderly = query.OrderByDescending(x => x.Id).ToList();
             return orderly;
         }

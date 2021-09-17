@@ -8,7 +8,6 @@ namespace ShopManagement.Domain.OrderDetailAgg
   public interface IOrderDetailRepository:IRepository<long,OrderDetail>
   {
 
-      List<OrderDetailViewModel> GetAllOrderDetail();
       OrderDetail? GetOrderDetailBy(long orderId, long courseId);
   }
 }

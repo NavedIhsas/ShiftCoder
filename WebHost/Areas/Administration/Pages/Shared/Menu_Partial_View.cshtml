@@ -22,6 +22,15 @@
                         <li>
                             <a asp-page="/Notifications/Index">اعلانات </a>
                         </li>
+                        
+                        <li>
+                            <a asp-page="/Orders/Index">سفارشات </a>
+                        </li>
+                        
+                        <li>
+                            <a  asp-area="Administration" asp-page="/Notifications/Index" asp-page-handler="AdminsActivity">فعالیت مدیران سیستم </a>
+                        </li>
+
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
@@ -113,7 +122,11 @@
                         </li>
                         
                         <li>
-                            <a asp-page="/Account/Users/Teacher">اساتید </a>
+                            <a asp-page="/Account/Users/BlockedUserList" asp-area="Administration">کاربران مسدود شده </a>
+                        </li>
+
+                        <li>
+                            <a asp-page="/Account/Users/Teacher">اساتید و بلاگر </a>
                         </li>
 
                         <li>

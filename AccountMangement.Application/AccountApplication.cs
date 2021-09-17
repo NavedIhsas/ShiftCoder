@@ -33,7 +33,16 @@ namespace AccountManagement.Application
                 var create = new Account(command.FullName, command.Email, command.Phone, command.Password, fileName,
                     command.RoleId, new List<Teacher>()
                     {
-                        new Teacher("","","",command.Id)
+                        new Teacher("","","",command.Id,ThisType.Teacher)
+                    });
+                _repository.Create(create);
+            }
+            else if (command.RoleId == 2)
+            {
+                var create = new Account(command.FullName, command.Email, command.Phone, command.Password, fileName,
+                    command.RoleId, new List<Teacher>()
+                    {
+                        new Teacher("","","",command.Id,ThisType.Blogger)
                     });
                 _repository.Create(create);
             }
@@ -44,7 +53,8 @@ namespace AccountManagement.Application
                 _repository.Create(create);
             }
 
-            var notification = new Notification($"کاربری جدید با نام ({command.FullName}) در سایت ثبت نام کرد",OwnerType.Account,command.Id);
+
+            var notification = new Notification($"کاربری جدید با نام ({command.FullName}) در سایت ثبت نام کرد", ThisType.Account, command.Id);
             _notification.Create(notification);
             _notification.SaveChanges();
 
@@ -63,10 +73,32 @@ namespace AccountManagement.Application
             var getUser = _repository.GetById(command.Id);
             if (getUser == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
-                getUser.Edit(command.FullName, command.Email, command.Phone, fileName,
-                    command.RoleId);
-           
+            switch (getUser.RoleId)
+            {
+                case 2:
+                    getUser.Edit(command.FullName, command.Email, command.Phone, fileName,
+                        command.RoleId, new List<Teacher>()
+                        {
+                            new Teacher("","","",command.Id,ThisType.Blogger),
+                        });
+                    _repository.Update(getUser);
+                    break;
 
+                case 3:
+                    getUser.Edit(command.FullName, command.Email, command.Phone, fileName,
+                        command.RoleId, new List<Teacher>()
+                        {
+                            new Teacher("","","",command.Id,ThisType.Teacher),
+                        });
+                    _repository.Update(getUser);
+                    break;
+
+                default:
+                    getUser.Edit(command.FullName, command.Email, command.Phone, fileName,
+                        command.RoleId);
+                    _repository.Update(getUser);
+                    break;
+            }
             _repository.SaveChanges();
             return operation.Succeeded();
         }
@@ -76,6 +108,15 @@ namespace AccountManagement.Application
             return _repository.GetDetails(id);
         }
 
+        public BlockUserViewModel GetUserForBlock(long id)
+        {
+            return _repository.GetUserForBlock(id);
+        }
+
+        public BlockUserViewModel GetUserForUnblock(long id)
+        {
+            return _repository.GetUserForUnblock(id);
+        }
         public List<AccountViewModel> Search(AccountSearchModel searchModel)
         {
             return _repository.Search(searchModel);
@@ -98,11 +139,17 @@ namespace AccountManagement.Application
             var operation = new OperationResult();
 
             var getUser = _repository.GetById(id);
+            
             if (getUser == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
             getUser.DeActive(id);
             _repository.SaveChanges();
             return operation.Succeeded();
+        }
+
+        public void ConfirmUnblockUser(long id)
+        {
+            _repository.ConfirmUnblockUser(id);
         }
 
         public OperationResult ChangePassword(ChangePasswordViewModel command)
@@ -119,17 +166,23 @@ namespace AccountManagement.Application
             return operation.Succeeded();
         }
 
-       
+
         public OperationResult Login(LoginViewModel command)
         {
             return _repository.Login(command);
         }
+
+        public List<AccountViewModel> ShowBlockedUser()
+        {
+            return _repository.ShowBlockedUser();
+        }
+
         public void Logout()
         {
             _repository.Logout();
         }
 
-      
+
         public OperationResult EditTeacher(EditTeacherViewModel edit)
         {
             var operation = new OperationResult();
@@ -137,7 +190,7 @@ namespace AccountManagement.Application
             var getUser = _teacher.GetById(edit.Id);
             if (getUser == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
-            getUser.Edit(edit.Skills, edit.Bio, edit.Resumes, edit.AccountId);
+            getUser.Edit(edit.Skills, edit.Bio, edit.Resumes, edit.AccountId, edit.Type);
             _teacher.Update(getUser);
             _teacher.SaveChanges();
             return operation.Succeeded();
@@ -149,10 +202,6 @@ namespace AccountManagement.Application
             return _teacher.GetTeacherDetails(id);
         }
 
-        public List<TeacherViewModel> GetAllTeachers()
-        {
-            return _teacher.GetAllTeachers();
-        }
-
+       
     }
 }

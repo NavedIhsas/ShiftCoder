@@ -4,7 +4,6 @@
     ViewData["Title"] = "مدیریت کاربران";
 }
 
-
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-6">
@@ -87,11 +86,11 @@
 
                                                 @if (!item.IsActive)
                                                 {
-                                                    <a asp-page="./Index" asp-page-handler="Active" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-remove-format">فعال کردن</i></a>
+                                                    <a asp-page="./Index" asp-page-handler="Active" asp-route-id="@item.Id" class="btn btn-success"><i class="fa fa-remove-format">فعال کردن</i></a>
                                                 }
                                                 else
                                                 {
-                                                    <a asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" class="btn btn-success"><i class="fa fa-check">غیر فعال</i></a>
+                                                    <a class="btn btn-danger text-center" href="#showmodal=@Url.Page("./Index", "BlockUser", new { id = item.Id})">مسدود کردن</a>
 
                                                 }
 

@@ -3,6 +3,7 @@ using System.IO;
 using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
 using CommentManagement.Application.Contract.Comment;
+using CommentManagement.Domain.CourseCommentAgg;
 using CommentManagement.Domain.Notification.Agg;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,14 +23,18 @@ namespace WebHost.Pages
         private readonly IAccountRepository _account;
         private readonly ICourseEpisodeRepository _episode;
         private readonly INotificationRepository _notification;
+        private readonly ICommentRepository _commentRepository;
+        private readonly IAuthHelper _authHelper;
 
-        public SingleCourseModel(ICourseQuery course, ICommentApplication aaApplication, IAccountRepository account, ICourseEpisodeRepository episode, INotificationRepository notification)
+        public SingleCourseModel(ICourseQuery course, ICommentApplication aaApplication, IAccountRepository account, ICourseEpisodeRepository episode, INotificationRepository notification, ICommentRepository commentRepository, IAuthHelper authHelper)
         {
             _course = course;
             _aaApplication = aaApplication;
             _account = account;
             _episode = episode;
             _notification = notification;
+            _commentRepository = commentRepository;
+            _authHelper = authHelper;
         }
 
 
@@ -42,9 +47,23 @@ namespace WebHost.Pages
 
         public IActionResult OnPost(CreateCommentViewModel command,string productSlug)
         {
-            command.Type = 1;
-          _aaApplication.Create(command);
-            return RedirectToPage("SingleCourse", new { id = productSlug });
+            if (_authHelper.IsAuthenticated())
+            {
+                command.Type = 1;
+                var createComment= new Comment(_authHelper.CurrentAccountFullName(), User.Identity.Name, command.Message
+                    , command.OwnerRecordId, command.Type, command.ParentId);
+                _commentRepository.Create(createComment);
+                _commentRepository.SaveChanges();
+                return RedirectToPage("SingleCourse", new { id = productSlug });
+
+            }
+            else
+            {
+                command.Type = 1;
+
+                _aaApplication.Create(command);
+                return RedirectToPage("SingleCourse", new { id = productSlug });
+            }
         }
 
         public IActionResult OnGetDownloadFile(long id)
@@ -54,6 +73,27 @@ namespace WebHost.Pages
             var episode = _course.GetEpisodeFile(id);
         
             var getGroupSlug = _episode.GetCourseGroupSlugBy(episode.CourseId);
+            if (getGroupSlug == null)
+            {
+                var pathFile = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/EpisodeFiles",
+                    episode.FileName);
+
+
+                if (episode.IsFree)
+                {
+                    byte[] file = System.IO.File.ReadAllBytes(pathFile);
+                    var downloadFile = File(file, "application/force-download", episode.FileName);
+
+                    var notification = new Notification($"دانلود فایل رایگان از دورۀ( {episode.Course.Name}).",
+                        ThisType.Course, episode.Id);
+                    _notification.Create(notification);
+                    _notification.SaveChanges();
+
+                    return downloadFile;
+
+
+                }
+            }
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/{getGroupSlug}/EpisodeFiles",
                 episode.FileName);
@@ -64,7 +104,7 @@ namespace WebHost.Pages
                var downloadFile= File(file, "application/force-download", episode.FileName);
 
                 var notification = new Notification($"دانلود فایل رایگان از دورۀ( {episode.Course.Name}).",
-                    OwnerType.Course, episode.Id);
+                    ThisType.Course, episode.Id);
                 _notification.Create(notification);
                 _notification.SaveChanges();
 

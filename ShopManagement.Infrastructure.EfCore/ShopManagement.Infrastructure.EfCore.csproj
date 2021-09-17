@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AccountManagement.Domain\AccountManagement.Domain.csproj" />
     <ProjectReference Include="..\AccountMangement.Infrastrcture.EfCore\AccountManagement.Infrastructure.EfCore.csproj" />
+    <ProjectReference Include="..\CommentMangement.Domain\CommentManagement.Domain.csproj" />
     <ProjectReference Include="..\ProductManagement.Domain\ShopManagement.Domain.csproj" />
   </ItemGroup>
 

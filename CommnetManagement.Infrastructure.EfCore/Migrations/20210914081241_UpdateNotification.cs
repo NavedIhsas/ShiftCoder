@@ -15,7 +15,7 @@ namespace CommentManagement.Infrastructure.EfCore.Migrations
                 table: "Notifications");
 
             migrationBuilder.DropColumn(
-                name: "Type",
+                name: "ThisType",
                 table: "Notifications");
         }
 
@@ -34,7 +34,7 @@ namespace CommentManagement.Infrastructure.EfCore.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "Type",
+                name: "ThisType",
                 table: "Notifications",
                 type: "int",
                 nullable: false,

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CommentManagement.Domain.VisitAgg;
 
 namespace ShiftCoderQuery.Contract.Course
 {
@@ -7,8 +8,6 @@ namespace ShiftCoderQuery.Contract.Course
     {
        
         public string Name { get; set; }
-        public double Price { get; set; }
-        public string CreationDate { get; set; }
         public string Filter { get; set; }
 
     }

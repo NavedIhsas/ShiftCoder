@@ -5,22 +5,24 @@ using _0_Framework.Application;
 using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Infrastructure.EfCore;
+using BlogManagement.Domain.ArticleAgg;
+using BlogManagement.Infrastructure.EfCore;
 using CommentManagement.Domain.VisitAgg;
 using CommentManagement.Infrastructure.EfCore;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using ShiftCoderQuery.Contract.Comment;
 using ShiftCoderQuery.Contract.Course;
 using Shop.Management.Application.Contract.AfterCourse;
 using Shop.Management.Application.Contract.CourseEpisode;
 using Shop.Management.Application.Contract.CoursePrerequisite;
 using Shop.Management.Application.Contract.CourseSuitable;
-using Shop.Management.Application.Contract.OrderDetail;
 using Shop.Management.Application.Contract.UserCourse;
 using ShopManagement.Domain.AfterTheCourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.CoursePrerequisiteAgg;
 using ShopManagement.Domain.CourseSuitableAgg;
-using ShopManagement.Domain.OrderDetailAgg;
 using ShopManagement.Domain.UserCoursesAgg;
 using ShopManagement.Infrastructure.EfCore;
 
@@ -34,18 +36,21 @@ namespace ShiftCoderQuery.Query
         private readonly AccountContext _account;
         private readonly IAccountRepository _accountRepository;
         private readonly IVisitRepository _visit;
+        private readonly BlogContext _article;
 
 
-        public CourseQuery(ShopContext context, CommentContext comment, AccountContext account, IAccountRepository accountRepository, IVisitRepository visit)
+        public CourseQuery(ShopContext context, CommentContext comment, AccountContext account, IAccountRepository accountRepository, IVisitRepository visit, BlogContext article)
         {
             _context = context;
             _comment = comment;
             _account = account;
             _accountRepository = accountRepository;
             _visit = visit;
+            _article = article;
         }
 
-        public List<GetAllCourseQueryModel> GetAllCourse(CourseQuerySearchModel searchQuery, List<long> group)
+        public CoursePaginationViewModel GetAllCourse(CourseQuerySearchModel searchQuery, List<long> @group,
+            int pageId = 1)
         {
             var query = _context.Courses
                 .Include(x => x.UserCourses)
@@ -75,29 +80,47 @@ namespace ShiftCoderQuery.Query
 
             foreach (var item in query)
             {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == OwnerType.Course).ToList();
+                //get comment list
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Course)
+                    .ToList();
                 item.Comments = comments;
 
+                //get teacher account
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
-                if (teacher == null) return null;
+                if (teacher == null) continue;
                 item.TeacherName = teacher.Account.FullName;
-
             }
 
+           
             if (!string.IsNullOrWhiteSpace(searchQuery.Name))
                 query = query.Where(x => x.Name.ToLower().Trim().Contains(searchQuery.Name.ToLower().Trim())).ToList();
 
 
+            //var visits = _comment.Visits
+            //    .OrderByDescending(x => x.NumberOfVisit)
+            //    .Select(x => new { x.RecordOwnerId }).ToList();
+
+
+            //foreach (var visit in visits)
+            //{
+            //    if (string.IsNullOrWhiteSpace(searchQuery.Filter)) continue;
+
+            //    if (searchQuery.Filter == "mustVisit")
+            //        query = query.Where(x => x.Id == visit.RecordOwnerId).ToList();
+
+            //}
+
+            //sort by
             if (!string.IsNullOrWhiteSpace(searchQuery.Filter))
             {
                 query = searchQuery.Filter switch
                 {
                     "maxPrice" => query.OrderByDescending(x => x.Price).ToList(),
                     "newest" => query.OrderByDescending(x => x.CreationDate).ToList(),
-                    "minPrice" => query.OrderBy(x => x.Price).ToList(),
-                    //"price"=>query.Where(x=>x.Price>0).ToList(), 
+                    "minPrice" => query.OrderBy(x => x.Price != 0).ToList(),
+                    "price" => query.Where(x => x.Price > 0).ToList(),
                     "free" => query.Where(x => x.Price == 0).ToList(),
-                    //"all"=>query,
+                    "all" => query,
                     _ => query
                 };
             }
@@ -105,14 +128,28 @@ namespace ShiftCoderQuery.Query
 
             //or 
 
+            //search group
             if (group.Count != 0)
             {
                 query = @group.Aggregate(query, (current, courseGroup) => current.Where(x => x.CourseGroupId == courseGroup).ToList());
             }
-            return query;
+
+            //paging
+            var take = 3;
+            var skip = (pageId - 1) * take;
+
+            var list = new CoursePaginationViewModel
+            {
+                CurrentPage = pageId,
+                PageCount = query.Count / take,
+                Courses = query.Skip(skip).Take(take).ToList()
+            };
+
+            return list;
+
         }
 
-        public List<GetAllCourseQueryModel> LatestCourses()
+        public List<GetAllCourseQueryModel> LatestCourses(string ipAddress)
         {
             var course = _context.Courses.Include(x => x.CourseEpisodes).
                 Include(x => x.UserCourses).
@@ -142,13 +179,19 @@ namespace ShiftCoderQuery.Query
 
             foreach (var item in course)
             {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == OwnerType.Course).ToList();
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Course).ToList();
                 item.Comments = comments;
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
-                if (teacher == null) return null;
+                if (teacher == null) continue;
                 item.TeacherName = teacher.Account.FullName;
-
             }
+
+            //var checkVisit = _comment.Visits.Any(x => x.IpAddress == ipAddress);
+            //if (checkVisit) return course;
+
+            var visit = new Visit(ThisType.Index, ipAddress, DateTime.Now, 1, ThisType.Index);
+            _comment.Visits.Add(visit);
+            _comment.SaveChanges();
 
             return course;
         }
@@ -185,11 +228,11 @@ namespace ShiftCoderQuery.Query
 
             foreach (var item in popular)
             {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == OwnerType.Course).ToList();
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Course).ToList();
                 item.Comments = comments;
 
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
-                if (teacher == null) return null;
+                if (teacher == null) continue;
                 item.TeacherName = teacher.Account.FullName;
 
             }
@@ -238,21 +281,21 @@ namespace ShiftCoderQuery.Query
 
             #region Visit
 
-            var visit = _visit.GetUsedBy(ipAddress, OwnerType.Course,course.Id);
+            var visit = _visit.GetUsedBy(ipAddress, ThisType.Course, course.Id);
 
-            if (visit != null && visit.LastVisitDateTime.Date !=DateTime.Now)
+            if (visit != null && visit.LastVisitDateTime.Date != DateTime.Now)
             {
                 visit.ReduceVisit(visit.NumberOfVisit);
                 visit.SetDateTime();
                 _visit.SaveChanges();
             }
-            else if(visit==null)
+            else if (visit == null)
             {
-                visit = new Visit(OwnerType.Course, ipAddress, DateTime.Now, 1,course.Id);
+                visit = new Visit(ThisType.Course, ipAddress, DateTime.Now, 1, course.Id);
                 _visit.Create(visit);
                 _visit.SaveChanges();
             }
-            course.VisitCount = _visit.GetNumberOfVisit(OwnerType.Course, course.Id);
+            course.VisitCount = _visit.GetNumberOfVisit(ThisType.Course, course.Id);
 
             #endregion
 
@@ -263,6 +306,7 @@ namespace ShiftCoderQuery.Query
             course.TeacherName = teacher?.Account.FullName;
             course.TeacherResume = teacher?.Resumes;
             course.TeacherSkills = teacher?.Skills;
+            course.TeacherAvatar = teacher?.Account.Avatar;
 
             //barrase kon k en rahe dorst ast ya na?
             course.CourseTeacher = _context.Courses.Where(x => x.TeacherId == teacher.Id).Select(selector: x => new { x.Name, x.Slug }).
@@ -291,7 +335,7 @@ namespace ShiftCoderQuery.Query
                 MapChildren(item);
 
             course.Comments = comment;
-            var comments = _comment.Comments.Where(x => x.OwnerRecordId == course.Id && x.Type == OwnerType.Course).ToList();
+            var comments = _comment.Comments.Where(x => x.OwnerRecordId == course.Id && x.Type == ThisType.Course).ToList();
             course.CommentList = comments;
 
             #endregion
@@ -308,6 +352,40 @@ namespace ShiftCoderQuery.Query
         public CourseEpisode GetEpisodeFile(long episodeId)
             => _context.CourseEpisodes.FirstOrDefault(x => x.Id == episodeId);
 
+        public List<Account> GetAllUsers() => _account.Accounts.ToList();
+
+
+        public double GetAllEpisodes()
+        {
+            return _context.CourseEpisodes.Sum(x => x.Time.TotalMinutes);
+
+        }
+
+        public List<Article> GetAllArticle() => _article.Articles.ToList();
+        public List<Teacher> GetAllTeacher() => _account.Teachers.ToList();
+
+
+        public List<UserCourseViewModel> GetUserCourseBy(string email)
+        {
+            var userId = _accountRepository.GetUserIdBy(email);
+            var userCourse = _context.UserCourses.Where(x => x.AccountId == userId).Select(x =>
+                  new UserCourseViewModel
+                  {
+                      AccountId = x.AccountId,
+                      CourseId = x.CourseId
+                  }).ToList();
+
+            foreach (var item in userCourse)
+            {
+                var course = _context.Courses.Find(item.CourseId);
+                item.CourseName = course.Name;
+                item.CourseSlug = course.Slug;
+            }
+
+            return userCourse;
+        }
+
+
 
         #region Mapping Single Course
 
@@ -320,7 +398,7 @@ namespace ShiftCoderQuery.Query
             }).ToList();
         }
 
-      
+
 
         private void MapChildren(CommentQueryModel parent)
         {

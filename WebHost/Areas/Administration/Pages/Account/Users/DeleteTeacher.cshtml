@@ -1,0 +1,28 @@
+﻿@model AccountManagement.Domain.Account.Agg.Teacher
+@{
+    ViewData["Title"] = "حذف رکورد";
+}
+
+<div class="container">
+   
+    <form asp-page="./Teacher" asp-page-handler="DeleteTeacher"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh">
+    <div class="modal-body">
+            <p class="text-warning"><h2><i class=" text-danger fa fa-warning fa-1x">هشدار ههم!</i></h2>
+                <br/>
+                آیا از حذف دایمی این رکورد مطمئنید؟
+                این عمل قابل برگشت  نیست.
+                <br/>
+                قبل از حذف توصیه میشود که رفرنس های این رکورد را بررسی کنید تا احتمالاً 
+                پیج های سایت به ارور 404 مواجه نشود!
+            </p>
+        </div>
+      
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بازگشت</button>
+            <a asp-page="./Teacher" asp-page-handler="ConfirmDelete" asp-route-id="@Model.Id" class="btn btn-info waves-effect waves-light">حذف کن</a>
+        </div>
+    </form>
+</div>

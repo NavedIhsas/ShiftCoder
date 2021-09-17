@@ -49,6 +49,7 @@
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 244px;" aria-sort="ascending"><strong>کد تخفیف</strong> </th>
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 244px;" aria-sort="ascending"><strong>تاریخ شروع</strong> </th>
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 244px;" aria-sort="ascending"><strong>تاریخ اتمام</strong> </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 244px;" aria-sort="ascending"><strong>قابل استفاده برای</strong> </th>
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 244px;" aria-sort="ascending"><strong>علت تخفیف</strong> </th>
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 244px;" aria-sort="ascending"><strong>وضعیت</strong> </th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 242px;">عملیات</th>
@@ -64,16 +65,23 @@
                                             <td class="sorting_1">@item.DiscountCode</td>
                                             <td class="sorting_1">@item.StartDate.ToFarsi()</td>
                                             <td class="sorting_1">@item.EndDate.ToFarsi()</td>
+                                            <td class="sorting_1">@item.UseableCount نفر</td>
                                             <td class="sorting_1">@item.Reason</td>
                                             <td class="sorting_1">
                                                 @if (item.EndDate < DateTime.Now)
                                                 {
                                                     <span class="text-danger">منقضی شده</span>
                                                 }
+                                                else if (item.UseableCount == 0)
+                                                {
+                                                    <span class="text-danger">به اتمام رسیده</span>
+
+                                                }
                                                 else
                                                 {
                                                     <span class="text-success">فعال</span>
                                                 }
+                                               
                                             </td>
 
                                             <td class="center ">

@@ -253,10 +253,12 @@ input[type=number] {
 	background-color: #eee;
 }
 
-.btn-first-accordion:nth-child(1){
-	border-radius: 0 5px 5px 0;
-	border-left: none;
-}
+    .btn-first-accordion:nth-child(1) {
+        border-radius: 0 5px 5px 0;
+        border-left: none;
+        padding: 7px;
+        color: #000000;
+    }
 
 .btn-first-accordion:nth-child(3){
 	border-radius: 5px 0 0 5px;

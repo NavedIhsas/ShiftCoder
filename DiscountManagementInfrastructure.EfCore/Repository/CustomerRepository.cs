@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using _0_Framework.Application;
@@ -65,6 +66,11 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
             return orderly;
 
 
+        }
+
+        public int? CustomerDiscountRate(long courseId)
+        {
+            return _context.CustomerDiscounts.FirstOrDefault(x => x.CourseId == courseId)?.DiscountRate;
         }
     }
 

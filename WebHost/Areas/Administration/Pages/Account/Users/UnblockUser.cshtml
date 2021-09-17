@@ -1,0 +1,30 @@
+﻿@model AccountManagement.Application.Contract.Account.BlockUserViewModel
+@{
+    ViewData["Title"] = "حذف رکورد";
+}
+
+<div class="container">
+
+    <form asp-page="./Index" asp-page-handler="UnblockUser"
+          method="post"
+          data-ajax="true"
+          data-action="Refresh">
+        <div class="modal-body">
+            <p class="text-warning">
+                <h2><i class=" text-danger fa fa-warning fa-1x">هشدار !</i></h2>
+                <br />
+                آیا از رفع انسداد این کاربر مطمئنید؟
+                <br />
+                در صورت تائید این کاربر میتواند با رمز و ایمیل  خود لاگین کرده و تمامی
+                دسترسی های قبل از انسداد خود را داشته باشد.
+                <br />
+                بعداً میتوانید این گزینه را تغییر دهید.
+            </p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بازگشت</button>
+            <a asp-page="./Index" asp-page-handler="ConfirmUnblockUser" asp-route-id="@Model.Id" class="btn btn-info waves-effect waves-light">تایید</a>
+        </div>
+    </form>
+</div>

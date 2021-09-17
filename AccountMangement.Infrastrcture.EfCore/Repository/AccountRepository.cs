@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
 using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Domain.Account.Agg;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountManagement.Infrastructure.EfCore.Repository
@@ -39,6 +35,30 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
                 //  Teacher = MapTeacher(x.Teachers)
 
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
+        }
+
+        public BlockUserViewModel GetUserForBlock(long id)
+        {
+            return _context.Accounts.Select(x => new BlockUserViewModel
+            {
+                Id = x.Id,
+            }).AsNoTracking().FirstOrDefault(x => x.Id == id);
+        }
+
+        public BlockUserViewModel GetUserForUnblock(long id)
+        {
+            return _context.Accounts.IgnoreQueryFilters().Select(x => new BlockUserViewModel
+            {
+                Id = x.Id,
+            }).AsNoTracking().FirstOrDefault(x => x.Id == id);
+        }
+       
+        public void ConfirmUnblockUser(long id)
+        {
+          var user=  _context.Accounts.IgnoreQueryFilters().FirstOrDefault(x => x.Id == id);
+         user.Active(id);
+         _context.Accounts.Update(user);
+            _context.SaveChanges();
         }
 
         private static List<TeacherViewModel> MapTeacher(IEnumerable<Teacher> teachers)
@@ -82,12 +102,24 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
 
         public long GetUserIdBy(string email)
         {
-            // ReSharper disable once PossibleNullReferenceException
-            return _context.Accounts.FirstOrDefault(x => x.Email == email).Id;
+            return _context.Accounts.Single(x => x.Email == email).Id;
         }
 
         public Account GetUserBy(string email)
-       => _context.Accounts.FirstOrDefault(x => x.Email == email);
+       => _context.Accounts.Single(x => x.Email == email);
+
+        public Account GetUserBy(long id) => _context.Accounts.Find(id);
+
+        public List<AccountViewModel> ShowBlockedUser()
+        {
+            return _context.Accounts.IgnoreQueryFilters().Where(x=>!x.IsActive).Select(x => new AccountViewModel()
+            {
+                Id = x.Id,
+                FullName = x.FullName,
+                CreationDate = x.CreationDate.ToFarsi(),
+                Email = x.Email,
+            }).ToList();
+        }
 
         public OperationResult Login(LoginViewModel login)
         {
@@ -105,6 +137,9 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
         {
             _authHelper.SignOut();
         }
+
+      
+
 
         public List<AccountViewModel> SelectList()
         {

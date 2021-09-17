@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
 using _0_FrameWork.Domain.Infrastructure;
@@ -8,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscountManagementInfrastructure.EfCore.Repository
 {
-  public class DiscountCodeRepository:RepositoryBase<long,DiscountCode>,IDiscountCodeRepository
-  {
-      private readonly DiscountContext _context;
+    public class DiscountCodeRepository : RepositoryBase<long, DiscountCode>, IDiscountCodeRepository
+    {
+        private readonly DiscountContext _context;
         public DiscountCodeRepository(DiscountContext dbContext, DiscountContext context) : base(dbContext)
         {
             _context = context;
@@ -39,7 +40,8 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
                 Reason = x.Reason,
                 DiscountCode = x.Code,
                 DiscountRate = x.DiscountRate,
-                Id = x.Id
+                Id = x.Id,
+                UseableCount = x.UseableCount,
             }).ToList();
             if (!string.IsNullOrWhiteSpace(searchModel.DiscountCode))
                 query = query.Where(x => x.DiscountCode.ToLower().Trim().Contains(searchModel.DiscountCode.ToLower().Trim())).ToList();
@@ -47,5 +49,11 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
             var orderly = query.OrderByDescending(x => x.Id).ToList();
             return orderly;
         }
-  }
+
+        public DiscountCode GetDiscountBy(long id)
+        {
+            return _context.DiscountCodes
+                .FirstOrDefault(x=>x.Id==id);
+        }
+    }
 }

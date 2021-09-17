@@ -9,6 +9,7 @@ namespace AccountManagement.Infrastructure.EfCore.Mapping
         public void Configure(EntityTypeBuilder<Account> builder)
         {
             builder.ToTable("Users");
+            builder.HasQueryFilter(x => x.IsActive);
             builder.HasKey(x => x.Id);
             builder.Property(x => x.FullName).HasMaxLength(250).IsRequired();
             builder.Property(x => x.Email).HasMaxLength(250).IsRequired();

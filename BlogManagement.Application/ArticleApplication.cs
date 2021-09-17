@@ -30,10 +30,7 @@ namespace BlogManagement.Application
             if (command.IsPublish == true)
                 publish = DateTime.Now;
             else
-            {
                 publish = null;
-               
-            }
 
             var categoryName = _articleCategory.GetArticleCategoryName(command.CategoryId);
             var path = $"Articles /{categoryName}";
@@ -42,7 +39,7 @@ namespace BlogManagement.Application
             var article = new Article(command.Title, command.Description, fileName, command.PictureTitle,
                 command.PictureAtl, command.Slug
                 , command.Keywords, command.CanonicalAddress, publish, command.CategoryId,
-                command.MetaDescription, command.ShortDescription, command.ShowOrder,command.IsPublish);
+                command.MetaDescription, command.ShortDescription, command.ShowOrder,command.IsPublish,command.BloggerId);
 
             _repository.Create(article);
             _repository.SaveChanges();
@@ -65,9 +62,7 @@ namespace BlogManagement.Application
                 if (command.IsPublish == true)
                 {
                     if (oldPublishDate == null)
-                    {
                         publish = DateTime.Now;
-                    }
                     else
                     {
                         isPublish = command.IsPublish;
@@ -87,7 +82,7 @@ namespace BlogManagement.Application
             article.Edit(command.Title, command.Description, fileName, command.PictureTitle,
                 command.PictureAtl, command.Slug
                 , command.Keywords, command.CanonicalAddress, publish, command.CategoryId,
-                command.MetaDescription, command.ShortDescription, command.ShowOrder,isPublish);
+                command.MetaDescription, command.ShortDescription, command.ShowOrder,isPublish,command.BloggerId);
 
             _repository.Update(article);
             _repository.SaveChanges();

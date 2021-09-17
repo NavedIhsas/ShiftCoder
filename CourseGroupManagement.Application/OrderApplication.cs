@@ -60,7 +60,7 @@ namespace ShopManagement.Application
             _orderDetail.SaveChanges();
             _order.SaveChanges();
 
-            var notification = new Notification($"کاربر سفارشی را برای ({course.Name}) ثبت کرد.", OwnerType.Order,order.Id);
+            var notification = new Notification($"کاربر سفارشی را برای ({course.Name}) ثبت کرد.", ThisType.Order,order.Id);
             _notification.Create(notification);
             _notification.SaveChanges();
 

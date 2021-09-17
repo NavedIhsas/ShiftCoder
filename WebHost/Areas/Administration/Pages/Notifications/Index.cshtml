@@ -1,5 +1,6 @@
 ﻿@page
 @using _0_FrameWork.Application
+@using Type = _0_FrameWork.Application.ThisType
 @model WebHost.Areas.Administration.Pages.Notifications.IndexModel
 @{
     ViewData["Title"] = "پنل اعلانات";
@@ -38,8 +39,8 @@
                         {
                             switch (item.Type)
                             {
-                                case OwnerType.Comment:
-                                    <a class="list-group-item">
+                                case Type.Comment:
+                                    <a asp-page="/Comment/Index" class="list-group-item">
                                         <i class="fa fa-comment fa-fw"></i> @item.Text
                                         <span class="pull-left text-muted small">
                                             <em>@item.CreationDate.TimeAgo()</em>
@@ -47,8 +48,8 @@
                                     </a>
                                     break;
 
-                                case OwnerType.Account:
-                                    <a class="list-group-item">
+                                case Type.Account:
+                                    <a asp-page="/Account/Users/Index" class="list-group-item">
                                         <i class="fa fa-user fa-fw"></i> @item.Text
                                         <span class="pull-left text-muted small">
                                             <em>@item.CreationDate.TimeAgo()</em>
@@ -56,8 +57,8 @@
                                     </a>
                                     break;
 
-                                case OwnerType.Order:
-                                    <a href="#" class="list-group-item">
+                                case Type.Order:
+                                    <a asp-page="/Orders/Index"  class="list-group-item">
                                         <i class="fa fa-shopping-cart fa-fw"></i> @item.Text
                                         <span class="pull-left text-muted small">
                                             <em>@item.CreationDate.TimeAgo()</em>
@@ -65,7 +66,7 @@
                                     </a>
                                     break;
 
-                                case OwnerType.Course:
+                                case Type.Course:
                                     <a href="#" class="list-group-item">
                                         <i class="fa fa-download fa-fw"></i> @item.Text
                                         <span class="pull-left text-muted small">

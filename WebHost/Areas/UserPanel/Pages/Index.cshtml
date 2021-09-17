@@ -23,9 +23,9 @@
         <section id="body-container" class="container" >
             <div class="row">
                 <partial name="Shared/_Left-bar-menu" />
-                <section id="content-container"  class="col-12 col-lg-8 ">
+                <section id="content-container" class="col-12 col-lg-8 ">
                     <div id="container-body">
-                     
+
                     </div>
                     <div class="container-info-aside price-course ">
                         <h3 id="text-price">اطلاعات مقاله</h3>
@@ -82,15 +82,43 @@
                                         <p class="paragraph-info-aside">موجودی کیف پول :</p>
                                     </div>
                                     <div class="container-title-line-aside">
-                                        <h2 class="value-info-aside">120,000 تومان</h2>
+                                        <h2 class="value-info-aside"> تومان</h2>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                 <br/>
+                    <hr />
+
+                    <div class="col-12 ">
+                        <div class="container-info-aside price-course ">
+                            <h2 class="text-dark text-price">دوره های من</h2>
+
+                        </div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="bg-info text-center" scope="col"> عنوان دوره</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.UserCourse)
+                                {
+                                    <tr class="text-center">
+                                        <td>
+                                            <a class="text-primary" asp-page="SingleCourse" asp-route-id="@item.CourseSlug">@item.CourseName</a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
-                <aside class="col-12 col-lg-4"></aside>
+
+                    <br />
+
             </div>
         </section>
     </div>

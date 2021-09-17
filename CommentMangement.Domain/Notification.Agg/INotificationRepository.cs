@@ -6,8 +6,10 @@ namespace CommentManagement.Domain.Notification.Agg
 {
     public interface INotificationRepository : IRepository<long, Notification>
     {
-        List<Notification> GetAllNotification(Notification search);
+        List<NotificationViewModel> GetAllNotification(Notification search);
         List<Notification> GetFiveNotification();
-      
+        void GetNotificationBy(string email);
+        List<Notification> GetActivityAdminsNotification();
+
     }
 }

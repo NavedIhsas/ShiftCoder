@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
+using AccountManagement.Domain.Account.Agg;
 using BlogManagement.Infrastructure.EfCore;
 using CommentManagement.Domain.VisitAgg;
 using CommentManagement.Infrastructure.EfCore;
@@ -17,17 +18,19 @@ namespace ShiftCoderQuery.Query
         private readonly BlogContext _context;
         private readonly CommentContext _comment;
         private readonly IVisitRepository _visit;
+        private readonly ITeacherRepository _teacher;
 
-        public ArticleQuery(BlogContext context, CommentContext comment, IVisitRepository visit)
+        public ArticleQuery(BlogContext context, CommentContext comment, IVisitRepository visit, ITeacherRepository teacher)
         {
             _context = context;
             _comment = comment;
             _visit = visit;
+            _teacher = teacher;
         }
 
         public List<LatestArticleQueryModel> LatestArticle()
         {
-            var article= _context.Articles.Where(x => x.IsPublish).Select(x => new LatestArticleQueryModel()
+            var article = _context.Articles.Where(x => x.IsPublish).Select(x => new LatestArticleQueryModel()
             {
                 Title = x.Title,
                 Picture = x.Picture,
@@ -38,12 +41,12 @@ namespace ShiftCoderQuery.Query
                 Slug = x.Slug,
                 Keywords = x.Keywords,
                 MetaDescription = x.MetaDescription,
-                Id=x.Id,
+                Id = x.Id,
             }).AsNoTracking().OrderByDescending(x => x.CreationDate).Take(6).ToList();
 
             foreach (var item in article)
             {
-                item.VisitCount = _visit.GetNumberOfVisit(OwnerType.Article, item.Id);
+                item.VisitCount = _visit.GetNumberOfVisit(ThisType.Article, item.Id);
             }
 
             return article;
@@ -100,6 +103,7 @@ namespace ShiftCoderQuery.Query
                 Keywords = x.Keywords,
                 MetaDescription = x.MetaDescription,
                 CanonicalAddress = x.CanonicalAddress,
+                BloggerId = x.BloggerId,
                 IsPublish = x.IsPublish,
                 PublishDate = x.PublishDate.ToFarsi(),
                 CategoryName = x.ArticleCategory.Name
@@ -107,8 +111,10 @@ namespace ShiftCoderQuery.Query
 
             if (article == null) return null;
 
+            #region Visit
 
-            var visit = _visit.GetUsedBy(ipAddress, OwnerType.Article, article.Id);
+            //start-visit
+            var visit = _visit.GetUsedBy(ipAddress, ThisType.Article, article.Id);
 
             if (visit != null && visit.LastVisitDateTime.Date != DateTime.Now)
             {
@@ -118,41 +124,70 @@ namespace ShiftCoderQuery.Query
             }
             else if (visit == null)
             {
-                visit = new Visit(OwnerType.Article, ipAddress, DateTime.Now, 1,article.Id);
+                visit = new Visit(ThisType.Article, ipAddress, DateTime.Now, 1, article.Id);
                 _visit.Create(visit);
                 _visit.SaveChanges();
             }
             article.VisitCount = visit.NumberOfVisit;
 
-            var comment = _comment.Comments.
+            #endregion
 
-               Where(x => x.Type == OwnerType.Article && x.ParentId == null)
-               .Where(x => x.OwnerRecordId == article.Id)
-               .OrderByDescending(x => x.CreationDate)
-               .Select(x => new CommentQueryModel
-               {
-                   Name = x.Name,
-                   Email = x.Email,
-                   Message = x.Message,
-                   Id = x.Id,
-                   ParentName = x.Parent.Name,
-                   ParentId = x.ParentId,
-                   CreationDate = x.CreationDate.ToFarsi(),
-                   OwnerRecordId = x.OwnerRecordId,
-               }).AsNoTracking().ToList();
+            #region Comment
+
+            //start-Comment//
+            var comment = _comment.Comments.
+                Where(x => x.Type == ThisType.Article && x.ParentId == null)
+                .Where(x => x.OwnerRecordId == article.Id)
+                .OrderByDescending(x => x.CreationDate)
+                .Select(x => new CommentQueryModel
+                {
+                    Name = x.Name,
+                    Email = x.Email,
+                    Message = x.Message,
+                    Id = x.Id,
+                    ParentName = x.Parent.Name,
+                    ParentId = x.ParentId,
+                    CreationDate = x.CreationDate.ToFarsi(),
+                    OwnerRecordId = x.OwnerRecordId,
+                }).AsNoTracking().ToList();
 
             foreach (var item in comment)
                 MapChildren(item);
 
             article.Comments = comment;
-            return article;
+            article.CommentList= _comment.Comments.
+                Where(x => x.Type == ThisType.Article && x.OwnerRecordId == article.Id).ToList();
 
+            #endregion
+
+            #region Blogger
+            //start-blogger//
+            var blogger = _teacher.GetBloggerBy(article.BloggerId);
+            if (blogger == null) return article;
+            article.BloggerName = blogger.Account.FullName;
+            article.BloggerBio = blogger.Bio;
+            article.BloggerResume = blogger.Resumes;
+            article.BloggerSkills = blogger.Skills;
+            article.BloggerPicture = blogger.Account.Avatar;
+
+            article.BloggerArticlesList = _context.Articles
+                .Where(x => x.BloggerId == blogger.Id)
+                .Select(selector:x=>new{x.Title,x.Slug})
+                .Select(x=>new BloggerArticlesViewModel()
+            {
+                Title = x.Title,
+                Slug = x.Slug
+            }).ToList();
+         
+            #endregion
+
+            return article;
         }
 
         private void MapChildren(CommentQueryModel parent)
         {
             var sub = _comment.Comments
-                .OrderByDescending(x=>x.CreationDate).Where(x => x.Type == OwnerType.Article && x.ParentId == parent.Id)
+                .OrderByDescending(x => x.CreationDate).Where(x => x.Type == ThisType.Article && x.ParentId == parent.Id)
                 .Select(x => new CommentQueryModel
                 {
                     Name = x.Name,

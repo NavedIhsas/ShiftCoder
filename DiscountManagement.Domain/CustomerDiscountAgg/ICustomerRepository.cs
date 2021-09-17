@@ -8,5 +8,6 @@ namespace DiscountManagement.Domain.CustomerDiscountAgg
     {
         EditCustomerDiscountViewModel GetDetails(long id);
         List<CustomerDiscountViewModel> Search(CustomerDiscountSearchModel searchModel);
+        int? CustomerDiscountRate(long courseId);
     }
 }

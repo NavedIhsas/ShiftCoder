@@ -20,6 +20,7 @@ namespace AccountManagement.Application.Contract.Account
         public long AccountId { get;  set; }
         public long Id { get; set; }
         public string AccountName { get; set; }
+        public int Type { get; set; }
         public List<AccountViewModel> SelectList { get; set; }
     }
 

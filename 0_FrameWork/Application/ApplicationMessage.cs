@@ -16,13 +16,23 @@
         public const string MaxLength = "کاراکتر های {0} بیشتر از حد مجاز {1} میباشد";
     }
 
-    public class OwnerType
+    public class ThisType
     {
         public const int Course = 1;
         public const int Article = 2;
         public const int Comment = 3;
         public const int Account = 4;
         public const int Order = 5;
+        public const int Index = 6;
+        public const int EnterWallet = 7;
+        public const int ExistWallet = 8;
+        public const int Teacher = 9;
+        public const int Blogger = 10;
+        public const int AdminPanelIndex = 11;
+
+        
+
+
     }
 
 }

@@ -42,8 +42,6 @@
                         <ul>
                             <li><a href="#">انجام پروژه های برنامه نویسی و وبسایت</a></li>
                             <li><a href="#">آموزش برنامه نویسی و طراحی وبسایت</a></li>
-                            @*<a href="#">
-                                </a>*@
                             <li><a href="#"></a><a href="#">برگزاری دوره های اموزشی رایگان</a></li>
                             <li><a href="#">آموزش گرافیک از صفر تا صد</a></li>
                         </ul>
@@ -77,7 +75,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         @await Component.InvokeAsync("Menu")
 
-                        @if (!User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item dropdown list-style-li-header" id="setting-list-item-header">
                                 <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -99,7 +97,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                        <a asp-page="Index" asp-page-handler="Comments" asp-area="UserPanel" class="dropdown-item text-white hover-link-dropdown" >
                                             <img src="~/icons/conversation.png" alt="comments" class="icons-img-header">
                                             نظرات
                                         </a>
@@ -114,7 +112,7 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <a class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" href="#">
+                                        <a  class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" href="#">
                                             <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
                                             تنظیمات بیشتر
                                         </a>
@@ -122,13 +120,13 @@
                                 </ul>
                             </li>
                             <li class="nav-item dropdown list-style-li-header">
-                                <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a asp-page="Index" asp-area="UserPanel" class="nav-link dropdown-toggle link-navbar-header"  id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="~/images/logo-icon-150px-shiftcoder.png" alt="پروفایل" id="profile-header">
                                     <span id="span-profile">پروفایل</span>
                                 </a>
                                 <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
                                     <li>
-                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                                        <a asp-page="Index" asp-area="Administration" class="dropdown-item text-white hover-link-dropdown" >
                                             <img src="~/icons/control-panel.png" alt="control panel" class="icons-img-header">
                                             پنل مدیریت
                                         </a>
@@ -151,7 +149,7 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <a asp-page="Login" asp-page-handler="Logout" class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown">
+                                        <a asp-page="Account" asp-page-handler="Logout" class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown">
                                             <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
                                             خروج از سایت
                                         </a>
@@ -159,15 +157,7 @@
                                 </ul>
                             </li>
                         }
-                        else
-                        {
-                            <p>
-                                <a asp-page="Account" asp-page-handler="Logout">خروج</a>
-                            </p>
-                        }
-
-
-
+                       
                     </div>
                 </div>
             </nav>

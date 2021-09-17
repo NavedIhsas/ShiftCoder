@@ -1,0 +1,35 @@
+﻿@using _0_FrameWork.Application
+@model IEnumerable<CommentManagement.Domain.Notification.Agg.Notification>
+@{
+    ViewData["Title"] = "گزارش فعالیت ها";
+    Layout = "Shared/_AdminLayout";
+}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> گزارش فعالیت های مدیران سیستم
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        @foreach (var item in Model)
+                        {
+                            <a asp-page="/Comment/Index" class="list-group-item">
+                                <i class="fa fa-comment fa-fw"></i> @item.Text
+                                <span class="pull-left text-muted small">
+                                    <em>@item.CreationDate.TimeAgo()</em>
+                                </span>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

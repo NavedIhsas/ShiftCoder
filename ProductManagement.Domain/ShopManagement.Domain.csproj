@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\0_FrameWork\0_FrameWork.csproj" />
     <ProjectReference Include="..\CourseGroup.Management.Application.Contract\Shop.Management.Application.Contract.csproj" />
+    <ProjectReference Include="..\DiscountManagement.Domain\DiscountManagement.Domain.csproj" />
   </ItemGroup>
 
 </Project>
