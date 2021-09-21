@@ -10,7 +10,7 @@
         </div>
         <div dir="ltr" class="col-lg-6 mr-3">
             <h1 class="page-header">
-                <a class="btn btn-success btn-lg" href="#showmodal=@Url.Page("./Index", "Create")">افزودن دوره جدید</a>
+                <a class="btn btn-success btn-lg" asp-page="Index" asp-page-handler="Create">افزودن دوره جدید</a>
             </h1>
         </div>
     </div>
@@ -81,7 +81,7 @@
                                         <td>
                                             <img src="/FileUploader/@course.Picture" style="max-width: 70px" alt="" />
                                         </td>
-                                        <td>@course.Name</td>
+                                        <td><a asp-page="/SingleCourse" asp-route-id="@course.Slug" class="text-primary">@course.Name</a></td>
                                         <td>@course.Code</td>
                                         <td>@course.CourseGroup</td>
                                         <td>
@@ -106,7 +106,7 @@
                                             }
                                         </td>
                                         <td class="center ">
-                                            <a class="btn btn-warning fa fa-edit text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = course.Id})">ویرایش</a>
+                                            <a asp-page="Index" asp-page-handler="Edit" asp-route-id="@course.Id" class="btn btn-warning fa fa-edit text-center">ویرایش</a>
                                         </td>
                                     </tr>
 

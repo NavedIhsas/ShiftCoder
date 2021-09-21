@@ -32,6 +32,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 Price = x.Price,
                 Code = x.Code,
                 PictureName = x.Picture,
+                StringDemoPoster = x.DemoVideoPoster,
                 PictureAlt = x.PictureAlt,
                 PictureTitle = x.PictureTitle,
                 KeyWords = x.KeyWords,
@@ -60,6 +61,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 CreationDate = x.CreationDate.ToFarsi(),
                 Price = x.Price,
                 TeacherId = x.TeacherId,
+                Slug = x.Slug,
             }).AsNoTracking().ToList();
 
             if (!string.IsNullOrWhiteSpace(searchModel.Name))

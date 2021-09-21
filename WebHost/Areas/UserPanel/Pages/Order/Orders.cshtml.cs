@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using _0_Framework.Application.ZarinPal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,10 +6,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShiftCoderQuery.Contract.Discount;
 using ShiftCoderQuery.Contract.Discount.Enum;
 using Shop.Management.Application.Contract.Order;
-using Shop.Management.Application.Contract.OrderDetail;
 using ShopManagement.Domain.OrderAgg;
 
-namespace WebHost.Areas.UserPanel.Pages
+namespace WebHost.Areas.UserPanel.Pages.Order
 {
     [Authorize]
     public class OrdersModel : PageModel

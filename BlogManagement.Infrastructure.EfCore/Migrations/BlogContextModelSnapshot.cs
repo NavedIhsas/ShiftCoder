@@ -40,9 +40,7 @@ namespace BlogManagement.Infrastructure.EfCore.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsPublish")
                         .HasColumnType("bit");

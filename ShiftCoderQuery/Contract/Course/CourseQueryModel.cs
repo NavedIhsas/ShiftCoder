@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CommentManagement.Domain.VisitAgg;
 using ShiftCoderQuery.Contract.Comment;
 using Shop.Management.Application.Contract.AfterCourse;
 using Shop.Management.Application.Contract.CourseEpisode;
@@ -74,7 +75,9 @@ namespace ShiftCoderQuery.Contract.Course
        public string Slug { get; set; }
        public string CourseGroup { get; set; }
        public long CourseGroupId { get; set; }
-       public string TeacherName { get; set; }
+        public long? SubGroupId { get; set; }
+
+        public string TeacherName { get; set; }
         public int CurrentPage { get; set; }
         public int PageCount { get; set; }
         public TimeSpan TotalTime { get; set; }
@@ -85,10 +88,19 @@ namespace ShiftCoderQuery.Contract.Course
         public long TeacherId { get; internal set; }
         public List<GetAllCourseQueryModel> Courses { get;  set; }
 
-        
+        public List<bool> Visits { get; set; }
     }
 
-   public class CoursePaginationViewModel
+   public class VisitViewModel
+    {
+        public int Type { get; set; }
+        public long OwnerId { get; set; }
+        public int NumberOfVisit { get; set; }
+        public long Id { get; set; }
+        public List<GetAllCourseQueryModel> Courses { get; set; }
+    }
+
+    public class CoursePaginationViewModel
     {
         public List<GetAllCourseQueryModel> Courses { get; set; }
         public int CurrentPage { get; set; }

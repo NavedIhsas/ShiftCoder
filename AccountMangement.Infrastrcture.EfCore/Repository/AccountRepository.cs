@@ -31,6 +31,7 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
                 Phone = x.Phone,
                 Password = x.Password,
                 RoleId = x.RoleId,
+                ActiveCode = x.ActiveCode,
                 Id = x.Id,
                 //  Teacher = MapTeacher(x.Teachers)
 
@@ -80,7 +81,7 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
                 FullName = x.FullName,
                 Eml = x.Email,
                 Email = x.Email.Substring(0, Math.Min(x.Email.Length, 15)) + "...",
-                IsActive = x.IsActive,
+                EmailConfirm = x.EmailConfirm,
                 RoleName = x.Role.Name,
                 RoleId = x.RoleId,
                 CreationDate = x.CreationDate.ToFarsi()
@@ -102,13 +103,17 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
 
         public long GetUserIdBy(string email)
         {
-            return _context.Accounts.Single(x => x.Email == email).Id;
+            return _context.Accounts.Single(x => x.Email == FixedText.FixEmail(email)).Id;
         }
 
-        public Account GetUserBy(string email)
-       => _context.Accounts.Single(x => x.Email == email);
+        public Account? GetUserBy(string email)
+       => _context.Accounts.SingleOrDefault(x => x.Email == FixedText.FixEmail(email));
 
         public Account GetUserBy(long id) => _context.Accounts.Find(id);
+
+        public Account GetUserByActiveCode(string activeCode)
+            => _context.Accounts.SingleOrDefault(x => x.ActiveCode == activeCode);
+
 
         public List<AccountViewModel> ShowBlockedUser()
         {
@@ -121,16 +126,14 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
             }).ToList();
         }
 
-        public OperationResult Login(LoginViewModel login)
+        public bool Login(LoginViewModel login)
         {
-            var operation = new OperationResult();
-
-            var user = _context.Accounts.SingleOrDefault(x => x.Email == login.Email && x.Password == login.Password);
-            if (user == null) return operation.Failed(ApplicationMessage.LoginError);
+            var user = _context.Accounts.SingleOrDefault(x => x.Email == FixedText.FixEmail(login.Email) && x.Password == login.Password);
+            if (user == null||user.IsActive==false) return false;
 
             var authModel = new AuthHelperViewModel(user.Id, user.RoleId, user.FullName, user.Email);
             _authHelper.Signin(authModel);
-            return operation.Succeeded();
+            return true;
         }
 
         public void Logout()
@@ -138,8 +141,18 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
             _authHelper.SignOut();
         }
 
-      
+     
+       public bool EmailConfirm(string activeCode)
+       {
+           var user= _context.Accounts.SingleOrDefault(x => x.ActiveCode == activeCode);
+           if (user ==null || user.EmailConfirm) return false;
 
+           user.ConfirmEmail(activeCode);
+           user.ChangeActiveCode(user.Id);
+           _context.Update(user);
+           _context.SaveChanges();
+           return true;
+       }
 
         public List<AccountViewModel> SelectList()
         {

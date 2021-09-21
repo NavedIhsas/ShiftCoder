@@ -1,46 +1,116 @@
-﻿using AccountManagement.Application.Contract.Account;
+﻿using System.Threading.Tasks;
+using _0_FrameWork.Application;
+using AccountManagement.Application.Contract.Account;
+using AccountManagement.Domain.Account.Agg;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebHost.Pages
 {
     public class AccountModel : PageModel
     {
-        private readonly IAccountApplication _account;
+        [ViewData] public string Message { get; set; }
+        [ViewData] public string Success { get; set; }
 
-        public AccountModel(IAccountApplication account)
+        private readonly IAccountApplication _account;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IRazorPartialToStringRenderer _renderView;
+       
+        public AccountModel(IAccountApplication account, IAccountRepository accountRepository, IRazorPartialToStringRenderer renderView)
         {
             _account = account;
+            _accountRepository = accountRepository;
+            _renderView = renderView;
         }
-        public void OnGetRegister()
+
+       //Register
+        public void OnGet()
         {
 
         }
-        public IActionResult OnPost(RegisterUserViewModel command)
+        public async Task<IActionResult> OnPostAsync(RegisterUserViewModel command)
         {
-          
-
-            var register = _account.Create(command);
-            if (!register.IsSucceeded) return RedirectToPage("Index");
+            var register = await _account.Create(command);
+            if (!register.IsSucceeded)
+            {
+                ViewData["ExistEmail"] = true;
+                return Page();
+            }
             ViewData["IsSuccess"] = true;
             return Page();
 
         }
 
+        //Login
         public IActionResult OnGetLogin()
         {
             return Partial("Login", new LoginViewModel());
         }
+
         public IActionResult OnPostLogin(LoginViewModel login)
         {
-            _account.Login(login);
-            return RedirectToPage("Index");
+            var user = _account.Login(login);
+            if (user == false)
+            {
+                Message = "رمز عبور ویا ایمیل شما درست نمیباشد";
+                return this.OnGetLogin();
+            }
+
+            Success = "ورود شما با موفقیت انجام شد";
+            return this.OnGetLogin();
         }
 
+        //Logout
         public void OnGetLogout()
         {
             _account.Logout();
+        }
+
+
+        //Confirm email
+        public IActionResult OnGetConfirmEmail(string id)
+        {
+            var user = _accountRepository.EmailConfirm(id);
+            if (user == false) return NotFound();
+            return Partial("SuccessEmailConfirmed");
+        }
+
+
+        //forgot password
+        public IActionResult OnGetForgotPassword()
+        {
+            return Partial("ForgotPassword", new ForgotPasswordViewModel());
+        }
+
+       
+        public async Task<IActionResult> OnPostForgotPassword(ForgotPasswordViewModel command)
+        {
+            var user = await _account.ForgotPassword(command);
+            if (user == false)
+            {
+                Message = ApplicationMessage.CheckEmailForExist;
+                return this.OnGetForgotPassword();
+            }
+
+            Success = ApplicationMessage.ResetPasswordEmailSent;
+           return this.OnGetForgotPassword();
+        }
+
+
+        //reset password
+        public IActionResult OnGetResetPassword(string id)
+        {
+            var user = _accountRepository.GetUserByActiveCode(id);
+            if (user == null) return NotFound();
+            return Partial("ResetPassword",new ResetPasswordViewModel(){ActiveCode  =id});
+        }
+        public IActionResult OnPostResetPassword(ResetPasswordViewModel command)
+        {
+            var user = _account.ResetPassword(command);
+            if (user == false) return NotFound();
+
+            Success = "رمز عبور شما با موفقیت تغییر کرد";
+            return this.OnGetForgotPassword();
         }
     }
 }

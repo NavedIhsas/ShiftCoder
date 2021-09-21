@@ -234,7 +234,7 @@
                         </video>
                     </div>
                     <div id="text-content">
-                        @Model.Course.Description
+                        @Html.Raw(Model.Course.Description)
                         @if (Model.Course.PrerequisiteCourse.Count != 0)
                         {
                             <div class="container-prerequisites">

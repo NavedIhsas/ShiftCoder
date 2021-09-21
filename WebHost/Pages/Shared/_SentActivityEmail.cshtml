@@ -1,0 +1,32 @@
+﻿@model AccountManagement.Domain.Account.Agg.Account
+
+<html>
+<head>
+    <title>تائید ایمیل - شیفت کدر</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            font-size: 11pt;
+            color: #555;
+        }
+
+        blockquote {
+            border-left: 8px solid #cceeaa;
+            font-size: 12pt;
+            margin: 0;
+            padding: 30px 60px;
+        }
+    </style>
+</head>
+<body dir="rtl">
+    <h2>@Model.FullName عزیز</h2>
+    <blockquote>باتشکر از ثبت نام شما در سایت شیفت کدر لطفا برای تائید ایمیل خود بروی لینک زیر کلیک کنید</blockquote>
+<blockquote>این لینک فقط یکبار قابل استفاده میباشد</blockquote>
+
+
+    <h3>
+        @*//href="/Author/Index?id=@item.AuthorID&handler=Delete*@
+        <a href="https://localhost:44358/Account?id=@Model.ActiveCode&handler=ConfirmEmail"> تائید ایمیل</a>
+    </h3>
+</body>
+</html>

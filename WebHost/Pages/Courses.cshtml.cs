@@ -20,11 +20,11 @@ namespace WebHost.Pages
         public CoursePaginationViewModel Course;
         public List<CourseGroupQueryModel> CourseGroups;
         public CourseQuerySearchModel SearchModel;
-        public void OnGet(CourseQuerySearchModel searchModel,List<long> groupId,int pageId=1)
+        public void OnGet(CourseQuerySearchModel searchModel,List<string> categories, int pageId=1)
         {
-            Course = _course.GetAllCourse(searchModel,groupId,pageId);
+            Course = _course.GetAllCourse(searchModel, categories, pageId);
             CourseGroups = _group.GetAllCourseGroup();
-            ViewData["checked"] = groupId;
+            ViewData["checked"] = categories;
             ViewData["SearchModel"] = searchModel;
 
         }

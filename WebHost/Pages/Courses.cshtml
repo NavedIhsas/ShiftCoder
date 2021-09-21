@@ -7,14 +7,14 @@
 @model WebHost.Pages.CoursesModel
 @{
     ViewData["Title"] = "دوره های آموزشی";
-    var courseGroup = ViewData["checked"] as List<long>;
+    var courseGroup = ViewData["checked"] as List<string>;
     var searchModel = ViewData["SearchModel"] as CourseQuerySearchModel;
 
 }
 <div class="container">
     <div class="row">
-        <main>
-            <form method="get" id="submitSearch">
+        <form method="get" id="submitSearch">
+            <main>
                 <div id="header-body">
                     <h1 id="title-main">دوره های آموزشی <span>(@Model.Course.Courses.Count)</span></h1>
                     <div id="container-search">
@@ -63,9 +63,9 @@
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input asp-for="SearchModel.Filter" value="mustVisit" class="form-check-input" onchange="Search()" type="radio" id="flexRadioDefault2">
+                                                        <input asp-for="SearchModel.Filter" value="popular" class="form-check-input" onchange="Search()" type="radio" id="flexRadioDefault2">
                                                         <label class="form-check-label" for="flexRadioDefault2">
-                                                            پربازدید ترین
+                                                            محبوب ترین
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
@@ -98,7 +98,7 @@
                                             @foreach (var group in Model.CourseGroups)
                                             {
                                                 <div class="form-check">
-                                                    <input name="groupId" onchange="Search()" @(courseGroup != null && courseGroup.Any(x => x == @group.Id) ? "checked" : "") class="form-check-input" type="checkbox" value="@group.Id" id="programming-checkbox">
+                                                    <input name="categories" onchange="Search()" @*@(courseGroup != null && courseGroup.Any(x => x == group.Title) ? "checked" : "")*@ class="form-check-input" type="checkbox" value="@group.Title" id="programming-checkbox">
                                                     <label class="form-check-label" for="programming-checkbox">
                                                         @group.Title
                                                     </label>
@@ -157,35 +157,39 @@
                                             </div>
                                         </div>
                                     }
-                                    <div class="col-12" id="pagination">
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination">
-                                                <li class="page-item @(Model.Course.CurrentPage<2?"disabled":"")">
-                                                    <a class="page-link" href="Courses?pageId=@(Model.Course.CurrentPage-1)" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                    </a>
-                                                </li>
-                                                @for (var i = 1; i <= Model.Course.PageCount; i++)
-                                                {
-                                                    <li class="page-item"><a class="page-link" href="Courses?pageId=@i">@i</a></li>
+                                    @if (Model.Course.PageCount > 12)
+                                    {
+                                        <div class="col-12" id="pagination">
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination">
+                                                    <li class="page-item @(Model.Course.CurrentPage<2?"disabled":"")">
+                                                        <a class="page-link" href="Courses?pageId=@(Model.Course.CurrentPage-1)" aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                        </a>
+                                                    </li>
+                                                    @for (var i = 1; i <= Model.Course.PageCount; i++)
+                                                    {
+                                                        <li class="page-item"><a class="page-link" href="Courses?pageId=@i">@i</a></li>
 
-                                                }
+                                                    }
 
-                                                <li class="page-item @(Model.Course.CurrentPage>=Model.Course.PageCount?"disabled":"")">
-                                                    <a class="page-link" href="Courses?pageId=@(Model.Course.CurrentPage+1)" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
+                                                    <li class="page-item @(Model.Course.CurrentPage>=Model.Course.PageCount?"disabled":"")">
+                                                        <a class="page-link" href="Courses?pageId=@(Model.Course.CurrentPage+1)" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </section>
                     </div>
                 </div>
-            </form>
-        </main>
+
+            </main>
+        </form>
     </div>
 </div>
 @section Scripts

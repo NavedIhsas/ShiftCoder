@@ -16,7 +16,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Command.FullName" class="control-label">نام کامل<span class="text-danger">*</span></label>
-                            <input type="text" asp-for="Command.FullName" class="form-control">
+                            <textarea type="text" asp-for="Command.FullName" class="form-control" row="3"></textarea>
                             <span class="text-danger" asp-validation-for="Command.FullName"></span>
                         </div>
                     </div>
@@ -67,7 +67,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
                 <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
             </div>
         </form>
@@ -77,9 +76,11 @@
 </div>
 
 
+<script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+<script>
 
+    CKEDITOR.replace('Command_FullName', {
+        customConfig: '~/js/Config.js'
+    });
 
-
-
-
-
+</script>

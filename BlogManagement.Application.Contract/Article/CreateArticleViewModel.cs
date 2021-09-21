@@ -17,12 +17,12 @@ namespace BlogManagement.Application.Contract.Article
         [Required(ErrorMessage = Validate.Required)]
         public string Description { get; set; }
 
-        [MaxLength(1000,ErrorMessage = Validate.MaxLength)]
+        [MaxLength(70,ErrorMessage = Validate.MaxLength)]
         public string ShortDescription { get; set; }
         public int ShowOrder { get; set; }
 
         public IFormFile Picture { get; set; }
-
+        public string PictureName { get; set; }
         [Required(ErrorMessage = Validate.Required)]
         [MaxLength(100, ErrorMessage = Validate.MaxLength)]
         public string PictureTitle { get; set; }

@@ -1,12 +1,11 @@
 ﻿using CommentManagement.Application.Contract.Comment;
-using System;
 using System.Collections.Generic;
 using _0_FrameWork.Application;
 using CommentManagement.Domain.CourseCommentAgg;
 using CommentManagement.Domain.Notification.Agg;
 using ShopManagement.Domain.CourseAgg;
 using BlogManagement.Domain.ArticleAgg;
-using Microsoft.AspNetCore.Authentication;
+
 
 namespace CommentManagement.Application
 {
@@ -62,12 +61,11 @@ namespace CommentManagement.Application
             var confirm = _repository.GetById(id);
 
             if (confirm == null) return operation.Failed(ApplicationMessage.RecordNotFount);
-
             confirm.IsConfirm(id);
+
             _repository.Update(confirm);
             _repository.SaveChanges();
             return operation.Succeeded();
-
         }
 
         public OperationResult IsCancel(long id)
@@ -77,8 +75,8 @@ namespace CommentManagement.Application
             var cancel = _repository.GetById(id);
 
             if (cancel == null) return operation.Failed(ApplicationMessage.RecordNotFount);
-
             cancel.IsCancel(id);
+
             _repository.Update(cancel);
             _repository.SaveChanges();
             return operation.Succeeded();

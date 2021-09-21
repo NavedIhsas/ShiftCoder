@@ -37,7 +37,7 @@ namespace BlogManagement.Application
             var fileName = _fileUploader.Uploader(command.Picture, path);
 
             var article = new Article(command.Title, command.Description, fileName, command.PictureTitle,
-                command.PictureAtl, command.Slug
+                command.PictureAtl, command.Slug.Slugify()
                 , command.Keywords, command.CanonicalAddress, publish, command.CategoryId,
                 command.MetaDescription, command.ShortDescription, command.ShowOrder,command.IsPublish,command.BloggerId);
 
@@ -80,7 +80,7 @@ namespace BlogManagement.Application
             var fileName = _fileUploader.Uploader(command.Picture, path);
 
             article.Edit(command.Title, command.Description, fileName, command.PictureTitle,
-                command.PictureAtl, command.Slug
+                command.PictureAtl, command.Slug.Slugify()
                 , command.Keywords, command.CanonicalAddress, publish, command.CategoryId,
                 command.MetaDescription, command.ShortDescription, command.ShowOrder,isPublish,command.BloggerId);
 

@@ -20,7 +20,7 @@ namespace WebHost.Pages
         public IActionResult OnGet(long id)
         {
             var order = _order.Create(User.Identity.Name, id);
-            return Redirect("/UserPanel/Orders/" + order);
+            return Redirect("/UserPanel/Order/Orders/" + order);
            
         }
     }

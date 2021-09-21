@@ -47,7 +47,6 @@ namespace ShiftCoderQuery.Query
             return _context.Comments.AsNoTracking().ToList();
 
         }
-
         public List<CommentModelForUserPanel> GetUserComment(string email)
         {
             var comment= _context.Comments.Where(x => x.Email == email)
@@ -74,8 +73,6 @@ namespace ShiftCoderQuery.Query
                     item.ArticleSlug = article.Slug;
                     item.ArticleName = article.Title;
                 }
-
-
             }
 
             return comment;

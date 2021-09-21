@@ -69,6 +69,8 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
                 .FirstOrDefault(x => x.Id == id);
         }
 
+        public List<Teacher> GetAllBlogger() => _context.Teachers.Include(x=>x.Account).Where(x => x.Type == ThisType.Blogger).ToList();
+        
         public void DeleteTeacher(long id)
         {
             var deleteTeacher = GetTeacherBy(id);

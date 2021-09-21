@@ -15,7 +15,6 @@ namespace BlogManagement.Infrastructure.EfCore.Mapping
             builder.Property(x => x.PictureAtl).HasMaxLength(100).IsRequired();
             builder.Property(x => x.PictureTitle).HasMaxLength(100).IsRequired();
             builder.Property(x => x.MetaDescription).HasMaxLength(150).IsRequired();
-            builder.Property(x => x.Description).HasMaxLength(150).IsRequired();
             builder.Property(x => x.CanonicalAddress).HasMaxLength(150);
             builder.Property(x => x.Picture).HasMaxLength(500);
             builder.HasOne(x => x.ArticleCategory).WithMany(x => x.Articles).HasForeignKey(x => x.CategoryId);

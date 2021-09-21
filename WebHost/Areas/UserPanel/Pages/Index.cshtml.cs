@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AccountManagement.Application.Contract.Account;
 using AccountManagement.Domain.Account.Agg;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,6 @@ using ShiftCoderQuery.Contract.Comment;
 using ShiftCoderQuery.Contract.Course;
 using Shop.Management.Application.Contract.Order;
 using Shop.Management.Application.Contract.UserCourse;
-using ShopManagement.Domain.OrderAgg;
 
 namespace WebHost.Areas.UserPanel.Pages
 {

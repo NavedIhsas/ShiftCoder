@@ -41,10 +41,10 @@ namespace WebHost.Areas.Administration.Pages.Blog.Article
             return Partial("./Create", course);
         }
 
-        public JsonResult OnPostCreate(CreateArticleViewModel command)
+        public IActionResult OnPostCreate(CreateArticleViewModel command)
         {
             var course = _article.Create(command);
-            return new JsonResult(course);
+            return RedirectToPage("Index");
         }
 
         public IActionResult OnGetEdit(long id)
@@ -57,10 +57,10 @@ namespace WebHost.Areas.Administration.Pages.Blog.Article
 
         }
 
-        public JsonResult OnPostEdit(EditArticleViewModel command)
+        public IActionResult OnPostEdit(EditArticleViewModel command)
         {
             var course = _article.Edit(command);
-            return new JsonResult(course);
+            return RedirectToPage("Index");
         }
     }
 }

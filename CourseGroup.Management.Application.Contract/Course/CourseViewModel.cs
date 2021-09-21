@@ -5,6 +5,7 @@
         public string Name { get; set; }
         public string Picture { get; set; }
         public string Code { get; set; }
+        public string Slug { get; set; }
         public long CourseGroupId { get; set; }
         public string UpdateDate { get; set; }
         public string CreationDate { get; set; }

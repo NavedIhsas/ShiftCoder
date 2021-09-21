@@ -1,7 +1,7 @@
 ﻿@page "{id}"
 @using _0_Framework.Application
 @using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging
-@model WebHost.Areas.UserPanel.Pages.OrdersModel
+@model WebHost.Areas.UserPanel.Pages.Order.OrdersModel
 @{
 
 
@@ -52,11 +52,11 @@
                                     <tr>
                                         <td>@item.CourseName</td>
                                         <td>@item.CourseCode</td>
-                                        <td>20 درصد</td>
+                                        <td>مقدار تخفیف</td>
                                         <td>@item.Price تومان</td>
                                         @if (!Model.List.IsFinally)
                                         {
-                                            <td><a href="" class="text-primary">حذف</a></td>
+                                            <td><a href="" class="text-primary" disabled>حذف</a></td>
                                         }
                                     </tr>
                                 }
@@ -64,8 +64,8 @@
                                 @if (!Model.List.IsFinally)
                                 {
                                     <tr>
-                                        <th class="text-left" colspan="4" scope="col">
-                                            کد تخفیف
+                                        <th class="text-left" colspan="3" scope="col">
+                                           اگر کد تخفیف دارید وارد کنید.
                                         </th>
                                         <td  colspan="4">
                                             <form asp-page="/Orders" asp-page-handler="UseDiscount" method="post">

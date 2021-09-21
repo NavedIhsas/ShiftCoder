@@ -24,6 +24,7 @@ namespace Shop.Management.Application.Contract.Course
         public double Price { get; set; }
 
         public IFormFile DemoPoster { get; set; }
+        public string StringDemoPoster { get; set; }
 
         [Required(ErrorMessage = Validate.Required)]
         [MaxLength(20, ErrorMessage = Validate.MaxLength)]
@@ -66,7 +67,5 @@ namespace Shop.Management.Application.Contract.Course
         public List<CourseStatusViewModel> CourseStatusSelectList { get; set; }
         public List<CourseLevelViewModel> CourseLevelSelectList { get; set; }
         public List<TeacherViewModel> TeacherSelectList { get; set; }
-
-
     }
 }

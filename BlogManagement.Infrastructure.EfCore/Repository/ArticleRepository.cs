@@ -38,7 +38,8 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
                 Id = x.Id,
                 ShowOrder = x.ShowOrder,
                 ShortDescription = x.ShortDescription,
-                IsPublish = x.IsPublish
+                IsPublish = x.IsPublish,
+                PictureName = x.Picture
                 
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
@@ -55,6 +56,7 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
                 Id = x.Id,
                 IsPublish = x.IsPublish,
                 BloggerId = x.BloggerId,
+                Slug = x.Slug,
                 CreationDate = x.CreationDate.ToFarsi()
             }).AsNoTracking().ToList();
 

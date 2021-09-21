@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using _0_FrameWork.Application;
-using AccountManagement.Domain.Account.Agg;
 using CommentManagement.Application.Contract.Comment;
 using CommentManagement.Domain.CourseCommentAgg;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +39,6 @@ namespace WebHost.Pages
                 _commentRepository.SaveChanges();
                 return RedirectToPage(new { id = articleSlug });
             }
-
 
             command.Type = ThisType.Article;
             var post = _comment.Create(command);

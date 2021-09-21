@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\FileUploader\" />
+    <Folder Include="wwwroot\FileUploader\SaveFromCDN\" />
   </ItemGroup>
 
 </Project>

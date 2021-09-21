@@ -1,4 +1,5 @@
 ﻿@page
+@using _0_FrameWork.Application
 @model WebHost.Pages.AccountModel
 @{
     Layout = "Shared/_AccountLayout";
@@ -7,49 +8,72 @@
 <div id="main-container">
     <div class="container">
         <div class="row" id="row-container">
-            <img src="images/avatar-login.png" alt="Avatar" id="avatar-img">
-            <div class="col-9 col-md-7 col-lg-5 col-xl-4" id="container-form">
+            <div class="col-9 col-md-7 col-lg-5 col-xl-4 " id="container-form">
                 <h2 id="title-heading">فرم ثبت نام</h2>
                 @if (ViewData["IsSuccess"] != null)
                 {
-                    <div class="alert alert-success">
-                        <p>ثبت نام شما با موفقیت انجام شد</p>
+                    <div class="alert alert-success text-center">
+                        <span>ایمیل حاوی کد فعال سازی به ایمیل ادرس شما ارسال شد، لطفا ایمیل خود تایید کنید.</span>
                     </div>
 
                     <script>
-                        var delay = 2000;
+                        var delay = 5000;
                         setTimeout(function() {
-                                window.location = "Login";
+                                window.location = "Account?handler=Login";
                             },
                             delay);
                     </script>
                 }
-                <form  method="post" id="form">
-                    <label   for="usersName" class="label-input">نام کاربری :</label>
-                    <input name="fullName" type="text" placeholder="yourName" autofocus autocomplete="on" required
-                           id="usersName" class="inputs validation">
+              @if (ViewData["ExistEmail"] != null)
+              {
+                  <p class="alert alert-danger text-center">بااین ایمیل قبلا ثبت نام کرده اید.
+                      <a asp-page="Account" asp-page-handler="ForgotPassword" class="text-primary">بازیابی رمز عبور</a>
+                      </p>
+              }
+           
+               
+                <form  method="post" id="form" asp-page="Account" asp-page-handler="Register" >
+                    <label   for="usersName" class="label-input"></label>
+                    <input name="fullName" type="text" placeholder="نام و نام خانوادگی" autofocus autocomplete="on" required
+                           id="usersName" class="inputs validation text-right"
+                            oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
                     <div id="meesageName"></div>
-                    <label for="email-input" class="label-input">ایمیل :</label>
-                    <input type="email"  name="email" placeholder="example@domain.com" autofocus autocomplete="on" required
-                           id="email-input" class="inputs validation">
+                    
+
+                    <label for="email-input" class="label-input"></label>
+                    <input type="email"  name="email" placeholder="ایمیل آردس" autofocus autocomplete="on" required
+                           id="email-input" class="inputs validation"
+                            oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
                     <div id="meesageEmail"></div>
-                    <label for="phone" class="label-input">شماره موبایل :</label>
-                    <input type="tel"  name="phone" placeholder="09--------" autofocus autocomplete="on" required
-                           id="phone" class="inputs validation">
+
+                    <label for="phone" class="label-input"></label>
+                    <input type="tel"  name="phone" placeholder="شماره موبایل" autofocus autocomplete="on" required
+                           id="phone" class="inputs validation"
+                           oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
+
                     <div id="meesagePhone"></div>
-                    <label for="password-input"  name="password" class="label-input">گذرواژه :</label>
-                    <input type="password"  name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
-                           autofocus autocomplete="on" required id="password-input" class="inputs validation">
+                    <label for="password-input"  name="password" class="label-input"></label>
+                    <input type="password"  name="password" placeholder="گذرواژه"
+                           autofocus autocomplete="on" required id="password-input" class="inputs validation"
+                           oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
+
                     <div id="meesagePassword"></div>
-                    <label for="reapetPass" class="label-input">تکرار گذرواژه :</label>
-                    <input type="password"  name="repassword" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autofocus autocomplete="on" required
-                           id="reapetPass" class="inputs validation">
+                    <label for="reapetPass" class="label-input"></label>
+                    <input type="password"  name="repassword" placeholder="تکرار گذرواژه" autofocus autocomplete="on"
+                           id="reapetPass" class="inputs validation"
+                           required   oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
+
                     <div id="meesageRepass"></div>
                     <div id="container-submit">
-                        <input type="submit" value="ورود" id="submit" class="validation" >
+                        <input type="submit" value="ثبت نام" id="submit" class="validation" >
                     </div>
 
-                    <a asp-page="Login" class="anchor-form">من قبلا ثبت نام کردم !</a>
+                    <a asp-page="Account" asp-page-handler="Login" class="anchor-form">من قبلا ثبت نام کردم !</a>
                 </form>
                 <div class="showSpiner">
                     <img src="images/spiner.gif" alt="spiner" id="spiner">

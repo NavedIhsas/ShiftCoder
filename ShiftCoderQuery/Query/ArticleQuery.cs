@@ -4,6 +4,7 @@ using System.Linq;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
+using AccountManagement.Infrastructure.EfCore;
 using BlogManagement.Infrastructure.EfCore;
 using CommentManagement.Domain.VisitAgg;
 using CommentManagement.Infrastructure.EfCore;
@@ -19,7 +20,7 @@ namespace ShiftCoderQuery.Query
         private readonly CommentContext _comment;
         private readonly IVisitRepository _visit;
         private readonly ITeacherRepository _teacher;
-
+     
         public ArticleQuery(BlogContext context, CommentContext comment, IVisitRepository visit, ITeacherRepository teacher)
         {
             _context = context;
@@ -52,27 +53,33 @@ namespace ShiftCoderQuery.Query
             return article;
         }
 
-        public List<GetAllArticleQueryModel> GetAllArticles(SearchArticleQueryModel search)
+        public PaginationArticlesViewModel GetAllArticles(SearchArticleQueryModel search, List<long> bloggerId, List<string> categories, int pageId = 1)
         {
-            var query = _context.Articles.Where(x => x.IsPublish).Select(x => new GetAllArticleQueryModel()
-            {
-                Title = x.Title,
-                Picture = x.Picture,
-                PictureAtl = x.PictureAtl,
-                PictureTitle = x.PictureTitle,
-                ShortDescription = x.ShortDescription,
-                CreationDate = x.CreationDate,
-                Slug = x.Slug,
-                Keywords = x.Keywords,
-                MetaDescription = x.MetaDescription
-            }).AsNoTracking().OrderByDescending(x => x.CreationDate).ToList();
+            var query = _context.Articles
+                .Where(x => x.IsPublish).Include(x => x.ArticleCategory)
+                .Select(x => new GetAllArticleQueryModel()
+                {
+                    Title = x.Title,
+                    Picture = x.Picture,
+                    PictureAtl = x.PictureAtl,
+                    PictureTitle = x.PictureTitle,
+                    ShortDescription = x.ShortDescription,
+                    CreationDate = x.CreationDate,
+                    Slug = x.Slug,
+                    BloggerId = x.BloggerId,
+                    Keywords = x.Keywords,
+                    ArticleCategory = x.ArticleCategory.Name,
+                    MetaDescription = x.MetaDescription,
+                }).AsNoTracking().OrderByDescending(x => x.CreationDate).ToList();
 
+            //---search---//
             if (!string.IsNullOrEmpty(search.Title))
                 query = query.Where(x =>
                         x.Title.ToLower().Contains(search.Title.ToLower().Trim()))
                     .ToList();
 
-            if (string.IsNullOrWhiteSpace(search.Filter)) return query;
+            //---sort--//
+            if (!string.IsNullOrWhiteSpace(search.Filter))
             {
                 query = search.Filter switch
                 {
@@ -82,9 +89,28 @@ namespace ShiftCoderQuery.Query
                 };
             }
 
+            //filter by category
+            if (categories.Count != 0)
+                foreach (var group in categories)
+                    query = query.Where(x => x.ArticleCategory.Contains(group)).ToList();
+
+            //filter by blogger
+            if (bloggerId.Count != 0)
+                foreach (var group in bloggerId)
+                    query = query.Where(x => x.BloggerId == group).ToList();
 
 
-            return query;
+            //---paging---//
+            const int take = 9;
+            var skip = (pageId - 1) * take;
+
+            var list = new PaginationArticlesViewModel()
+            {
+                CurrentPage = pageId,
+                PageCount =(int)Math.Ceiling(query.Count /(double) take),
+                Articles = query.Skip(skip).Take(take).ToList()
+            };
+            return list;
         }
 
         public SinglePageArticleQueryModel GetSingleArticleBy(string slug, string ipAddress)
@@ -155,7 +181,7 @@ namespace ShiftCoderQuery.Query
                 MapChildren(item);
 
             article.Comments = comment;
-            article.CommentList= _comment.Comments.
+            article.CommentList = _comment.Comments.
                 Where(x => x.Type == ThisType.Article && x.OwnerRecordId == article.Id).ToList();
 
             #endregion
@@ -172,13 +198,13 @@ namespace ShiftCoderQuery.Query
 
             article.BloggerArticlesList = _context.Articles
                 .Where(x => x.BloggerId == blogger.Id)
-                .Select(selector:x=>new{x.Title,x.Slug})
-                .Select(x=>new BloggerArticlesViewModel()
-            {
-                Title = x.Title,
-                Slug = x.Slug
-            }).ToList();
-         
+                .Select(selector: x => new { x.Title, x.Slug })
+                .Select(x => new BloggerArticlesViewModel()
+                {
+                    Title = x.Title,
+                    Slug = x.Slug
+                }).ToList();
+
             #endregion
 
             return article;

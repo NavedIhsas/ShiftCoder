@@ -11,7 +11,7 @@
         </div>
         <div dir="ltr" class="col-lg-6 mr-3">
             <h1 class="page-header">
-                <a class="btn btn-success btn-lg" asp-page="Create">افزودن تخفیف جدید</a>
+                <a class="btn btn-success btn-lg" asp-page="Create">افزودن کاربر جدید</a>
             </h1>
         </div>
     </div>
@@ -57,7 +57,7 @@
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 200px;" aria-sort="ascending"><strong>نام کامل</strong> </th>
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 170px;" aria-sort="ascending"><strong>تاریخ ثبت نام</strong> </th>
                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 170px;" aria-sort="ascending"><strong>نقش</strong> </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 150px;" aria-sort="ascending"><strong>وضعیت</strong> </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 150px;" aria-sort="ascending"><strong>وضعیت ایمیل</strong> </th>
                                         <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 500px;">عملیات</th>
                                     </tr>
 
@@ -71,29 +71,19 @@
                                             <td class="sorting_1">@item.CreationDate</td>
                                             <td class="sorting_1">@item.RoleName</td>
                                             <td class="sorting_1">
-                                                @if (!item.IsActive)
+                                                @if (!item.EmailConfirm)
                                                 {
-                                                    <span class="text-danger">غیر فعال</span>
+                                                    <span class="text-danger">تایید نشده</span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="text-success">فعال</span>
+                                                    <span class="text-success">تایید شده</span>
                                                 }
                                             </td>
 
                                             <td class="center ">
                                                 <a class="btn btn-warning text-center" asp-page="Edit" asp-route-id="@item.Id">ویرایش</a>
-
-                                                @if (!item.IsActive)
-                                                {
-                                                    <a asp-page="./Index" asp-page-handler="Active" asp-route-id="@item.Id" class="btn btn-success"><i class="fa fa-remove-format">فعال کردن</i></a>
-                                                }
-                                                else
-                                                {
-                                                    <a class="btn btn-danger text-center" href="#showmodal=@Url.Page("./Index", "BlockUser", new { id = item.Id})">مسدود کردن</a>
-
-                                                }
-
+                                                <a class="btn btn-danger text-center" href="#showmodal=@Url.Page("./Index", "BlockUser", new { id = item.Id})">مسدود کردن</a>
                                                 <a class="btn btn-primary text-center" href="#showmodal=@Url.Page("./Index", "ChangePassword", new { id = item.Id})">تغییر رمز</a>
                                             </td>
                                         </tr>

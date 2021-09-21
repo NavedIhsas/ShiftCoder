@@ -1,9 +1,9 @@
 using System;
+using System.Security.Policy;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
 using _0_Framework.Application.ZarinPal;
 using AccountManagement.Infrastructure;
-using AutoMapper;
 using BlogManagement.Infrastructure;
 using CommentManagement.Infrastructure;
 using DiscountManagement.Infrastructure;
@@ -41,16 +41,13 @@ namespace WebHost
             services.AddTransient<IAuthHelper, AuthHelper>();
             services.AddTransient<IPasswordHasher,PasswordHasher>();
             services.AddTransient<IZarinPalFactory, ZarinPalFactory>();
+            services.AddTransient<IRazorPartialToStringRenderer,RazorPartialToStringRenderer>();
             ShopManagementBootstrapper.Configure(services, connectionString);
             InventoryManagementBootstrapper.Configure(services, connectionString);
             BlogManagementBootstrapper.Configure(services, connectionString);
             CommentManagementBootstrapper.Configure(services, connectionString);
             DiscountManagementBootstrapper.Configure(services, connectionString);
             AccountManagementBootstrapper.Configure(services, connectionString);
-
-
-
-
             #endregion
 
             #region Authentication
@@ -64,8 +61,8 @@ namespace WebHost
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
                 {
-                    o.LoginPath = new PathString($"/Account");
-                    o.LogoutPath = new PathString("/Account");
+                    o.LoginPath = new PathString("/Account");
+                    o.LogoutPath = new PathString("/Account?handler=logout");
                     o.AccessDeniedPath = new PathString("/AccessDenied");
                 });
             #endregion

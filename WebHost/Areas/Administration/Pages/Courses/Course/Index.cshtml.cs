@@ -41,17 +41,17 @@ namespace WebHost.Areas.Administration.Pages.Courses.Course
             var course = new CreateCourseViewModel()
             {
                 CourseGroupSelectList = _courseGroup.SelectList(),
-                CourseStatusSelectList=_courseStatus.SelectList(),
+                CourseStatusSelectList = _courseStatus.SelectList(),
                 CourseLevelSelectList = _courseLevel.SelectList(),
                 TeacherSelectList = _teacher.SelectList(),
             };
             return Partial("./Create", course);
         }
 
-        public JsonResult OnPostCreate(CreateCourseViewModel command)
+        public IActionResult OnPostCreate(CreateCourseViewModel command)
         {
-            var course = _course.Create(command);
-            return new JsonResult(course);
+          _course.Create(command);
+            return RedirectToPage("Index");
         }
 
         public IActionResult OnGetEdit(long id)
@@ -66,10 +66,10 @@ namespace WebHost.Areas.Administration.Pages.Courses.Course
 
         }
 
-        public JsonResult OnPostEdit(EditCourseViewModel command)
+        public IActionResult OnPostEdit(EditCourseViewModel command)
         {
-            var course = _course.Edit(command);
-            return new JsonResult(course);
+           _course.Edit(command);
+            return RedirectToPage("Index");
         }
     }
 }

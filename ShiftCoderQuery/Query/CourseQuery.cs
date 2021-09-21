@@ -5,6 +5,7 @@ using _0_Framework.Application;
 using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Infrastructure.EfCore;
+using AutoMapper.Configuration.Annotations;
 using BlogManagement.Domain.ArticleAgg;
 using BlogManagement.Infrastructure.EfCore;
 using CommentManagement.Domain.VisitAgg;
@@ -49,12 +50,14 @@ namespace ShiftCoderQuery.Query
             _article = article;
         }
 
-        public CoursePaginationViewModel GetAllCourse(CourseQuerySearchModel searchQuery, List<long> @group,
+        public CoursePaginationViewModel GetAllCourse(CourseQuerySearchModel searchQuery, List<string> categories,
             int pageId = 1)
         {
             var query = _context.Courses
                 .Include(x => x.UserCourses)
                 .Include(x => x.CourseEpisodes).
+              Include(x => x.CourseGroup).
+                Include(x => x.OrderDetails).
                 AsNoTracking().AsEnumerable().Select(x => new GetAllCourseQueryModel
                 {
                     Name = x.Name,
@@ -71,10 +74,13 @@ namespace ShiftCoderQuery.Query
                     MetaDescription = x.MetaDescription,
                     Slug = x.Slug,
                     Id = x.Id,
+                    CourseGroup = x.CourseGroup.Title,
                     TeacherId = x.TeacherId,
                     UserCourse = MapUserCourse(x.UserCourses),
                     CreationDate = x.CreationDate,
                     CourseGroupId = x.CourseGroupId,
+                    SubGroupId = x.CourseGroup.SubGroupId,
+                    OrderDetails = x.OrderDetails,
                     TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
                 }).ToList();
 
@@ -91,24 +97,8 @@ namespace ShiftCoderQuery.Query
                 item.TeacherName = teacher.Account.FullName;
             }
 
-           
             if (!string.IsNullOrWhiteSpace(searchQuery.Name))
                 query = query.Where(x => x.Name.ToLower().Trim().Contains(searchQuery.Name.ToLower().Trim())).ToList();
-
-
-            //var visits = _comment.Visits
-            //    .OrderByDescending(x => x.NumberOfVisit)
-            //    .Select(x => new { x.RecordOwnerId }).ToList();
-
-
-            //foreach (var visit in visits)
-            //{
-            //    if (string.IsNullOrWhiteSpace(searchQuery.Filter)) continue;
-
-            //    if (searchQuery.Filter == "mustVisit")
-            //        query = query.Where(x => x.Id == visit.RecordOwnerId).ToList();
-
-            //}
 
             //sort by
             if (!string.IsNullOrWhiteSpace(searchQuery.Filter))
@@ -119,6 +109,7 @@ namespace ShiftCoderQuery.Query
                     "newest" => query.OrderByDescending(x => x.CreationDate).ToList(),
                     "minPrice" => query.OrderBy(x => x.Price != 0).ToList(),
                     "price" => query.Where(x => x.Price > 0).ToList(),
+                    "popular" => query.OrderByDescending(x => x.OrderDetails.Count).Take(4).ToList(),
                     "free" => query.Where(x => x.Price == 0).ToList(),
                     "all" => query,
                     _ => query
@@ -129,19 +120,20 @@ namespace ShiftCoderQuery.Query
             //or 
 
             //search group
-            if (group.Count != 0)
+            if (categories.Count != 0)
             {
-                query = @group.Aggregate(query, (current, courseGroup) => current.Where(x => x.CourseGroupId == courseGroup).ToList());
+                foreach (var courseGroup in categories)
+                    query = query.Where(x => x.CourseGroup.Contains(courseGroup)).ToList();
             }
 
             //paging
-            var take = 3;
+            var take = 12;
             var skip = (pageId - 1) * take;
 
             var list = new CoursePaginationViewModel
             {
                 CurrentPage = pageId,
-                PageCount = query.Count / take,
+                PageCount = (int)Math.Ceiling(query.Count / (double)take),
                 Courses = query.Skip(skip).Take(take).ToList()
             };
 
@@ -223,7 +215,6 @@ namespace ShiftCoderQuery.Query
                     CreationDate = x.CreationDate,
                     UserCourse = MapUserCourse(x.UserCourses),
                     TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
-
                 }).OrderByDescending(x => x.OrderDetails.Count).Take(4).ToList();
 
             foreach (var item in popular)
@@ -385,6 +376,15 @@ namespace ShiftCoderQuery.Query
             return userCourse;
         }
 
+        public void SearchHomePage(CourseQuerySearchModel command)
+        {
+            if (!string.IsNullOrWhiteSpace(command.Name))
+            {
+                var courses = _context.Courses.Where(x => x.Name.Contains(command.Name) ||
+                                                          x.ShortDescription.Contains(command.Name)).ToList();
+            }
+
+        }
 
 
         #region Mapping Single Course

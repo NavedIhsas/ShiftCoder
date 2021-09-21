@@ -1,4 +1,5 @@
 ﻿
+@using _0_FrameWork.Application
 @model AccountManagement.Application.Contract.Account.LoginViewModel
 @{
     ViewData["Title"] = "ورود به سایت";
@@ -10,40 +11,50 @@
             <img src="images/avatar-login.png" alt="Avatar" id="avatar-img">
             <div class="col-9 col-md-7 col-lg-5 col-xl-4" id="container-form">
                 <h2 id="title-heading">فرم ورود</h2>
-                @if (ViewData["IsSuccess"] != null)
+                @if (ViewData["Success"] != null)
                 {
                     <div class="alert alert-success text-center">
-                        <p>ورود شما با موفقیت انجام شد</p>
+                        <p>@ViewData["Success"]</p>
                     </div>
 
                     <script>
-                        var daley = 2000;
+                        var daley = 3000;
                         setTimeout(function () {
                             window.location = "/Index";
                         },
                             daley);
                     </script>
                 }
-               @if (ViewData["Message"] != null)
+                
+
+                @if (ViewData["Message"] != null)
                {
-                   <p class="text-center text-danger">رمز عبور ویا ایمیل شما درست نمیباشد</p>
+                   <p class="text-center text-danger">@ViewData["Message"]</p>
                }
-                <form method="post" asp-page="Account" asp-page-handler="Login" id="form">
-                    <label for="email-input" class="label-input">ایمیل :</label>
-                    <input type="email"  name="email" placeholder="example@domain.com" autofocus autocomplete="on" required
-                           id="email-input" class="inputs">
-                    <label for="password-input" class="label-input">گذرواژه :</label>
-                    <input type="password"  name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
-                           autofocus autocomplete="on" required id="password-input" class="inputs">
-                    <div id="container-submit">
-                        <input type="submit" value="ورود" id="submit">
-                    </div>
-                    <div class="showSpiner">
-                        <img src="images/spiner.gif" alt="spiner" id="spiner">
-                    </div>
-                    <a asp-page="forgotPassword" class="anchor-form">گذرواژه را فراموش کرده ام !</a>
-                    <a asp-page="Register" class="anchor-form">هنوز ثبت نام نکرده ام !</a>
-                </form>
+
+            <form method="post" id="form" asp-page="Account" asp-page-handler="Login">
+                <label for="email-input" class="label-input">ایمیل :</label>
+                <input type="email" name="email" placeholder="example@domain.com" autofocus autocomplete="on" required
+                       id="email-input" class="inputs" oninvalid="this.setCustomValidity(@(Validate.Required))"
+                       oninput="setCustomValidity('')">
+
+
+                <label for="password-input" class="label-input">گذرواژه :</label>
+                <input type="password" name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                       autofocus autocomplete="on" id="password-input" class="inputs"
+                       required oninvalid="this.setCustomValidity(@(Validate.Required))"
+                       oninput="setCustomValidity('')">
+
+                <div id="meesageRepass"></div>
+                <div id="container-submit">
+                    <input type="submit" value="ورود" id="submit" class="validation">
+                </div>
+                <div class="showSpiner">
+                    <img src="images/spiner.gif" alt="spiner" id="spiner">
+                </div>
+                <a asp-page="Account" asp-page-handler="ForgotPassword" class="anchor-form">گذرواژه را فراموش کرده ام !</a>
+                <a asp-page="Account" asp-page-handler="Register" class="anchor-form">هنوز ثبت نام نکرده ام !</a>
+            </form>
             </div>
         </div>
     </div>

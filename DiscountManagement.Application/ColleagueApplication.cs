@@ -8,7 +8,6 @@ namespace DiscountManagement.Application
    public class ColleagueApplication:IColleagueApplication
    {
        private readonly IColleagueRepository _colleague;
-
        public ColleagueApplication(IColleagueRepository colleague)
        {
            _colleague = colleague;
@@ -24,8 +23,7 @@ namespace DiscountManagement.Application
             _colleague.Create(colleague);
             _colleague.SaveChanges();
             return operation.Succeeded();
-
-        }
+       }
 
         public OperationResult Edit(EditColleagueDiscountViewModel command)
         {
@@ -43,19 +41,9 @@ namespace DiscountManagement.Application
             _colleague.Update(getColleague);
             _colleague.SaveChanges();
             return operation.Succeeded();
-
         }
 
-        public EditColleagueDiscountViewModel GetDetails(long id)
-        {
-           return _colleague.GetDetails(id);
-        }
-
-        public List<ColleagueDiscountViewModel> GetAll()
-        {
-            return _colleague.GetAllList();
-        }
-
+      
         public OperationResult Remove(long id)
         {
             var operation = new OperationResult();
@@ -79,5 +67,8 @@ namespace DiscountManagement.Application
             _colleague.SaveChanges();
             return operation.Succeeded();
         }
-    }
+
+        public EditColleagueDiscountViewModel GetDetails(long id) => _colleague.GetDetails(id);
+        public List<ColleagueDiscountViewModel> GetAll() => _colleague.GetAllList();
+   }
 }

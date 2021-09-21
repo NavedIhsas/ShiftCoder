@@ -39,7 +39,6 @@ function ValidTheName(name) {
         validation[5].classList.remove('error')
     } else {
         validation[5].classList.add('error')
-        send.sendMessage('لطفا اسم خود را صحیح وارد کنید', 'text-danger text-center', 'meesageName')
         validation[0].style.borderColor = "red"
     }
 }
@@ -53,7 +52,6 @@ function ValidTheeamil(getEmail) {
     } else {
         validation[1].style.borderColor = "red"
         validation[5].classList.add('error')
-        send.sendMessage('لطفا ایمیل خود را صحیح وارد کنید', 'text-danger text-center', 'meesageEmail')
     }
 }
  // valid the phone
@@ -65,20 +63,19 @@ function ValidThePhone(getPhone) {
         validation[5].classList.remove('error')
     } else {
         validation[5].classList.add('error')
-        send.sendMessage('لطفا شماره خود را صحیح وارد کنید', 'text-danger text-center', 'meesagePhone')
         validation[2].style.borderColor = "red"
     }
 }
  // valid the password
 function ValidThePassword(pass) {
-    if (pass.target.value !== '' && pass.target.value.length >= 8) {
+    if (pass.target.value !== '' && pass.target.value.length >= 5) {
         validation[3].style.borderColor = "green"
         send.sendMessage( '','','meesagePassword')
         validation[5].classList.remove('error')
     }
      else {
         validation[5].classList.add('error')
-        send.sendMessage('لطفا رمز خود را وارد کنید', 'text-danger text-center', 'meesagePassword')
+        send.sendMessage('ضعیف', 'text-danger text-center', 'meesagePassword')
         validation[3].style.borderColor = "red"
     }
 }

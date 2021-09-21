@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using _0_FrameWork.Application;
 using _0_FrameWork.Domain;
 using AccountManagement.Application.Contract.Account;
@@ -10,11 +11,13 @@ namespace AccountManagement.Domain.Account.Agg
         EditAccountViewModel GetDetails(long id);
         List<AccountViewModel> Search(AccountSearchModel searchModel);
         long GetUserIdBy(string email);
-        Account GetUserBy(string email);
+        Account? GetUserBy(string email);
         Account GetUserBy(long id);
+        Account? GetUserByActiveCode(string activeCode);
+        bool EmailConfirm(string activeCode);
         List<AccountViewModel> SelectList();
         List<AccountViewModel> ShowBlockedUser();
-        OperationResult Login(LoginViewModel login);
+        bool Login(LoginViewModel login);
         BlockUserViewModel GetUserForBlock(long id);
         BlockUserViewModel GetUserForUnblock(long id);
         void ConfirmUnblockUser(long id);

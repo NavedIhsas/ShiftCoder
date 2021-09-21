@@ -26,6 +26,9 @@ namespace AccountManagement.Infrastructure.EfCore.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ActiveCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Avatar")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");

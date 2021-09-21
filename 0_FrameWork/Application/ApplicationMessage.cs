@@ -2,12 +2,15 @@
 {
     public class ApplicationMessage
     {
+        public const string DuplicatedEmailAddress = "با این ایمیل قبلا ثبت نام کرده اید. ";
         public const string DuplicatedRecord = "ثبت رکورد تکراری مجاز نمیباشد، مجدداً تلاش کنید. ";
         public const string RecordNotFount = " هیچ رکوردی با این مشخصات یافت نشد.";
         public const string PasswordNotFount = "رمز عبور فعلی شما درست نمیباشد";
-        public const string LoginError = "رمز عبور ویا ایمیل شما درست نمیباشد";
+        public const string CheckEmailForExist = "با یاین ایمیل هیچ کاربری ثبت نام نکرده است.";
         public const string ExistUserCourse = "شما این دوره را قبلا خریداری کرده اید.";
 
+        public const string ResetPasswordEmailSent =
+            "ایمیل بازیابی کلمه عبور به ایمیل شما ارسال شد، لطفا جهت ادامه فرایند از طریق ایمیل خود اقدام بفرمائید.";
     }
 
     public class Validate

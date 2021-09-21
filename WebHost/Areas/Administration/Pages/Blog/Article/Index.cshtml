@@ -11,7 +11,7 @@
         </div>
         <div dir="ltr" class="col-lg-6 mr-3">
             <h1 class="page-header">
-                <a class="btn btn-success btn-lg" href="#showmodal=@Url.Page("./Index", "Create")">افزودن مقاله جدید</a>
+                <a class="btn btn-success btn-lg" asp-page="Index" asp-page-handler="Create">افزودن مقاله جدید</a>
             </h1>
         </div>
     </div>
@@ -61,16 +61,18 @@
 
                                 </thead>
                                 <tbody >
-                                @foreach (var course in Model.Article)
+                                @foreach (var article in Model.Article)
                                 {
                                     <tr class="gradeU odd">
-                                        <td class="">@course.Id</td>
-                                        <td class="sorting_1">@course.Title</td>
-                                        <td class="sorting_1">@course.CategoryName</td>
-                                        <td class="sorting_1">@course.BloggerName</td>
+                                        <td class="">@article.Id</td>
+                                        <td>
+                                            <a asp-page="/SingleArticle" asp-route-id="@article.Slug" class="text-primary">@article.Title</a>
+                                        </td>
+                                        <td>@article.CategoryName</td>
+                                        <td>@article.BloggerName</td>
                                         
-                                        <td class="sorting_1">
-                                            @if (course.IsPublish)
+                                        <td>
+                                            @if (article.IsPublish)
                                             {
                                                 <span class="text-success"> منتشر شده</span>
                                             }
@@ -81,19 +83,19 @@
                                         </td>
 
                                         <td class="sorting_1">
-                                            @if (course.PublishDate != "")
+                                            @if (article.PublishDate != "")
                                             {
-                                                @course.PublishDate
+                                                @article.PublishDate
                                             }
                                             else
                                             {
                                                 <span class="text-danger"> منتشر نشده</span>
                                             }
                                                                             </td>
-                                        <td class="sorting_1">@course.CreationDate</td>
+                                        <td class="sorting_1">@article.CreationDate</td>
                                            
                                         <td class="center ">
-                                            <a class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = course.Id})">ویرایش</a>
+                                            <a class="btn btn-warning text-center" asp-page="Index" asp-page-handler="Edit" asp-route-id="@article.Id">ویرایش</a>
                                         </td>
                                     </tr>
 
