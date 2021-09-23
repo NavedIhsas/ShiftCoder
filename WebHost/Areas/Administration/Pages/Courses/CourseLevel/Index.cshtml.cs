@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shop.Management.Application.Contract.CourseLevel;
@@ -14,11 +16,13 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseLevel
         }
 
         public List<CourseLevelViewModel> CourseLevel;
+
         public void OnGet()
         {
             CourseLevel = _course.GetAll();
         }
 
+        [NeedPermission(Permission.CreateCourseLevel)]
         public IActionResult OnGetCreate()
         {
             return Partial("./Create",new CreateCourseLevelViewModel());
@@ -31,6 +35,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseLevel
         }
 
 
+        [NeedPermission(Permission.EditCourseLevel)]
         public IActionResult OnGetEdit(long id)
         {
             var courseLevel = _course.GetDetails(id);

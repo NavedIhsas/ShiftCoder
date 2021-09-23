@@ -1,4 +1,5 @@
 ﻿@page
+@using _0_FrameWork.Application
 @model WebHost.Areas.Administration.Pages.Courses.CourseGroup.IndexModel
 @{
     ViewData["Title"] = "گروه آموزش ها";
@@ -10,7 +11,7 @@
         </div>
         <div dir="ltr" class="col-lg-6 mr-3">
             <h1 class="page-header">
-                <a class="btn btn-success btn-lg" href="#showmodal=@Url.Page("./Index", "Create")">افزودن گروه آموزش جدید</a>
+                <a Permission="@Permission.CreateCourseGroups" class="btn btn-success btn-lg" href="#showmodal=@Url.Page("./Index", "Create")">افزودن گروه آموزش جدید</a>
             </h1>
         </div>
         <!-- /.col-lg-12 -->
@@ -113,15 +114,15 @@
                                                 }
                                             </td>
                                             <td class="center ">
-                                                <a class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = course.Id})">ویرایش</a>
+                                                <a Permission="@Permission.EditCourseGroups" class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = course.Id})">ویرایش</a>
 
                                                 @if (!course.IsRemove)
                                                 {
-                                                    <a asp-page="./Index" asp-page-handler="Remove" asp-route-id="@course.Id" class="btn btn-danger">حذف</a>
+                                                    <a Permission="@Permission.DeleteCourseGroups" asp-page="./Index" asp-page-handler="Remove" asp-route-id="@course.Id" class="btn btn-danger">حذف</a>
                                                 }
                                                 else
                                                 {
-                                                    <a asp-page="./Index" asp-page-handler="Restore" asp-route-id="@course.Id" class="btn btn-success">لغو حذف</a>
+                                                    <a  Permission="@Permission.RestoreCourseGroups" asp-page="./Index" asp-page-handler="Restore" asp-route-id="@course.Id" class="btn btn-success">لغو حذف</a>
                                                 }
                                             </td>
                                         </tr>

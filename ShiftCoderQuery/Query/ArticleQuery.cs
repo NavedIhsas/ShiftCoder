@@ -182,7 +182,8 @@ namespace ShiftCoderQuery.Query
 
             article.Comments = comment;
             article.CommentList = _comment.Comments.
-                Where(x => x.Type == ThisType.Article && x.OwnerRecordId == article.Id).ToList();
+                Where(x => x.Type == ThisType.Article && x.OwnerRecordId == article.Id)
+                .Where(x=>x.IsConfirmed).ToList();
 
             #endregion
 

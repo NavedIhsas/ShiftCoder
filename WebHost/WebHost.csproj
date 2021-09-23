@@ -12,6 +12,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.App" Version="2.2.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="SharpCompress" Version="0.29.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +21,6 @@
     <ProjectReference Include="..\CommentManagement.Infrastructure\CommentManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\CommnetManagement.Application.Contract\CommentManagement.Application.Contract.csproj" />
     <ProjectReference Include="..\DiscountManagement.Infrastructure\DiscountManagement.Infrastructure.csproj" />
-    <ProjectReference Include="..\InventoryManagement.Infrastracture\InventoryManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\ShiftCoderQuery\ShiftCoderQuery.csproj" />
     <ProjectReference Include="..\ShopManagement.Configuration\ShopManagement.Configuration.csproj" />
     <ProjectReference Include="..\ShopManagement.Infrastructure.EfCore\ShopManagement.Infrastructure.EfCore.csproj" />

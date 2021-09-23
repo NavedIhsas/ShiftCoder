@@ -19,7 +19,6 @@ namespace ShiftCoderQuery.Contract.Course
         List<BlogManagement.Domain.ArticleAgg.Article> GetAllArticle();
         List<Teacher> GetAllTeacher();
         List<UserCourseViewModel> GetUserCourseBy(string email);
-        void SearchHomePage(CourseQuerySearchModel command);
 
     }
 }

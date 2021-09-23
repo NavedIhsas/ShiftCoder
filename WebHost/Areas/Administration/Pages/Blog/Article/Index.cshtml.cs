@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Domain.Account.Agg;
 using BlogManagement.Application.Contract.Article;
@@ -25,12 +27,14 @@ namespace WebHost.Areas.Administration.Pages.Blog.Article
             _teacher = teacher;
         }
 
+        [NeedPermission(Permission.ListArticles)]
         public void OnGet(ArticleSearchModel searchModel)
         {
             SelectList = new SelectList(_categoryApplication.SelectList(), "Id", "Name");
             Article = _article.Search(searchModel);
         }
 
+        [NeedPermission(Permission.CreateArticles)]
         public IActionResult OnGetCreate()
         {
             var course = new CreateArticleViewModel()
@@ -47,6 +51,7 @@ namespace WebHost.Areas.Administration.Pages.Blog.Article
             return RedirectToPage("Index");
         }
 
+        [NeedPermission(Permission.EditListArticles)]
         public IActionResult OnGetEdit(long id)
         {
             var course = _article.GetDetails(id);

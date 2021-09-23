@@ -1,4 +1,5 @@
-﻿
+﻿@using _0_FrameWork.Application
+
 
     <div class="navbar-default navbar-static-side" role="navigation" >
         <div class="sidebar-collapse">
@@ -17,10 +18,10 @@
                     <a asp-page="/Index"><i class="fa fa-dashboard fa-fw"></i> داشبورد</a>
                 </li>
                 <li>
-                    <a asp-page=""><i class="fa fa-user-alt"></i> فعالیت ها (مدیر)<span class="fa arrow"></span></a>
+                    <a permission="@Permission.SystemAdministratorActivity" asp-page=""><i class="fa fa-user-alt"></i> فعالیت ها (مدیر)<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: auto;">
                         <li>
-                            <a asp-page="/Notifications/Index">اعلانات </a>
+                            <a   asp-page="/Notifications/Index">اعلانات </a>
                         </li>
                         
                         <li>
@@ -41,11 +42,11 @@
                     <a asp-page=""><i class="fa fa-book "></i> مدیریت دوره ها<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: auto;">
                         <li>
-                            <a asp-page="/Courses/CourseGroup/Index">گروه ها </a>
+                            <a permission="@Permission.ListCourseGroups" asp-page="/Courses/CourseGroup/Index">گروه ها </a>
                         </li>
 
                         <li>
-                            <a asp-page="/Courses/Course/Index">کورس ها </a>
+                            <a permission="@Permission.ListCourses" asp-page="/Courses/Course/Index">کورس ها </a>
                         </li>
 
                         <li>
@@ -62,7 +63,7 @@
                                 <li>
                                     <a asp-page="/Courses/CourseLevel/Index">سطح دوره ها</a>
                                 </li>
-                                <li>
+                                @*<li>
                                     <a asp-page="/Courses/CourseSuitable/Index">دوره مناسب چی افرادی است؟</a>
                                 </li>
                                 <li>
@@ -70,7 +71,7 @@
                                 </li>
                                 <li>
                                     <a asp-page="/Courses/AfterCourse/Index">توقعات بعد از تماشای دوره</a>
-                                </li>
+                                </li>*@
                             </ul>
                             <!-- /.nav-third-level -->
                         </li>
@@ -78,19 +79,43 @@
                     <!-- /.nav-second-level -->
                 </li>
                 
+                
+                <li>
+                    <a asp-page=""><i class="fa fa-user"></i> مدیریت حساب کاربران<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" style="height: auto;">
+                        <li>
+                            <a permission="@Permission.ListUsers" asp-page="/Account/Users/Index">کاربران </a>
+                        </li>
+
+                        <li>
+                            <a permission="@Permission.ListBlockedUsers" asp-page="/Account/Users/BlockedUserList" asp-area="Administration">کاربران مسدود شده </a>
+                        </li>
+
+                        <li>
+                            <a permission="@Permission.ListTeacherAndBlogger" asp-page="/Account/Users/Teacher">اساتید و بلاگر </a>
+                        </li>
+
+                        <li>
+                            <a permission="@Permission.ListRoles" asp-page="/Account/Roles/Index">نقش ها و سطح دسترسی </a>
+                        </li>
+
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
                 <li>
                     <a asp-page=""><i class="fa fa-book-open"></i> سیستم تخفیفات<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: auto;">
                         <li>
-                            <a asp-page="/Discount/CustomerDiscount/Index">تخفیفات مشتری </a>
+                            <a permission="@Permission.ListCostumerDiscount" asp-page="/Discount/CustomerDiscount/Index">تخفیفات مشتری </a>
                         </li>
 
                         <li>
-                            <a asp-page="/Discount/ColleagueDiscount/Index">تخفیفات همکار </a>
+                            <a permission="@Permission.ListColleagueDiscount" asp-page="/Discount/ColleagueDiscount/Index">تخفیفات همکار </a>
                         </li>
 
                         <li>
-                            <a asp-page="/Discount/DiscountCode/Index">تخفیفات کد اختصاصی </a>
+                            <a permission="@Permission.ListDiscountCode" asp-page="/Discount/DiscountCode/Index">تخفیفات کد اختصاصی </a>
                         </li>
 
                     </ul>
@@ -102,44 +127,19 @@
                     <a asp-page=""><i class="fa fa-book-open"></i> مدیریت مقاله ها<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: auto;">
                         <li>
-                            <a asp-page="/Blog/ArticleCategory/Index">گروه مقاله ها </a>
+                            <a permission="@Permission.ListArticleCategories" asp-page="/Blog/ArticleCategory/Index">گروه مقاله ها </a>
                         </li>
 
                         <li>
-                            <a asp-page="/Blog/Article/Index">مقاله ها </a>
-                        </li>
-
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-                
-                
-                <li>
-                    <a asp-page=""><i class="fa fa-user"></i> مدیریت حساب کاربران<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" style="height: auto;">
-                        <li>
-                            <a asp-page="/Account/Users/Index">کاربران </a>
-                        </li>
-                        
-                        <li>
-                            <a asp-page="/Account/Users/BlockedUserList" asp-area="Administration">کاربران مسدود شده </a>
-                        </li>
-
-                        <li>
-                            <a asp-page="/Account/Users/Teacher">اساتید و بلاگر </a>
-                        </li>
-
-                        <li>
-                            <a asp-page="/Account/Roles/Index">نقش ها </a>
+                            <a permission="@Permission.ListArticles" asp-page="/Blog/Article/Index">مقاله ها </a>
                         </li>
 
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
 
-
                 <li>
-                    <a asp-page="/Comment/Index"><i class="fa fa-comment fa-fw"></i> کامنت ها</a>
+                    <a permission="@Permission.ListComments" asp-page="/Comment/Index"><i class="fa fa-comment fa-fw"></i> کامنت ها</a>
                 </li>
             </ul>
         </div>

@@ -1,32 +1,128 @@
-﻿@model AccountManagement.Application.Contract.Role.EditRoleViewModel
+﻿@page
+@using _0_FrameWork.Application
+@model WebHost.Areas.Administration.Pages.Account.Roles.EditModel
 @{
     ViewData["Title"] = "ویرایش کاربر";
 }
 
-<div class="container">
-    <partial name="Shared/_Create_View_Header" />
-
-    <form asp-page="./Index" asp-page-handler="Edit"
-          method="post"
-          data-ajax="true"
-          data-action="Refresh"
-          enctype="multipart/form-data">
-        <div class="modal-body">
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label">عنوان نقش<span class="text-danger">*</span></label>
-                        <input type="text" asp-for="Name" class="form-control" >
-                        <span class="text-danger" asp-validation-for="Name"></span>
+<div id="page-wrapper">
+    <div class="container">
+        <partial name="Shared/_Create_View_Header" />
+        <p>یاد داشت: در صورتیکه کاربر نقش یک عملیات را نداشته  باشد نمیتواند منو یا دکمه اون عملیات
+            را ببیند.</p>
+        <form method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Role.Name" class="control-label">عنوان نقش<span class="text-danger">*</span></label>
+                            <input type="text" name="name" value="@Model.Role.Name" class="form-control">
+                            <span class="text-danger" asp-validation-for="Role.Name"></span>
+                        </div>
                     </div>
+
+                    <div class="col-md-6">
+                        <label class="control-label col-md-3">انتخاب دسترسی ها</label>
+                        <div class="col-md-12">
+                            <select multiple="multiple" name="Permissions" value="@Model.Role.Permissions" asp-items="@Model.Permissions" class="multi-select" id="my_multi_select2">
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
+                <input type="hidden" asp-for="Role.Id" value="@Model.Role.Id" />
+
+                <button type="submit" class="btn btn-info waves-effect waves-light">ویرایش</button>
+
             </div>
-        </div>
-        <input type="hidden" asp-for="Id" value="@Model.Id"/>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
-            <button type="submit" class="btn btn-info waves-effect waves-light">ویرایش</button>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
+
+@section Scripts
+{
+
+    <script src="~/js/multi-select/jquery.min.js"></script>
+    <script src="~/js/multi-select/jquery-multi-select/jquery.multi-select.js"></script>
+    <script src="~/js/multi-select/jquery-multi-select/jquery.quicksearch.js"></script>
+    <script src="~/js/multi-select/toggles.min.js"></script>
+    <script src="~/js/multi-select/bootstrap-datepicker.js"></script>
+    <script src="~/js/multi-select/bootstrap-timepicker.min.js"></script>
+    <script src="~/js/multi-select/jquery.tagsinput.min.js"></script>
+    <script src="~/js/multi-select/bootstrap-colorpicker.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+
+            // Tags Input
+            jQuery('#tags').tagsInput({ width: 'auto' });
+
+            // Form Toggles
+            jQuery('.toggle').toggles({ on: true });
+
+            // Time Picker
+            jQuery('#timepicker').timepicker({ defaultTIme: false });
+            jQuery('#timepicker2').timepicker({ showMeridian: false });
+            jQuery('#timepicker3').timepicker({ minuteStep: 15 });
+
+            // Date Picker
+            jQuery('#datepicker').datepicker();
+            jQuery('#datepicker-inline').datepicker();
+            jQuery('#datepicker-multiple').datepicker({
+                numberOfMonths: 3,
+                showButtonPanel: true
+            });
+            //colorpicker start
+
+            $('.colorpicker-default').colorpicker({
+                format: 'hex'
+            });
+            $('.colorpicker-rgba').colorpicker();
+
+
+            //multiselect start
+
+            $('#my_multi_select1').multiSelect();
+            $('#my_multi_select2').multiSelect({
+                selectableOptgroup: true
+            });
+
+            $('#my_multi_select3').multiSelect({
+                selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+                selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+                afterInit: function (ms) {
+                    var that = this,
+                        $selectableSearch = that.$selectableUl.prev(),
+                        $selectionSearch = that.$selectionUl.prev(),
+                        selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                        selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+
+                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which === 40) {
+                                that.$selectableUl.focus();
+                                return false;
+                            }
+                        });
+
+                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which == 40) {
+                                that.$selectionUl.focus();
+                                return false;
+                            }
+                        });
+                },
+                afterSelect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                },
+                afterDeselect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                }
+            });
+
+        });
+    </script>
+}

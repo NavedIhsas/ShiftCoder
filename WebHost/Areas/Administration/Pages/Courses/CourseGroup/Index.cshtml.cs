@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,11 +21,14 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseGroup
 
         public CourseGroupSearchModel SearchModel;
         public List<CourseGroupViewModel> CourseGroup;
+
+        [NeedPermission(Permission.ListCourseGroups)]
         public void OnGet(CourseGroupSearchModel searchModel)
         {
 
             CourseGroup = _course.Search(searchModel);
         }
+
 
         public IActionResult OnGetCreate()
         {
@@ -34,6 +39,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseGroup
             return Partial("./Create", selectGroup);
         }
 
+        [NeedPermission(Permission.CreateCourseGroups)]
         public JsonResult OnPostCreate(CreateCourseGroupViewModel command)
         {
             var courseGroup = _course.Create(command);
@@ -48,12 +54,15 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseGroup
             return Partial("./Edit", courseGroup);
         }
 
+        [NeedPermission(Permission.EditCourseGroups)]
         public JsonResult OnPostEdit(EditCourseGroupViewModel command)
         {
             var courseGroup = _course.Edit(command);
             return new JsonResult(courseGroup);
         }
 
+
+        [NeedPermission(Permission.DeleteCourseGroups)]
         public IActionResult OnGetRemove(long id)
         {
             var removeCourseGroup = _course.Remove(id);
@@ -64,6 +73,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseGroup
             return RedirectToPage("./Index");
         }
 
+        [NeedPermission(Permission.RestoreCourseGroups)]
         public IActionResult OnGetRestore(long id)
         {
             var removeCourseGroup = _course.Restore(id);

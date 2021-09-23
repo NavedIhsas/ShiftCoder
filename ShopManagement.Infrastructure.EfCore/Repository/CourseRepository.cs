@@ -98,5 +98,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
            var course= _context.Courses.Find(courseId);
            return course;
        }
+
+       public string GetCourseSlugBy(long courseId)=> _context.Courses.Find(courseId).Slug;
     }
 }

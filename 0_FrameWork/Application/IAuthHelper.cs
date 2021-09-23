@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace _0_FrameWork.Application
 {
@@ -14,6 +15,7 @@ namespace _0_FrameWork.Application
         void Signin(AuthHelperViewModel account);
         bool IsAuthenticated();
         string CurrentAccountFullName();
+        List<int> GetPermissions();
     }
 
     public class AuthHelper : IAuthHelper
@@ -35,8 +37,20 @@ namespace _0_FrameWork.Application
             return _httpContextAccessor.HttpContext.User.Claims.
                 FirstOrDefault(x => x.Type == "FullName")?.Value;
         }
+
+        public List<int> GetPermissions()
+        {
+            if (!IsAuthenticated()) return new List<int>();
+
+            var permissions = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Permissions")
+                ?.Value;
+
+            return JsonConvert.DeserializeObject<List<int>>(permissions);//convert form string to List<int>
+        }
+
         public void Signin(AuthHelperViewModel account)
         {
+            var permission = JsonConvert.SerializeObject(account.Permissions);//convert to string
             var claims = new List<Claim>
             {
                 new Claim("FullName",account.Fullname),
@@ -44,6 +58,7 @@ namespace _0_FrameWork.Application
                 new Claim(ClaimTypes.Name, account.Email),
                 new Claim(ClaimTypes.Role, account.RoleId.ToString()),
                 new Claim("Email", account.Email), // Or Use ClaimTypes.NameIdentifier
+                new Claim("Permissions",permission)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

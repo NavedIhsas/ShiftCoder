@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Application.Contract.Role;
 using AccountManagement.Domain.Account.Agg;
@@ -19,6 +21,8 @@ namespace WebHost.Areas.Administration.Pages.Account.Users
         }
 
         public EditAccountViewModel Edit;
+
+        [NeedPermission(Permission.EditUsers)]
         public void OnGet(long id)
         {
            

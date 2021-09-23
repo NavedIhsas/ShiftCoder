@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Role;
 using AccountManagement.Domain.RoleAgg;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccountManagement.Infrastructure.EfCore.Repository
 {
@@ -16,11 +18,21 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
 
         public EditRoleViewModel GetDetails(long id)
         {
-            return _context.Roles.Select(x => new EditRoleViewModel
+            var role= _context.Roles.Select(x => new EditRoleViewModel
             {
                 Name = x.Name,
-                Id = x.Id
-            }).FirstOrDefault(x => x.Id == id);
+                Id = x.Id,
+                MapPermission =  MapPermission(x.Permissions)
+            }).AsNoTracking().FirstOrDefault(x => x.Id == id);
+
+            role.Permissions = role.MapPermission.Select(x => x.Code).ToList();
+
+            return role;
+        }
+
+        private static List<PermissionDto> MapPermission(IEnumerable<Permission> permissions)
+        {
+            return permissions.Select(x => new PermissionDto(x.Code, x.Name)).ToList();
         }
 
         public List<RoleViewModel> GetAllList()
@@ -33,9 +45,5 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
 
         }
 
-        public long GetRoleBy(long roleId)
-        {
-            return _context.Roles.Find(roleId).Id;
-        }
    }
 }

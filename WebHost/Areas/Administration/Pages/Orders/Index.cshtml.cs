@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using CommentManagement.Domain.Notification.Agg;
 using CommentManagement.Domain.VisitAgg;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +30,8 @@ namespace WebHost.Areas.Administration.Pages.Orders
         public SelectList SelectList;
         public List<OrderViewModel> List;
         public List<Visit> Visit;
+
+        [NeedPermission(Permission.SystemAdministratorOrders)]
         public void OnGet(CourseSearchModel searchModel)
         {
             var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();

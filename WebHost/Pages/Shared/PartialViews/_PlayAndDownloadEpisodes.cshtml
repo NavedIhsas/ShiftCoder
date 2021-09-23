@@ -1,0 +1,86 @@
+﻿@using ShiftCoderQuery.Contract.Course
+@inject ICourseQuery _course;
+@{
+
+    var userInCourse = false;
+    if (User.Identity.IsAuthenticated)
+        userInCourse = _course.UserInCourse(User.Identity.Name, Model.Course.Id);
+}
+<div class="accordion-item">
+    <h2 class="accordion-header mb-0 mt-h2-accordion" id="headingOne">
+        <button class="accordion-button collapsed accordion-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            سر فصل های @Model.Course.Name - بخش @Model.Course.CourseLevel
+        </button>
+    </h2>
+
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            @if (!userInCourse)
+            {
+                <p class=" text-success mt-2 text-center"><b>بعد از ثبت نام در دوره و تایید فاکتور،  لینک های دانلود برای شما فعال خواهد شد</b></p>
+                if (!User.Identity.IsAuthenticated)
+                {
+                    <p class=" text-info mt-2 text-center"><b>برای تماشای آنلاین فایل های رایگان لطفا وارد حساب خود شوید</b></p>
+                }
+                <hr />
+            }
+            @foreach (var episode in Model.Course.EpisodeCourse)
+            {
+                <div class="container-Section">
+                    <div class="container-right-section">
+                        <i class="fas fa-video video-icon"></i>
+                        <h4 class="title-section">@episode.Title</h4>
+                        <div class="line-section"></div>
+                        <p class="video-time">@episode.Time</p>
+                        <div class="line-section"></div>
+
+                        @if (!userInCourse)
+                        {
+                            @if (episode.IsFree)
+                            {
+                                <a class="text-success">رایگان</a>
+                            }
+                            else
+                            {
+                                <p class="text-info">نقدی</p>
+
+                            }
+                        }
+
+                    </div>
+                    <div class="container-left-section">
+
+                        @if (!userInCourse)
+                        {
+                            @if (episode.IsFree)
+                            {
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a href="/SingleCourse/@Model.Course.Slug?episode=@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                }
+                                else
+                                {
+                                    <a><i class="fas fa-play icon-left-section"></i></a>
+                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                }
+
+                            }
+                            else
+                            {
+                                <a><i class="fas fa-play icon-left-section"></i></a>
+                                <a><i class="fas fa-download icon-left-section"></i></a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="/SingleCourse/@Model.Course.Slug?episode=@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                            <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

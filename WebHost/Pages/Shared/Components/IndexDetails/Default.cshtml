@@ -1,0 +1,25 @@
+﻿@using ShiftCoderQuery.Contract.Course
+@inject ICourseQuery _course;
+<div id="container-meta-section">
+    <div class="meta-section-header">
+        <img src="~/icons/student.png" alt="Student" class="img-meta-section">
+        <span class="span-meta-section">@_course.GetAllUsers().Count</span>
+        <span class="span-meta-section">نفر دانشجو</span>
+    </div>
+    <div class="meta-section-header" id="meta-section-teacher">
+        <img src="~/icons/teacher.png" alt="teacher" class="img-meta-section">
+        <span class="span-meta-section">@_course.GetAllTeacher().Count </span>
+        <span class="span-meta-section">مدرس</span>
+    </div>
+    <div class="meta-section-header">
+        <img src="~/icons/video.png" alt="video" class="img-meta-section">
+        <span class="span-meta-section">10000</span>
+        <span class="span-meta-section">دقیقه ویدئو</span>
+    </div>
+
+    <div class="meta-section-header" id="meta-section-article">
+        <img src="~/icons/article-2.png" alt="article" class="img-meta-section">
+        <span class="span-meta-section">@_course.GetAllArticle().Count</span>
+        <span class="span-meta-section">مقاله</span>
+    </div>
+</div>

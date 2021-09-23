@@ -1,5 +1,6 @@
 ﻿@page
 @using _0_Framework.Application
+@using _0_FrameWork.Application
 @model WebHost.Areas.Administration.Pages.Blog.Article.IndexModel
 @{
     ViewData["Title"] = "مدیریت مقاله ها";
@@ -11,7 +12,7 @@
         </div>
         <div dir="ltr" class="col-lg-6 mr-3">
             <h1 class="page-header">
-                <a class="btn btn-success btn-lg" asp-page="Index" asp-page-handler="Create">افزودن مقاله جدید</a>
+                <a Permission="@Permission.CreateArticles" class="btn btn-success btn-lg" asp-page="Index" asp-page-handler="Create">افزودن مقاله جدید</a>
             </h1>
         </div>
     </div>
@@ -95,7 +96,7 @@
                                         <td class="sorting_1">@article.CreationDate</td>
                                            
                                         <td class="center ">
-                                            <a class="btn btn-warning text-center" asp-page="Index" asp-page-handler="Edit" asp-route-id="@article.Id">ویرایش</a>
+                                            <a Permission="@Permission.EditListArticles" class="btn btn-warning text-center" asp-page="Index" asp-page-handler="Edit" asp-route-id="@article.Id">ویرایش</a>
                                         </td>
                                     </tr>
 

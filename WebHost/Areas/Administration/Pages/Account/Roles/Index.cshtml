@@ -1,4 +1,5 @@
 ﻿@page
+@using _0_FrameWork.Application
 @model WebHost.Areas.Administration.Pages.Account.Roles.IndexModel
 @{
     ViewData["Title"] = "مدیریت نقش ها";
@@ -11,8 +12,8 @@
             <h1 class="page-header">مدیریت نقش ها</h1>
         </div>
         <div dir="ltr" class="col-lg-6 mr-3">
-            <h1 class="page-header">
-                <a class="btn btn-success btn-lg" href="#showmodal=@Url.Page("./Index", "Create")">افزودن نقش جدید</a>
+            <h1 Permission="@Permission.CreateRoles" class="page-header">
+                <a class="btn btn-success btn-lg" asp-page="Create">افزودن نقش جدید</a>
             </h1>
         </div>
         <!-- /.col-lg-12 -->
@@ -47,7 +48,7 @@
                                             <td class="sorting_1">@item.Name</td>
 
                                             <td class="center ">
-                                                <a class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = item.Id})">ویرایش</a>
+                                                <a Permission="@Permission.EditRoles" class="btn btn-warning text-center" asp-page="Edit" asp-route-id="@item.Id">ویرایش</a>
                                             </td>
                                         </tr>
 

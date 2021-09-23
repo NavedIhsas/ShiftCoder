@@ -7,29 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@ViewData["Title"]-ShiftCoder</title>
+    @if (ViewData["Title"] != null)
+    {
+        <title>@ViewData["Title"]-شیفت کدر</title>
+    }
+    else
+    {
+        <title>شیفت کدر</title>
+    }
 
-    <link href="~/frameworks/bootstrap/bootstrap.rtl.css" rel="stylesheet" />
-    <link href="~/frameworks/bootstrap/bootstrap-reboot.rtl.min.css" rel="stylesheet" />
-    <link href="~/style/account.css" rel="stylesheet" />
-    <link href="~/style/style-userPanel.css" rel="stylesheet" />
-    <link href="~/style/main.min.css" rel="stylesheet" />
-    <link href="~/style/courses.css" rel="stylesheet" />
-    <link rel="~/stylesheet" href="style/artiles.css">
-    <link href="~/style/edit-profile.css" rel="stylesheet" />
-    <link href="~/style/course-single-page.css" rel="stylesheet" />
-    <link href="~/style/article-single-page.css" rel="stylesheet" />
-
-    <link href="~/AdminTemplate/css/custom.css" rel="stylesheet" />
-    <link href="~/library/plyr/plyr.css" rel="stylesheet" />
-    <link href="~/frameworks/FontAwesome/css/all.min.css" rel="stylesheet" />
-    <link href="~/frameworks/FontAwesome/css/all.css" rel="stylesheet" />
-  
-    <style>
-        :root {
-            --plyr-color-main: #eb3233;
-        }
-    </style>
+    <partial name="PartialViews/_Styles" />
 
 </head>
 <body>
@@ -64,152 +51,11 @@
                     </a>
                 </div>
             </div>
-            <nav class="navbar navbar-expand-lg navbar-dark" id="custom-navbar-header">
-                <div class="container-fluid">
-                    <h1>
-                        <a class="navbar-brand text-su" href="#">Learn <span class="text-danger">hub</span></a>
-                    </h1>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        @await Component.InvokeAsync("Menu")
-
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item dropdown list-style-li-header" id="setting-list-item-header">
-                                <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span id="span-profile">
-                                        <img src="~/icons/settings.png" alt="settings" width="28">
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
-                                    <li>
-                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                            <img src="~/icons/settings-3.png" alt="settings" class="icons-img-header">
-                                            تنظیمات حساب
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                            <img src="~/icons/edit.png" alt="send article" class="icons-img-header">
-                                            ارسال مطالب
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a asp-page="Index" asp-page-handler="Comments" asp-area="UserPanel" class="dropdown-item text-white hover-link-dropdown" >
-                                            <img src="~/icons/conversation.png" alt="comments" class="icons-img-header">
-                                            نظرات
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                            <img src="~/icons/notification.png" alt="notification" class="icons-img-header">
-                                            اعلان ها
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <a  class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" href="#">
-                                            <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
-                                            تنظیمات بیشتر
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown list-style-li-header">
-                                <a asp-page="Index" asp-area="UserPanel" class="nav-link dropdown-toggle link-navbar-header"  id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/images/logo-icon-150px-shiftcoder.png" alt="پروفایل" id="profile-header">
-                                    <span id="span-profile">پروفایل</span>
-                                </a>
-                                <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
-                                    <li>
-                                        <a asp-page="Index" asp-area="Administration" class="dropdown-item text-white hover-link-dropdown" >
-                                            <img src="~/icons/control-panel.png" alt="control panel" class="icons-img-header">
-                                            پنل مدیریت
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                            <img src="~/icons/profile.png" alt="profile" class="icons-img-header">
-                                            دوره های شما
-                                        </a>
-                                    </li>
-                                    <li>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-white hover-link-dropdown" href="#">
-                                            <img src="~/icons/invoice.png" alt="invoice" class="icons-img-header">
-                                            ارسال تیکت
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <a asp-page="Account" asp-page-handler="Logout" class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown">
-                                            <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
-                                            خروج از سایت
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        }
-                       
-                    </div>
-                </div>
-            </nav>
+            <partial name="PartialViews/_Header" />
         </div>
     </div>
     @RenderBody()
-    <footer class="container-fluid" id="footer">
-        <div class="row">
-            <div class="col-10 col-md-6 col-lg-4" id="container-title-footer">
-                <h4 id="title-info-footer">لورم ایپسوم</h4>
-                <p id="title-p-footer">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                    گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.
-                </p>
-            </div>
-            <div class="col-10 col-md-6 col-lg-4" id="container-newsletters-footer">
-                <input type="email" id="newsletters-footer-email" placeholder="آدرس ایمیل">
-                <input type="number" id="newsletters-footer-number" placeholder="شماره موبایل">
-                <input type="submit" id="newsletters-footer-submit" value="عضویت در خبرنامه">
-            </div>
-            <div class="col-10 col-md-6 col-lg-4" id="container-app-footer">
-                <div>
-                    <a href="#"><img src="~/images/GooglePlay.png" alt="GooglePlay" class="img-app-footer"></a>
-                    <a href="#"><img src="~/images/SibApp.png" alt="SibApp" class="img-app-footer"></a>
-                </div>
-
-            </div>
-        </div>
-        <div id="container-footer-bottom">
-            <div class="col-6" id="container-copyright-footer">
-                <p id="p-copyright-footer">
-                    استفاده از مطالب وبسایت آموزشی لرن هاب فقط برای مقاصد غیرتجاری و با
-                    ذکر منبع بلامانع است.
-                </p>
-            </div>
-            <div class="col-6" id="container-social-footer">
-                <a href="#"><img src="~/icons/youtube-2.png" alt="youtube" title="youtube" class="img-social-footer"></a>
-                <a href="#">
-                    <img src="~/icons/telegram-2.png" alt="telegram" title="telegram"
-                         class="img-social-footer">
-                </a>
-                <a href="#">
-                    <img src="~/icons/linkedin-2.png" alt="linkedin" title="linkedin"
-                         class="img-social-footer">
-                </a>
-                <a href="#">
-                    <img src="~/icons/instagram-2.png" alt="instagram" title="instagram"
-                         class="img-social-footer">
-                </a>
-            </div>
-        </div>
-    </footer>
+    <partial name="PartialViews/_Footer" />
     <section id="hero">
         <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              viewBox="0 24 150 28 " preserveAspectRatio="none">
@@ -231,22 +77,8 @@
             </g>
         </svg>
     </section>
-    <script src="~/scripts/debugAvatar.js"></script>
-    <script src="~/scripts/jquery.min.js"></script>
-    <script src="~/scripts/courses.js"></script>
-    <script src="~/scripts/course-single-page.js"></script>
-  
-    <script src="~/scripts/article-single-page.js"></script>
-    <script src="~/frameworks/bootstrap/bootstrap.min.js"></script>
-    <script src="~/scripts/text.js"></script>
-    <script src="~/library/plyr/plyr.js"></script>
-    <script src="~/scripts/script.js"></script>
-    <script src="scripts/articles.js"></script>
-    <script src="~/frameworks/FontAwesome/js/all.min.js"></script>
+    <partial name="PartialViews/_Scripts" />
 
-    <script>
-        const player = new Plyr('#player');
-    </script>
     @RenderSectionAsync("Scripts", required: false)
 </body>
 

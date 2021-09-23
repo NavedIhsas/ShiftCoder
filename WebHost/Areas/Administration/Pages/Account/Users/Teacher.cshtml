@@ -1,4 +1,5 @@
 ﻿@page
+@using _0_FrameWork.Application
 @using Type = _0_FrameWork.Application.ThisType
 @model WebHost.Areas.Administration.Pages.Account.Users.TeacherModel
 @{
@@ -61,8 +62,8 @@
                                             <td>@item.Bio</td>
                                            
                                             <td class="center ">
-                                                <a class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Teacher", "TeacherEdit", new { id = item.Id})">ویرایش</a>
-                                                <a class="btn btn-danger text-center" href="#showmodal=@Url.Page("./Teacher", "Delete", new { id = item.Id})">حذف</a>
+                                                <a Permission="@Permission.EditTeacherAndBlogger" class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Teacher", "TeacherEdit", new { id = item.Id})">ویرایش</a>
+                                                <a Permission="@Permission.DeleteTeacherAndBlogger" class="btn btn-danger text-center" href="#showmodal=@Url.Page("./Teacher", "Delete", new { id = item.Id})">حذف</a>
                                         </tr>
                                     }
                                 </tbody>

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Domain.Account.Agg;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -30,12 +32,15 @@ namespace WebHost.Areas.Administration.Pages.Courses.Course
         public SelectList SelectList;
         public CourseSearchModel SearchModel;
         public List<CourseViewModel> Course;
+
+        [NeedPermission(Permission.ListCourses)]
         public void OnGet(CourseSearchModel searchModel)
         {
             SelectList = new SelectList(_courseGroup.SelectList(), "Id", "Title");
             Course = _course.Search(searchModel);
         }
 
+        [NeedPermission(Permission.CreateCourses)]
         public IActionResult OnGetCreate()
         {
             var course = new CreateCourseViewModel()
@@ -48,12 +53,14 @@ namespace WebHost.Areas.Administration.Pages.Courses.Course
             return Partial("./Create", course);
         }
 
+        [NeedPermission(Permission.CreateCourses)]
         public IActionResult OnPostCreate(CreateCourseViewModel command)
         {
           _course.Create(command);
             return RedirectToPage("Index");
         }
 
+        [NeedPermission(Permission.EditCourses)]
         public IActionResult OnGetEdit(long id)
         {
             var course = _course.GetDetails(id);
@@ -66,6 +73,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.Course
 
         }
 
+        [NeedPermission(Permission.EditCourses)]
         public IActionResult OnPostEdit(EditCourseViewModel command)
         {
            _course.Edit(command);

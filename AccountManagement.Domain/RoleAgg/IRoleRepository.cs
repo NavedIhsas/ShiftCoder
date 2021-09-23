@@ -8,6 +8,7 @@ namespace AccountManagement.Domain.RoleAgg
     {
         EditRoleViewModel GetDetails(long id);
         List<RoleViewModel> GetAllList();
+   
 
 
     }

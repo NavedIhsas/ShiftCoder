@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shop.Management.Application.Contract.CourseGroup;
@@ -20,6 +22,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseStatus
             CourseStatus = _course.GetAll();
         }
 
+        [NeedPermission(Permission.CreateCourseStatus)]
         public IActionResult OnGetCreate()
         {
             return Partial("./Create",new CourseStatusViewModel());
@@ -32,6 +35,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseStatus
         }
 
 
+        [NeedPermission(Permission.EditCourseStatus)]
         public IActionResult OnGetEdit(long id)
         {
             var courseStatus = _course.GetDetails(id);

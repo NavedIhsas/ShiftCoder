@@ -1,0 +1,154 @@
+﻿@page
+@model WebHost.Pages.testModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+    <meta name="author" content="Coderthemes">
+
+    <title>Moltran - Responsive Admin Dashboard Template</title>
+
+  
+    <link href="~/Test/assets/jquery-multi-select/multi-select.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+
+
+
+<body class="fixed-left">
+
+    <!-- Begin page -->
+    <div class="col-md-9">
+        <select multiple="multiple" class="multi-select" id="my_multi_select2" name="my_multi_select2[]">
+            <optgroup label="NFC EAST">
+                <option>Dallas Cowboys</option>
+                <option>New York Giants</option>
+                <option>Philadelphia Eagles</option>
+                <option>Washington Redskins</option>
+            </optgroup>
+            <optgroup label="NFC NORTH">
+                <option>Chicago Bears</option>
+                <option>Detroit Lions</option>
+                <option>Green Bay Packers</option>
+                <option>Minnesota Vikings</option>
+            </optgroup>
+            <optgroup label="NFC SOUTH">
+                <option>Atlanta Falcons</option>
+                <option>Carolina Panthers</option>
+                <option>New Orleans Saints</option>
+                <option>Tampa Bay Buccaneers</option>
+            </optgroup>
+            <optgroup label="NFC WEST">
+                <option>Arizona Cardinals</option>
+                <option>St. Louis Rams</option>
+                <option>San Francisco 49ers</option>
+                <option>Seattle Seahawks</option>
+            </optgroup>
+        </select>
+    </div>
+    <!-- END wrapper -->
+
+    <script>
+            var resizefunc = [];
+    </script>
+
+    <!-- jQuery  -->
+    <script src="~/Test/js/jquery.min.js"></script>
+
+   
+    
+
+
+    <script src="~/Test/assets/tagsinput/jquery.tagsinput.min.js"></script>
+    <script src="~/Test/assets/toggles/toggles.min.js"></script>
+    <script src="~/Test/assets/timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="~/Test/assets/timepicker/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="~/Test/assets/colorpicker/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="~/Test/assets/jquery-multi-select/jquery.multi-select.js"></script>
+  
+   
+
+    <script>
+            jQuery(document).ready(function() {
+
+                // Tags Input
+                jQuery('#tags').tagsInput({width:'auto'});
+
+                // Form Toggles
+                jQuery('.toggle').toggles({on: true});
+
+                // Time Picker
+                jQuery('#timepicker').timepicker({defaultTIme: false});
+                jQuery('#timepicker2').timepicker({showMeridian: false});
+                jQuery('#timepicker3').timepicker({minuteStep: 15});
+
+                // Date Picker
+                jQuery('#datepicker').datepicker();
+                jQuery('#datepicker-inline').datepicker();
+                jQuery('#datepicker-multiple').datepicker({
+                    numberOfMonths: 3,
+                    showButtonPanel: true
+                });
+                //colorpicker start
+
+                $('.colorpicker-default').colorpicker({
+                    format: 'hex'
+                });
+                $('.colorpicker-rgba').colorpicker();
+
+
+                //multiselect start
+
+                $('#my_multi_select1').multiSelect();
+                $('#my_multi_select2').multiSelect({
+                    selectableOptgroup: true
+                });
+
+                $('#my_multi_select3').multiSelect({
+                    selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+                    selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+                    afterInit: function (ms) {
+                        var that = this,
+                            $selectableSearch = that.$selectableUl.prev(),
+                            $selectionSearch = that.$selectionUl.prev(),
+                            selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                            selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+
+                        that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                            .on('keydown', function (e) {
+                                if (e.which === 40) {
+                                    that.$selectableUl.focus();
+                                    return false;
+                                }
+                            });
+
+                        that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                            .on('keydown', function (e) {
+                                if (e.which == 40) {
+                                    that.$selectionUl.focus();
+                                    return false;
+                                }
+                            });
+                    },
+                    afterSelect: function () {
+                        this.qs1.cache();
+                        this.qs2.cache();
+                    },
+                    afterDeselect: function () {
+                        this.qs1.cache();
+                        this.qs2.cache();
+                    }
+                });
+
+            });
+    </script>
+
+
+</body>
+</html>

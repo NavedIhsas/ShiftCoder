@@ -1,4 +1,5 @@
-﻿using BlogManagement.Domain.ArticleCategoryAgg;
+﻿using _0_FrameWork.Domain.Infrastructure;
+using BlogManagement.Domain.ArticleCategoryAgg;
 using BlogManagement.Infrastructure.EfCore.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using BlogManagement.Application.Contract.ArticleCategory;
@@ -6,6 +7,7 @@ using BlogManagement.Application;
 using BlogManagement.Application.Contract.Article;
 using BlogManagement.Domain.ArticleAgg;
 using BlogManagement.Infrastructure.EfCore;
+using BlogManagement.Infrastructure.Permissions;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Article;
 using ShiftCoderQuery.Contract.ArticleCategory;
@@ -26,6 +28,7 @@ namespace BlogManagement.Infrastructure
             service.AddTransient<IArticleQuery, ArticleQuery>();
             service.AddTransient<IArticleCategoryQuery, ArticleCategoryQuery>();
 
+            service.AddTransient<IPermissionExposer, BlogPermissionExposer>();
 
             service.AddDbContext<BlogContext>(option =>
             {

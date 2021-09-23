@@ -1,4 +1,5 @@
 ﻿@page
+@using _0_FrameWork.Application
 @model WebHost.Areas.Administration.Pages.Courses.Course.IndexModel
 @{
     ViewData["Title"] = "مدیریت دوره ها";
@@ -10,7 +11,7 @@
         </div>
         <div dir="ltr" class="col-lg-6 mr-3">
             <h1 class="page-header">
-                <a class="btn btn-success btn-lg" asp-page="Index" asp-page-handler="Create">افزودن دوره جدید</a>
+                <a Permission="@Permission.CreateCourses" class="btn btn-success btn-lg" asp-page="Index" asp-page-handler="Create">افزودن دوره جدید</a>
             </h1>
         </div>
     </div>
@@ -106,7 +107,7 @@
                                             }
                                         </td>
                                         <td class="center ">
-                                            <a asp-page="Index" asp-page-handler="Edit" asp-route-id="@course.Id" class="btn btn-warning fa fa-edit text-center">ویرایش</a>
+                                            <a Permission="@Permission.EditCourses" asp-page="Index" asp-page-handler="Edit" asp-route-id="@course.Id" class="btn btn-warning fa fa-edit text-center">ویرایش</a>
                                         </td>
                                     </tr>
 

@@ -1,6 +1,7 @@
 ﻿using DiscountManagement.Domain.CustomerDiscountAgg;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using _0_FrameWork.Domain.Infrastructure;
 using ColleagueDiscountManagementApplication.Contract.ColleagueDiscount;
 using DiscountManagementInfrastructure.EfCore;
 using DiscountManagementInfrastructure.EfCore.Repository;
@@ -11,6 +12,7 @@ using ColleagueDiscountManagementApplication.Contract.CustomerDiscount;
 using ColleagueDiscountManagementApplication.Contract.DiscountCode;
 using DiscountManagement.Domain.DiscountCode;
 using DiscountManagement.Domain.UserDiscountAgg;
+using DiscountManagement.Infrastructure.Permissions;
 using ShiftCoderQuery.Contract.Discount;
 using ShiftCoderQuery.Query;
 
@@ -32,6 +34,9 @@ namespace DiscountManagement.Infrastructure
             services.AddTransient<IDiscountQuery, DiscountQuery>();
 
             services.AddTransient<IUserDiscountRepository, UserDiscountRepository>();
+
+            services.AddTransient<IPermissionExposer, DiscountPermissionExposer>();
+
 
             services.AddDbContext<DiscountContext>(option =>
             {

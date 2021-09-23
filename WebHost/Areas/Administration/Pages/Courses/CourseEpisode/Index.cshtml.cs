@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,12 +22,15 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseEpisode
         public List<CourseEpisodeViewModel> List;
         public CourseEpisodeSearchModel SearchModel;
         public SelectList CourseSelectList;
+        
+        [NeedPermission(Permission.ListCourseEpisodes)]
         public void OnGet(CourseEpisodeSearchModel searchModel)
         {
             CourseSelectList = new SelectList(_course.SelectCourses(), "Id", "Name");
             List = _application.Search(searchModel);
         }
 
+        [NeedPermission(Permission.CreateCourseEpisodes)]
         public IActionResult OnGetCreate()
         {
             var select = new CreateCourseEpisodeViewModel()
@@ -42,6 +47,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseEpisode
         }
 
 
+        [NeedPermission(Permission.EditCourseEpisodes)]
         public IActionResult OnGetEdit(long id)
         {
             var getDetails = _application.GetDetails(id);

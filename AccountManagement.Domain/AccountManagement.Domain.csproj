@@ -9,8 +9,4 @@
     <ProjectReference Include="..\AccountManagement.Application\AccountManagement.Application.Contract.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>

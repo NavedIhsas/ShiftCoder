@@ -1,16 +1,13 @@
 ﻿@page
 @using _0_Framework.Application
-@using ReflectionIT.Mvc.Paging
-@addTagHelper*,ReflectionIT.Mvc.Paging
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using ShiftCoderQuery.Contract.Course
 @model WebHost.Pages.CoursesModel
 @{
     ViewData["Title"] = "دوره های آموزشی";
     var courseGroup = ViewData["checked"] as List<string>;
     var searchModel = ViewData["SearchModel"] as CourseQuerySearchModel;
-
 }
+
 <div class="container">
     <div class="row">
         <form method="get" id="submitSearch">

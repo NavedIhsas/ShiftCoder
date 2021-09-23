@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _0_FrameWork.Application;
 using Shop.Management.Application.Contract.CourseEpisode;
+using ShopManagement.Domain.CourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
 
 namespace ShopManagement.Application
@@ -9,22 +10,24 @@ namespace ShopManagement.Application
    {
        private readonly ICourseEpisodeRepository _repository;
        private readonly IEpisodeFileUploader _fileUploader;
+       private readonly ICourseRepository _courseRepository;
 
-       public CourseEpisodeApplication(ICourseEpisodeRepository repository, IEpisodeFileUploader fileUploader)
+       public CourseEpisodeApplication(ICourseEpisodeRepository repository, IEpisodeFileUploader fileUploader, ICourseRepository courseRepository)
        {
            _repository = repository;
            _fileUploader = fileUploader;
+           _courseRepository = courseRepository;
        }
 
        public OperationResult Create(CreateCourseEpisodeViewModel command)
        {
            var operation = new OperationResult();
 
-           if (_repository.IsExist(x => x.FileName == command.File.FileName))
+           if (_repository.IsExist(x => x.FileName == command.File.FileName && x.CourseId==command.CourseId))
                return operation.Failed("فایل دوره نمیتواند تکراری باشد");
 
-           var getGroupSlug = _repository.GetCourseGroupSlugBy(command.CourseId);
-           var pathFile = $"{getGroupSlug}/EpisodeFiles";
+           var courseSlug = _courseRepository.GetCourseSlugBy(command.CourseId);
+           var pathFile = $"EpisodeFiles/{courseSlug}";
            var fileName = _fileUploader.Uploader(command.File, pathFile);
 
            var courseEpisode = new CourseEpisode(fileName, command.Time, command.Title, command.CourseId,
@@ -39,14 +42,11 @@ namespace ShopManagement.Application
         {
             var operation = new OperationResult();
 
-            if (!string.IsNullOrWhiteSpace(command.FileName))
-            {
-                if (_repository.IsExist(x => x.FileName == command.File.FileName && x.CourseId == command.CourseId && x.Id != command.Id))
-                    return operation.Failed("فایل دوره نمیتواند تکراری باشد");
-            }
+            if (_repository.IsExist(x => x.FileName == command.FileName && x.CourseId == command.CourseId && x.Id!=command.Id))
+                return operation.Failed("فایل دوره نمیتواند تکراری باشد");
 
-            var getGroupSlug = _repository.GetCourseGroupSlugBy(command.CourseId);
-            var pathFile = $"{getGroupSlug}/EpisodeFiles";
+            var courseSlug = _courseRepository.GetCourseSlugBy(command.CourseId);
+            var pathFile = $"EpisodeFiles/{courseSlug}";
             var fileName = _fileUploader.Uploader(command.File, pathFile);
 
             var courseEpisode = _repository.GetById(command.Id);

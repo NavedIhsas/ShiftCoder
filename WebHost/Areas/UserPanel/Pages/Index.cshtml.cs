@@ -18,7 +18,7 @@ namespace WebHost.Areas.UserPanel.Pages
         private readonly ICourseQuery _course;
 
         public OrderViewModel List;
-        public Account AccountList;
+        public AccountManagement.Domain.Account.Agg.Account AccountList;
         public List<UserCourseViewModel> UserCourse;
         public IndexModel(ICommentQuery comment, IAccountRepository account, ICourseQuery course)
         {

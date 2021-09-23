@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using BlogManagement.Application.Contract.Article;
 using BlogManagement.Application.Contract.ArticleCategory;
 using CommentManagement.Application.Contract.Comment;
@@ -21,18 +23,21 @@ namespace WebHost.Areas.Administration.Pages.Comment
             _comment = comment;
         }
 
+        [NeedPermission(Permission.ListComments)]
         public void OnGet(SearchCommentViewModel searchModel)
         {
             Comment = _comment.Search(searchModel);
            
         }
 
+        [NeedPermission(Permission.CancelComments)]
         public IActionResult OnGetCancel(long id)
         {
             _comment.IsCancel(id);
             return RedirectToPage("Index");
         }
 
+        [NeedPermission(Permission.ApproveComments)]
         public IActionResult OnGetConfirm(long id)
         {
             _comment.IsConfirm(id);

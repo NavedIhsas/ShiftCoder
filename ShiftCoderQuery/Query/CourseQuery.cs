@@ -5,14 +5,11 @@ using _0_Framework.Application;
 using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Infrastructure.EfCore;
-using AutoMapper.Configuration.Annotations;
 using BlogManagement.Domain.ArticleAgg;
 using BlogManagement.Infrastructure.EfCore;
 using CommentManagement.Domain.VisitAgg;
 using CommentManagement.Infrastructure.EfCore;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using ReflectionIT.Mvc.Paging;
 using ShiftCoderQuery.Contract.Comment;
 using ShiftCoderQuery.Contract.Course;
 using Shop.Management.Application.Contract.AfterCourse;
@@ -21,6 +18,7 @@ using Shop.Management.Application.Contract.CoursePrerequisite;
 using Shop.Management.Application.Contract.CourseSuitable;
 using Shop.Management.Application.Contract.UserCourse;
 using ShopManagement.Domain.AfterTheCourseAgg;
+using ShopManagement.Domain.CourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.CoursePrerequisiteAgg;
 using ShopManagement.Domain.CourseSuitableAgg;
@@ -40,7 +38,8 @@ namespace ShiftCoderQuery.Query
         private readonly BlogContext _article;
 
 
-        public CourseQuery(ShopContext context, CommentContext comment, AccountContext account, IAccountRepository accountRepository, IVisitRepository visit, BlogContext article)
+        public CourseQuery(ShopContext context, CommentContext comment, AccountContext account,
+            IAccountRepository accountRepository, IVisitRepository visit, BlogContext article)
         {
             _context = context;
             _comment = comment;
@@ -55,10 +54,8 @@ namespace ShiftCoderQuery.Query
         {
             var query = _context.Courses
                 .Include(x => x.UserCourses)
-                .Include(x => x.CourseEpisodes).
-              Include(x => x.CourseGroup).
-                Include(x => x.OrderDetails).
-                AsNoTracking().AsEnumerable().Select(x => new GetAllCourseQueryModel
+                .Include(x => x.CourseEpisodes).Include(x => x.CourseGroup).Include(x => x.OrderDetails).AsNoTracking()
+                .AsEnumerable().Select(x => new GetAllCourseQueryModel
                 {
                     Name = x.Name,
                     Description = x.Description,
@@ -97,8 +94,13 @@ namespace ShiftCoderQuery.Query
                 item.TeacherName = teacher.Account.FullName;
             }
 
+            //search by name or short description
             if (!string.IsNullOrWhiteSpace(searchQuery.Name))
-                query = query.Where(x => x.Name.ToLower().Trim().Contains(searchQuery.Name.ToLower().Trim())).ToList();
+            {
+                query = query.Where(x => x.Name.ToLower().Trim().
+                    Contains(searchQuery.Name.ToLower().Trim()) || x.ShortDescription.ToLower().Trim().
+                    Contains(searchQuery.Name.ToLower().Trim())).ToList();
+            }
 
             //sort by
             if (!string.IsNullOrWhiteSpace(searchQuery.Filter))
@@ -116,9 +118,6 @@ namespace ShiftCoderQuery.Query
                 };
             }
 
-
-            //or 
-
             //search group
             if (categories.Count != 0)
             {
@@ -127,7 +126,7 @@ namespace ShiftCoderQuery.Query
             }
 
             //paging
-            var take = 12;
+            const int take = 12;
             var skip = (pageId - 1) * take;
 
             var list = new CoursePaginationViewModel
@@ -143,10 +142,8 @@ namespace ShiftCoderQuery.Query
 
         public List<GetAllCourseQueryModel> LatestCourses(string ipAddress)
         {
-            var course = _context.Courses.Include(x => x.CourseEpisodes).
-                Include(x => x.UserCourses).
-                AsNoTracking().AsEnumerable().
-                Select(x => new GetAllCourseQueryModel
+            var course = _context.Courses.Include(x => x.CourseEpisodes).Include(x => x.UserCourses).AsNoTracking()
+                .AsEnumerable().Select(x => new GetAllCourseQueryModel
                 {
                     Name = x.Name,
                     Description = x.Description,
@@ -171,7 +168,8 @@ namespace ShiftCoderQuery.Query
 
             foreach (var item in course)
             {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Course).ToList();
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Course)
+                    .ToList();
                 item.Comments = comments;
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
                 if (teacher == null) continue;
@@ -192,9 +190,7 @@ namespace ShiftCoderQuery.Query
         {
             var popular = _context.Courses.Include(x => x.CourseEpisodes)
                 .Include(x => x.UserCourses)
-                .Include(x => x.OrderDetails).
-                AsNoTracking().AsEnumerable().
-                Select(x => new GetAllCourseQueryModel
+                .Include(x => x.OrderDetails).AsNoTracking().AsEnumerable().Select(x => new GetAllCourseQueryModel
                 {
                     TeacherId = x.TeacherId,
                     Name = x.Name,
@@ -219,7 +215,8 @@ namespace ShiftCoderQuery.Query
 
             foreach (var item in popular)
             {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Course).ToList();
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Course)
+                    .ToList();
                 item.Comments = comments;
 
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
@@ -286,6 +283,7 @@ namespace ShiftCoderQuery.Query
                 _visit.Create(visit);
                 _visit.SaveChanges();
             }
+
             course.VisitCount = _visit.GetNumberOfVisit(ThisType.Course, course.Id);
 
             #endregion
@@ -300,16 +298,17 @@ namespace ShiftCoderQuery.Query
             course.TeacherAvatar = teacher?.Account.Avatar;
 
             //barrase kon k en rahe dorst ast ya na?
-            course.CourseTeacher = _context.Courses.Where(x => x.TeacherId == teacher.Id).Select(selector: x => new { x.Name, x.Slug }).
-                Select(x => new CourseQueryModel() { Name = x.Name, Slug = x.Slug }).ToList();
+            course.CourseTeacher = _context.Courses.Where(x => x.TeacherId == teacher.Id)
+                .Select(selector: x => new { x.Name, x.Slug })
+                .Select(x => new CourseQueryModel() { Name = x.Name, Slug = x.Slug }).ToList();
 
             #endregion
 
             #region Comment
 
             var comment = _comment.Comments
-                .OrderByDescending(x => x.CreationDate).
-                Where(x => x.Type == 1).Where(x => x.IsConfirmed).Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
+                .OrderByDescending(x => x.CreationDate).Where(x => x.Type == 1).Where(x => x.IsConfirmed)
+                .Where(x => x.OwnerRecordId == course.Id && x.ParentId == null)
                 .Select(x => new CommentQueryModel
                 {
                     Name = x.Name,
@@ -326,7 +325,8 @@ namespace ShiftCoderQuery.Query
                 MapChildren(item);
 
             course.Comments = comment;
-            var comments = _comment.Comments.Where(x => x.OwnerRecordId == course.Id && x.Type == ThisType.Course).ToList();
+            var comments = _comment.Comments.Where(x => x.OwnerRecordId == course.Id && x.Type == ThisType.Course)
+                .Where(x=>x.IsConfirmed).ToList();
             course.CommentList = comments;
 
             #endregion
@@ -342,16 +342,8 @@ namespace ShiftCoderQuery.Query
 
         public CourseEpisode GetEpisodeFile(long episodeId)
             => _context.CourseEpisodes.FirstOrDefault(x => x.Id == episodeId);
-
         public List<Account> GetAllUsers() => _account.Accounts.ToList();
-
-
-        public double GetAllEpisodes()
-        {
-            return _context.CourseEpisodes.Sum(x => x.Time.TotalMinutes);
-
-        }
-
+        public double GetAllEpisodes()=> _context.CourseEpisodes.Sum(x => x.Time.TotalMinutes);
         public List<Article> GetAllArticle() => _article.Articles.ToList();
         public List<Teacher> GetAllTeacher() => _account.Teachers.ToList();
 
@@ -360,11 +352,11 @@ namespace ShiftCoderQuery.Query
         {
             var userId = _accountRepository.GetUserIdBy(email);
             var userCourse = _context.UserCourses.Where(x => x.AccountId == userId).Select(x =>
-                  new UserCourseViewModel
-                  {
-                      AccountId = x.AccountId,
-                      CourseId = x.CourseId
-                  }).ToList();
+                new UserCourseViewModel
+                {
+                    AccountId = x.AccountId,
+                    CourseId = x.CourseId
+                }).ToList();
 
             foreach (var item in userCourse)
             {
@@ -375,18 +367,6 @@ namespace ShiftCoderQuery.Query
 
             return userCourse;
         }
-
-        public void SearchHomePage(CourseQuerySearchModel command)
-        {
-            if (!string.IsNullOrWhiteSpace(command.Name))
-            {
-                var courses = _context.Courses.Where(x => x.Name.Contains(command.Name) ||
-                                                          x.ShortDescription.Contains(command.Name)).ToList();
-            }
-
-        }
-
-
         #region Mapping Single Course
 
         private static List<UserCourseViewModel> MapUserCourse(IEnumerable<UserCourse> userCourses)
@@ -438,7 +418,8 @@ namespace ShiftCoderQuery.Query
             }).ToList();
         }
 
-        private static List<CoursePrerequisiteViewModel> MapPrerequisiteCourse(IEnumerable<CoursePrerequisite> coursePrerequisites)
+        private static List<CoursePrerequisiteViewModel> MapPrerequisiteCourse(
+            IEnumerable<CoursePrerequisite> coursePrerequisites)
         {
             return coursePrerequisites.Where(x => !x.IsRemove).Select(x => new CoursePrerequisiteViewModel()
             {

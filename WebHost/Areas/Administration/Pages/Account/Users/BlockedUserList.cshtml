@@ -1,4 +1,5 @@
 ﻿@page
+@using _0_FrameWork.Application
 @model WebHost.Areas.Administration.Pages.Account.Users.BlockedUserListModel
 @{
     ViewData["Title"] = "کابران مسدود شده";
@@ -16,7 +17,7 @@
                 <div class="panel-heading">
                     لیست کاربران مسدود شده
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" Permission="@Permission.ListBlockedUsers">
                     <div class="table-responsive">
                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                             <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">

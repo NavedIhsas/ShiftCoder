@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Application.Contract.Role;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +26,7 @@ namespace WebHost.Areas.Administration.Pages.Account.Users
         public RegisterUserViewModel Command;
         public SelectList SelectList;
        
+        [NeedPermission(Permission.CreateUsers)]
         public void OnGet()
         {
             SelectList = new SelectList(_role.GetAll(), "Id", "Name");

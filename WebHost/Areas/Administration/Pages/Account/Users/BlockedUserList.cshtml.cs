@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Application.Contract.Role;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +23,8 @@ namespace WebHost.Areas.Administration.Pages.Account.Users
         }
 
         public List<AccountViewModel> List;
+
+        [NeedPermission(Permission.BlockUsers)]
         public void OnGet()
         {
             List = _application.ShowBlockedUser();

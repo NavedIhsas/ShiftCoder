@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Infrastructure.EfCore;
@@ -20,24 +22,30 @@ namespace WebHost.Areas.Administration.Pages.Account.Users
 
         public List<TeacherViewModel> List;
         public EditTeacherViewModel Edit;
+
+
+        [NeedPermission(Permission.ListTeacherAndBlogger)]
         public void OnGet()
         {
             List = _teacher.GetAllTeachers();
         }
       
        
+        [NeedPermission(Permission.EditTeacherAndBlogger)]
         public IActionResult OnGetTeacherEdit(long id)
         {
             Edit = _teacher.GetTeacherDetails(id);
             return Partial("./TeacherEdit", Edit);
         }
 
+        [NeedPermission(Permission.EditTeacherAndBlogger)]
         public JsonResult OnPostTeacherEdit(EditTeacherViewModel edit)
         {
             var teacher = _account.EditTeacher(edit);
             return new JsonResult(teacher);
         }
 
+        [NeedPermission(Permission.DeleteTeacherAndBlogger)]
         public IActionResult OnGetDelete(long id)
         {
             var getTeacher = _teacher.GetTeacherBy(id);

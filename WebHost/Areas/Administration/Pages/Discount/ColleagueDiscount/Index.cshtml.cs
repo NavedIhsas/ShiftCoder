@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using ColleagueDiscountManagementApplication.Contract.ColleagueDiscount;
 using ColleagueDiscountManagementApplication.Contract.CustomerDiscount;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +24,16 @@ namespace WebHost.Areas.Administration.Pages.Discount.ColleagueDiscount
         [TempData] public string Message { get; set; }
         public List<ColleagueDiscountViewModel> List;
         public SelectList SelectList;
+      
+        
+        [NeedPermission(Permission.ListColleagueDiscount)]
         public void OnGet()
         {
             List = _application.GetAll();
             SelectList = new SelectList(_course.SelectCourses(), "Id", "Name");
         }
 
+        [NeedPermission(Permission.CreateColleagueDiscount)]
         public IActionResult OnGetCreate()
         {
             var select = new CreateColleagueDiscountViewModel()
@@ -44,6 +50,7 @@ namespace WebHost.Areas.Administration.Pages.Discount.ColleagueDiscount
         }
 
 
+        [NeedPermission(Permission.EditColleagueDiscount)]
         public IActionResult OnGetEdit(long id)
         {
             var getDetails = _application.GetDetails(id);
@@ -56,6 +63,7 @@ namespace WebHost.Areas.Administration.Pages.Discount.ColleagueDiscount
             return new JsonResult(edit);
         }
 
+        [NeedPermission(Permission.DeleteColleagueDiscount)]
         public IActionResult OnGetRemove(long id)
         {
             var getDetails = _application.Remove(id);
@@ -66,6 +74,7 @@ namespace WebHost.Areas.Administration.Pages.Discount.ColleagueDiscount
             return RedirectToPage("./Index");
         }
 
+        [NeedPermission(Permission.RestoreColleagueDiscount)]
         public IActionResult OnGetRestore(long id)
         {
             var getDetails = _application.Restore(id);

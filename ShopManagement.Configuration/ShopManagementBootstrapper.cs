@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using _0_FrameWork.Domain.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Shop.Management.Application.Contract.CourseGroup;
 using ShopManagement.Application;
@@ -20,6 +21,7 @@ using Shop.Management.Application.Contract.CourseEpisode;
 using Shop.Management.Application.Contract.CoursePrerequisite;
 using Shop.Management.Application.Contract.CourseSuitable;
 using Shop.Management.Application.Contract.Order;
+using ShopManagement.Configuration.Permission;
 using ShopManagement.Domain.AfterTheCourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.CoursePrerequisiteAgg;
@@ -66,7 +68,7 @@ namespace ShopManagement.Configuration
 
             service.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
 
-           
+            service.AddTransient<IPermissionExposer, ShopPermissionExposer>();
 
 
             service.AddDbContext<ShopContext>(option =>

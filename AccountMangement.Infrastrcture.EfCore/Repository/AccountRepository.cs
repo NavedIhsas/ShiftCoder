@@ -6,6 +6,7 @@ using _0_FrameWork.Application;
 using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Domain.Account.Agg;
+using AccountManagement.Domain.RoleAgg;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountManagement.Infrastructure.EfCore.Repository
@@ -14,12 +15,13 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
     {
         private readonly AccountContext _context;
         private readonly IAuthHelper _authHelper;
-        private readonly IPasswordHasher _passwordHasher;
-        public AccountRepository(AccountContext dbContext, AccountContext context, IAuthHelper authHelper, IPasswordHasher passwordHasher) : base(dbContext)
+        private readonly IRoleRepository _role;
+
+        public AccountRepository(AccountContext dbContext, AccountContext context, IAuthHelper authHelper, IRoleRepository role) : base(dbContext)
         {
             _context = context;
             _authHelper = authHelper;
-            _passwordHasher = passwordHasher;
+            _role = role;
         }
 
         public EditAccountViewModel GetDetails(long id)
@@ -131,7 +133,9 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
             var user = _context.Accounts.SingleOrDefault(x => x.Email == FixedText.FixEmail(login.Email) && x.Password == login.Password);
             if (user == null||user.IsActive==false) return false;
 
-            var authModel = new AuthHelperViewModel(user.Id, user.RoleId, user.FullName, user.Email);
+            var permission = _role.GetById(user.RoleId).Permissions.Select(x=>x.Code).ToList();
+
+            var authModel = new AuthHelperViewModel(user.Id, user.RoleId, user.FullName, user.Email,permission);
             _authHelper.Signin(authModel);
             return true;
         }
