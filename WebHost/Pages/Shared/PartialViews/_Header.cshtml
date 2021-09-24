@@ -1,16 +1,17 @@
-﻿<nav class="navbar navbar-expand-lg navbar-dark" id="custom-navbar-header">
+﻿@using _0_FrameWork.Application
+<nav class="navbar navbar-expand-lg navbar-dark" id="custom-navbar-header">
     <div class="container-fluid">
         <h1>
-            <a class="navbar-brand text-su" href="#">Learn <span class="text-danger">hub</span></a>
+            <a class="navbar-brand text-su" asp-page="Index">Shift <span class="text-danger">Coder</span></a>
         </h1>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <cache expires-after="@TimeSpan.FromMinutes(5)">
+            @await Component.InvokeAsync("Menu")
+            @*<cache expires-after="@TimeSpan.FromMinutes(5)">
                 @await Component.InvokeAsync("Menu")
-            </cache>
+            </cache>*@
             @if (User.Identity.IsAuthenticated)
             {
                 <li class="nav-item dropdown list-style-li-header" id="setting-list-item-header">
@@ -20,26 +21,26 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
-                        <li>
+                        @*<li>
                             <a class="dropdown-item text-white hover-link-dropdown" href="#">
                                 <img src="~/icons/settings-3.png" alt="settings" class="icons-img-header">
                                 تنظیمات حساب
                             </a>
-                        </li>
-                        <li>
+                        </li>*@
+                        @*<li>
                             <a class="dropdown-item text-white hover-link-dropdown" href="#">
                                 <img src="~/icons/edit.png" alt="send article" class="icons-img-header">
                                 ارسال مطالب
                             </a>
-                        </li>
+                        </li>*@
                         <li>
                             <a asp-page="Index" asp-page-handler="Comments" asp-area="UserPanel" class="dropdown-item text-white hover-link-dropdown">
                                 <img src="~/icons/conversation.png" alt="comments" class="icons-img-header">
-                                نظرات
+                                 نظرات من
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                            <a permission="@Permission.AdministrationNotifications" asp-page="Index" asp-area="Administration" class="dropdown-item text-white hover-link-dropdown">
                                 <img src="~/icons/notification.png" alt="notification" class="icons-img-header">
                                 اعلان ها
                             </a>
@@ -48,7 +49,7 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" href="#">
+                            <a class="dropdown-item text-white hover-link-dropdown no-hover-link-dropdown" asp-page="Index" asp-area="UserPanel">
                                 <img src="~/icons/settings-2.png" alt="settings" class="icons-img-header">
                                 تنظیمات بیشتر
                             </a>
@@ -56,31 +57,38 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown list-style-li-header">
-                    <a asp-page="Index" asp-area="UserPanel" class="nav-link dropdown-toggle link-navbar-header" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a  asp-page="Index" asp-area="Administration" class="nav-link dropdown-toggle link-navbar-header" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="~/images/logo-icon-150px-shiftcoder.png" alt="پروفایل" id="profile-header">
                         <span id="span-profile">پروفایل</span>
                     </a>
                     <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
+                        <li permission="@Permission.AdministrationHomepage">
+                                <a asp-page="Index" asp-area="Administration" class="dropdown-item text-white hover-link-dropdown">
+                                    <img src="~/icons/control-panel.png" alt="control panel" class="icons-img-header">
+                                    پنل ادمین
+                                </a>
+                            </li>
                         <li>
-                            <a asp-page="Index" asp-area="Administration" class="dropdown-item text-white hover-link-dropdown">
+                        <li>
+                            <a asp-page="Index" asp-area="UserPanel" class="dropdown-item text-white hover-link-dropdown">
                                 <img src="~/icons/control-panel.png" alt="control panel" class="icons-img-header">
-                                پنل مدیریت
+                                حساب کاربری
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                            <a class="dropdown-item text-white hover-link-dropdown" asp-page="Index" asp-area="UserPanel">
                                 <img src="~/icons/profile.png" alt="profile" class="icons-img-header">
                                 دوره های شما
                             </a>
                         </li>
                         <li>
                         </li>
-                        <li>
-                            <a class="dropdown-item text-white hover-link-dropdown" href="#">
+                        @*<li>
+                            <a class="dropdown-item text-white hover-link-dropdown" >
                                 <img src="~/icons/invoice.png" alt="invoice" class="icons-img-header">
                                 ارسال تیکت
                             </a>
-                        </li>
+                        </li>*@
                         <li>
                             <hr class="dropdown-divider">
                         </li>

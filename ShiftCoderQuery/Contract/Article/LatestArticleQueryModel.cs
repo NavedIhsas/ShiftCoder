@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BlogManagement.Application.Contract.Article;
 
 namespace ShiftCoderQuery.Contract.Article
@@ -17,5 +18,8 @@ namespace ShiftCoderQuery.Contract.Article
       
         public DateTime CreationDate { get;  set; }
         public long Id { get; internal set; }
+        public List<CommentManagement.Domain.CourseCommentAgg.Comment> Comments { get; internal set; }
+        public long BloggerId { get; internal set; }
+        public string BloggerName { get; internal set; }
     }
 }

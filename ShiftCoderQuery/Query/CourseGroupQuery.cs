@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.CourseGroup;
 using ShopManagement.Infrastructure.EfCore;
@@ -22,7 +19,6 @@ namespace ShiftCoderQuery.Query
          return _context.CourseGroups.Where(x=>!x.IsRemove).Include(x=>x.SubGroup).Select(x => new CourseGroupQueryModel
           {
               Title = x.Title,
-              Description = x.Description,
               KeyWords = x.KeyWords,
               MetaDescription = x.MetaDescription,
               Slug = x.Slug,
@@ -37,7 +33,6 @@ namespace ShiftCoderQuery.Query
           var query = _context.CourseGroups.Select(x => new CourseGroupQueryModel
           {
               Title = x.Title,
-              Description = x.Description,
               KeyWords = x.KeyWords,
               MetaDescription = x.MetaDescription,
               Slug = x.Slug,

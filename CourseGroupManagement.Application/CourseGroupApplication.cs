@@ -22,7 +22,7 @@ namespace ShopManagement.Application
             if (_repository.IsExist(x => x.Title == command.Title))
                 return operation.Failed( ApplicationMessage.DuplicatedRecord);
 
-            var courseGroup = new CourseGroup(command.Title, command.Description, command.KeyWords,
+            var courseGroup = new CourseGroup(command.Title, command.KeyWords,
                 command.MetaDescription, command.Slug.Slugify(),command.SubGroupId);
 
             _repository.Create(courseGroup);
@@ -40,7 +40,7 @@ namespace ShopManagement.Application
             var courseGroup = _repository.GetById(command.Id);
             if (courseGroup == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
-            courseGroup.Edit(command.Title, command.Description, command.KeyWords,
+            courseGroup.Edit(command.Title,command.KeyWords,
                 command.MetaDescription, command.Slug,command.SubGroupId);
 
             _repository.Update(courseGroup);

@@ -1,6 +1,6 @@
-﻿
+﻿@page
 @using _0_FrameWork.Application
-@model AccountManagement.Application.Contract.Account.LoginViewModel
+@model LoginModel
 @{
     ViewData["Title"] = "ورود به سایت";
     Layout = "Shared/_AccountLayout";
@@ -14,7 +14,7 @@
                 @if (ViewData["Success"] != null)
                 {
                     <div class="alert alert-success text-center">
-                        <p>@ViewData["Success"]</p>
+                        <p>ورود شما با موفقیت ثبت شد</p>
                     </div>
 
                     <script>
@@ -29,20 +29,20 @@
 
                 @if (ViewData["Message"] != null)
                {
-                   <p class="text-center text-danger">@ViewData["Message"]</p>
+                   <p class="text-center alert alert-danger">رمز عبور و یا ایمیل شما درست نمیباشد</p>
                }
 
-            <form method="post" id="form" asp-page="Account" asp-page-handler="Login">
+            <form method="post" id="form">
                 <label for="email-input" class="label-input">ایمیل :</label>
-                <input type="email" name="email" placeholder="example@domain.com" autofocus autocomplete="on" required
-                       id="email-input" class="inputs" oninvalid="this.setCustomValidity(@(Validate.Required))"
+                <input type="email" name="email" placeholder="example@domain.com" autofocus autocomplete="on" 
+                       id="email-input" class="inputs" required   oninvalid="this.setCustomValidity('@(Validate.Required)')"
                        oninput="setCustomValidity('')">
 
 
                 <label for="password-input" class="label-input">گذرواژه :</label>
                 <input type="password" name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
                        autofocus autocomplete="on" id="password-input" class="inputs"
-                       required oninvalid="this.setCustomValidity(@(Validate.Required))"
+                       required   oninvalid="this.setCustomValidity('@(Validate.Required)')"
                        oninput="setCustomValidity('')">
 
                 <div id="meesageRepass"></div>

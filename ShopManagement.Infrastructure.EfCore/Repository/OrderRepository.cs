@@ -93,27 +93,27 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 {
                     item.CustomerDiscountRate = customerDiscountRate;
                 }
+            }
 
-                //// add visit
-                //if (_visit.IsExist(x => x.IpAddress == ipAddress)) continue;
-                //else
-                //{
-                //    var visit = new Visit(ThisType.AdminPanelIndex, ipAddress, DateTime.Now, 1, item.Id);
-                //    _visit.Create(visit);
-                //    _notification.GetNotificationBy(email);
-                //    _visit.SaveChanges();
-                //}
+            var userId = _account.GetUserIdBy(email);
 
-                //این را چک کن که شخص در هر قسمتی از پنل ادمین شد باید ثبت بشود نه تنها در صفحه اندیکس
-
-                var userId = _account.GetUserIdBy(email);
+            //get visit by ipAddress and adminType
+            var getVisit = _visit.GetVisitBy(ipAddress);
+            if (getVisit == null)
+            {
                 var visit = new Visit(ThisType.AdminPanelIndex, ipAddress, DateTime.Now, 1, userId);
                 _visit.Create(visit);
                 _notification.GetNotificationBy(email);
                 _visit.SaveChanges();
 
             }
-
+            else if (getVisit.LastVisitDateTime.Hour != DateTime.Now.Hour)
+            {
+                var visit = new Visit(ThisType.AdminPanelIndex, ipAddress, DateTime.Now, 1, userId);
+                _visit.Create(visit);
+                _notification.GetNotificationBy(email);
+                _visit.SaveChanges();
+            }
             return orders;
         }
 

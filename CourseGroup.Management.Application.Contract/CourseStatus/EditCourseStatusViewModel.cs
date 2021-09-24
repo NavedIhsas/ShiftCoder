@@ -2,6 +2,5 @@
 {
     public class EditCourseStatusViewModel : CourseStatusViewModel
     {
-        public long Id { get; set; }
     }
 }

@@ -34,6 +34,7 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
                 Password = x.Password,
                 RoleId = x.RoleId,
                 ActiveCode = x.ActiveCode,
+                AvatarName = x.Avatar,
                 Id = x.Id,
                 //  Teacher = MapTeacher(x.Teachers)
 

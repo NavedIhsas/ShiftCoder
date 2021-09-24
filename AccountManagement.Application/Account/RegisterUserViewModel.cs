@@ -32,6 +32,7 @@ namespace AccountManagement.Application.Contract.Account
         public TeacherViewModel Teacher { get; set; }
         public long Id { get; set; }
         public string ActiveCode { get; set; }
+        public string AvatarName { get; set; }
        
     }
 }

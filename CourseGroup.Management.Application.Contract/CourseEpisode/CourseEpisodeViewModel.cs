@@ -11,7 +11,7 @@ namespace Shop.Management.Application.Contract.CourseEpisode
         public bool IsFree { get; set; }
         public string CourseName { get; set; }
         public long CourseId { get; set; }
-        public double TotalSpan { get; set; }
+        public double TotalMinute { get; set; }
         public IFormFile File { get; set; }
         public long Id { get; set; }
     }

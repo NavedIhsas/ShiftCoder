@@ -3,280 +3,316 @@
 @{
     ViewData["Title"] = Model.Article.Title;
 }
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <main id="main-container" class="container">
-<div class="row">
-<header>
-    <div>
-        <h1 id="head-title">
-            @Model.Article.Title
-        </h1>
-        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-page="Index">خانه</a></li>
-                <li class="breadcrumb-item"><a asp-page="Articles">مقالات</a></li>
-                <li class="breadcrumb-item"><a asp-page="">@Model.Article.CategoryName</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@Model.Article.Title </li>
-            </ol>
-        </nav>
-    </div>
-</header>
-<section id="body-container" class="container">
-<div class="row">
-<aside id="aside-container" class="col-12 col-lg-4">
-    <div class="condition-course">
-        <div class="container-info-aside price-course">
-            <h3 id="text-price">اطلاعات مقاله</h3>
-        </div>
-        <div class="line-aside"></div>
-        <div class="container-info-aside">
-            <div class="container-title-line-aside">
-                <i class="fas fa-user-edit icon-title-aside icon-title-aside-mr"></i>
-                <p class="paragraph-info-aside">نویسنده :</p>
+    <div class="row">
+        <header>
+            <div>
+                <h1 id="head-title">
+                    @Model.Article.Title
+                </h1>
+                <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-page="Index">خانه</a></li>
+                        <li class="breadcrumb-item"><a asp-page="Articles">مقالات</a></li>
+                        <li class="breadcrumb-item"><a asp-page="Articles" asp-route-categories="@Model.Article.CategoryName">@Model.Article.CategoryName</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@Model.Article.Title </li>
+                    </ol>
+                </nav>
             </div>
-            <div class="container-title-line-aside">
-                <h2 class="value-info-aside">@Model.Article.BloggerName</h2>
-            </div>
-        </div>
-        <div class="container-info-aside">
-            <div class="container-title-line-aside">
-                <i class="fas fa-layer-group icon-title-aside"></i>
-                <p class="paragraph-info-aside">دسته بندی :</p>
-            </div>
-            <div class="container-title-line-aside">
-                <h5 class="value-info-aside">@Model.Article.CategoryName</h5>
-            </div>
-        </div>
-        <div class="container-info-aside">
-            <div class="container-title-line-aside">
-                <i class="fas fa-user-alt icon-title-aside"></i>
-                <p class="paragraph-info-aside">تعداد خوانندگان :</p>
-            </div>
-            <div class="container-title-line-aside">
-                <h5 class="value-info-aside">@Model.Article.VisitCount نفر</h5>
-            </div>
-        </div>
-        <div class="container-info-aside">
-            <div class="container-title-line-aside">
-                <i class="fas fa-comment icon-title-aside icon-title-aside-mr"></i>
-                <p class="paragraph-info-aside">تعداد نظر ها :</p>
-            </div>
-            <div class="container-title-line-aside">
-                <h5 class="value-info-aside">@Model.Article.CommentList.Count نظر</h5>
-            </div>
-        </div>
-        <div class="container-info-aside">
-            <div class="container-title-line-aside">
-                <i class="fas fa-calendar-check icon-title-aside"></i>
-                <p class="paragraph-info-aside">تاریخ انتشار :</p>
-            </div>
-            @if (Model.Article.PublishDate != null)
-            {
-                <div class="container-title-line-aside">
-                    <h5 class="value-info-aside">@Model.Article.PublishDate</h5>
-                </div>
-            }
-        </div>
-    </div>
-    <div class="condition-course condition-course-mb">
-        <div id="container-view-comment-number">
-            <div id="view-aside">
-                <i class="far fa-eye icon-view-comment-number"></i>
-                <p class="paragraph-view-comment-number">@Model.Article.VisitCount بازدید</p>
-            </div>
-            <div id="line-y-aside"></div>
-            <div id="comment-aside">
-                <i class="fa fa-comments icon-view-comment-number"></i>
-                <p class="paragraph-view-comment-number">@Model.Article.Comments.Count کامنت</p>
-            </div>
-        </div>
-        <div id="container-share-media">
-            <p id="text-share-media">اشتراک گذاری لینک</p>
-            <div id="container-icons-share-social">
-                <div class="container-icon-share-social">
-                    <a href="#"><i class="fab fa-whatsapp icon-share-social icon-whatsapp-share"></i></a>
-                </div>
-                <div class="container-icon-share-social">
-                    <a href="#"><i class="fab fa-twitter icon-share-social"></i></a>
-                </div>
-                <div class="container-icon-share-social">
-                    <a href="#"><i class="fab fa-telegram-plane icon-share-social icon-telegram-share"></i></a>
-                </div>
-                <div class="container-icon-share-social">
-                    <a href="#"><i class="fab fa-linkedin-in icon-share-social"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="condition-course condition-course-mb">
-        <div id="container-profile-teacher">
-            <div id="container-img-name-job-teacher">
-                <img src="~/FileUploader/@Model.Article.BloggerPicture" alt="@Model.Article.BloggerName" title="@Model.Article.BloggerName" id="img-info-teacher">
-                <div id="container-name-job-teacher">
-                    <h2 id="name-info-teacher">@Model.Article.BloggerName</h2>
-                    <h4 id="job-info-teacher">@Model.Article.BloggerSkills</h4>
-                </div>
-            </div>
-            <div id="container-profile-job">
-                <a href="#" id="profile-info-teacher">پروفایل</a>
-                <a href="#" id="cv-info-teacher">رزومه</a>
-            </div>
-        </div>
-        <div class="container-info-teacher">
-            <div class="container-line-info-line">
-                <div class="line-info-aside"></div>
-                <p class="title-info-teacher">درباره نویسنده</p>
-            </div>
-            <p class="paragraph-info-teacher">@Model.Article.BloggerBio</p>
-        </div>
-        <div class="container-info-teacher">
-            <div class="container-line-info-line margin-container-line-info-line">
-                <div class="line-info-aside"></div>
-                <p class="title-info-teacher">مقاله های نویسنده</p>
-            </div>
-            <ul id="ul-courses-teacher">
-                @foreach (var blogger in Model.Article.BloggerArticlesList)
-                {
-                    <li class="listitem-courses-teacher">
-                        <a asp-page="SingleArticle" asp-route-id="@blogger.Slug" class="anchor-courses-teacher">@blogger.Title</a>
-                    </li>
-                }
-
-            </ul>
-        </div>
-    </div>
-</aside>
-<section id="content-container" class="col-12 col-lg-8">
-    <div id="container-img-title">
-        <img src="~/FileUploader/@Model.Article.Picture" title="@Model.Article.PictureTitle" alt="@Model.Article.PictureAtl" id="img-title-content">
-    </div>
-    <div id="text-content">
-        <h2>@Model.Article.ShortDescription</h2>
-       @Html.Raw(Model.Article.Description)
-    </div>
-</section>
-<aside class="col-12 col-lg-4"></aside>
-          
-<section id="comment-container" class="col-12 col-lg-8">
-    <div id="header-comment">
-        <h5>
-            <i class="fas fa-comments-alt icon-comment"></i>
-            نظرات دوره
-            <small id="number-all-comment">(@Model.Article.CommentList.Count)</small>
-        </h5>
-    </div>
-   
-    <form method="post" id="formPost" >
-        <div id="container-send-comment">
-            <p id="text-comment-write">دیدگاه خود را بنویسید ...</p>
-            <div id="inputs-comment" class="container">
-                @if (User.Identity is {IsAuthenticated: false })
-                {
-                    <div class="row">
-                        <div class="col-12 col-md-6 container-email-name">
-                            <label for="name-input" class="label-email-name-text">نام *</label>
-                            <input type="text" id="name-input" name="name" class="col-12 input-name-email"
-                                   required oninvalid="this.setCustomValidity('وارد کردن نام الزامی میباشد!')"
-                                   oninput="setCustomValidity('')">
+        </header>
+        <section id="body-container" class="container">
+            <div class="row">
+                <aside id="aside-container" class="col-12 col-lg-4">
+                    <div class="condition-course">
+                        <div class="container-info-aside price-course">
+                            <h3 id="text-price">اطلاعات مقاله</h3>
                         </div>
-                        <div class="col-12 col-md-6 container-email-name">
-                            <label for="email-input" class="label-email-name-text">ایمیل *</label>
-                            <input type="email" id="email-input" name="email" class="col-12 input-name-email"
-                                   required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
-                                   oninput="setCustomValidity('')">
-                        </div>
-                        <div class="col-12 container-email-name">
-                            <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
-                            <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email" required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
-                                      oninput="setCustomValidity('')"></textarea>
-                        </div>
-                        <input type="hidden" name="ownerRecordId" value="@Model.Article.Id" />
-                        <input type="hidden" name="articleSlug" value="@Model.Article.Slug" />
-                        <input type="hidden" name="parentId" id="CommentParentId" value="" />
-                        <input type="submit" id="submit-comment" value="ارسال">
-                    </div>
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col-12 container-email-name">
-                            <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
-                            <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"></textarea>
-                        </div>
-                        <input type="hidden" name="ownerRecordId" value="@Model.Article.Id" />
-                        <input type="hidden" name="articleSlug" value="@Model.Article.Slug" />
-                        <input type="hidden" name="parentId" id="CommentParentId" value="" />
-                        <input type="submit" id="submit-comment" value="ارسال">
-                    </div>
-                }
-            </div>
-            
-            @foreach (var comment in Model.Article.Comments)
-            {
-                <div  class="container-answer-question">
-
-                    <div id="comment-@comment.Id" class="box-comment-question" >
-                        <div class="container-photo-comment-answer-btn">
-                            <img src="~/images/profile-8.jpg" alt="profile user" class="img-profile-user">
-                            <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick= '$("#CommentParentId").val(@comment.Id)' class="btn-answer text-center">
-                                پاسخ
-                                <i class="fas fa-reply icon-answer"></i>
-                            </a>
-                        </div>
-                        <div class="container-name-text-comment">
-                            <div class="container-name-date">
-                                <h6 class="name-commanet-question">@comment.Name</h6>
-                                <div class="line-name-date"></div>
-                                <p class="date-question"> 23:59 - @comment.CreationDate</p>
+                        <div class="line-aside"></div>
+                        <div class="container-info-aside">
+                            <div class="container-title-line-aside">
+                                <i class="fas fa-user-edit icon-title-aside icon-title-aside-mr"></i>
+                                <p class="paragraph-info-aside">نویسنده :</p>
                             </div>
-                                   
-                            <div>
-                                <p class="text-question">
-                                    @comment.Message
-                                </p>
+                            <div class="container-title-line-aside">
+                                <h2 class="value-info-aside">@Model.Article.BloggerName</h2>
                             </div>
                         </div>
-                    </div>
-                    @if (comment.SubComment.Count != 0)
-                    {
-                        @foreach (var sub in comment.SubComment)
-                        {
-                            <div id="comment-@sub.Id" class="box-comment-answer" >
-                                <div class="container-photo-comment-answer-btn">
-                                    <img src="~/images/profile-2.jpg" alt="profile user" class="img-profile-user">
-                                    <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick= '$("#CommentParentId").val(@sub.Id)' class="btn-answer text-center">
-                                        پاسخ
-                                        <i class="fas fa-reply icon-answer"></i>
-                                    </a>
+                        <div class="container-info-aside">
+                            <div class="container-title-line-aside">
+                                <i class="fas fa-layer-group icon-title-aside"></i>
+                                <p class="paragraph-info-aside">دسته بندی :</p>
+                            </div>
+                            <div class="container-title-line-aside">
+                                <h5 class="value-info-aside">@Model.Article.CategoryName</h5>
+                            </div>
+                        </div>
+                        <div class="container-info-aside">
+                            <div class="container-title-line-aside">
+                                <i class="fas fa-user-alt icon-title-aside"></i>
+                                <p class="paragraph-info-aside">تعداد خوانندگان :</p>
+                            </div>
+                            <div class="container-title-line-aside">
+                                <h5 class="value-info-aside">@Model.Article.VisitCount نفر</h5>
+                            </div>
+                        </div>
+                        <div class="container-info-aside">
+                            <div class="container-title-line-aside">
+                                <i class="fas fa-comment icon-title-aside icon-title-aside-mr"></i>
+                                <p class="paragraph-info-aside">تعداد نظر ها :</p>
+                            </div>
+                            <div class="container-title-line-aside">
+                                <h5 class="value-info-aside">@Model.Article.CommentList.Count نظر</h5>
+                            </div>
+                        </div>
+                        <div class="container-info-aside">
+                            <div class="container-title-line-aside">
+                                <i class="fas fa-calendar-check icon-title-aside"></i>
+                                <p class="paragraph-info-aside">تاریخ انتشار :</p>
+                            </div>
+                            @if (Model.Article.PublishDate != null)
+                            {
+                                <div class="container-title-line-aside">
+                                    <h5 class="value-info-aside">@Model.Article.PublishDate</h5>
                                 </div>
-                                <div class="container-name-text-comment">
-                                    <div  class="container-name-date">
-                                        <h6 class="name-commanet-question">@sub.Name</h6>
-                                        <div class="line-name-date"></div>
-                                        <p class="date-question"> 23:59 -@sub.CreationDate</p>
-                                    </div>
-                                    <p class="small text-warning">در پاسخ به : 
-                                        <a class="text-primary" @*href="#12-@sub.ParentId"*@>@sub.ParentName</a></p>
-                                    <div>
-                                        <p class="text-question">
-                                            @sub.Message
-                                        </p>
-                                    </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="condition-course condition-course-mb">
+                        <div id="container-view-comment-number">
+                            <div id="view-aside">
+                                <i class="far fa-eye icon-view-comment-number"></i>
+                                <p class="paragraph-view-comment-number">@Model.Article.VisitCount بازدید</p>
+                            </div>
+                            <div id="line-y-aside"></div>
+                            <div id="comment-aside">
+                                <i class="fa fa-comments icon-view-comment-number"></i>
+                                <p class="paragraph-view-comment-number">@Model.Article.CommentList.Count کامنت</p>
+                            </div>
+                        </div>
+                        <div id="container-share-media">
+                            <p id="text-share-media">اشتراک گذاری لینک</p>
+                            <div id="container-icons-share-social">
+                                <div class="container-icon-share-social">
+                                    <a href="#"><i class="fab fa-whatsapp icon-share-social icon-whatsapp-share"></i></a>
+                                </div>
+                                <div class="container-icon-share-social">
+                                    <a href="#"><i class="fab fa-twitter icon-share-social"></i></a>
+                                </div>
+                                <div class="container-icon-share-social">
+                                    <a href="#"><i class="fab fa-telegram-plane icon-share-social icon-telegram-share"></i></a>
+                                </div>
+                                <div class="container-icon-share-social">
+                                    <a href="#"><i class="fab fa-linkedin-in icon-share-social"></i></a>
                                 </div>
                             </div>
-                            <partial name="Shared/PartialViews/_Subcomment" model="sub.SubComment"/>
-                        }
+                        </div>
+                    </div>
+                    <div class="condition-course condition-course-mb">
+                        <div id="container-profile-teacher">
+                            <div id="container-img-name-job-teacher">
+                                <img src="~/FileUploader/@Model.Article.BloggerPicture" alt="@Model.Article.BloggerName" title="@Model.Article.BloggerName" id="img-info-teacher">
+                                <div id="container-name-job-teacher">
+                                    <h2 id="name-info-teacher">@Model.Article.BloggerName</h2>
+                                    <h4 id="job-info-teacher">@Model.Article.BloggerSkills</h4>
+                                </div>
+                            </div>
+                            <div id="container-profile-job">
+                                <a href="#" id="profile-info-teacher">پروفایل</a>
+                                <a href="#" id="cv-info-teacher">رزومه</a>
+                            </div>
+                        </div>
+                        <div class="container-info-teacher">
+                            <div class="container-line-info-line">
+                                <div class="line-info-aside"></div>
+                                <p class="title-info-teacher">درباره نویسنده</p>
+                            </div>
+                            <p class="paragraph-info-teacher">@Model.Article.BloggerBio</p>
+                        </div>
+                        <div class="container-info-teacher">
+                            <div class="container-line-info-line margin-container-line-info-line">
+                                <div class="line-info-aside"></div>
+                                <p class="title-info-teacher">مقاله های نویسنده</p>
+                            </div>
+                            <ul id="ul-courses-teacher">
+                                @foreach (var blogger in Model.Article.BloggerArticlesList)
+                                {
+                                    <li class="listitem-courses-teacher">
+                                        <a asp-page="SingleArticle" asp-route-id="@blogger.Slug" class="anchor-courses-teacher">@blogger.Title</a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+                <section id="content-container" class="col-12 col-lg-8">
+                    <div id="container-img-title">
+                        <img src="~/FileUploader/@Model.Article.Picture" title="@Model.Article.PictureTitle" alt="@Model.Article.PictureAtl" id="img-title-content">
+                    </div>
+                    <div id="text-content">
+                        <h2>@Model.Article.ShortDescription</h2>
+                        @Html.Raw(Model.Article.Description)
+                    </div>
+                </section>
+                <aside class="col-12 col-lg-4"></aside>
+
+                <section id="comment-container" class="col-12 col-lg-8">
+                    <div id="header-comment">
+                        <h5>
+                            <i class="fas fa-comments-alt icon-comment"></i>
+                            نظرات دوره
+                            <small id="number-all-comment">(@Model.Article.CommentList.Count)</small>
+                        </h5>
+                    </div>
+                    @{
+                        var type = ViewData["Type"];
+
                     }
 
-                    <div class="line-end-comment-box"></div>
-                </div>
-            }
 
-            <button disabled id="more-comment-btn">شماهده نظرات بیشتر ...</button>
-        </div>
-    </form>
-</section>
-         
-</div>
-</section>
-</div>
+                    @if (type is "send-comment")
+                    {
+                        <script>
+                            swal("موفق", "نظر شما با موفقیت ثبت شد", "success");
+                        </script>
+                    }
+
+
+                    <form method="post" id="formPost">
+                        <div id="container-send-comment">
+                            <p id="text-comment-write">دیدگاه خود را بنویسید ...</p>
+                            <div id="inputs-comment" class="container">
+                                @if (User.Identity is { IsAuthenticated: false })
+                                {
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 container-email-name">
+                                            <label for="name-input" class="label-email-name-text">نام *</label>
+                                            <input type="text" id="name-input" name="name" class="col-12 input-name-email"
+                                                   required oninvalid="this.setCustomValidity('وارد کردن نام الزامی میباشد!')"
+                                                   oninput="setCustomValidity('')">
+                                        </div>
+                                        <div class="col-12 col-md-6 container-email-name">
+                                            <label for="email-input" class="label-email-name-text">ایمیل *</label>
+                                            <input type="email" id="email-input" name="email" class="col-12 input-name-email"
+                                                   required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
+                                                   oninput="setCustomValidity('')">
+                                        </div>
+                                        <div class="col-12 container-email-name">
+                                            <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
+                                            <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email" required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                                                      oninput="setCustomValidity('')"></textarea>
+                                        </div>
+                                        <input type="hidden" name="ownerRecordId" value="@Model.Article.Id" />
+                                        <input type="hidden" name="articleSlug" value="@Model.Article.Slug" />
+                                        <input type="hidden" name="parentId" id="CommentParentId" value="" />
+                                        <input type="submit" id="submit-comment" value="ارسال">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-12 container-email-name">
+                                            <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
+                                            <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"></textarea>
+                                        </div>
+                                        <input type="hidden" name="ownerRecordId" value="@Model.Article.Id" />
+                                        <input type="hidden" name="articleSlug" value="@Model.Article.Slug" />
+                                        <input type="hidden" name="parentId" id="CommentParentId" value="" />
+                                        <input type="submit" id="submit-comment" value="ارسال">
+                                    </div>
+                                }
+                            </div>
+
+                            @foreach (var comment in Model.Article.Comments)
+                            {
+                                <div class="container-answer-question">
+
+                                    <div id="comment-@comment.Id" class="box-comment-question">
+                                        <div class="container-photo-comment-answer-btn">
+                                            @if (!string.IsNullOrEmpty(comment.Picture))
+                                            {
+                                                <img src="~/FileUploader/@comment.Picture" alt="profile user" class="img-profile-user">
+                                            }
+
+                                            else
+                                            {
+                                                <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
+                                            }
+                                            <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#CommentParentId").val(@comment.Id)' class="btn-answer text-center">
+                                                پاسخ
+                                                <i class="fas fa-reply icon-answer"></i>
+                                            </a>
+                                        </div>
+                                        <div class="container-name-text-comment">
+                                            <div class="container-name-date">
+                                                <h6 class="name-commanet-question">@comment.Name</h6>
+                                                <div class="line-name-date"></div>
+                                                <p class="date-question"> 23:59 - @comment.CreationDate</p>
+                                            </div>
+
+                                            <div>
+                                                <p class="text-question">
+                                                    @comment.Message
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (comment.SubComment.Count != 0)
+                                    {
+                                        @foreach (var sub in comment.SubComment)
+                                        {
+                                            <div id="comment-@sub.Id" class="box-comment-answer">
+                                                <div class="container-photo-comment-answer-btn">
+                                                    @if (!string.IsNullOrEmpty(comment.Picture))
+                                                    {
+                                                        <img src="~/FileUploader/@comment.Picture" alt="profile user" class="img-profile-user">
+                                                    }
+
+                                                    else
+                                                    {
+                                                        <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
+                                                    }
+
+                                                    <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#CommentParentId").val(@sub.Id)' class="btn-answer text-center">
+                                                        پاسخ
+                                                        <i class="fas fa-reply icon-answer"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="container-name-text-comment">
+                                                    <div class="container-name-date">
+                                                        <h6 class="name-commanet-question">@sub.Name</h6>
+                                                        <div class="line-name-date"></div>
+                                                        <p class="date-question"> 23:59 -@sub.CreationDate</p>
+                                                    </div>
+                                                    <p class="small text-warning">
+                                                        در پاسخ به :
+                                                        <a class="text-primary" @*href="#12-@sub.ParentId"*@>@sub.ParentName</a>
+                                                    </p>
+                                                    <div>
+                                                        <p class="text-question">
+                                                            @sub.Message
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <partial name="Shared/PartialViews/_Subcomment" model="sub.SubComment" />
+                                        }
+                                    }
+
+                                    <div class="line-end-comment-box"></div>
+                                </div>
+                            }
+
+                            <button disabled id="more-comment-btn">شماهده نظرات بیشتر ...</button>
+                        </div>
+                    </form>
+                </section>
+
+            </div>
+        </section>
+    </div>
 </main>
+

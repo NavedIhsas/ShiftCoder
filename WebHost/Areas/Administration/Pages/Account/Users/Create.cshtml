@@ -11,12 +11,12 @@
         <partial name="Shared/_Create_View_Header" />
 
         <form method="post" enctype="multipart/form-data">
-            <div class="modal-body">
+            <div class="modal-body col col-md-8">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Command.FullName" class="control-label">نام کامل<span class="text-danger">*</span></label>
-                            <textarea type="text" asp-for="Command.FullName" class="form-control" row="3"></textarea>
+                            <input type="text" asp-for="Command.FullName" class="form-control">
                             <span class="text-danger" asp-validation-for="Command.FullName"></span>
                         </div>
                     </div>
@@ -56,31 +56,43 @@
                             <span class="text-danger" asp-validation-for="Command.RoleId"></span>
                         </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="Command.Avatar" class="control-label">آواتار</label>
-                            <input type="file" asp-for="Command.Avatar" class="form-control" accept="image">
-                            <span class="text-danger" asp-validation-for="Command.Avatar"></span>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
+
+            <div class="col-md-4">
+                <p></p>
+                <img id="imgCourse" class="thumbnail" src="/images/DefaultImg/user-avatar.png" />
+                <div class="form-group">
+                    <label asp-for="Command.Avatar" class="control-label">آواتار</label>
+                    <input id="imgCourseUp" type="file" asp-for="Command.Avatar" class="form-control" accept="image">
+                    <span class="text-danger" asp-validation-for="Command.Avatar"></span>
+                </div>
             </div>
+            <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
         </form>
     </div>
 
 
 </div>
+@section Scripts
+{
+    <script>
+        function readURL(input) {
 
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-<script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
-<script>
+                reader.onload = function (e) {
+                    $('#imgCourse').attr('src', e.target.result);
+                }
 
-    CKEDITOR.replace('Command_FullName', {
-        customConfig: '~/js/Config.js'
-    });
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
-</script>
+        $("#imgCourseUp").change(function () {
+            readURL(this);
+        });
+
+    </script>
+}

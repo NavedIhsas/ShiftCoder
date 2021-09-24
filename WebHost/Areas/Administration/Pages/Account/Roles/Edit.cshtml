@@ -7,9 +7,18 @@
 
 <div id="page-wrapper">
     <div class="container">
+       
         <partial name="Shared/_Create_View_Header" />
-        <p>یاد داشت: در صورتیکه کاربر نقش یک عملیات را نداشته  باشد نمیتواند منو یا دکمه اون عملیات
-            را ببیند.</p>
+      
+        <br/>
+        <br/>
+        <p>
+            یاد داشت: در صورتیکه  نقش سطح دسترسی عملیاتی را نداشته  باشد نمیتواند منو یا دکمه اون عملیات
+            را ببیند.
+       
+        </p>
+        <br/> 
+        <h4 class="text-info"> بعد از ویرایش سطح دسترسی لازم است که کاربر مورد نظر از سیستم خارج شده و دوباره لاگین کنید تا تغییرات مورد نظر اعمال شود</h4>
         <form method="post" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
@@ -20,9 +29,8 @@
                             <span class="text-danger" asp-validation-for="Role.Name"></span>
                         </div>
                     </div>
-
+                    <label class="control-label col-md-3">انتخاب دسترسی ها</label>
                     <div class="col-md-6">
-                        <label class="control-label col-md-3">انتخاب دسترسی ها</label>
                         <div class="col-md-12">
                             <select multiple="multiple" name="Permissions" value="@Model.Role.Permissions" asp-items="@Model.Permissions" class="multi-select" id="my_multi_select2">
                             </select>
@@ -38,6 +46,11 @@
         </form>
     </div>
 </div>
+
+@section Css
+{
+    <link href="~/Test/assets/jquery-multi-select/multi-select.css" rel="stylesheet" type="text/css" />
+}
 
 @section Scripts
 {

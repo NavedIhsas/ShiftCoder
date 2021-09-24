@@ -42,14 +42,8 @@
                             <hr />
                             
                             <div class="well">
-                                <h4>راهنمایی:</h4>
-                                <p>
-                                    به دلیل عدم وقت کافی جهت طراحی UI، نشد که یک دیزاین مناسبی را برای این صفحه آماده کنیم،
-                                    در قسمت زیر گروه ها لازمه که بیدانید: تمامی زیر گروه ها به ترتیب زیر گروه اصلی اش قرار گرفته ( به شکل درختی)، مثلا 
-                                    <span class="text-info"> برنامه نویسی موبایل</span> زیر گروه <span class="text-info">زامارین</span>
-                                    میباشد ،و   <span class="text-info">برنامه نویسی آیفون
-                                    </span>زیر گروه <span class="text-info">برنامه نویسی موبایل</span>، همینطور به ترتیب الی آخر...
-                                </p>
+                              
+                              
                             </div>
                             <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
                                 <thead>
@@ -77,10 +71,13 @@
                                                @if (course.Sub != null)
                                                {
                                                    <ul class="item">
-
+                                                       
+                                                       <li>
+                                                           <partial name="CourseGroup/_SubGroup" model="course.Sub"/>
+                                                       </li>
                                                        @foreach (var item in course.Sub)
                                                        {
-                                                           <partial name="CourseGroup/_SubGroup" model="course.Sub" />
+                                                          
                                                            <partial name="CourseGroup/_SubGroup" model="item.Sub" />
 
 

@@ -25,7 +25,7 @@ namespace WebHost
         public void OnPageHandlerExecuting(PageHandlerExecutingContext context)
         {
             var handlerPermission =
-              (NeedPermissionAttribute) context.HandlerMethod.MethodInfo.GetCustomAttribute(
+              (NeedPermissionAttribute)context.HandlerMethod.MethodInfo.GetCustomAttribute(
                     typeof(NeedPermissionAttribute));
 
             if (handlerPermission == null) return;
@@ -33,7 +33,7 @@ namespace WebHost
             var currentPermission = _authHelper.GetPermissions();
 
             if (currentPermission.All(x => handlerPermission != null && x != handlerPermission.Permission))
-                context.HttpContext.Response.Redirect("/Account?handler=Login");
+                context.HttpContext.Response.Redirect("/Index?handler=NotFountPage");
 
         }
 

@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shop.Management.Application.Contract.Order;
-using ShopManagement.Domain.OrderAgg;
 
 namespace WebHost.Pages
 {
@@ -21,7 +20,7 @@ namespace WebHost.Pages
         {
             var order = _order.Create(User.Identity.Name, id);
             return Redirect("/UserPanel/Order/Orders/" + order);
-           
+
         }
     }
 }

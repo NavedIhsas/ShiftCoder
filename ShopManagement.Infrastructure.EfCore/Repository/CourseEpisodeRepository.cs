@@ -26,8 +26,6 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 Time = x.Time,
                 CourseId = x.CourseId,
                 FileName = x.FileName,
-                KeyWords = x.KeyWords,
-                MetaDescription = x.MetaDescription
             }).FirstOrDefault(x => x.Id == id);
         }
 

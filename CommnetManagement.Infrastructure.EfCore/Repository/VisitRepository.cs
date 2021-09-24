@@ -15,12 +15,15 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
            _context = context;
        }
 
-        public Visit GetUsedBy(string ipAddress, int type,long recordOwnerId)
+        public Visit GetVisitBy(string ipAddress, int type,long recordOwnerId)
          =>_context.Visits.FirstOrDefault(x => x.IpAddress == ipAddress && x.Type == type && x.RecordOwnerId==recordOwnerId);
        
 
         public int? GetNumberOfVisit(int type, long ownerId)
             => _context.Visits.FirstOrDefault(x => x.Type == type && x.RecordOwnerId == ownerId)?.NumberOfVisit;
+
+        public Visit GetVisitBy(string ipAddress)
+         => _context.Visits.FirstOrDefault(x => x.IpAddress == ipAddress && x.Type==ThisType.AdminPanelIndex);
 
         public List<Visit> GetAllVisit() => _context.Visits.ToList();
 

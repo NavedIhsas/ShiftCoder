@@ -20,7 +20,7 @@
             {
                 var comments = _comment.GetCommentBy(item.RecordOwnerId).Take(3);
                 <li>
-                    <a asp-page="Comment/Index">
+                    <a asp-page="/Comment/Index" asp-area="Administration">
                         <div>
 
                             <i class="fa fa-comment fa-fw"></i> @item.Text.Replace(item.Text, "کمنت جدید ")
@@ -39,7 +39,7 @@
             {
 
                 <li>
-                    <a asp-page="Comment/Index">
+                    <a asp-page="/Notifications/Index" asp-area="Administration">
                         <div>
                             <i class="fa fa-shopping-cart fa-fw"></i> @item.Text.Replace(item.Text, "سفارشی ثبت شد ")
 
@@ -53,7 +53,7 @@
             @if (item.Type == Type.Account)
             {
                 <li>
-                    <a asp-page="Comment/Index" class="list-group-item">
+                    <a asp-page="/Account/Users/Index" asp-area="Administration" class="list-group-item">
                         <div>
                             <i class="fa fa-user fa-fw"></i> @item.Text.Replace(item.Text, "عضو جدید ")
 
@@ -65,12 +65,7 @@
 
             }
         }
-        <li>
-            <a class="text-center" asp-page="/Notification/Index">
-                <strong>همه اعلان ها</strong>
-                <i class="fa fa-angle-left"></i>
-            </a>
-        </li>
+       
         @if (!Model.Any())
         {
             <li>
@@ -82,7 +77,13 @@
             </li>
             <li class="divider"></li>
         }
-
+        
+        <li>
+            <a class="text-center" asp-page="/Notifications/Index" asp-area="Administration">
+                <strong>همه اعلان ها</strong>
+                <i class="fa fa-angle-left"></i>
+            </a>
+        </li>
     </ul>
     <!-- /.dropdown-alerts -->
 </li>

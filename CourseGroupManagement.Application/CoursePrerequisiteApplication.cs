@@ -16,9 +16,7 @@ namespace ShopManagement.Application
         public OperationResult Create(CreateCoursePrerequisiteViewModel command)
         {
             var operation = new OperationResult();
-            if (_repository.IsExist(x => x.Title == command.Title.Trim()))
-                return operation.Failed(ApplicationMessage.DuplicatedRecord);
-
+           
             var create = new CoursePrerequisite(command.Title,command.CourseId);
             _repository.Create(create);
             _repository.SaveChanges();
@@ -28,9 +26,7 @@ namespace ShopManagement.Application
         public OperationResult Edit(EditCoursePrerequisiteViewModel command)
         {
             var operation = new OperationResult();
-            if (_repository.IsExist(x => x.Title == command.Title.Trim() && x.Id != command.Id))
-                return operation.Failed(ApplicationMessage.DuplicatedRecord);
-
+           
             var update = _repository.GetById(command.Id);
             if (update == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 

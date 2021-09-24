@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using CommentManagement.Domain.Notification.Agg;
+using _0_FrameWork.Application;
+using _0_FrameWork.Domain.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ using ShopManagement.Domain.OrderAgg;
 namespace WebHost.Areas.Administration.Pages
 {
     [Authorize]
+    [NeedPermission(Permission.AdministrationHomepage)]
     public class IndexModel : PageModel
     {
         private readonly IOrderRepository _order;
@@ -24,6 +26,7 @@ namespace WebHost.Areas.Administration.Pages
         public List<OrderViewModel> List;
         public List<CommentManagement.Domain.CourseCommentAgg.Comment> CommentList;
 
+        [NeedPermission(Permission.AdministrationHomepage)]
         public IActionResult OnGet()
         {
             var email = User.Identity.Name;

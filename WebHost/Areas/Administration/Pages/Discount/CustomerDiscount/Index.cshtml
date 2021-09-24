@@ -1,5 +1,6 @@
 ﻿@page
 @using _0_Framework.Application
+@using _0_FrameWork.Application
 @model WebHost.Areas.Administration.Pages.Discount.CustomerDiscount.IndexModel
 @{
     ViewData["Title"] = "سیستم تخفیفات مشتری";
@@ -12,7 +13,7 @@
             <h1 class="page-header">سیستم تخفیفات مشتری</h1>
         </div>
         <div dir="ltr" class="col-lg-6 mr-3">
-            <h1 class="page-header">
+            <h1 permission="@Permission.CreateCostumerDiscount" class="page-header">
                 <a class="btn btn-success btn-lg" href="#showmodal=@Url.Page("./Index", "Create")">افزودن تخفیف جدید</a>
             </h1>
         </div>
@@ -90,15 +91,15 @@
                                             </td>
 
                                             <td class="center ">
-                                                <a class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = item.Id})">ویرایش</a>
+                                                <a permission="@Permission.EditCostumerDiscount" class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = item.Id})">ویرایش</a>
 
                                                 @if (!item.IsRemove)
                                                 {
-                                                    <a asp-page="./Index" asp-page-handler="Remove" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-remove-format">حذف</i></a>
+                                                    <a permission="@Permission.DeleteCostumerDiscount" asp-page="./Index" asp-page-handler="Remove" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-remove-format">حذف</i></a>
                                                 }
                                                 else
                                                 {
-                                                    <a asp-page="./Index" asp-page-handler="Restore" asp-route-id="@item.Id" class="btn btn-success"><i class="fa fa-check">لغو حذف</i></a>
+                                                    <a permission="@Permission.RestoreCostumerDiscount" asp-page="./Index" asp-page-handler="Restore" asp-route-id="@item.Id" class="btn btn-success"><i class="fa fa-check">لغو حذف</i></a>
 
                                                 }
                                             </td>

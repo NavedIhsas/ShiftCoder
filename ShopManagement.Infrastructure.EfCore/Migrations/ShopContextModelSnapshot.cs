@@ -157,16 +157,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                     b.Property<bool>("IsFree")
                         .HasColumnType("bit");
 
-                    b.Property<string>("KeyWords")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("MetaDescription")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
                     b.Property<TimeSpan>("Time")
                         .HasColumnType("time");
 
@@ -191,9 +181,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsRemove")
                         .HasColumnType("bit");

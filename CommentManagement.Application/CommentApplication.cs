@@ -27,7 +27,7 @@ namespace CommentManagement.Application
             var operation = new OperationResult();
           
             var comment = new Comment(command.Name, command.Email, command.Message, command.OwnerRecordId
-                , command.Type, command.ParentId);
+                , command.Type, command.ParentId,"");
             
             _repository.Create(comment);
             _repository.SaveChanges();

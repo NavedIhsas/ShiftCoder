@@ -19,6 +19,9 @@ namespace ShiftCoderQuery.Contract.Article
         public string MetaDescription { get; set; }
         public DateTime CreationDate { get; internal set; }
         public List<Teacher> Teachers { get; set; }
+        public long Id { get; internal set; }
+        public List<CommentManagement.Domain.CourseCommentAgg.Comment> Comments { get; internal set; }
+        public int? VisitCount { get; internal set; }
     }
 
     public class PaginationArticlesViewModel

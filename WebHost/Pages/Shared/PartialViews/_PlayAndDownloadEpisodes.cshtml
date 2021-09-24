@@ -17,7 +17,10 @@
         <div class="accordion-body">
             @if (!userInCourse)
             {
-                <p class=" text-success mt-2 text-center"><b>بعد از ثبت نام در دوره و تایید فاکتور،  لینک های دانلود برای شما فعال خواهد شد</b></p>
+                @if (Model.Course.Price != 0)
+                {
+                    <p class=" text-success mt-2 text-center"><b>بعد از ثبت نام در دوره و تایید فاکتور،  لینک های دانلود برای شما فعال خواهد شد</b></p>
+                }
                 if (!User.Identity.IsAuthenticated)
                 {
                     <p class=" text-info mt-2 text-center"><b>برای تماشای آنلاین فایل های رایگان لطفا وارد حساب خود شوید</b></p>

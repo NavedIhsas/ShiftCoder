@@ -166,9 +166,11 @@ namespace ShiftCoderQuery.Query
 
                 }).OrderByDescending(x => x.CreationDate).Take(8).ToList();
 
+
+            //comment and teacher
             foreach (var item in course)
             {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Course)
+                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.IsConfirmed && x.Type == ThisType.Course)
                     .ToList();
                 item.Comments = comments;
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
@@ -176,13 +178,21 @@ namespace ShiftCoderQuery.Query
                 item.TeacherName = teacher.Account.FullName;
             }
 
-            //var checkVisit = _comment.Visits.Any(x => x.IpAddress == ipAddress);
-            //if (checkVisit) return course;
+            //visit
+            var getVisit = _comment.Visits.FirstOrDefault(x => x.IpAddress == ipAddress && x.Type==ThisType.Index);
+            if (getVisit == null)
+            {
+                var visit = new Visit(ThisType.Index, ipAddress, DateTime.Now, 1, ThisType.Index);
+                _comment.Visits.Add(visit);
+                _comment.SaveChanges();
 
-            var visit = new Visit(ThisType.Index, ipAddress, DateTime.Now, 1, ThisType.Index);
-            _comment.Visits.Add(visit);
-            _comment.SaveChanges();
-
+            }else if (getVisit.LastVisitDateTime.Hour != DateTime.Now.Hour)
+            {
+                var visit = new Visit(ThisType.Index, ipAddress, DateTime.Now, 1, ThisType.Index);
+                _comment.Visits.Add(visit);
+                _comment.SaveChanges();
+            }
+            
             return course;
         }
 
@@ -269,9 +279,9 @@ namespace ShiftCoderQuery.Query
 
             #region Visit
 
-            var visit = _visit.GetUsedBy(ipAddress, ThisType.Course, course.Id);
+            var visit = _visit.GetVisitBy(ipAddress, ThisType.Course, course.Id);
 
-            if (visit != null && visit.LastVisitDateTime.Date != DateTime.Now)
+            if (visit != null && visit.LastVisitDateTime.Hour != DateTime.Now.Hour)
             {
                 visit.ReduceVisit(visit.NumberOfVisit);
                 visit.SetDateTime();
@@ -326,7 +336,7 @@ namespace ShiftCoderQuery.Query
 
             course.Comments = comment;
             var comments = _comment.Comments.Where(x => x.OwnerRecordId == course.Id && x.Type == ThisType.Course)
-                .Where(x=>x.IsConfirmed).ToList();
+                .Where(x => x.IsConfirmed).ToList();
             course.CommentList = comments;
 
             #endregion
@@ -336,16 +346,20 @@ namespace ShiftCoderQuery.Query
 
         public bool UserInCourse(string email, long courseId)
         {
-            var userId = _accountRepository.GetUserIdBy(email);
+            var userId = _account.Accounts.SingleOrDefault(x => x.Email == email)?.Id;
             return _context.UserCourses.Any(x => x.AccountId == userId && x.CourseId == courseId);
         }
 
         public CourseEpisode GetEpisodeFile(long episodeId)
             => _context.CourseEpisodes.FirstOrDefault(x => x.Id == episodeId);
-        public List<Account> GetAllUsers() => _account.Accounts.ToList();
-        public double GetAllEpisodes()=> _context.CourseEpisodes.Sum(x => x.Time.TotalMinutes);
-        public List<Article> GetAllArticle() => _article.Articles.ToList();
-        public List<Teacher> GetAllTeacher() => _account.Teachers.ToList();
+        public List<Account> GetAllUsers() => _account.Accounts.AsNoTracking().ToList();
+        public double GetTotalMinutesEpisodeVideos()
+        {
+            return _context.CourseEpisodes.AsNoTracking().ToList().Sum(c => Convert.ToInt32(c.Time.Minutes));
+        }
+
+        public List<Article> GetAllArticle() => _article.Articles.AsNoTracking().ToList();
+        public List<Teacher> GetAllTeacher() => _account.Teachers.AsNoTracking().ToList();
 
 
         public List<UserCourseViewModel> GetUserCourseBy(string email)

@@ -19,7 +19,7 @@
                     <script>
                         var delay = 5000;
                         setTimeout(function() {
-                                window.location = "Account?handler=Login";
+                                window.location = "/Login";
                             },
                             delay);
                     </script>
@@ -73,7 +73,7 @@
                         <input type="submit" value="ثبت نام" id="submit" class="validation" >
                     </div>
 
-                    <a asp-page="Account" asp-page-handler="Login" class="anchor-form">من قبلا ثبت نام کردم !</a>
+                    <a asp-page="Login"  class="anchor-form">من قبلا ثبت نام کردم !</a>
                 </form>
                 <div class="showSpiner">
                     <img src="images/spiner.gif" alt="spiner" id="spiner">

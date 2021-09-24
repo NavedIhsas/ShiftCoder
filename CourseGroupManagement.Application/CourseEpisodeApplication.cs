@@ -31,7 +31,7 @@ namespace ShopManagement.Application
            var fileName = _fileUploader.Uploader(command.File, pathFile);
 
            var courseEpisode = new CourseEpisode(fileName, command.Time, command.Title, command.CourseId,
-               command.IsFree,command.KeyWords,command.MetaDescription);
+               command.IsFree);
 
             _repository.Create(courseEpisode);
             _repository.SaveChanges();
@@ -51,7 +51,7 @@ namespace ShopManagement.Application
 
             var courseEpisode = _repository.GetById(command.Id);
             courseEpisode.Edit(fileName, command.Time, command.Title, command.CourseId,
-                command.IsFree, command.KeyWords, command.MetaDescription);
+                command.IsFree);
 
             _repository.Update(courseEpisode);
             _repository.SaveChanges();

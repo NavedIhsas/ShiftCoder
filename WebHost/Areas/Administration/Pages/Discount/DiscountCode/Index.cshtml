@@ -1,5 +1,6 @@
 ﻿@page
 @using _0_Framework.Application
+@using _0_FrameWork.Application
 @model WebHost.Areas.Administration.Pages.Discount.DiscountCode.IndexModel
 @{
     ViewData["Title"] = "تخفیف بر اساس کد اختصاصی";
@@ -10,7 +11,7 @@
             <h1 class="page-header">تخفیفات بر اساس کد اختصاصی</h1>
         </div>
         <div dir="ltr" class="col-lg-6 mr-3">
-            <h1 class="page-header">
+            <h1 permission="@Permission.CreateDiscountCode" class="page-header">
                 <a class="btn btn-success btn-lg" href="#showmodal=@Url.Page("./Index", "Create")">افزودن تخفیف جدید</a>
             </h1>
         </div>
@@ -85,7 +86,7 @@
                                             </td>
 
                                             <td class="center ">
-                                                <a class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = item.Id})">ویرایش</a>
+                                                <a permission="@Permission.EditDiscountCode" class="btn btn-warning text-center" href="#showmodal=@Url.Page("./Index", "Edit", new { id = item.Id})">ویرایش</a>
                                             </td>
                                         </tr>
 

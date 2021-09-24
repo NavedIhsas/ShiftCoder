@@ -11,7 +11,7 @@
             <form method="post" enctype="multipart/form-data">
                 <input type="hidden" asp-for="Edit.Id" />
                 <input type="hidden" asp-for="Edit.ActiveCode" />
-                <div class="col col-md-12">
+                <div class="col col-md-8">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -40,15 +40,6 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label asp-for="Edit.Avatar" class="control-label">آواتار</label>
-                                <input type="file" asp-for="Edit.Avatar" class="form-control" accept="image">
-                                <span class="text-danger" asp-validation-for="Edit.Avatar"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
                                 <label asp-for="Edit.RoleId" class="control-label">انتخاب نقش...<span class="text-danger">*</span></label>
                                 <Select asp-for="Edit.RoleId" asp-Items="@(new SelectList(Model.Edit.SelectList, "Id", "Name"));" type="file" class="form-control">
                                     <option value="0">--انتخاب کنید--</option>
@@ -57,14 +48,49 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
-                        <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
+                </div>
+
+
+                <div class="col-md-4">
+                    <p></p>
+                    <img id="imgCourse" class="thumbnail" src="/FileUploader/@Model.Edit.AvatarName" />
+                    <div class="form-group">
+                        <label asp-for="Edit.Avatar" class="control-label">آواتار</label>
+                        <input id="imgCourseUp" type="file" asp-for="Edit.Avatar"  class="form-control" accept="image">
+                        <span class="text-danger" asp-validation-for="Edit.Avatar"></span>
                     </div>
                 </div>
+
+                <button type="submit" class="btn btn-info waves-effect waves-light">ویرایش</button>
             </form>
         </div>
-          
+
     </div>
 </div>
+
+
+@section Scripts
+{
+    <script>
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgCourse').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgCourseUp").change(function () {
+            readURL(this);
+        });
+
+    </script>
+}
+
+
+

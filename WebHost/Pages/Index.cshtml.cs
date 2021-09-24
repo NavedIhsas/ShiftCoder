@@ -44,5 +44,9 @@ namespace WebHost.Pages
             return new JsonResult(new { uploaded = true, url });
         }
 
+        public IActionResult OnGetNotFountPage()
+        {
+            return NotFound();
+        }
     }
 }

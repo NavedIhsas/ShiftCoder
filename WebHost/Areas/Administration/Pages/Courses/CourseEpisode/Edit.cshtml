@@ -34,7 +34,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="File" class="control-label">فایل <span class="text-danger">*</span></label>
-                        <input type="file" class="form-control" asp-for="File" accept="video">
+                        <input type="file" class="form-control" asp-for="File" accept="video" >
                         <span class="text-danger" asp-validation-for="File"></span>
                     </div>
                 </div>
@@ -44,24 +44,6 @@
                         <label asp-for="Time" class="control-label">زمان <span class="text-danger">*</span></label>
                         <input type="TimeSpan" class="form-control" asp-for="Time">
                         <span class="text-danger" asp-validation-for="Time"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="KeyWords" class="control-label">کلمات کلیدی <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="KeyWords">
-                        <span class="text-danger" asp-validation-for="KeyWords"></span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="MetaDescription" class="control-label">توضیحات میتا <span class="text-danger">*</span></label>
-                        <textarea type="text" class="form-control" asp-for="MetaDescription" rows="2"></textarea>
-                        <span class="text-danger" asp-validation-for="MetaDescription"></span>
                     </div>
                 </div>
             </div>

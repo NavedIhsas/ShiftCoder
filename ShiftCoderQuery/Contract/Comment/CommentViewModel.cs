@@ -13,6 +13,7 @@ namespace ShiftCoderQuery.Contract.Comment
         public long OwnerRecordId { get; set; }
         public List<CommentQueryModel> SubComment { get; set; }
         public string ParentName { get; internal set; }
+        public string Picture { get; set; }
         public CommentQueryModel()
         {
             SubComment = new List<CommentQueryModel>();

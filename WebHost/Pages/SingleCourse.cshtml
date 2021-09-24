@@ -10,10 +10,9 @@
     var userInCourse = false;
     if (User.Identity.IsAuthenticated)
         userInCourse = _course.UserInCourse(User.Identity.Name, Model.Course.Id);
-
-
 }
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <main id="main-container" class="container">
     <div class="row">
@@ -24,7 +23,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a asp-page="Index">خانه</a></li>
                         <li class="breadcrumb-item"><a asp-page="Courses">آموزش ها</a></li>
-                        <li class="breadcrumb-item"><a asp-page="Courses" asp-route-groupId="@Model.Course.CourseGroupId">@Model.Course.CourseGroup</a></li>
+                        <li class="breadcrumb-item"><a asp-page="Courses" asp-route-categories="@Model.Course.CourseGroup">@Model.Course.CourseGroup</a></li>
                         <li class="breadcrumb-item active" aria-current="page">@Model.Course.Name</li>
                     </ol>
                 </nav>
@@ -296,7 +295,7 @@
                             case "مقدماتی":
                                 <div class="accordion" id="accordionExample">
 
-                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model"/>
+                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model" />
 
                                     <div class="accordion-item">
                                         <h2 class="accordion-header mb-0" id="headingTwo">
@@ -329,7 +328,7 @@
                             case "پیشرفته":
 
                                 <div class="accordion" id="accordionExample">
-                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model"/>
+                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model" />
 
                                 </div>
 
@@ -338,7 +337,7 @@
                             case "متوسط":
 
                                 <div class="accordion" id="accordionExample">
-                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model"/>
+                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model" />
 
                                     <div class="accordion-item">
                                         <h2 class="accordion-header mb-0" id="headingThree">
@@ -358,7 +357,7 @@
 
                             default:
                                 <div class="accordion" id="accordionExample">
-                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model"/>
+                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model" />
                                 </div>
                                 break;
                         }
@@ -375,6 +374,15 @@
                             <small id="number-all-comment">(@Model.Course.CommentList.Count)</small>
                         </h5>
                     </div>
+
+                    @{ var type = ViewData["Type"];}
+
+                    @if (type is "send-comment")
+                    {
+                        <script>
+                            swal("موفق", "نظر شما بعد از تایید مدیر نشر خواهد شد", "success");
+                        </script>
+                    }
                     <form method="post" id="formPost">
                         <div id="container-send-comment">
                             <p id="text-comment-write">دیدگاه خود را بنویسید ...</p>
@@ -430,9 +438,17 @@
                             @foreach (var comment in Model.Course.Comments)
                             {
                                 <div class="container-answer-question">
-                                    <div id="comment-@comment.Id" class="box-comment-question" id="comment-@comment.Id">
+                                    <div id="comment-@comment.Id" class="box-comment-question">
                                         <div class="container-photo-comment-answer-btn">
-                                            <img src="~/images/profile-8.jpg" alt="profile user" class="img-profile-user">
+                                            @if (!string.IsNullOrEmpty(comment.Picture))
+                                            {
+                                                <img src="~/FileUploader/@comment.Picture" alt="profile user" class="img-profile-user">
+                                            }
+
+                                            else
+                                            {
+                                                <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
+                                            }
                                             <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
                                                 پاسخ
                                                 <i class="fas fa-reply icon-answer"></i>
@@ -458,7 +474,15 @@
                                         {
                                             <div id="comment-@sub.Id" class="box-comment-answer">
                                                 <div class="container-photo-comment-answer-btn">
-                                                    <img src="~/images/profile-2.jpg" alt="profile user" class="img-profile-user">
+                                                    @if (!string.IsNullOrEmpty(sub.Picture))
+                                                    {
+                                                        <img src="~/FileUploader/@comment.Picture" alt="profile user" class="img-profile-user">
+                                                    }
+
+                                                    else
+                                                    {
+                                                        <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
+                                                    }
                                                     <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
                                                         پاسخ
                                                         <i class="fas fa-reply icon-answer"></i>

@@ -22,7 +22,6 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
             var getDetails = _context.CourseGroups.Select(x => new EditCourseGroupViewModel
             {
                 Title = x.Title,
-                Description = x.Description,
                 IsRemove = x.IsRemove,
                 KeyWords = x.KeyWords,
                 MetaDescription = x.MetaDescription,

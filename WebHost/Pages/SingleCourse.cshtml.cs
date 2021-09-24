@@ -40,12 +40,19 @@ namespace WebHost.Pages
 
       
         public CourseQueryModel Course;
-        public IActionResult OnGet(string id, long episode = 0)
+        public Account Account;
+        public IActionResult OnGet(string id, long episode = 0,string type="")
         {
+            ViewData["Type"] = type.ToString();
+
             var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
             Course = _course.GetCourseBySlug(id, ipAddress);
 
-            
+            //get user avatar for comment
+           if (_authHelper.IsAuthenticated())
+               Account = _account.GetUserBy(User.Identity.Name);
+
+
             if (episode != 0 && _authHelper.IsAuthenticated())
             {
                 //چک کن این فایل مربوط همین کورس است یا خیر
@@ -106,22 +113,25 @@ namespace WebHost.Pages
 
         public IActionResult OnPost(CreateCommentViewModel command, string productSlug)
         {
+            const string type = "send-comment";
+            if (_authHelper.IsAuthenticated())
+                Account = _account.GetUserBy(User.Identity.Name);
+
             if (_authHelper.IsAuthenticated())
             {
                 command.Type = 1;
                 var createComment = new Comment(_authHelper.CurrentAccountFullName(), User.Identity.Name, command.Message
-                    , command.OwnerRecordId, command.Type, command.ParentId);
+                    , command.OwnerRecordId, command.Type, command.ParentId,Account.Avatar);
                 _commentRepository.Create(createComment);
                 _commentRepository.SaveChanges();
-                return RedirectToPage("SingleCourse", new { id = productSlug });
+                return RedirectToPage("SingleCourse", new { id = productSlug,type });
 
             }
             else
             {
                 command.Type = 1;
-
                 _aaApplication.Create(command);
-                return RedirectToPage("SingleCourse", new { id = productSlug });
+                return RedirectToPage("SingleCourse", new { id = productSlug,type });
             }
         }
 

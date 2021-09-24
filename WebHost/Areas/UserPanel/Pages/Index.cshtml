@@ -14,8 +14,7 @@
                 </h1>
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a asp-page="Index">خانه</a></li>
-                        <li class="breadcrumb-item"><a asp-page="Articles">مقالات</a></li>
+                        <li class="breadcrumb-item"><a asp-page="Index">حساب کاربری</a></li>
                     </ol>
                 </nav>
             </div>
@@ -27,8 +26,9 @@
                     <div id="container-body">
 
                     </div>
+                    <br/>
                     <div class="container-info-aside price-course ">
-                        <h3 id="text-price">اطلاعات مقاله</h3>
+                        <h3 id="text-price">احساب کاربری</h3>
                     </div>
                     <div class="line-aside"></div>
 
@@ -62,14 +62,14 @@
                                         <h5 class="value-info-aside">@Model.AccountList.Email</h5>
                                     </div>
                                 </div>
-
+                               
 
                             </div>
                             <div class="col col-md-6">
 
                                 <div class="container-info-user">
                                     <div class="container-title-line-aside">
-                                        <i class="fas fa-times-circle icon-title-aside icon-title-aside-mr"></i>
+                                        <i class="fas fa-calendar-times icon-title-aside icon-title-aside-mr"></i>
                                         <p class="paragraph-info-aside">تاریخ ثبت نام :</p>
                                     </div>
                                     <div class="container-title-line-aside">
@@ -85,11 +85,33 @@
                                         <h2 class="value-info-aside"> تومان</h2>
                                     </div>
                                 </div>
+                                
+                                 
+                                <div class="container-info-user">
+                                    <div class="container-title-line-aside">
+                                        <i class="fa fa-envelope icon-title-aside"></i>
+                                        <p class="paragraph-info-aside">وضعیت ایمیل :</p>
+                                    </div>
+                                    <div class="container-title-line-aside">
+                                        @if (Model.AccountList.EmailConfirm)
+                                        {
+                                            <h5 class="value-info-aside text-success">تایید شده</h5>
+                                        }
+                                        else
+                                        {
+                                            <h5 class="value-info-aside text-danger">تایید نشده</h5>
+                                        }
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                     <hr />
-
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                     <div class="col-12 ">
                         <div class="container-info-aside price-course ">
                             <h2 class="text-dark text-price">دوره های من</h2>

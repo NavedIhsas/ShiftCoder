@@ -41,29 +41,11 @@ namespace WebHost.Pages
 
         }
 
-        //Login
-        public IActionResult OnGetLogin()
-        {
-            return Partial("Login", new LoginViewModel());
-        }
-
-        public IActionResult OnPostLogin(LoginViewModel login)
-        {
-            var user = _account.Login(login);
-            if (user == false)
-            {
-                Message = "رمز عبور ویا ایمیل شما درست نمیباشد";
-                return this.OnGetLogin();
-            }
-
-            Success = "ورود شما با موفقیت انجام شد";
-            return this.OnGetLogin();
-        }
-
         //Logout
-        public void OnGetLogout()
+        public IActionResult OnGetLogout()
         {
             _account.Logout();
+            return RedirectToPage("/Index");
         }
 
 
@@ -109,7 +91,8 @@ namespace WebHost.Pages
             var user = _account.ResetPassword(command);
             if (user == false) return NotFound();
 
-            Success = "رمز عبور شما با موفقیت تغییر کرد";
+            Success = $"رمز عبور شما با موفقیت تغییر کرد لطفا وارد شوید";
+
             return this.OnGetForgotPassword();
         }
     }

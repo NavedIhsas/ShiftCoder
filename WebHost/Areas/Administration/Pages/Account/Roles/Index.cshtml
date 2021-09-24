@@ -16,20 +16,20 @@
                 <a class="btn btn-success btn-lg" asp-page="Create">افزودن نقش جدید</a>
             </h1>
         </div>
-        <!-- /.col-lg-12 -->
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    لیست
+                    لیست نقش ها
                 </div>
-                <!-- /.panel-heading -->
+                <br/>
+                <p class="text-info" style="margin-right: 4px">برای مدیریت سطح دسترسی نقش ها به صفحه ویرایش نقش مورد نظر بروید.</p>
+
                 <div class="panel-body">
                     <div class="table-responsive">
                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                            
-                            
+
                             <hr />
                             <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
                                 <thead>
@@ -48,7 +48,7 @@
                                             <td class="sorting_1">@item.Name</td>
 
                                             <td class="center ">
-                                                <a Permission="@Permission.EditRoles" class="btn btn-warning text-center" asp-page="Edit" asp-route-id="@item.Id">ویرایش</a>
+                                                <a Permission="@Permission.EditRoles" class="btn btn-warning text-center" asp-page="Edit" asp-route-id="@item.Id">ویرایش و سطح دسترسی</a>
                                             </td>
                                         </tr>
 

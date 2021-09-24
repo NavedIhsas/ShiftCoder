@@ -34,7 +34,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="File" class="control-label">فایل <span class="text-danger">*</span></label>
-                        <input type="file" class="form-control" asp-for="File" accept="video">
+                        <input type="file" class="form-control" asp-for="File" accept="video" required>
                         <span class="text-danger" asp-validation-for="File"></span>
                     </div>
                 </div>
@@ -49,34 +49,16 @@
             </div>
             
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="KeyWords" class="control-label">کلمات کلیدی <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="KeyWords">
-                        <span class="text-danger" asp-validation-for="KeyWords"></span>
-                    </div>
-                </div>
-
-
-                <div class="col-md-6">
+              
+                <div class="col-md-12">
                     <div class="form-group">
                         <label asp-for="IsFree" class="checkbox-inline control-label">ایا رایگان است؟ <span class="text-danger">*</span></label>
                         <input  type="checkbox" class="checkbox-inline" asp-for="IsFree" >
                         <span class="text-danger" asp-validation-for="IsFree"></span>
                     </div>
                 </div>
-               
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label asp-for="MetaDescription" class="control-label">توضیحات میتا <span class="text-danger">*</span></label>
-                        <textarea type="text" class="form-control" asp-for="MetaDescription" rows="2"></textarea>
-                        <span class="text-danger" asp-validation-for="MetaDescription"></span>
-                    </div>
-                </div>
-            </div>
 
         </div>
         <div class="modal-footer">

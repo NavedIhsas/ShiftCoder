@@ -42,7 +42,8 @@ namespace WebHost.Areas.UserPanel.Pages.Order
         public IActionResult OnPostUseDiscount(long orderId, string code)
         {
             DiscountUseType type = _discount.UseDiscount(orderId, code);
-            return Redirect("/UserPanel/Orders/" + orderId + "?type=" + type.ToString());
+            ViewData["IsSuccess"] = true;
+            return Redirect("/UserPanel/Order/Orders/" + orderId + "?type=" + type.ToString());
         }
 
         public IActionResult OnGetPay(long id)

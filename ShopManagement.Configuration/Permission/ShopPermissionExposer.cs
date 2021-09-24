@@ -30,7 +30,34 @@ namespace ShopManagement.Configuration.Permission
                        new PermissionDto(_0_FrameWork.Application.Permission.DeleteCourseGroups,"حذف گروه"),
                        new PermissionDto(_0_FrameWork.Application.Permission.RestoreCourseGroups,"لغو حذف گروه"),
                    }
-               }
+               },
+               {
+                   "CourseEpisode", new List<PermissionDto>()
+                   {
+                       new PermissionDto(_0_FrameWork.Application.Permission.ListCourseEpisodes,"لیست فایل های دوره"),
+                       new PermissionDto(_0_FrameWork.Application.Permission.CreateCourseEpisodes,"ایجاد فایل برای دوره"),
+                       new PermissionDto(_0_FrameWork.Application.Permission.EditCourseEpisodes,"ویرایش فایل های دوره ها"),
+                     
+                   }
+
+               },
+
+               {
+                   "CourseStatus", new List<PermissionDto>()
+                   {
+                       new PermissionDto(_0_FrameWork.Application.Permission.CreateCourseStatus,"ایجاد وضعیت دوره ها"),
+                       new PermissionDto(_0_FrameWork.Application.Permission.EditCourseStatus,"ویرایش وضعیت دوره ها"),
+                   }
+
+               },
+               {
+                   "CourseLevel", new List<PermissionDto>()
+                   {
+                       new PermissionDto(_0_FrameWork.Application.Permission.CreateCourseLevel,"ایجاد سطح دور ها"),
+                       new PermissionDto(_0_FrameWork.Application.Permission.EditCourseLevel,"ویرایش سطح دوره ها"),
+                   }
+
+               },
 
            };
         }

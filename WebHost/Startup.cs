@@ -3,12 +3,12 @@ using System.Security.Policy;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
 using _0_Framework.Application.ZarinPal;
+using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Infrastructure;
 using BlogManagement.Infrastructure;
 using CommentManagement.Infrastructure;
 using DiscountManagement.Infrastructure;
-using InventoryManagement.Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +19,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShopManagement.Configuration;
+using ShopManagement.Configuration.Permission;
+using WebHost.Permissions;
 
 namespace WebHost
 {
@@ -27,6 +29,7 @@ namespace WebHost
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -45,8 +48,8 @@ namespace WebHost
             services.AddTransient<IPasswordHasher, PasswordHasher>();
             services.AddTransient<IZarinPalFactory, ZarinPalFactory>();
             services.AddTransient<IRazorPartialToStringRenderer, RazorPartialToStringRenderer>();
+            services.AddTransient<IPermissionExposer, WebHostPermissionExposer>();
             ShopManagementBootstrapper.Configure(services, connectionString);
-            InventoryManagementBootstrapper.Configure(services, connectionString);
             BlogManagementBootstrapper.Configure(services, connectionString);
             CommentManagementBootstrapper.Configure(services, connectionString);
             DiscountManagementBootstrapper.Configure(services, connectionString);
@@ -66,9 +69,10 @@ namespace WebHost
                 {
                     var context = new HttpContextAccessor();
 
-                    o.LoginPath = new PathString("/Account/Login");
-                    o.LogoutPath = new PathString("/Account?handler=logout");
+                    o.LoginPath = new PathString("/Login");
+                    o.LogoutPath = new PathString("/Account");
                     o.AccessDeniedPath = new PathString("/AccessDenied");
+                    o.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
                 });
             #endregion
         }
@@ -85,14 +89,14 @@ namespace WebHost
                 {
                     var callingUrl = context.Request.Headers["Referer"].ToString();
 
-                    if (callingUrl != "" && (callingUrl.StartsWith("https://localhost:44358/") ||
-                                             callingUrl.StartsWith("http://localhost:44358/")))
+                    if (callingUrl != "" && (callingUrl.StartsWith("https://ihsasdevelopment.ir/") ||
+                                             callingUrl.StartsWith("http://ihsasdevelopment.ir/")))
                     {
                         await next.Invoke();
                     }
                     else
                     {
-                        context.Response.Redirect("/Account");
+                        context.Response.Redirect("/Login");
                     }
 
                 }
@@ -103,7 +107,6 @@ namespace WebHost
 
 
             });
-
 
             if (env.IsDevelopment())
             {
