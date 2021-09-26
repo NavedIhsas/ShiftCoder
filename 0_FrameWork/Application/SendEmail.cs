@@ -15,7 +15,7 @@ namespace _0_FrameWork.Application
             mail.Body = body;
             mail.IsBodyHtml = true;
             smtpServer.Port = 587;
-            smtpServer.Credentials = new System.Net.NetworkCredential("afghanlearn.ed@gmail.com", "786Mather");
+            smtpServer.Credentials = new System.Net.NetworkCredential("ghzaladurani@gmail.com", "12Qudrat");
             smtpServer.EnableSsl = true;
 
             smtpServer.Send(mail);

@@ -327,6 +327,8 @@ namespace ShiftCoderQuery.Query
                     OwnerRecordId = x.OwnerRecordId,
                     Id = x.Id,
                     ParentId = x.ParentId,
+                    Picture=x.Picture,
+                    CreateDateTime=x.CreationDate,
                     ParentName = x.Parent.Name,
                     CreationDate = x.CreationDate.ToFarsi()
                 }).AsNoTracking().ToList();
@@ -406,7 +408,9 @@ namespace ShiftCoderQuery.Query
                     Message = x.Message,
                     OwnerRecordId = x.OwnerRecordId,
                     Id = x.Id,
+                    Picture = x.Picture,
                     ParentId = x.ParentId,
+                    CreateDateTime = x.CreationDate,
                     ParentName = x.Parent.Name,
                     CreationDate = x.CreationDate.ToFarsi()
                 }).AsNoTracking().ToList();

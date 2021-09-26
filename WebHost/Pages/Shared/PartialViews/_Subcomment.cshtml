@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<ShiftCoderQuery.Contract.Comment.CommentQueryModel>
-
-
+@using _0_Framework.Application
 @foreach (var sub in Model)
 {
-    <div class="box-comment-answer" >
+    <div class="box-comment-answer">
         <div class="container-photo-comment-answer-btn">
             @if (!string.IsNullOrEmpty(sub.Picture))
             {
@@ -13,7 +12,7 @@
             else
             {
                 <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
-            }  
+            }
             <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@sub.Id)' class="btn-answer text-center">
                 پاسخ
                 <i class="fas fa-reply icon-answer"></i>
@@ -23,11 +22,13 @@
             <div id="comment-@sub.Id" class="container-name-date">
                 <h6 class="name-commanet-question">@sub.Name</h6>
                 <div class="line-name-date"></div>
-                <p class="date-question"> 23:59 - @sub.CreationDate</p>
+                <p class="date-question"> @Tools.ChangeTimeToFarsi(sub.CreateDateTime, "yyyy/MM/dd-HH-mm")</p>
             </div>
 
-            <p  class="small text-warning">در پاسخ به : 
-                <a class="text-primary" @*href="#comment-@sub.ParentId"*@>@sub.ParentName</a></p>
+            <p class="small text-warning">
+                در پاسخ به :
+                <a class="text-primary" @*href="#comment-@sub.ParentId"*@>@sub.ParentName</a>
+            </p>
             <div>
                 <p class="text-question">
                     @sub.Message

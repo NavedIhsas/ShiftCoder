@@ -26,12 +26,9 @@
                 <div id="top-title">
                     <div class="news">
                         <span id="news-span">اخبار جدید</span>
-                        <ul>
-                            <li><a href="#">انجام پروژه های برنامه نویسی و وبسایت</a></li>
-                            <li><a href="#">آموزش برنامه نویسی و طراحی وبسایت</a></li>
-                            <li><a href="#"></a><a href="#">برگزاری دوره های اموزشی رایگان</a></li>
-                            <li><a href="#">آموزش گرافیک از صفر تا صد</a></li>
-                        </ul>
+                        <cache expires-after="@TimeSpan.FromMinutes(5)">
+                            @await Component.InvokeAsync("LatestNews");
+                        </cache>
                     </div>
                 </div>
             </div>
@@ -78,7 +75,6 @@
         </svg>
     </section>
     <partial name="PartialViews/_Scripts" />
-
     @RenderSectionAsync("Scripts", required: false)
 </body>
 

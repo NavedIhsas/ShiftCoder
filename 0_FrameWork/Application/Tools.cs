@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MD.PersianDateTime.Core;
+using System;
 using System.Globalization;
 
 namespace _0_Framework.Application
@@ -25,7 +26,12 @@ namespace _0_Framework.Application
 
             return "";
         }
-
+        
+        public static string ChangeTimeToFarsi(DateTime date, string format)
+        {
+            var time = new PersianDateTime(date);
+            return time.ToString(format);
+        }
         public static string ToFarsi(this DateTime date)
         {
             if (date == new DateTime()) return "";

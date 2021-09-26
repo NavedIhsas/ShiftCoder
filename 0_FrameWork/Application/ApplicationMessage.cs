@@ -131,6 +131,13 @@
         public const int CancelComments =902;
         public const int SearchComments =903;
 
+        //LatestNews
+        public const int CreateLatestNews =1010;
+        public const int EditLatestNews =1011;
+
+        //Homephoto
+        public const int ChangePhotoHomePage = 1020;
+        public const int CreatePhotoHomePage = 1021;
 
         //System Administrator
         public const int SystemAdministratorNotification = 1000;

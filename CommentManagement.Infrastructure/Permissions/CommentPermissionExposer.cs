@@ -19,6 +19,24 @@ namespace CommentManagement.Infrastructure.Permissions
                         new PermissionDto(Permission.CancelComments,"کنسل نظرات"),
                         new PermissionDto(Permission.SearchComments,"سرچ در نظرات"),
                     }
+                },
+
+                 {
+                    "LatestNews",new List<PermissionDto>()
+                    {
+                        new PermissionDto(Permission.CreateLatestNews,"ایجاد آخرین خبر"),
+                        new PermissionDto(Permission.EditLatestNews,"ویرایش آخرین خبر"),
+                     
+                    }
+                },
+
+                 {
+                    "HomePhoto",new List<PermissionDto>()
+                    {
+                        new PermissionDto(Permission.ChangePhotoHomePage,"تغییر عکس صفحه اصلی"),
+                        new PermissionDto(Permission.CreatePhotoHomePage,"ایجاد عکس صفحه اصلی"),
+                  
+                    }
                 }
             };
         }

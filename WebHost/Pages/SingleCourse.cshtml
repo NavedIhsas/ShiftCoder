@@ -458,7 +458,7 @@
                                             <div class="container-name-date">
                                                 <h6 class="name-commanet-question">@comment.Name</h6>
                                                 <div class="line-name-date"></div>
-                                                <p class="date-question"> 23:59 - @comment.CreationDate</p>
+                                                <p class="date-question"> @Tools.ChangeTimeToFarsi(comment.CreateDateTime,"yyyy/MM/dd-HH-mm")</p>
                                             </div>
                                             <div>
                                                 <p class="text-question">
@@ -492,7 +492,7 @@
                                                     <div class="container-name-date">
                                                         <h6 class="name-commanet-question">@sub.Name</h6>
                                                         <div class="line-name-date"></div>
-                                                        <p class="date-question"> 23:59 - @sub.CreationDate</p>
+                                                        <p class="date-question"> @Tools.ChangeTimeToFarsi(sub.CreateDateTime, "yyyy/MM/dd-HH-mm")</p>
                                                     </div>
                                                     <div>
                                                         <p class="text-question">

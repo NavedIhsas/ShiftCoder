@@ -132,7 +132,7 @@
             </div>
             <div class="col col-md-4">
 
-                <img id="imgCourse" class="thumbnail" src="/FileUploader/@Model.PictureName" alt=""/>
+                <img id="imgCourse" class="thumbnail" src="/FileUploader/@Model.PictureName" alt="" />
                 <div class="form-group">
                     <div class="form-group">
                         <label asp-for="Picture" class="control-label">عکس<span class="text-danger">*</span></label>
@@ -140,23 +140,24 @@
                         <span class="text-danger" asp-validation-for="Picture"></span>
                     </div>
                 </div>
-            </div>
-           
-              
-                    <div class="form-group">
-                        <input type="checkbox" class="checkbox-inline" asp-for="IsPublish">
-                        <label asp-for="IsPublish" class="checkbox-inline">ذخیره به صورت پیش نویس</label>
-                    </div>
 
-                    <p class="help-block">
-                        در صورت انتخاب کردن این گزینه مقاله شما در سایت منتشر نشده بلکه به صورت 
-                       پیش نویس فقط در پنل ادمین میباشد
-                        بعداً میتوانید وضعیت را تغییر دهید.
-                    </p>
-              
+
+
+                <div class="form-group">
+                    <input type="checkbox" class="checkbox-inline" asp-for="IsPublish">
+                    <label asp-for="IsPublish" class="checkbox-inline">ذخیره به صورت پیش نویس</label>
+                </div>
+
+                <p class="help-block">
+                    در صورت انتخاب کردن این گزینه مقاله شما در سایت منتشر نشده بلکه به صورت
+                    پیش نویس فقط در پنل ادمین میباشد
+                    بعداً میتوانید وضعیت را تغییر دهید.
+                </p>
+            </div>
             <input type="hidden" asp-for="Id" value="@Model.Id" />
             <input type="hidden" asp-for="Slug" value="@Model.Slug" />
             <div class="modal-footer">
+
                 <button type="submit" class="btn btn-info">ایجاد</button>
             </div>
         </form>

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<CommentManagement.Domain.HomePageDetailsAgg.News>
+@{
+    ViewData["Title"] = "آخرین خبر ها";
+}
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li><a class="text-white">@item.Title</a></li>
+    }
+</ul>
+        
