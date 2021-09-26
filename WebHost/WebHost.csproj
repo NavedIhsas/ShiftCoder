@@ -5,10 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\FileUploader\SaveFromCDN\**" />
-    <Content Remove="wwwroot\FileUploader\SaveFromCDN\**" />
-    <EmbeddedResource Remove="wwwroot\FileUploader\SaveFromCDN\**" />
-    <None Remove="wwwroot\FileUploader\SaveFromCDN\**" />
+    <Compile Remove="wwwroot\images - Copy\**" />
+    <Compile Remove="wwwroot\js - Copy\**" />
+    <Content Remove="wwwroot\images - Copy\**" />
+    <Content Remove="wwwroot\js - Copy\**" />
+    <EmbeddedResource Remove="wwwroot\images - Copy\**" />
+    <EmbeddedResource Remove="wwwroot\js - Copy\**" />
+    <None Remove="wwwroot\images - Copy\**" />
+    <None Remove="wwwroot\js - Copy\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,10 +36,6 @@
     <ProjectReference Include="..\ShiftCoderQuery\ShiftCoderQuery.csproj" />
     <ProjectReference Include="..\ShopManagement.Configuration\ShopManagement.Configuration.csproj" />
     <ProjectReference Include="..\ShopManagement.Infrastructure.EfCore\ShopManagement.Infrastructure.EfCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\FileUploader\" />
   </ItemGroup>
 
 </Project>
