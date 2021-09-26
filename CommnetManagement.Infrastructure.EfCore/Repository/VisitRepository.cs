@@ -23,7 +23,7 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
             => _context.Visits.FirstOrDefault(x => x.Type == type && x.RecordOwnerId == ownerId)?.NumberOfVisit;
 
         public Visit GetVisitBy(string ipAddress)
-         => _context.Visits.FirstOrDefault(x => x.IpAddress == ipAddress && x.Type==ThisType.AdminPanelIndex);
+         => _context.Visits.OrderBy(x=>x.CreationDate).LastOrDefault(x => x.IpAddress == ipAddress && x.Type==ThisType.AdminPanelIndex);
 
         public List<Visit> GetAllVisit() => _context.Visits.ToList();
 

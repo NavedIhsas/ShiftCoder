@@ -21,23 +21,23 @@
                     <a permission="@Permission.SystemAdministratorActivity" asp-page=""><i class="fa fa-user-alt"></i> فعالیت ها (مدیر)<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: auto;">
                         <li>
-                            <a   asp-page="/Notifications/Index">اعلانات </a>
+                            <a asp-page="/Notifications/Index">اعلانات </a>
                         </li>
-                        
+
                         <li>
                             <a asp-page="/Orders/Index">سفارشات </a>
                         </li>
-                        
+
                         <li>
-                            <a  asp-area="Administration" asp-page="/Notifications/Index" asp-page-handler="AdminsActivity">فعالیت مدیران سیستم </a>
+                            <a asp-area="Administration" asp-page="/Notifications/Index" asp-page-handler="AdminsActivity">فعالیت مدیران سیستم </a>
                         </li>
 
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
 
-                    
-                
+
+
                 <li>
                     <a asp-page=""><i class="fa fa-book "></i> مدیریت دوره ها<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: auto;">
@@ -78,8 +78,22 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                
-                
+
+                <li>
+                    <a asp-page=""><i class="fa fa-book-open"></i> مدیریت مقاله ها<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" style="height: auto;">
+                        <li>
+                            <a permission="@Permission.ListArticleCategories" asp-page="/Blog/ArticleCategory/Index">گروه مقاله ها </a>
+                        </li>
+
+                        <li>
+                            <a permission="@Permission.ListArticles" asp-page="/Blog/Article/Index">مقاله ها </a>
+                        </li>
+
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
                 <li>
                     <a asp-page=""><i class="fa fa-user"></i> مدیریت کاربران و نقش ها<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: auto;">
@@ -121,17 +135,17 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                
+
 
                 <li>
-                    <a asp-page=""><i class="fa fa-book-open"></i> مدیریت مقاله ها<span class="fa arrow"></span></a>
+                    <a asp-page=""><i class="fa fa-book-open"></i> مدیریت صفحه اصلی<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: auto;">
                         <li>
-                            <a permission="@Permission.ListArticleCategories" asp-page="/Blog/ArticleCategory/Index">گروه مقاله ها </a>
+                            <a permission="@Permission.CreatePhotoHomePage" asp-page="/HomePage/Index">تغییر عکس صفحه اصلی </a>
                         </li>
 
                         <li>
-                            <a permission="@Permission.ListArticles" asp-page="/Blog/Article/Index">مقاله ها </a>
+                            <a permission="@Permission.CreateLatestNews" asp-page="/News/Index">آخرین خبر ها </a>
                         </li>
 
                     </ul>
