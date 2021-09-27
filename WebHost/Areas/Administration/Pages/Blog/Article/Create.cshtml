@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group no-margin">
-                            <label asp-for="BloggerId" class="control-label">استاد دوره<span class="text-danger">*</span></label>
+                            <label asp-for="BloggerId" class="control-label">نویسنده<span class="text-danger">*</span></label>
                             <select class="form-control autogrow" asp-for="BloggerId" asp-items="@(new SelectList(Model.BloggerSelectList, "Id", "AccountName"))">
                                 <option value="0">انتخاب کنید</option>
                             </select>

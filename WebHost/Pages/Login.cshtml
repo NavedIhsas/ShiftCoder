@@ -5,56 +5,75 @@
     ViewData["Title"] = "ورود به سایت";
     Layout = "Shared/_AccountLayout";
 }
-<div id="main-container">
-    <div class="container">
-        <div class="row" id="row-container">
-            <img src="images/avatar-login.png" alt="Avatar" id="avatar-img">
-            <div class="col-9 col-md-7 col-lg-5 col-xl-4" id="container-form">
-                <h2 id="title-heading">فرم ورود</h2>
-                @if (ViewData["Success"] != null)
-                {
-                    <div class="alert alert-success text-center">
-                        <p>ورود شما با موفقیت ثبت شد</p>
+
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+<br />
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center mb-5">
+        <h2 class="heading-section">ورود به سایت</h2>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="login-wrap p-0">
+           
+            @if (ViewData["Success"] != null)
+            {
+                <span class="text-success float-right mr-5 mb-3">
+                    ورود شما با موفقیت انجام شد.
+                </span>
+
+                <script>
+                    // milliseconds
+                    var delay = 2000;
+                    setTimeout(function () { window.location = "/Index"; }, delay);
+                </script>
+            }
+                
+            @if (ViewData["Message"] != null)
+            {
+                <span class="text-success float-right mr-5 mb-3">رمز عبور و یا ایمیل شما درست نمیباشد</span>
+            }
+            <form method="post" class="signin-form">
+
+                <div class="form-group" >
+                    <input type="email" name="email" class="form-control" placeholder="ایمیل" required oninvalid="this.setCustomValidity('لطفا ایمیلی خود را وارد کنید')"
+                           oninput="setCustomValidity('')">
+                </div>
+
+                <div class="form-group">
+                    <input name="password" id="password-field" type="password" class="form-control" placeholder="رمز عبور" required oninvalid="this.setCustomValidity('رمز عبور خود را وارد نماید.')"
+                           oninput="setCustomValidity('')">
+                    <span toggle="#password-field" class="  fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="form-control btn btn-primary submit px-3" value="ورود">
+                </div>
+
+                <div class="form-group d-md-flex row">
+
+                    <div class="w-50  ">
+                        <label class="checkbox-wrap checkbox-primary">
+                            <input name="rememberMe" type="checkbox" checked>
+                            <span class="checkmark mr-2"></span>
+                            مرا بخاطر بسپار
+                        </label>
                     </div>
 
-                    <script>
-                        var daley = 3000;
-                        setTimeout(function () {
-                            window.location = "/Index";
-                        },
-                            daley);
-                    </script>
-                }
-                
+                    <div class="w-50 forgot-password  text-left  ">
+                        <a href="/forgotPassword">رمز خود را فراموش کرده ام</a>
+                    </div>
 
-                @if (ViewData["Message"] != null)
-               {
-                   <p class="text-center alert alert-danger">رمز عبور و یا ایمیل شما درست نمیباشد</p>
-               }
-
-            <form method="post" id="form">
-                <label for="email-input" class="label-input">ایمیل :</label>
-                <input type="email" name="email" placeholder="example@domain.com" autofocus autocomplete="on" 
-                       id="email-input" class="inputs" required   oninvalid="this.setCustomValidity('@(Validate.Required)')"
-                       oninput="setCustomValidity('')">
-
-
-                <label for="password-input" class="label-input">گذرواژه :</label>
-                <input type="password" name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
-                       autofocus autocomplete="on" id="password-input" class="inputs"
-                       required   oninvalid="this.setCustomValidity('@(Validate.Required)')"
-                       oninput="setCustomValidity('')">
-
-                <div id="meesageRepass"></div>
-                <div id="container-submit">
-                    <input type="submit" value="ورود" id="submit" class="validation">
                 </div>
-                <div class="showSpiner">
-                    <img src="images/spiner.gif" alt="spiner" id="spiner">
-                </div>
-                <a asp-page="Account" asp-page-handler="ForgotPassword" class="anchor-form">گذرواژه را فراموش کرده ام !</a>
-                <a asp-page="Account" asp-page-handler="Register" class="anchor-form">هنوز ثبت نام نکرده ام !</a>
             </form>
+
+            <p class="w-100 text-center">&mdash; یا وارد شوید با &mdash;</p>
+            <div class="social-facebook d-flex text-center">
+
+                <a class="px-2 py-2 mr-4 text-center facebook-icon rounded"><span class="iconify" data-icon="ion-social-facebook" data-inline="false"></span> فیسبوک</a>
+
+                <a  class="px-2 py-2 ml-md-3 rounded google-icon "><span class="iconify " data-icon="ant-design:google-plus-outlined" data-inline="false"></span>گوگل</a>
             </div>
         </div>
     </div>

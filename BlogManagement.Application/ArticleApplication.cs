@@ -33,7 +33,7 @@ namespace BlogManagement.Application
                 publish = null;
 
             var categoryName = _articleCategory.GetArticleCategoryName(command.CategoryId);
-            var path = $"Articles /{categoryName}";
+            var path = $"مقاله ها /{categoryName}";
             var fileName = _fileUploader.Uploader(command.Picture, path);
 
             var article = new Article(command.Title, command.Description, fileName, command.PictureTitle,
@@ -76,7 +76,7 @@ namespace BlogManagement.Application
             if (article == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
             var categoryName = _articleCategory.GetArticleCategoryName(command.CategoryId);
-            var path = $"{categoryName}/مقاله ها";
+            var path = $"مقاله ها /{categoryName}";
             var fileName = _fileUploader.Uploader(command.Picture, path);
 
             article.Edit(command.Title, command.Description, fileName, command.PictureTitle,

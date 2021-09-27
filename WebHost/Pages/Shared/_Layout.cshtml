@@ -26,7 +26,7 @@
                 <div id="top-title">
                     <div class="news">
                         <span id="news-span">اخبار جدید</span>
-                        <cache expires-after="@TimeSpan.FromMinutes(5)">
+                        <cache expires-after="@TimeSpan.FromMinutes(50)">
                             @await Component.InvokeAsync("LatestNews");
                         </cache>
                     </div>

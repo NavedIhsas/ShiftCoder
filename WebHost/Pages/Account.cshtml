@@ -5,81 +5,73 @@
     Layout = "Shared/_AccountLayout";
 }
 
-<div id="main-container">
-    <div class="container">
-        <div class="row" id="row-container">
-            <div class="col-9 col-md-7 col-lg-5 col-xl-4 " id="container-form">
-                <h2 id="title-heading">فرم ثبت نام</h2>
-                @if (ViewData["IsSuccess"] != null)
-                {
-                    <div class="alert alert-success text-center">
-                        <span>ایمیل حاوی کد فعال سازی به ایمیل ادرس شما ارسال شد، لطفا ایمیل خود تایید کنید.</span>
-                    </div>
-
-                    <script>
-                        var delay = 5000;
-                        setTimeout(function() {
-                                window.location = "/Login";
-                            },
-                            delay);
-                    </script>
-                }
-              @if (ViewData["ExistEmail"] != null)
-              {
-                  <p class="alert alert-danger text-center">بااین ایمیل قبلا ثبت نام کرده اید.
-                      <a asp-page="Account" asp-page-handler="ForgotPassword" class="text-primary">بازیابی رمز عبور</a>
-                      </p>
-              }
+<br/>
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center mb-5">
+        <h2 class="heading-section">فرم ثبت نام</h2>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="login-wrap p-0">
            
-               
-                <form  method="post" id="form" asp-page="Account" asp-page-handler="Register" >
-                    <label   for="usersName" class="label-input"></label>
-                    <input name="fullName" type="text" placeholder="نام و نام خانوادگی" autofocus autocomplete="on" required
-                           id="usersName" class="inputs validation text-right"
-                            oninvalid="this.setCustomValidity('@(Validate.Required)')"
-                           oninput="setCustomValidity('')">
-                    <div id="meesageName"></div>
-                    
-
-                    <label for="email-input" class="label-input"></label>
-                    <input type="email"  name="email" placeholder="ایمیل آردس" autofocus autocomplete="on" required
-                           id="email-input" class="inputs validation"
-                            oninvalid="this.setCustomValidity('@(Validate.Required)')"
-                           oninput="setCustomValidity('')">
-                    <div id="meesageEmail"></div>
-
-                    <label for="phone" class="label-input"></label>
-                    <input type="tel"  name="phone" placeholder="شماره موبایل" autofocus autocomplete="on" required
-                           id="phone" class="inputs validation"
-                           oninvalid="this.setCustomValidity('@(Validate.Required)')"
-                           oninput="setCustomValidity('')">
-
-                    <div id="meesagePhone"></div>
-                    <label for="password-input"  name="password" class="label-input"></label>
-                    <input type="password"  name="password" placeholder="گذرواژه"
-                           autofocus autocomplete="on" required id="password-input" class="inputs validation"
-                           oninvalid="this.setCustomValidity('@(Validate.Required)')"
-                           oninput="setCustomValidity('')">
-
-                    <div id="meesagePassword"></div>
-                    <label for="reapetPass" class="label-input"></label>
-                    <input type="password"  name="repassword" placeholder="تکرار گذرواژه" autofocus autocomplete="on"
-                           id="reapetPass" class="inputs validation"
-                           required   oninvalid="this.setCustomValidity('@(Validate.Required)')"
-                           oninput="setCustomValidity('')">
-
-                    <div id="meesageRepass"></div>
-                    <div id="container-submit">
-                        <input type="submit" value="ثبت نام" id="submit" class="validation" >
-                    </div>
-
-                    <a asp-page="Login"  class="anchor-form">من قبلا ثبت نام کردم !</a>
-                </form>
-                <div class="showSpiner">
-                    <img src="images/spiner.gif" alt="spiner" id="spiner">
+            
+            @if (ViewData["IsSuccess"] != null)
+            {
+                <div class="alert alert-success text-center">
+                    <span>ایمیل حاوی کد فعال سازی به ایمیل ادرس شما ارسال شد، لطفا ایمیل خود تایید کنید.</span>
                 </div>
+
+                <script>
+                    var delay = 5000;
+                    setTimeout(function () {
+                            window.location = "/Login";
+                        },
+                        delay);
+                </script>
+            }
+            @if (ViewData["ExistEmail"] != null)
+            {
+                <p class="alert alert-danger text-center">
+                    بااین ایمیل قبلا ثبت نام کرده اید.
+                    <a asp-page="Account" asp-page-handler="ForgotPassword" class="text-primary">بازیابی رمز عبور</a>
+                </p>
+            }
+            <form method="post" class="signin-form">
+                <div class="form-group">
+                    <input type="text" name="fullname" class="form-control" placeholder="نام کامل" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="ایمیل" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
+                </div>
+
+                <div class="form-group">
+                    <input type="tel" name="phone" class="form-control" placeholder="شماره موبایل" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
+                </div>
+
+                <div class="form-group">
+                    <input name="password" id="password-field" type="password" class="form-control" placeholder="رمز عبور" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
+                    <span toggle="#password-field" class="  fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="form-control btn btn-primary submit px-3" value="ثبت نام">
+                </div>
+
+            </form>
+
+            <p class="w-100 text-center">&mdash; و یا انتخاب کنید &mdash;</p>
+            <div class="social-facebook d-flex text-center">
+
+                <a asp-page="Login" class="px-2 py-2 mr-4 text-center "> ورود به سایت</a>
+
+                <a asp-page="Account" asp-page-handler="Register"  class="px-2 py-2 ml-md-3  ">هنوز ثبت نام نکرده ام</a>
             </div>
         </div>
-
     </div>
 </div>

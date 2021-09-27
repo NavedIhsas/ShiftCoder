@@ -39,7 +39,8 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
                 ShowOrder = x.ShowOrder,
                 ShortDescription = x.ShortDescription,
                 IsPublish = x.IsPublish,
-                PictureName = x.Picture
+                PictureName = x.Picture,
+                BloggerId = x.BloggerId,
                 
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }

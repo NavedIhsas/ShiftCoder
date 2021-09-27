@@ -63,9 +63,6 @@ namespace AccountManagement.Application
                 var body = await _renderer.RenderPartialToStringAsync("_SentActivityEmail", create);
                  SendEmail.Send(create.Email,  "تائید ایمیل", body);
 
-                //---send activity email--//
-                //var emailBody = _renderView.RenderToStringAsync($"_SentActivityEmail", create);
-                //SendEmail.Send(create.Email,"فعال سازی حساب کاربری",emailBody);
             }
             //---create notification--//
             var notification = new Notification($"کاربری جدید با نام ({command.FullName}) در سایت ثبت نام کرد", ThisType.Account, command.Id);
@@ -113,6 +110,7 @@ namespace AccountManagement.Application
                     break;
             }
             _repository.SaveChanges();
+            _teacher.SaveChanges();
             return operation.Succeeded();
         }
 

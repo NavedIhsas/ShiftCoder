@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebHost.Pages
 {
-    [Authorize]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     [IgnoreAntiforgeryToken]
     public class ErrorModel : PageModel

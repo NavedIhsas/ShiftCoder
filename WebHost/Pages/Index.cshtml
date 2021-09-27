@@ -27,7 +27,7 @@
             </a>
         </div>
        
-        <cache expires-after="@TimeSpan.FromMinutes(5)">
+        <cache expires-after="@TimeSpan.FromMinutes(50)">
             @await Component.InvokeAsync("IndexDetails")
         </cache>
     </div>
@@ -91,7 +91,7 @@
     </div>
 </div>
 
-<cache expires-after="@TimeSpan.FromMinutes(5)">
+<cache expires-after="@TimeSpan.FromMinutes(50)">
     @await Component.InvokeAsync("LatestCourses")
 </cache>
 
@@ -112,7 +112,7 @@
     </div>
 </div>
 
-<cache expires-after="@TimeSpan.FromMinutes(5)">
+<cache expires-after="@TimeSpan.FromMinutes(50)">
     @await Component.InvokeAsync("PopularCourse")
 </cache>
 
@@ -132,6 +132,6 @@
         </div>
     </div>
 </div>
-<cache expires-after="@TimeSpan.FromMinutes(5)">
+<cache expires-after="@TimeSpan.FromMinutes(50)">
     @await Component.InvokeAsync("Articles")
 </cache>
