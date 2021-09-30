@@ -46,7 +46,7 @@ namespace ShiftCoderQuery.Query
                 BloggerId = x.BloggerId,
                 MetaDescription = x.MetaDescription,
                 Id = x.Id,
-            }).AsNoTracking().OrderByDescending(x => x.CreationDate).Take(6).ToList();
+            }).AsNoTracking().OrderByDescending(x => x.CreationDate).Take(3).ToList();
 
             foreach (var item in article)
             {
@@ -85,7 +85,7 @@ namespace ShiftCoderQuery.Query
                 }).AsNoTracking().OrderByDescending(x => x.CreationDate).ToList();
 
 
-
+            
             foreach (var item in query)
             {
                 var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Article)
@@ -97,6 +97,7 @@ namespace ShiftCoderQuery.Query
                 item.BloggerName = blogger.Account.FullName;
 
                 item.VisitCount = _visit.GetNumberOfVisit(ThisType.Article, item.Id);
+                item.KeyWords = item.Keywords.Split("-").ToList();
             }
 
             //---search---//
@@ -128,7 +129,7 @@ namespace ShiftCoderQuery.Query
 
 
             //---paging---//
-            const int take = 9;
+            const int take = 6;
             var skip = (pageId - 1) * take;
 
             var list = new PaginationArticlesViewModel()
@@ -153,6 +154,7 @@ namespace ShiftCoderQuery.Query
                 PictureTitle = x.PictureTitle,
                 PictureAtl = x.PictureAtl,
                 Slug = x.Slug,
+                CreationDate=x.CreationDate,
                 Keywords = x.Keywords,
                 MetaDescription = x.MetaDescription,
                 CanonicalAddress = x.CanonicalAddress,
@@ -163,7 +165,6 @@ namespace ShiftCoderQuery.Query
             }).AsNoTracking().FirstOrDefault(x => x.Slug == slug);
 
             if (article == null) return null;
-
             #region Visit
 
             //start-visit
@@ -236,6 +237,11 @@ namespace ShiftCoderQuery.Query
 
             #endregion
 
+            var key = new SinglePageArticleQueryModel()
+            {
+                KeyWords = article.Keywords.Split("-").ToList(),
+            };
+            article.KeyWords = key.KeyWords;
             return article;
         }
 

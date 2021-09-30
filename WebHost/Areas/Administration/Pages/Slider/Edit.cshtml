@@ -1,0 +1,100 @@
+﻿
+@model CommentManagement.Application.Contract.HomePhoto.SliderViewModel
+@{
+    ViewData["Title"] = "ویرایش اسلایدر";
+    Layout = "Shared/_AdminLayout";
+}
+
+
+<div id="page-wrapper">
+    <div class="container">
+        <partial name="Shared/_Create_View_Header" />
+
+        <form method="post"  enctype="multiPart/form-data">
+            <div class="modal-body col col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="PictureAlt" class="control-label">Alt<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" asp-for="PictureAlt">
+                            <span class="text-danger" asp-validation-for="PictureAlt" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="PictureTitle" class="control-label">عنوان<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" asp-for="PictureTitle">
+                            <span class="text-danger" asp-validation-for="PictureTitle"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ButtonText" class="control-label">متن دکمه<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" asp-for="ButtonText">
+                            <span class="text-danger" asp-validation-for="ButtonText"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ShortTitle" class="control-label">متن کوچک<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" asp-for="ShortTitle">
+                            <span class="text-danger" asp-validation-for="ShortTitle"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                                <label asp-for="Title" class="control-label">متن بزرگ<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" asp-for="Title">
+                                <span class="text-danger" asp-validation-for="Title" ></span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <p></p>
+                <img id="imgCourse" class="thumbnail" src="/FileUploader/@Model.PictureStringFormat" />
+                <div class="form-group">
+                    <label asp-for="Picture" class="control-label">عکس<span class="text-danger">*</span></label>
+                    <input id="imgCourseUp" type="file" asp-for="Picture" class="form-control" accept="image/*" required>
+                    <span class="text-danger" asp-validation-for="Picture"></span>
+                </div>
+            </div>
+
+            <input type="hidden" asp-for="Id" value="@Model.Id"/>
+            <div class="modal-footer">
+                <input type="submit" value="ویرایش" class="btn btn-info">
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgCourse').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgCourseUp").change(function () {
+            readURL(this);
+        });
+
+    </script>
+}

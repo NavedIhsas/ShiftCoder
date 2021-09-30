@@ -10,10 +10,12 @@ namespace ShopManagement.Application
     public class CourseGroupApplication:ICourseGroupApplication
     {
         private readonly ICourseGroupRepository _repository;
+        private readonly IFileUploader _fileUploader;
 
-        public CourseGroupApplication(ICourseGroupRepository repository)
+        public CourseGroupApplication(ICourseGroupRepository repository, IFileUploader fileUploader)
         {
             _repository = repository;
+            _fileUploader = fileUploader;
         }
         public OperationResult Create(CreateCourseGroupViewModel command)
         {
@@ -22,8 +24,11 @@ namespace ShopManagement.Application
             if (_repository.IsExist(x => x.Title == command.Title))
                 return operation.Failed( ApplicationMessage.DuplicatedRecord);
 
+            var filePath = $"CourseGroup/{command.Slug.Slugify()}";
+            var fileName = _fileUploader.Uploader(command.Picture, filePath);
+
             var courseGroup = new CourseGroup(command.Title, command.KeyWords,
-                command.MetaDescription, command.Slug.Slugify(),command.SubGroupId);
+                command.MetaDescription, command.Slug.Slugify(),command.SubGroupId, fileName, command.PictureAlt,command.PictureTitle);
 
             _repository.Create(courseGroup);
             _repository.SaveChanges();
@@ -34,14 +39,17 @@ namespace ShopManagement.Application
         {
             var operation = new OperationResult();
 
-            if (_repository.IsExist(x => x.Title == command.Title))
+            if (_repository.IsExist(x => x.Title == command.Title&&x.Id !=command.Id))
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
             var courseGroup = _repository.GetById(command.Id);
             if (courseGroup == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
+            var filePath = $"CourseGroup/{command.Slug.Slugify()}";
+            var fileName = _fileUploader.Uploader(command.Picture, filePath);
+
             courseGroup.Edit(command.Title,command.KeyWords,
-                command.MetaDescription, command.Slug,command.SubGroupId);
+                command.MetaDescription, command.Slug,command.SubGroupId, fileName, command.PictureAlt, command.PictureTitle);
 
             _repository.Update(courseGroup);
             _repository.SaveChanges();

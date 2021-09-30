@@ -1,62 +1,60 @@
 ﻿@model IEnumerable<ShiftCoderQuery.Contract.CourseGroup.CourseGroupQueryModel>
-
-<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    <li class="nav-item">
-        <a asp-page="Index" class="nav-link active" aria-current="page">خانه</a>
-    </li>
-    @foreach (var group in Model.Where(x => x.SubGroupId == null))
-    {
-        <li class="nav-item">
-            <a asp-page="Courses" asp-route-categories="@group.Title" class="nav-link @(Model.Any(x=>x.SubGroupId==group.Id)?"dropdown-toggle":"")  link-navbar-header"
-
-               id="@(Model.Any(x=>x.SubGroupId==group.Id)?"navbarDropdown":"") " role="button" data-bs-toggle="@(Model.Any(x=>x.SubGroupId==group.Id)?"dropdown":"")" aria-expanded="false">
-            
-                @group.Title
+<div class="container-fluid">
+    <div class="row border-top px-xl-5">
+        <div class="col-lg-3 d-none d-lg-block">
+            <a class="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none" data-toggle="collapse" href="#navbar-vertical" style="height: 67px; padding: 0 30px;">
+                <h5 class="text-primary m-0"><i class="fa fa-book-open mr-2 p-2"></i>دسته بندی ها</h5>
+                <i class="fa fa-angle-down text-primary"></i>
             </a>
-            <div class="dropdown-menu bgcolo-ul-header" id="megamenu-dropdown" aria-labelledby="navbarDropdown">
-                <div class="container-fluid">
-                    <div class="row">
-                        @if (Model.Any(x => x.SubGroupId == group.Id))
-                        {
-                            @foreach (var sub in Model.Where(x => x.SubGroupId == group.Id))
+            <nav dir="rtl" class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 9;">
+                <div class="navbar-nav w-100">
+
+                    @foreach (var group in Model.Where(x => x.SubGroupId == null))
+                    {
+                        <div class="nav-item dropdown">
+                            <a asp-page="Courses" asp-route-id="@group.Slug" class="nav-link" data-toggle=@(Model.Any(x=>x.SubGroupId==group.Id)?"dropdown":"")>
+                                @group.Title
+                            <i class="@(Model.Any(x=>x.SubGroupId==group.Id)?"fa fa-angle-down ":"") float-left mt-1"></i>
+                             </a>
+
+                        <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                            @if (Model.Any(x => x.SubGroupId == group.Id))
                             {
-                                <div class="col-12 col-md-3 text-center">
-                                    <ul>
-                                        <li>
-                                            <a asp-page="Courses" asp-route-SearchModel.Name="@sub.Title" class="dropdown-item text-white hover-link-dropdown anchor-megamenu-border-radius">@sub.Title</a>
-                                        </li>
-                                        @if (Model.Any(x => x.SubGroupId == sub.Id))
-                                        {
-                                            <li>
-                                                <img src="~/icons/arrow-down.png" alt="arrow down"
-                                                     class="arrow-down-header my-3">
-                                            </li>
-                                        }
-                                        <li>
-                                            @if (Model.Any(x => x.SubGroupId == sub.Id))
-                                            {
-                                                <ul class="ul-item-megamenu">
-                                                    @foreach (var sub2 in Model.Where(x => x.SubGroupId == sub.Id))
-                                                    {
-                                                        <li class="li-item-megamenu my-2">
-                                                            <a asp-page="Courses" asp-route-SearchModel.Name="@sub2.Title"
-                                                               class="text-white">@sub2.Title</a>
-                                                        </li>
-                                                    }
-                                                </ul>
-                                            }
-                                        </li>
-                                    </ul>
-                                </div>
-                               
+                                @foreach (var sub in Model.Where(x => x.SubGroupId == group.Id))
+                                {
+                                    <a asp-page="Courses" asp-route-id="@sub.Slug" class="dropdown-item">@sub.Title</a>
+
+                                }
                             }
-                        }
-
+                        </div>
                     </div>
+                }
+
                 </div>
-            </div>
-        </li>
-    }
-</ul>
-
-
+            </nav>
+        </div>
+        <div class="col-lg-9">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                <a href="" class="text-decoration-none d-block d-lg-none">
+                    <h1 class="m-0"><span class="text-primary">Learn</span>hub</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav py-0">
+                        <a asp-page="Index" class="nav-item nav-link  @Html.ActiveClass("/Index")">صفحه اصلی</a>
+                        <a asp-page="AboutUs" class="nav-item nav-link  @Html.ActiveClass("/AboutUs")">در باره ما</a>
+                        <a asp-page="AllCourses" class="nav-item nav-link  @Html.ActiveClass("/AllCourses")">همه دوره ها</a>
+                        <a asp-page="Articles" class="nav-item nav-link  @Html.ActiveClass("/Articles")">وبلاگ</a>
+                        <a asp-page="ContactUs" class="nav-item nav-link  @Html.ActiveClass("/ContactUs")">تماس با ما</a>
+                    </div>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" asp-page="Account" asp-page-handler="Register">همین حالا ثبت نام کن</a>
+                }
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>

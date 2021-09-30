@@ -2,39 +2,27 @@
 @using _0_Framework.Application
 @foreach (var sub in Model)
 {
-    <div class="box-comment-answer">
-        <div class="container-photo-comment-answer-btn">
-            @if (!string.IsNullOrEmpty(sub.Picture))
-            {
-                <img src="~/FileUploader/@sub.Picture" alt="profile user" class="img-profile-user">
-            }
 
-            else
-            {
-                <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
-            }
-            <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@sub.Id)' class="btn-answer text-center">
-                پاسخ
-                <i class="fas fa-reply icon-answer"></i>
-            </a>
-        </div>
-        <div class="container-name-text-comment">
-            <div id="comment-@sub.Id" class="container-name-date">
-                <h6 class="name-commanet-question">@sub.Name</h6>
-                <div class="line-name-date"></div>
-                <p class="date-question"> @Tools.ChangeTimeToFarsi(sub.CreateDateTime, "yyyy/MM/dd-HH-mm")</p>
-            </div>
+    <div id="comment-@sub.Id" class="media mt-4">
 
-            <p class="small text-warning">
-                در پاسخ به :
-                <a class="text-primary" @*href="#comment-@sub.ParentId"*@>@sub.ParentName</a>
+        @if (!string.IsNullOrEmpty(sub.Picture))
+        {
+            <img src="~/FileUploader/@sub.Picture" alt="@sub.Name" title="@sub.Name"  class="img-fluid rounded-circle mr-3 mt-1"
+                 style="width: 45px;">
+        }
+
+        else
+        {
+            <img src="~/img/DefaultImg/comment-img.png" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                 style="width: 45px;">
+        }
+
+        <div class="media-body">
+            <h6>@sub.Name <small class="mr-3"><i>@Tools.ChangeTimeToFarsi(sub.CreateDateTime, "M-MMMM/dddd-HH:mm")</i></small></h6>
+            <p>
+                @sub.Message
             </p>
-            <div>
-                <p class="text-question">
-                    @sub.Message
-                </p>
-            </div>
+            <a href="#formPost" onclick='$("#commentParenId").val(@sub.Id)' class="btn btn-sm btn-secondary">پاسخ</a>
         </div>
     </div>
-
 }

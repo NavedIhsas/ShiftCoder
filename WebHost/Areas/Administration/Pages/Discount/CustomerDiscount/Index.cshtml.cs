@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Shop.Management.Application.Contract.Course;
-using Shop.Management.Application.Contract.CoursePrerequisite;
 
 namespace WebHost.Areas.Administration.Pages.Discount.CustomerDiscount
 {

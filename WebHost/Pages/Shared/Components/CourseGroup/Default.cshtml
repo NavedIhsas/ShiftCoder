@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ShiftCoderQuery.Contract.CourseGroup.CourseGroupQueryModel>
+
+<div class="container-fluid py-5">
+    <div class="container pt-5 pb-3">
+        <div class="text-center mb-5">
+            <h5 class="text-primary text-uppercase mb-3">دسته بندی ها</h5>
+            <h1>دورۀ دلخواه خود را بیابید</h1>
+        </div>
+        <div class="row">
+            @foreach (var group in Model)
+            {
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
+                        <img class="img-fluid" src="~/FileUploader/@group.Picture" alt="@group.PictureAlt" title="@group.PictureTitle">
+                        <a asp-page="Courses" asp-route-id="@group.Slug" class="cat-overlay text-white text-decoration-none" >
+                            <h4 class="text-white font-weight-medium">@group.Title</h4>
+                            <span>@group.CourseCount دوره</span>
+                        </a>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

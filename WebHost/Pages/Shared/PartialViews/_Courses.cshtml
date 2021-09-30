@@ -1,46 +1,37 @@
 ﻿@using _0_Framework.Application
-@model IEnumerable<ShiftCoderQuery.Contract.Course.GetAllCourseQueryModel>
+@model IEnumerable<ShiftCoderQuery.Contract.Course.GetCourseGroupViewModel>
 
-@foreach (var course in Model)
-{
-    <div class="col-6 col-md-4 col-lg-3">
-        <div class="card container-card">
-            <a asp-page="SingleCourse" asp-route-id="@course.Slug" class="anchor-cards">
-                <img src="~/FileUploader/@course.Picture" class="card-img-top img-card" alt="@course.PictureAlt" title="@course.PictureTitle">
-                <div class="card-body">
-                    <h5 class="card-title title-card">@course.Name</h5>
-                    <div class="container-items-card">
-                        <div>
-                            <img src="~/icons/teacher-2.png" alt="Teacher" class="img-teacher-card">
-                            <span class="span-item-card">@course.TeacherName</span>
-                        </div>
-                        <div class="chat-display-item-none">
-                            <img src="~/icons/chat.png" alt="chat" class="img-teacher-card">
-                            <span class="span-item-card">@course.Comments.Count</span>
-                        </div>
-                        <div>
-                            <img src="~/icons/student-2.png" alt="student" class="img-teacher-card">
-                            <span class="span-item-card">@course.UserCourse.Count</span>
-                        </div>
+
+<div class="row">
+    @foreach (var course in Model)
+    {
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="rounded overflow-hidden mb-2">
+                <img class="img-fluid" src="~/FileUploader/@course.Picture" title="@course.PictureTitle" alt="@course.PictureAlt">
+                <div class="bg-secondary p-4">
+                    <div class="d-flex justify-content-between mb-3">
+                        <small class="m-0"><i class="fa fa-users text-primary mr-3"></i>@course.UserCourse.Count دانشجو</small>
+                        <small class="m-0"><i class="far fa-clock text-primary mr-3"></i>@course.TotalTime</small>
                     </div>
-                    <div class="container-time-payment-card">
-                        <div>
-                            <img src="~/icons/clock.png" alt="clock" class="img-teacher-card">
-                            <span class="time-p-card">@course.TotalTime</span>
-                        </div>
-                        <div>
+                    <a class="h5" asp-page="SingleCourse" asp-route-id="@course.Slug">@course.Name</a>
+                    <div class="border-top mt-4 pt-4">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
                             @if (course.Price > 0)
                             {
-                                <span class="payment-card">@course.Price.ToMoney()</span>
+                                <h5 class="m-0">@course.Price.ToMoney() تومان</h5>
                             }
                             else
                             {
-                                <span class="payment-card">رایگان</span>
+                                <h5 class="m-0 text-success">رایگان</h5>
+
                             }
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
-    </div>
-}
+    }
+
+</div>
+   

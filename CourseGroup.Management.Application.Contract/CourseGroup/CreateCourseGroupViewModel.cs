@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using _0_FrameWork.Application;
+using Microsoft.AspNetCore.Http;
 
 namespace Shop.Management.Application.Contract.CourseGroup
 {
@@ -24,6 +25,11 @@ namespace Shop.Management.Application.Contract.CourseGroup
         public string Slug { get; set; }
 
         public long? SubGroupId { get; set; }
+        public IFormFile Picture { get; set; }
+        public string PictureName { get; set; }
+        public string PictureTitle { get; set; }
+        public string PictureAlt { get; set; }
+
         public List<CourseGroupViewModel> CourseGroupSelectList { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     public class CourseQuerySearchModel
     {
        
-        public string Name { get; set; }
+        public string Search { get; set; }
         public string Filter { get; set; }
         public string Course { get; set; }
 

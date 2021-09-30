@@ -4,7 +4,6 @@ using _0_Framework.Application;
 using _0_FrameWork.Application;
 using BlogManagement.Domain.ArticleAgg;
 using CommentManagement.Domain.CourseCommentAgg;
-using CommentManagement.Domain.HomePageDetailsAgg;
 using CommentManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Comment;
@@ -104,9 +103,5 @@ namespace ShiftCoderQuery.Query
             return operation.Succeeded("نظر شما با موفقیت ثبت شد");
         }
 
-        public List<News> GetAllNews()
-        {
-            return _context.News.AsNoTracking().OrderByDescending(x => x.CreationDate).Take(6).ToList();
-        }
     }
 }

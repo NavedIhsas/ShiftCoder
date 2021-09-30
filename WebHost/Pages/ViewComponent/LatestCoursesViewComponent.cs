@@ -16,7 +16,7 @@ namespace WebHost.Pages.ViewComponent
         {
             var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
             if (ipAddress == null) return null;
-            var course = _courseQuery.LatestCourses(ipAddress);
+            var course = _courseQuery.LatestCourses();
             return View("Default", course);
         }
     }

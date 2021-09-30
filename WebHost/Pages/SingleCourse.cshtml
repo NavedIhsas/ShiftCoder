@@ -1,9 +1,12 @@
 ﻿@page "{id}"
+
 @using _0_Framework.Application
 @using ShiftCoderQuery.Contract.Course
+@using ShiftCoderQuery.Contract.CourseGroup
 @using Shop.Management.Application.Contract.CourseEpisode
 @model WebHost.Pages.SingleCourseModel
 @inject ICourseQuery _course;
+@inject ICourseGroupQuery _group
 @{
     ViewData["Title"] = Model.Course.Name;
 
@@ -13,507 +16,815 @@
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<main id="main-container" class="container">
-    <div class="row">
-        <header>
-            <div>
-                <h1 id="head-title">@Model.Course.Name</h1>
-                <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a asp-page="Index">خانه</a></li>
-                        <li class="breadcrumb-item"><a asp-page="Courses">آموزش ها</a></li>
-                        <li class="breadcrumb-item"><a asp-page="Courses" asp-route-categories="@Model.Course.CourseGroup">@Model.Course.CourseGroup</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">@Model.Course.Name</li>
-                    </ol>
-                </nav>
+<!-- Header Start -->
+<div class="container-fluid page-header" style="margin-bottom: 90px;">
+    <div class="container">
+        <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+            <h3 class="display-4 text-white text-uppercase">جزئیات دوره</h3>
+            <div class="d-inline-flex text-white">
+                <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">صفحه اصلی</a></p>
+                <i class="fa fa-angle-double-left pt-1 px-3"></i>
+                <p class="m-0 text-uppercase"><a class="text-white" asp-page="Courses" asp-route-id="@Model.Course.CourseGroupSlug">@Model.Course.CourseGroup</a></p>
+                <i class="fa fa-angle-double-left pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">@Model.Course.Name</p>
             </div>
-        </header>
-        <section id="body-container" class="container">
-            <div class="row">
-                <aside id="aside-container" class="col-12 col-lg-4">
-                    <div class="condition-course">
-                        <div class="container-info-aside price-course">
-                            <h3 id="text-price">قیمت دوره</h3>
-                            <h3 id="value-price"><span>@((Model.Course.Price==0)?"رایگان":$"{Model.Course.Price.ToMoney()} تومان" )</span></h3>
-                        </div>
-                        <div class="line-aside"></div>
-                        <div class="container-info-aside">
-                            <div class="container-title-line-aside">
-                                <i class="fas fa-user-tie icon-title-aside"></i>
-                                <p class="paragraph-info-aside">مدرس :</p>
-                            </div>
-                            <div class="container-title-line-aside">
-                                <h2 class="value-info-aside">@Model.Course.TeacherName</h2>
-                            </div>
-                        </div>
-                        <div class="container-info-aside">
-                            <div class="container-title-line-aside">
-                                <i class="fas fa-user-graduate icon-title-aside"></i>
-                                <p class="paragraph-info-aside">تعداد دانشجویان :</p>
-                            </div>
-                            <div class="container-title-line-aside">
-                                <h5 class="value-info-aside">@Model.Course.UserCourse.Count نفر</h5>
-                            </div>
-                        </div>
-                        <div class="container-info-aside">
-                            <div class="container-title-line-aside">
-                                <i class="fas fa-play-circle icon-title-aside"></i>
-                                <p class="paragraph-info-aside">تعداد قسمت ها :</p>
-                            </div>
-                            <div class="container-title-line-aside">
-                                <h5 class="value-info-aside">@Model.Course.EpisodeCount قسمت</h5>
-                            </div>
-                        </div>
-                        <div class="container-info-aside">
-                            <div class="container-title-line-aside">
-                                <i class="fas fa-clock icon-title-aside"></i>
-                                <p class="paragraph-info-aside">مدت زمان دوره :</p>
-                            </div>
-                            <div class="container-title-line-aside">
-                                <h5 class="value-info-aside">
-                                    @{
-                                        var time = new TimeSpan(Model.Course.EpisodeCourse.Sum(t => t.Time.Ticks));
+        </div>
+    </div>
+</div>
+
+
+<!-- Detail Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8" style="position: relative; float: left">
+                <div class="mb-5">
+                    <h6 class="text-primary mb-3">@Tools.ChangeTimeToFarsi(Model.Course.CreationDate, "M-MMMM/yyyy")</h6>
+                    <h1 class="mb-5">@Model.Course.ShortDescription</h1>
+                    <img class="img-fluid rounded w-100 mb-4" src="~/FileUploader/@Model.Course.Picture" alt="@Model.Course.PictureAlt" title="@Model.Course.PictureTitle">
+                    @Html.Raw(Model.Course.Description)
+                </div>
+                <hr />
+                <div id="container-img-title">
+
+
+                    @if (ViewData["Episode"] != null)
+                    {
+                        var episode = ViewData["Episode"] as CourseEpisodeViewModel;
+                        <video id="player" playsinline controls class="video-title-content">
+                            <source src="@ViewData["FilePath"]" type="video/mp4" style="width: 100%" class="video-title-content">
+                        </video>
+                    }
+                    else
+                    {
+                        <video id="player" playsinline controls poster="~/FileUploader/@Model.Course.PosterImg" class="video-title-content">
+                            <source src="~/FileUploader/@Model.Course.File" type="video/mp4" class="video-title-content">
+                        </video>
+                    }
+
+                </div>
+                <br />
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header mb-0 mt-h2-accordion" id="headingOne">
+                            <button class="accordion-button collapsed accordion-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                سرفصل های دوره
+                            </button>
+                        </h2>
+
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                @if (!userInCourse)
+                                {
+                                    @if (Model.Course.Price != 0)
+                                    {
+                                        <p class=" text-success mt-2 text-center"><b>بعد از ثبت نام در دوره و تایید فاکتور، لینک های دانلود برای شما فعال خواهد شد</b></p>
                                     }
-                                    @time
-                                </h5>
+                                    if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <p class=" text-info mt-2 text-center"><b>برای تماشای آنلاین فایل های رایگان لطفا وارد حساب خود شوید</b></p>
+                                    }
+                                    <hr />
+                                }
+                                @foreach (var episode in Model.Course.EpisodeCourse)
+                                {
+                                    <div class="container-Section">
+                                        <div class="container-right-section">
+                                            <i class="fas fa-video video-icon"></i>
+                                            <h4 class="title-section">@episode.Title</h4>
+                                            <div class="line-section"></div>
+                                            <p class="video-time">@episode.Time</p>
+                                            <div class="line-section"></div>
+
+                                            @if (!userInCourse)
+                                            {
+                                                @if (episode.IsFree)
+                                                {
+                                                    <a class="text-success">رایگان</a>
+                                                }
+                                                else
+                                                {
+                                                    <p class="text-info">نقدی</p>
+
+                                                }
+                                            }
+
+                                        </div>
+                                        <div class="container-left-section">
+
+                                            @if (!userInCourse)
+                                            {
+                                                @if (episode.IsFree)
+                                                {
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <a href="/SingleCourse/@Model.Course.Slug?episode=@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                        <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a><i class="fas fa-play icon-left-section"></i></a>
+                                                        <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <a><i class="fas fa-play icon-left-section"></i></a>
+                                                    <a><i class="fas fa-download icon-left-section"></i></a>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <a href="/SingleCourse/@Model.Course.Slug?episode=@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
+                                                <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        @if (Model.Course.UpdateDate != "")
-                        {<div class="container-info-aside">
-                                <div class="container-title-line-aside">
-                                    <i class="fas fa-calendar-check icon-title-aside"></i>
-                                    <p class="paragraph-info-aside">آخرین بروزرسانی :</p>
-                                </div>
-
-                                <div class="container-title-line-aside">
-                                    <h5 class="value-info-aside">@Model.Course.UpdateDate</h5>
-                                </div>
-                            </div>
-                        }
-
-                        <div class="container-info-aside">
-                            <div class="container-title-line-aside">
-                                <i class="fas fa-layer-group icon-title-aside"></i>
-                                <p class="paragraph-info-aside">سطح دوره آموزشی :</p>
-                            </div>
-                            <div class="container-title-line-aside">
-                                <h5 class="value-info-aside">@Model.Course.CourseLevel</h5>
-                            </div>
-                        </div>
-                        <div class="container-info-aside">
-                            <div class="container-title-line-aside">
-                                <i class="fas fa-question-circle icon-title-aside"></i>
-                                <p class="paragraph-info-aside">وضعیت دوره :</p>
-                            </div>
-                            <div class="container-title-line-aside">
-                                <h5 class="value-info-aside state-course @((Model.Course.CourseStatus=="در حال برگذاری")?"":"text-primary")">@Model.Course.CourseStatus</h5>
-                            </div>
-                        </div>
-                        <div id="container-register-course">
-                            @if (Model.Course.Price > 0 && !userInCourse)
+                <br />
+                <hr />
+                <!-- Comment List -->
+                <div class="mb-5">
+                    @if (Model.Course.CommentList.Count > 0)
+                    {
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">@Model.Course.CommentList.Count نظر</h3>
+                    }
+                    @foreach (var comment in Model.Course.Comments)
+                    {
+                        <div id="comment-@comment.Id" class="media mb-4">
+                            @if (!string.IsNullOrEmpty(comment.Picture))
                             {
-                                <a asp-page="BuyCourse" asp-route-id="@Model.Course.Id" id="btn-register-course">
-                                    <i class="fas fa-shopping-basket icon-register"></i>
-                                    <span id="span-text-register">شرکت در دوره @Model.Course.Price.ToMoney() تومان</span>
-                                </a>
-                            }
-
-                            else if (userInCourse)
-                            {
-                                <a id="btn-register-course">
-                                    <i class="fas fa-shopping-basket icon-register"></i>
-                                    <span id="span-text-register">شما قبلا این دوره را خریده اید.</span>
-                                </a>
+                                <img src="~/FileUploader/@comment.Picture" alt="@comment.Name" title="@comment.Name" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                                     style="width: 45px;">
                             }
 
                             else
                             {
-                                <a asp-page="BuyCourse" asp-route-id="@Model.Course.Id" id="btn-register-course">
-                                    <i class="fas fa-shopping-basket icon-register"></i>
-                                    <span id="span-text-register">شرکت رایگان در دوره.</span>
-                                </a>
+                                <img src="~/img/DefaultImg/comment-img.png" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                                     style="width: 45px;">
                             }
-                        </div>
-                    </div>
-                    <div class="condition-course condition-course-mb">
-                        <div id="container-view-comment-number">
-                            <div id="view-aside">
-                                <i class="far fa-eye icon-view-comment-number"></i>
-                                <p class="paragraph-view-comment-number">@Model.Course.VisitCount بازدید</p>
-                            </div>
-                            <div id="line-y-aside"></div>
-                            <div id="comment-aside">
-                                <i class="fa fa-comments icon-view-comment-number"></i>
-                                <p class="paragraph-view-comment-number">@Model.Course.CommentList.Count کامنت</p>
-                            </div>
-                        </div>
-                        <div id="container-share-media">
-                            <p id="text-share-media">اشتراک گذاری لینک</p>
-                            <div id="container-icons-share-social">
-                                <div class="container-icon-share-social">
-                                    <a href="#"><i class="fab fa-whatsapp icon-share-social icon-whatsapp-share"></i></a>
-                                </div>
-                                <div class="container-icon-share-social">
-                                    <a href="#"><i class="fab fa-twitter icon-share-social"></i></a>
-                                </div>
-                                <div class="container-icon-share-social">
-                                    <a href="#"><i class="fab fa-telegram-plane icon-share-social icon-telegram-share"></i></a>
-                                </div>
-                                <div class="container-icon-share-social">
-                                    <a href="#"><i class="fab fa-linkedin-in icon-share-social"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="condition-course condition-course-mb">
-                        <div id="container-profile-teacher">
-                            <div id="container-img-name-job-teacher">
-                                <img src="~/FileUploader/@Model.Course.TeacherAvatar" alt="@Model.Course.TeacherName" title="@Model.Course.TeacherName" id="img-info-teacher">
-                                <div id="container-name-job-teacher">
-                                    <h2 id="name-info-teacher">@Model.Course.TeacherName</h2>
-                                    <h4 id="job-info-teacher">@Model.Course.TeacherSkills</h4>
-                                </div>
-                            </div>
-                            <div id="container-profile-job">
-                                <a id="profile-info-teacher">پروفایل</a>
-                                <a id="cv-info-teacher">رزومه</a>
-                            </div>
-                        </div>
-                        <div class="container-info-teacher">
-                            <div class="container-line-info-line">
-                                <div class="line-info-aside"></div>
-                                <p class="title-info-teacher">درباره مدرس</p>
-                            </div>
-                            <p class="paragraph-info-teacher">
-                                @Model.Course.TeacherBio
-                                <div class="container-info-teacher">
-                                    <div class="container-line-info-line margin-container-line-info-line">
-                                        <div class="line-info-aside"></div>
-                                        <p class="title-info-teacher">دوره های مدرس</p>
-                                    </div>
-                                    <ul id="ul-courses-teacher">
-                                        @foreach (var item in Model.Course.CourseTeacher)
-                                        {
-                                            <li class="listitem-courses-teacher">
-                                                <a asp-page="SingleCourse" asp-route-id="@item.Slug" class="anchor-courses-teacher">@item.Name</a>
-                                            </li>
-                                        }
-
-                                    </ul>
-                                </div>
-                        </div>
-                        <div class="condition-course condition-course-mb">
-                            <div>
-                                <h3 id="title-support">
-                                    <i class="fas fa-user-headset icon-title-support"></i>
-                                    پشتیبانی دوره های شیفت کدر
-                                </h3>
-                                <p class="paragraph-support">شیفت کدر در طول شبانه روز آماده پاسخگویی به سوالات و مشکلات شما می باشد.</p>
-                                <p class="paragraph-support">
-                                    <i class="fas fa-mobile-alt icon-support"></i>
-                                    تماس با <strong class="bold-text-support">09212885357</strong>
+                            <div class="media-body">
+                                <h6 class="mr-3">@comment.Name <small class="mr-3" dir="rtl"><i>@comment.CreationDate</i></small></h6>
+                                <p class="mr-3">
+                                    @comment.Message
                                 </p>
-                                <p class="paragraph-support">
-                                    <i class="fab fa-telegram-plane icon-support"></i>
-                                    آی دی تلگرام <strong class="bold-text-support">shiftcoder_support</strong>
-                                </p>
-                                <p class="paragraph-support">
-                                    <i class="fab fa-instagram icon-support"></i>
-                                    دایرکت اینستاگرام <strong class="bold-text-support">shiftcoder</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
+                                <a href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn btn-sm btn-secondary">پاسخ</a>
 
-                <section id="content-container" class="col-12 col-lg-8">
-                    <div id="container-img-title">
-
-
-                        @if (ViewData["Episode"] != null)
-                        {
-                            var episode = ViewData["Episode"] as CourseEpisodeViewModel;
-                            <video id="player" playsinline controls class="video-title-content">
-                                <source src="@ViewData["FilePath"]" type="video/mp4" class="video-title-content">
-                            </video>
-                        }
-                        else
-                        {
-                            <video id="player" playsinline controls poster="~/FileUploader/@Model.Course.PosterImg" class="video-title-content">
-                                <source src="~/FileUploader/@Model.Course.File" type="video/mp4" class="video-title-content">
-                            </video>
-                        }
-
-                    </div>
-                    <div id="text-content">
-                        @Html.Raw(Model.Course.Description)
-                        @if (Model.Course.PrerequisiteCourse.Count != 0)
-                        {
-                            <div class="container-prerequisites">
-                                <h5>پیش نیاز های این دوره</h5>
-                                <ul>
-                                    @foreach (var course in Model.Course.PrerequisiteCourse)
-                                    {
-                                        <li class="li-checked">@course.Title.</li>
-
-                                    }
-                                </ul>
-                            </div>
-                        }
-                        @if (Model.Course.SuitableCourse.Count != 0)
-                        {
-                            <div class="container-prerequisites mt-5">
-                                <h5>این دوره مناسب چه افرادی است ؟</h5>
-                                <ul>
-                                    @foreach (var item in Model.Course.SuitableCourse)
-                                    {
-                                        <li class="li-checked">@item.Title.</li>
-                                    }
-                                </ul>
-                            </div>
-                        }
-
-                        @if (Model.Course.AfterCourse.Count != 0)
-                        {
-                            <div class="container-prerequisites mt-5">
-                                <h5>در پایان این دوره چه کار هایی میتوانیم انجام دهیم ؟</h5>
-                                <ul>
-
-                                    @foreach (var course in Model.Course.AfterCourse)
-                                    {
-                                        <li class="li-checked">@course.Title.</li>
-                                    }
-                                </ul>
-                            </div>
-                        }
-
-
-                        @switch (Model.Course.CourseLevel)
-                        {
-                            case "مقدماتی":
-                                <div class="accordion" id="accordionExample">
-
-                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model" />
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header mb-0" id="headingTwo">
-                                            <button class="accordion-button collapsed accordion-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                سر فصل های @Model.Course.Name - بخش متوسط
-                                            </button>
-                                        </h2>
-                                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                <p style="margin: 1rem 0 0 0; font-style: italic;">به زودی ...</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header mb-0" id="headingThree">
-                                            <button class="accordion-button collapsed accordion-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                سر فصل های @Model.Course.Name - بخش پیشرفته
-                                            </button>
-                                        </h2>
-                                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                <p style="margin: 1rem 0 0 0; font-style: italic;">به زودی ...</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                break;
-
-                            case "پیشرفته":
-
-                                <div class="accordion" id="accordionExample">
-                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model" />
-
-                                </div>
-
-                                break;
-
-                            case "متوسط":
-
-                                <div class="accordion" id="accordionExample">
-                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model" />
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header mb-0" id="headingThree">
-                                            <button class="accordion-button collapsed accordion-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                سر فصل های @Model.Course.Name - بخش پیشرفته
-                                            </button>
-                                        </h2>
-                                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                <p style="margin: 1rem 0 0 0; font-style: italic;">به زودی ...</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                break;
-
-                            default:
-                                <div class="accordion" id="accordionExample">
-                                    <partial name="Shared/PartialViews/_PlayAndDownloadEpisodes" model="this.Model" />
-                                </div>
-                                break;
-                        }
-
-
-                    </div>
-                </section>
-                <aside class="col-12 col-lg-4"></aside>
-                <section id="comment-container" class="col-12 col-lg-8">
-                    <div id="header-comment">
-                        <h5>
-                            <i class="fas fa-comments-alt icon-comment"></i>
-                            نظرات دوره
-                            <small id="number-all-comment">(@Model.Course.CommentList.Count)</small>
-                        </h5>
-                    </div>
-
-                    @{ var type = ViewData["Type"];}
-
-                    @if (type is "send-comment")
-                    {
-                        <script>
-                            swal("موفق", "نظر شما بعد از تایید مدیر نشر خواهد شد", "success");
-                        </script>
-                    }
-                    <form method="post" id="formPost">
-                        <div id="container-send-comment">
-                            <p id="text-comment-write">دیدگاه خود را بنویسید ...</p>
-                            <div id="inputs-comment" class="container">
-
-                                @if (!User.Identity.IsAuthenticated)
+                                @if (comment.SubComment.Count != 0)
                                 {
-                                    <div class="row">
-                                        <div class="col-12 col-md-6 container-email-name">
-                                            <label for="name-input" class="label-email-name-text">نام *</label>
-                                            <input type="text" id="name-input" name="name" class="col-12 input-name-email"
-                                                   required oninvalid="this.setCustomValidity('وارد کردن نام الزامی میباشد!')"
-                                                   oninput="setCustomValidity('')">
-                                        </div>
-                                        <div class="col-12 col-md-6 container-email-name">
-                                            <label for="email-input" class="label-email-name-text">ایمیل *</label>
-                                            <input type="email" id="email-input" name="email" class="col-12 input-name-email"
-                                                   required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
-                                                   oninput="setCustomValidity('')">
-                                        </div>
-                                        <div class="col-12 container-email-name">
-                                            <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
-                                            <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"
-                                                      required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
-                                                      oninput="setCustomValidity('')"></textarea>
-                                        </div>
-                                        <input type="hidden" name="ownerRecordId" value="@Model.Course.Id" />
-                                        <input type="hidden" name="productSlug" value="@Model.Course.Slug" />
-                                        <input type="hidden" name="parentId" id="commentParenId" value="" />
+                                    @foreach (var sub in comment.SubComment)
+                                    {
 
-                                        <input type="submit" id="submit-comment" value="ارسال">
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="row">
-                                        <div class="col-12 container-email-name">
-                                            <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
-                                            <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"
-                                                      required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
-                                                      oninput="setCustomValidity('')"></textarea>
-                                        </div>
-                                        <input type="hidden" name="ownerRecordId" value="@Model.Course.Id" />
-                                        <input type="hidden" name="productSlug" value="@Model.Course.Slug" />
-                                        <input type="hidden" name="parentId" id="commentParenId" value="" />
+                                        <div id="comment-@sub.Id" class="media mt-4">
 
-                                        <input type="submit" id="submit-comment" value="ارسال">
-                                    </div>
-                                }
-                            </div>
-
-
-                            @foreach (var comment in Model.Course.Comments)
-                            {
-                                <div class="container-answer-question">
-                                    <div id="comment-@comment.Id" class="box-comment-question">
-                                        <div class="container-photo-comment-answer-btn">
-                                            @if (!string.IsNullOrEmpty(comment.Picture))
+                                            @if (!string.IsNullOrEmpty(sub.Picture))
                                             {
-                                                <img src="~/FileUploader/@comment.Picture" alt="profile user" class="img-profile-user">
+                                                <img src="~/FileUploader/@sub.Picture" alt="@sub.Name" title="@sub.Name" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                                                     style="width: 45px;">
                                             }
 
                                             else
                                             {
-                                                <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
+                                                <img src="~/img/DefaultImg/comment-img.png" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                                                     style="width: 45px;">
                                             }
-                                            <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
-                                                پاسخ
-                                                <i class="fas fa-reply icon-answer"></i>
-                                            </a>
-                                        </div>
-                                        <div class="container-name-text-comment">
-                                            <div class="container-name-date">
-                                                <h6 class="name-commanet-question">@comment.Name</h6>
-                                                <div class="line-name-date"></div>
-                                                <p class="date-question"> @Tools.ChangeTimeToFarsi(comment.CreateDateTime,"yyyy/MM/dd-HH-mm")</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-question">
-                                                    @comment.Message
+
+                                            <div class="media-body">
+                                                <h6 class="mr-3">@sub.Name <small class="mr-3" dir="rtl"><i>@sub.CreationDate</i></small></h6>
+                                                <p class="mr-3">
+                                                    @sub.Message
                                                 </p>
+                                                <a href="#formPost" onclick='$("#commentParenId").val(@sub.Id)' class="btn btn-sm btn-secondary">پاسخ</a>
                                             </div>
                                         </div>
+                                        <partial name="Shared/PartialViews/_Subcomment" model="sub.SubComment" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+
+                @{ var type = ViewData["Type"];}
+
+                @if (type is "send-comment")
+                {
+                    <script>
+                        swal("موفق", "نظر شما بعد از تایید مدیر نشر خواهد شد", "success");
+                    </script>
+                }
+
+
+                <!-- Comment Form -->
+                <div class="bg-secondary rounded p-5">
+                    <h3 class="text-uppercase mb-4">دیدگاه خود را بنویسید</h3>
+                    <form method="post" id="formPost">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="form-group">
+                                <label for="message">دیدگاه *</label>
+                                <textarea id="message" name="message" cols="30" rows="5" class="form-control border-0" required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                                          oninput="setCustomValidity('')"></textarea>
+                            </div>
+                            <div class="form-group mb-0">
+                                <input type="submit" value="ارسال نظر" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
+                            </div>
+
+                            <input type="hidden" name="ownerRecordId" value="@Model.Course.Id" />
+                            <input type="hidden" name="productSlug" value="@Model.Course.Slug" />
+                            <input type="hidden" name="parentId" id="commentParenId" value="" />
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label for="name">نام *</label>
+                                <input name="name" type="text" class="form-control border-0" id="name" required oninvalid="this.setCustomValidity('نام خود را بنویسید.')"
+                                       oninput="setCustomValidity('')">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">ایمیل *</label>
+                                <input name="email" type="email" class="form-control border-0" id="email" required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
+                                       oninput="setCustomValidity('')">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">نظر *</label>
+                                <textarea name="message" id="message" cols="30" rows="5" class="form-control border-0" required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                                          oninput="setCustomValidity('')"></textarea>
+                            </div>
+                            <div class="form-group mb-0">
+                                <input type="submit" value="ثبت نظر" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
+                            </div>
+
+                            <input type="hidden" name="ownerRecordId" value="@Model.Course.Id" />
+                            <input type="hidden" name="productSlug" value="@Model.Course.Slug" />
+                            <input type="hidden" name="parentId" id="commentParenId" value="" />
+
+                        }
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-4" style="margin-top:8rem !important">
+
+                <div class="d-flex flex-column bg-aliceblue text-center rounded mb-5 py-5 px-4" >
+                    <div class="container-info-aside price-course">
+                        <h3 id="text-price">قیمت دوره</h3>
+                        <h3 id="value-price"><span>@((Model.Course.Price==0)?"رایگان":$"{Model.Course.Price.ToMoney()} تومان" )</span></h3>
+                    </div>
+                    <div class="line-aside"></div>
+                    <div class="container-info-aside">
+                        <div class="container-title-line-aside">
+                            <i class="fas fa-user-tie icon-title-aside"></i>
+                            <p class="paragraph-info-aside">مدرس :</p>
+                        </div>
+                        <div class="container-title-line-aside">
+                            <h2 class="value-info-aside">@Model.Course.TeacherName</h2>
+                        </div>
+                    </div>
+                    <div class="container-info-aside">
+                        <div class="container-title-line-aside">
+                            <i class="fas fa-user-graduate icon-title-aside"></i>
+                            <p class="paragraph-info-aside">تعداد دانشجویان :</p>
+                        </div>
+                        <div class="container-title-line-aside">
+                            <h5 class="value-info-aside">@Model.Course.UserCourse.Count نفر</h5>
+                        </div>
+                    </div>
+                    <div class="container-info-aside">
+                        <div class="container-title-line-aside">
+                            <i class="fas fa-play-circle icon-title-aside"></i>
+                            <p class="paragraph-info-aside">تعداد قسمت ها :</p>
+                        </div>
+                        <div class="container-title-line-aside">
+                            <h5 class="value-info-aside">@Model.Course.EpisodeCount قسمت</h5>
+                        </div>
+                    </div>
+                    <div class="container-info-aside">
+                        <div class="container-title-line-aside">
+                            <i class="fas fa-clock icon-title-aside"></i>
+                            <p class="paragraph-info-aside">مدت زمان دوره :</p>
+                        </div>
+                        <div class="container-title-line-aside">
+                            <h5 class="value-info-aside">
+                                @{
+                                    var time = new TimeSpan(Model.Course.EpisodeCourse.Sum(t => t.Time.Ticks));
+                                }
+                                @time
+                            </h5>
+                        </div>
+                    </div>
+
+                    @if (Model.Course.UpdateDate != "")
+                    {<div class="container-info-aside">
+                            <div class="container-title-line-aside">
+                                <i class="fas fa-calendar-check icon-title-aside"></i>
+                                <p class="paragraph-info-aside">آخرین بروزرسانی :</p>
+                            </div>
+
+                            <div class="container-title-line-aside">
+                                <h5 class="value-info-aside">@Model.Course.UpdateDate</h5>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="container-info-aside">
+                        <div class="container-title-line-aside">
+                            <i class="fas fa-layer-group icon-title-aside"></i>
+                            <p class="paragraph-info-aside">سطح دوره آموزشی :</p>
+                        </div>
+                        <div class="container-title-line-aside">
+                            <h5 class="value-info-aside">@Model.Course.CourseLevel</h5>
+                        </div>
+                    </div>
+                    <div class="container-info-aside">
+                        <div class="container-title-line-aside">
+                            <i class="fas fa-question-circle icon-title-aside"></i>
+                            <p class="paragraph-info-aside">وضعیت دوره :</p>
+                        </div>
+                        <div class="container-title-line-aside">
+                            <h5 class="value-info-aside state-course @((Model.Course.CourseStatus=="در حال برگذاری")?"":"text-primary")">@Model.Course.CourseStatus</h5>
+                        </div>
+                    </div>
+                    <div id="container-register-course">
+                        @if (Model.Course.Price > 0 && !userInCourse)
+                        {
+                            <a asp-page="BuyCourse" asp-route-id="@Model.Course.Id" id="btn-register-course">
+                                <i class="fas fa-shopping-basket icon-register"></i>
+                                <span id="span-text-register">شرکت در دوره @Model.Course.Price.ToMoney() تومان</span>
+                            </a>
+                        }
+
+                        else if (userInCourse)
+                        {
+                            <a id="btn-register-course">
+                                <i class="fas fa-shopping-basket icon-register"></i>
+                                <span id="span-text-register">شما قبلا این دوره را خریده اید.</span>
+                            </a>
+                        }
+
+                        else
+                        {
+                            <a asp-page="BuyCourse" asp-route-id="@Model.Course.Id" id="btn-register-course">
+                                <i class="fas fa-shopping-basket icon-register"></i>
+                                <span id="span-text-register">شرکت رایگان در دوره.</span>
+                            </a>
+                        }
+                    </div>
+                </div>
+
+                <br />
+                <!-- Author Bio -->
+                <div class="d-flex flex-column bg-aliceblue text-center text-dark rounded mb-5 py-5 px-4" >
+                    <img src="~/FileUploader/@Model.Course.TeacherAvatar" alt="@Model.Course.TeacherName" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px; height: 100px">
+                    <h3 class="text-primary mb-3">@Model.Course.TeacherName</h3>
+                    <h6 class="text-uppercase mb-4">@Model.Course.TeacherSkills</h6>
+                    <p class="m-0">
+                        @Model.Course.TeacherBio
+                    </p>
+                </div>
+
+                <!-- Category List -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var category in _group.LatestCourseGroup())
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a asp-page="Courses" asp-route-id="@category.Slug" class="text-decoration-none h6 m-0">@category.Title</a>
+                                <span class="badge badge-primary badge-pill">@category.CourseCount</span>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+
+                <!-- Recent Post -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4">آخرین دوره ها</h3>
+                    @foreach (var latestCourse in _course.LatestCourses())
+                    {
+                        <a asp-page="SingleCourse" asp-route-id="@latestCourse.Slug" class="d-flex align-items-center text-decoration-none mb-3">
+                            <img style="width: 80px; height:80px" class="img-fluid rounded" src="~/FileUploader/@latestCourse.Picture" alt="@latestCourse.PictureAlt" title="@latestCourse.PictureTitle">
+                            <div class="pl-3">
+                                <h6 class="m-1 mr-3">@latestCourse.ShortDescription</h6>
+                                <small class="mr-3" dir="rtl">@Tools.ChangeTimeToFarsi(latestCourse.CreationDate, "M - MMMM / yyyy")</small>
+                            </div>
+                        </a>
+                    }
+
+                </div>
+
+                <!-- Tag Cloud -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4">کلمات کلیدی</h3>
+                    <div class="d-flex flex-wrap m-n1">
+                        @foreach (var keywords in Model.Course.Keywords)
+                        {
+                            <a asp-page="AllCourses" asp-route-Search="@keywords" class="btn btn-outline-primary m-1">@keywords</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Detail End -->
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <main id="main-container" class="container">
+        <div class="row">
+            <header>
+                <div>
+                    <h1 id="head-title">@Model.Course.Name</h1>
+                    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-page="Index">خانه</a></li>
+                            <li class="breadcrumb-item"><a asp-page="Courses">آموزش ها</a></li>
+                            <li class="breadcrumb-item"><a asp-page="Courses" asp-route-categories="@Model.Course.CourseGroup">@Model.Course.CourseGroup</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">@Model.Course.Name</li>
+                        </ol>
+                    </nav>
+                </div>
+            </header>
+            <section id="body-container" class="container">
+                <div class="row">
+                    <aside id="aside-container" class="col-12 col-lg-4">
+                        <div class="condition-course">
+                            <div class="container-info-aside price-course">
+                                <h3 id="text-price">قیمت دوره</h3>
+                                <h3 id="value-price"><span>@((Model.Course.Price==0)?"رایگان":$"{Model.Course.Price.ToMoney()} تومان" )</span></h3>
+                            </div>
+                            <div class="line-aside"></div>
+                            <div class="container-info-aside">
+                                <div class="container-title-line-aside">
+                                    <i class="fas fa-user-tie icon-title-aside"></i>
+                                    <p class="paragraph-info-aside">مدرس :</p>
+                                </div>
+                                <div class="container-title-line-aside">
+                                    <h2 class="value-info-aside">@Model.Course.TeacherName</h2>
+                                </div>
+                            </div>
+                            <div class="container-info-aside">
+                                <div class="container-title-line-aside">
+                                    <i class="fas fa-user-graduate icon-title-aside"></i>
+                                    <p class="paragraph-info-aside">تعداد دانشجویان :</p>
+                                </div>
+                                <div class="container-title-line-aside">
+                                    <h5 class="value-info-aside">@Model.Course.UserCourse.Count نفر</h5>
+                                </div>
+                            </div>
+                            <div class="container-info-aside">
+                                <div class="container-title-line-aside">
+                                    <i class="fas fa-play-circle icon-title-aside"></i>
+                                    <p class="paragraph-info-aside">تعداد قسمت ها :</p>
+                                </div>
+                                <div class="container-title-line-aside">
+                                    <h5 class="value-info-aside">@Model.Course.EpisodeCount قسمت</h5>
+                                </div>
+                            </div>
+                            <div class="container-info-aside">
+                                <div class="container-title-line-aside">
+                                    <i class="fas fa-clock icon-title-aside"></i>
+                                    <p class="paragraph-info-aside">مدت زمان دوره :</p>
+                                </div>
+                                <div class="container-title-line-aside">
+                                    <h5 class="value-info-aside">
+                                        @{
+                                            var time = new TimeSpan(Model.Course.EpisodeCourse.Sum(t => t.Time.Ticks));
+                                        }
+                                        @time
+                                    </h5>
+                                </div>
+                            </div>
+
+                            @if (Model.Course.UpdateDate != "")
+                            {<div class="container-info-aside">
+                                    <div class="container-title-line-aside">
+                                        <i class="fas fa-calendar-check icon-title-aside"></i>
+                                        <p class="paragraph-info-aside">آخرین بروزرسانی :</p>
                                     </div>
 
-                                    @if (comment.SubComment.Count != 0)
-                                    {
-                                        @foreach (var sub in comment.SubComment)
-                                        {
-                                            <div id="comment-@sub.Id" class="box-comment-answer">
-                                                <div class="container-photo-comment-answer-btn">
-                                                    @if (!string.IsNullOrEmpty(sub.Picture))
-                                                    {
-                                                        <img src="~/FileUploader/@sub.Picture" alt="profile user" class="img-profile-user">
-                                                    }
-
-                                                    else
-                                                    {
-                                                        <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
-                                                    }
-                                                    <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
-                                                        پاسخ
-                                                        <i class="fas fa-reply icon-answer"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="container-name-text-comment">
-                                                    <div class="container-name-date">
-                                                        <h6 class="name-commanet-question">@sub.Name</h6>
-                                                        <div class="line-name-date"></div>
-                                                        <p class="date-question"> @Tools.ChangeTimeToFarsi(sub.CreateDateTime, "yyyy/MM/dd-HH-mm")</p>
-                                                    </div>
-                                                    <div>
-                                                        <p class="text-question">
-                                                            @sub.Message
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <partial name="Shared/PartialViews/_Subcomment" model="sub.SubComment" />
-                                        }
-                                    }
-
-                                    <div class="line-end-comment-box"></div>
+                                    <div class="container-title-line-aside">
+                                        <h5 class="value-info-aside">@Model.Course.UpdateDate</h5>
+                                    </div>
                                 </div>
                             }
-                            <button id="more-comment-btn" disabled>شماهده نظرات بیشتر ...</button>
+
+                            <div class="container-info-aside">
+                                <div class="container-title-line-aside">
+                                    <i class="fas fa-layer-group icon-title-aside"></i>
+                                    <p class="paragraph-info-aside">سطح دوره آموزشی :</p>
+                                </div>
+                                <div class="container-title-line-aside">
+                                    <h5 class="value-info-aside">@Model.Course.CourseLevel</h5>
+                                </div>
+                            </div>
+                            <div class="container-info-aside">
+                                <div class="container-title-line-aside">
+                                    <i class="fas fa-question-circle icon-title-aside"></i>
+                                    <p class="paragraph-info-aside">وضعیت دوره :</p>
+                                </div>
+                                <div class="container-title-line-aside">
+                                    <h5 class="value-info-aside state-course @((Model.Course.CourseStatus=="در حال برگذاری")?"":"text-primary")">@Model.Course.CourseStatus</h5>
+                                </div>
+                            </div>
+                            <div id="container-register-course">
+                                @if (Model.Course.Price > 0 && !userInCourse)
+                                {
+                                    <a asp-page="BuyCourse" asp-route-id="@Model.Course.Id" id="btn-register-course">
+                                        <i class="fas fa-shopping-basket icon-register"></i>
+                                        <span id="span-text-register">شرکت در دوره @Model.Course.Price.ToMoney() تومان</span>
+                                    </a>
+                                }
+
+                                else if (userInCourse)
+                                {
+                                    <a id="btn-register-course">
+                                        <i class="fas fa-shopping-basket icon-register"></i>
+                                        <span id="span-text-register">شما قبلا این دوره را خریده اید.</span>
+                                    </a>
+                                }
+
+                                else
+                                {
+                                    <a asp-page="BuyCourse" asp-route-id="@Model.Course.Id" id="btn-register-course">
+                                        <i class="fas fa-shopping-basket icon-register"></i>
+                                        <span id="span-text-register">شرکت رایگان در دوره.</span>
+                                    </a>
+                                }
+                            </div>
                         </div>
-                    </form>
-                </section>
-            </div>
-        </section>
-    </div>
-</main>
+                        <div class="condition-course condition-course-mb">
+                            <div id="container-view-comment-number">
+                                <div id="view-aside">
+                                    <i class="far fa-eye icon-view-comment-number"></i>
+                                    <p class="paragraph-view-comment-number">@Model.Course.VisitCount بازدید</p>
+                                </div>
+                                <div id="line-y-aside"></div>
+                                <div id="comment-aside">
+                                    <i class="fa fa-comments icon-view-comment-number"></i>
+                                    <p class="paragraph-view-comment-number">@Model.Course.CommentList.Count کامنت</p>
+                                </div>
+                            </div>
+                            <div id="container-share-media">
+                                <p id="text-share-media">اشتراک گذاری لینک</p>
+                                <div id="container-icons-share-social">
+                                    <div class="container-icon-share-social">
+                                        <a href="#"><i class="fab fa-whatsapp icon-share-social icon-whatsapp-share"></i></a>
+                                    </div>
+                                    <div class="container-icon-share-social">
+                                        <a href="#"><i class="fab fa-twitter icon-share-social"></i></a>
+                                    </div>
+                                    <div class="container-icon-share-social">
+                                        <a href="#"><i class="fab fa-telegram-plane icon-share-social icon-telegram-share"></i></a>
+                                    </div>
+                                    <div class="container-icon-share-social">
+                                        <a href="#"><i class="fab fa-linkedin-in icon-share-social"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="condition-course condition-course-mb">
+                            <div id="container-profile-teacher">
+                                <div id="container-img-name-job-teacher">
+                                    <img src="~/FileUploader/@Model.Course.TeacherAvatar" alt="@Model.Course.TeacherName" title="@Model.Course.TeacherName" id="img-info-teacher">
+                                    <div id="container-name-job-teacher">
+                                        <h2 id="name-info-teacher">@Model.Course.TeacherName</h2>
+                                        <h4 id="job-info-teacher">@Model.Course.TeacherSkills</h4>
+                                    </div>
+                                </div>
+                                <div id="container-profile-job">
+                                    <a id="profile-info-teacher">پروفایل</a>
+                                    <a id="cv-info-teacher">رزومه</a>
+                                </div>
+                            </div>
+                            <div class="container-info-teacher">
+                                <div class="container-line-info-line">
+                                    <div class="line-info-aside"></div>
+                                    <p class="title-info-teacher">درباره مدرس</p>
+                                </div>
+                                <p class="paragraph-info-teacher">
+                                    @Model.Course.TeacherBio
+                                    <div class="container-info-teacher">
+                                        <div class="container-line-info-line margin-container-line-info-line">
+                                            <div class="line-info-aside"></div>
+                                            <p class="title-info-teacher">دوره های مدرس</p>
+                                        </div>
+                                        <ul id="ul-courses-teacher">
+                                            @foreach (var item in Model.Course.CourseTeacher)
+                                            {
+                                                <li class="listitem-courses-teacher">
+                                                    <a asp-page="SingleCourse" asp-route-id="@item.Slug" class="anchor-courses-teacher">@item.Name</a>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                            </div>
+                            <div class="condition-course condition-course-mb">
+                                <div>
+                                    <h3 id="title-support">
+                                        <i class="fas fa-user-headset icon-title-support"></i>
+                                        پشتیبانی دوره های شیفت کدر
+                                    </h3>
+                                    <p class="paragraph-support">شیفت کدر در طول شبانه روز آماده پاسخگویی به سوالات و مشکلات شما می باشد.</p>
+                                    <p class="paragraph-support">
+                                        <i class="fas fa-mobile-alt icon-support"></i>
+                                        تماس با <strong class="bold-text-support">09212885357</strong>
+                                    </p>
+                                    <p class="paragraph-support">
+                                        <i class="fab fa-telegram-plane icon-support"></i>
+                                        آی دی تلگرام <strong class="bold-text-support">shiftcoder_support</strong>
+                                    </p>
+                                    <p class="paragraph-support">
+                                        <i class="fab fa-instagram icon-support"></i>
+                                        دایرکت اینستاگرام <strong class="bold-text-support">shiftcoder</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <section id="content-container" class="col-12 col-lg-8">
+                        <div id="container-img-title">
+
+
+                            @if (ViewData["Episode"] != null)
+                            {
+                                var episode = ViewData["Episode"] as CourseEpisodeViewModel;
+                                <video id="player" playsinline controls class="video-title-content">
+                                    <source src="@ViewData["FilePath"]" type="video/mp4" class="video-title-content">
+                                </video>
+                            }
+                            else
+                            {
+                                <video id="player" playsinline controls poster="~/FileUploader/@Model.Course.PosterImg" class="video-title-content">
+                                    <source src="~/FileUploader/@Model.Course.File" type="video/mp4" class="video-title-content">
+                                </video>
+                            }
+
+                        </div>
+
+                    </section>
+                    <aside class="col-12 col-lg-4"></aside>
+                    <section id="comment-container" class="col-12 col-lg-8">
+                        <div id="header-comment">
+                            <h5>
+                                <i class="fas fa-comments-alt icon-comment"></i>
+                                نظرات دوره
+                                <small id="number-all-comment">(@Model.Course.CommentList.Count)</small>
+                            </h5>
+                        </div>
+
+                        @{ var type = ViewData["Type"];}
+
+                        @if (type is "send-comment")
+                        {
+                            <script>
+                                swal("موفق", "نظر شما بعد از تایید مدیر نشر خواهد شد", "success");
+                            </script>
+                        }
+                        <form method="post" id="formPost">
+                            <div id="container-send-comment">
+                                <p id="text-comment-write">دیدگاه خود را بنویسید ...</p>
+                                <div id="inputs-comment" class="container">
+
+                                    @if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 container-email-name">
+                                                <label for="name-input" class="label-email-name-text">نام *</label>
+                                                <input type="text" id="name-input" name="name" class="col-12 input-name-email"
+                                                       required oninvalid="this.setCustomValidity('وارد کردن نام الزامی میباشد!')"
+                                                       oninput="setCustomValidity('')">
+                                            </div>
+                                            <div class="col-12 col-md-6 container-email-name">
+                                                <label for="email-input" class="label-email-name-text">ایمیل *</label>
+                                                <input type="email" id="email-input" name="email" class="col-12 input-name-email"
+                                                       required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
+                                                       oninput="setCustomValidity('')">
+                                            </div>
+                                            <div class="col-12 container-email-name">
+                                                <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
+                                                <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"
+                                                          required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                                                          oninput="setCustomValidity('')"></textarea>
+                                            </div>
+                                            <input type="hidden" name="ownerRecordId" value="@Model.Course.Id" />
+                                            <input type="hidden" name="productSlug" value="@Model.Course.Slug" />
+                                            <input type="hidden" name="parentId" id="commentParenId" value="" />
+
+                                            <input type="submit" id="submit-comment" value="ارسال">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-12 container-email-name">
+                                                <label for="text-comment" class="label-email-name-text">دیدگاه شما *</label>
+                                                <textarea id="text-comment" name="message" class="col-12 textarae-comment input-name-email"
+                                                          required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                                                          oninput="setCustomValidity('')"></textarea>
+                                            </div>
+                                            <input type="hidden" name="ownerRecordId" value="@Model.Course.Id" />
+                                            <input type="hidden" name="productSlug" value="@Model.Course.Slug" />
+                                            <input type="hidden" name="parentId" id="commentParenId" value="" />
+
+                                            <input type="submit" id="submit-comment" value="ارسال">
+                                        </div>
+                                    }
+                                </div>
+
+
+                                @foreach (var comment in Model.Course.Comments)
+                                {
+                                    <div class="container-answer-question">
+                                        <div id="comment-@comment.Id" class="box-comment-question">
+                                            <div class="container-photo-comment-answer-btn">
+                                                @if (!string.IsNullOrEmpty(comment.Picture))
+                                                {
+                                                    <img src="~/FileUploader/@comment.Picture" alt="profile user" class="img-profile-user">
+                                                }
+
+                                                else
+                                                {
+                                                    <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
+                                                }
+                                                <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
+                                                    پاسخ
+                                                    <i class="fas fa-reply icon-answer"></i>
+                                                </a>
+                                            </div>
+                                            <div class="container-name-text-comment">
+                                                <div class="container-name-date">
+                                                    <h6 class="name-commanet-question">@comment.Name</h6>
+                                                    <div class="line-name-date"></div>
+                                                    <p class="date-question"> @Tools.ChangeTimeToFarsi(comment.CreateDateTime,"yyyy/MM/dd-HH-mm")</p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-question">
+                                                        @comment.Message
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @if (comment.SubComment.Count != 0)
+                                        {
+                                            @foreach (var sub in comment.SubComment)
+                                            {
+                                                <div id="comment-@sub.Id" class="box-comment-answer">
+                                                    <div class="container-photo-comment-answer-btn">
+                                                        @if (!string.IsNullOrEmpty(sub.Picture))
+                                                        {
+                                                            <img src="~/FileUploader/@sub.Picture" alt="profile user" class="img-profile-user">
+                                                        }
+
+                                                        else
+                                                        {
+                                                            <img src="~/images/DefaultImg/comment-img.png" alt="profile user" class="img-profile-user">
+                                                        }
+                                                        <a style="padding: 5px; margin-top: 4px;" href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn-answer text-center">
+                                                            پاسخ
+                                                            <i class="fas fa-reply icon-answer"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="container-name-text-comment">
+                                                        <div class="container-name-date">
+                                                            <h6 class="name-commanet-question">@sub.Name</h6>
+                                                            <div class="line-name-date"></div>
+                                                            <p class="date-question"> @Tools.ChangeTimeToFarsi(sub.CreateDateTime, "yyyy/MM/dd-HH-mm")</p>
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-question">
+                                                                @sub.Message
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <partial name="Shared/PartialViews/_Subcomment" model="sub.SubComment" />
+                                            }
+                                        }
+
+                                        <div class="line-end-comment-box"></div>
+                                    </div>
+                                }
+                                <button id="more-comment-btn" disabled>شماهده نظرات بیشتر ...</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </main>*@
 

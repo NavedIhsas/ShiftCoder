@@ -7,8 +7,8 @@ using CommentManagement.Infrastructure.EfCore;
 using CommentManagement.Infrastructure.EfCore.Repository;
 using CommentManagement.Application;
 using CommentManagement.Application.Contract.HomePhoto;
-using CommentManagement.Domain.HomePageDetailsAgg;
 using CommentManagement.Domain.Notification.Agg;
+using CommentManagement.Domain.SliderAgg;
 using CommentManagement.Domain.VisitAgg;
 using CommentManagement.Infrastructure.Permissions;
 using Microsoft.EntityFrameworkCore;
@@ -31,8 +31,8 @@ namespace CommentManagement.Infrastructure
 
             service.AddTransient<IPermissionExposer, CommentPermissionExposer>();
 
-            service.AddTransient<IHomePhotoApplication, HomePhotoApplication>();
-            service.AddTransient<IHomePhotoRepository, HomePhotoRepository>();
+            service.AddTransient<ISliderApplication, SliderApplication>();
+            service.AddTransient<ISliderRepository, SliderRepository>();
 
             service.AddDbContext<CommentContext>(option =>
             {

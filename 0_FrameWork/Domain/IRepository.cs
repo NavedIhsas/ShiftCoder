@@ -7,7 +7,6 @@ namespace _0_FrameWork.Domain
     public interface IRepository<TKey,T> where T:class
     {
         T GetById(TKey id);
-        List<T> GetAll();
         void Create(T entity);
         void Update(T entity);
         bool IsExist(Expression<Func<T, bool>> expression);

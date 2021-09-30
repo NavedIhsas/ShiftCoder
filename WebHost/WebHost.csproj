@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\_ViewImports.cshtml~RF147c9eae.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="MD.PersianDateTime.Core" Version="2.3.5" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
@@ -25,6 +29,10 @@
     <ProjectReference Include="..\ShiftCoderQuery\ShiftCoderQuery.csproj" />
     <ProjectReference Include="..\ShopManagement.Configuration\ShopManagement.Configuration.csproj" />
     <ProjectReference Include="..\ShopManagement.Infrastructure.EfCore\ShopManagement.Infrastructure.EfCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

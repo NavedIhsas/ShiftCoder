@@ -12,16 +12,9 @@ using CommentManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Comment;
 using ShiftCoderQuery.Contract.Course;
-using Shop.Management.Application.Contract.AfterCourse;
 using Shop.Management.Application.Contract.CourseEpisode;
-using Shop.Management.Application.Contract.CoursePrerequisite;
-using Shop.Management.Application.Contract.CourseSuitable;
 using Shop.Management.Application.Contract.UserCourse;
-using ShopManagement.Domain.AfterTheCourseAgg;
-using ShopManagement.Domain.CourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
-using ShopManagement.Domain.CoursePrerequisiteAgg;
-using ShopManagement.Domain.CourseSuitableAgg;
 using ShopManagement.Domain.UserCoursesAgg;
 using ShopManagement.Infrastructure.EfCore;
 
@@ -49,7 +42,7 @@ namespace ShiftCoderQuery.Query
             _article = article;
         }
 
-        public CoursePaginationViewModel GetAllCourse(CourseQuerySearchModel searchQuery, List<string> categories,
+        public CoursePaginationViewModel GetAllCourse(CourseQuerySearchModel searchQuery,
             int pageId = 1)
         {
             var query = _context.Courses
@@ -92,14 +85,22 @@ namespace ShiftCoderQuery.Query
                 var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
                 if (teacher == null) continue;
                 item.TeacherName = teacher.Account.FullName;
+
+                //tag
+                var tag = new GetAllCourseQueryModel()
+                {
+                    Keywords = item.KeyWords.Split("-").Take(8).ToList(),
+                };
+                item.Keywords = tag.Keywords;
             }
 
             //search by name or short description
-            if (!string.IsNullOrWhiteSpace(searchQuery.Name))
+            if (!string.IsNullOrWhiteSpace(searchQuery.Search))
             {
                 query = query.Where(x => x.Name.ToLower().Trim().
-                    Contains(searchQuery.Name.ToLower().Trim()) || x.ShortDescription.ToLower().Trim().
-                    Contains(searchQuery.Name.ToLower().Trim())).ToList();
+                    Contains(searchQuery.Search.ToLower().Trim())
+                                         || x.KeyWords.ToLower().Trim().Contains(searchQuery.Search.ToLower().Trim()) ||
+                                         x.ShortDescription.ToLower().Trim().Contains(searchQuery.Search.ToLower().Trim())).ToList();
             }
 
             //sort by
@@ -118,12 +119,6 @@ namespace ShiftCoderQuery.Query
                 };
             }
 
-            //search group
-            if (categories.Count != 0)
-            {
-                foreach (var courseGroup in categories)
-                    query = query.Where(x => x.CourseGroup.Contains(courseGroup)).ToList();
-            }
 
             //paging
             const int take = 12;
@@ -140,100 +135,66 @@ namespace ShiftCoderQuery.Query
 
         }
 
-        public List<GetAllCourseQueryModel> LatestCourses(string ipAddress)
+
+        public List<GetCourseGroupViewModel> GetCourseGroup(string slug)
         {
-            var course = _context.Courses.Include(x => x.CourseEpisodes).Include(x => x.UserCourses).AsNoTracking()
-                .AsEnumerable().Select(x => new GetAllCourseQueryModel
+            var course = _context.Courses
+                .Include(x => x.UserCourses)
+                .Include(x => x.CourseEpisodes).Include(x => x.CourseGroup).Include(x => x.OrderDetails).AsNoTracking()
+                .Where(x => x.CourseGroup.Slug == slug)
+                .AsEnumerable().Select(x => new GetCourseGroupViewModel
                 {
                     Name = x.Name,
-                    Description = x.Description,
-                    ShortDescription = x.ShortDescription,
-                    File = x.File,
                     Price = x.Price,
-                    Code = x.Code,
-                    UpdateDate = x.UpdateDate.ToFarsi(),
                     Picture = x.Picture,
                     PictureAlt = x.PictureAlt,
                     PictureTitle = x.PictureTitle,
-                    KeyWords = x.KeyWords,
-                    MetaDescription = x.MetaDescription,
                     Slug = x.Slug,
                     Id = x.Id,
-                    CreationDate = x.CreationDate,
-                    TeacherId = x.TeacherId,
-                    TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks)),
                     UserCourse = MapUserCourse(x.UserCourses),
+                    TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
+                }).ToList();
 
-                }).OrderByDescending(x => x.CreationDate).Take(8).ToList();
-
-
-            //comment and teacher
-            foreach (var item in course)
-            {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.IsConfirmed && x.Type == ThisType.Course)
-                    .ToList();
-                item.Comments = comments;
-                var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
-                if (teacher == null) continue;
-                item.TeacherName = teacher.Account.FullName;
-            }
-
-            //visit
-            var getVisit = _comment.Visits.FirstOrDefault(x => x.IpAddress == ipAddress && x.Type==ThisType.Index);
-            if (getVisit == null)
-            {
-                var visit = new Visit(ThisType.Index, ipAddress, DateTime.Now, 1, ThisType.Index);
-                _comment.Visits.Add(visit);
-                _comment.SaveChanges();
-
-            }else if (getVisit.LastVisitDateTime.Hour != DateTime.Now.Hour)
-            {
-                var visit = new Visit(ThisType.Index, ipAddress, DateTime.Now, 1, ThisType.Index);
-                _comment.Visits.Add(visit);
-                _comment.SaveChanges();
-            }
-            
             return course;
         }
 
-        public List<GetAllCourseQueryModel> PopularCourses()
+        public List<LatestCourseViewModel> LatestCourses()
         {
-            var popular = _context.Courses.Include(x => x.CourseEpisodes)
-                .Include(x => x.UserCourses)
-                .Include(x => x.OrderDetails).AsNoTracking().AsEnumerable().Select(x => new GetAllCourseQueryModel
+            var course = _context.Courses.Include(x => x.CourseEpisodes).Include(x => x.UserCourses).AsNoTracking()
+                .AsEnumerable().Select(x => new LatestCourseViewModel
                 {
-                    TeacherId = x.TeacherId,
                     Name = x.Name,
-                    Description = x.Description,
-                    ShortDescription = x.ShortDescription,
-                    File = x.File,
-                    Price = x.Price,
-                    Code = x.Code,
-                    UpdateDate = x.UpdateDate.ToFarsi(),
                     Picture = x.Picture,
                     PictureAlt = x.PictureAlt,
                     PictureTitle = x.PictureTitle,
-                    KeyWords = x.KeyWords,
-                    MetaDescription = x.MetaDescription,
+                    Slug = x.Slug,
+                    Price = x.Price,
+                    CreationDate = x.CreationDate,
+                    ShortDescription = x.ShortDescription,
+                    UserCourse = MapUserCourse(x.UserCourses),
+                    TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
+                }).OrderByDescending(x => x.CreationDate).Take(6).ToList();
+
+            return course;
+        }
+
+        public List<GetPopularCourseViewModel> PopularCourses()
+        {
+            var popular = _context.Courses.Include(x => x.CourseEpisodes)
+                .Include(x => x.UserCourses)
+                .Include(x => x.OrderDetails).AsNoTracking().AsEnumerable().Select(x => new GetPopularCourseViewModel
+                {
+                    Name = x.Name,
+                    Price = x.Price,
+                    Picture = x.Picture,
+                    PictureAlt = x.PictureAlt,
+                    PictureTitle = x.PictureTitle,
                     Slug = x.Slug,
                     Id = x.Id,
                     OrderDetails = x.OrderDetails,
-                    CreationDate = x.CreationDate,
                     UserCourse = MapUserCourse(x.UserCourses),
                     TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
-                }).OrderByDescending(x => x.OrderDetails.Count).Take(4).ToList();
-
-            foreach (var item in popular)
-            {
-                var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Course)
-                    .ToList();
-                item.Comments = comments;
-
-                var teacher = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.TeacherId);
-                if (teacher == null) continue;
-                item.TeacherName = teacher.Account.FullName;
-
-            }
+                }).OrderByDescending(x => x.OrderDetails.Count).Take(6).ToList();
 
             return popular;
         }
@@ -263,14 +224,12 @@ namespace ShiftCoderQuery.Query
                     CourseGroupId = x.CourseGroupId,
                     TeacherId = x.TeacherId,
                     PosterImg = x.DemoVideoPoster,
+                    CourseGroupSlug = x.CourseGroup.Slug,
                     CreationDate = x.CreationDate,
                     CourseGroup = x.CourseGroup.Title,
                     CourseStatus = x.CourseStatus.Title,
                     CourseLevel = x.CourseLevel.Title,
                     UserCourse = MapUserCourse(x.UserCourses),
-                    SuitableCourse = MapSuitable(x.CourseSuitableList),
-                    AfterCourse = MapAfterCourse(x.AfterTheCourses),
-                    PrerequisiteCourse = MapPrerequisiteCourse(x.CoursePrerequisites),
                     EpisodeCourse = MapEpisodeCourse(x.CourseEpisodes),
                     EpisodeCount = x.CourseEpisodes.Count
                 }).AsNoTracking().FirstOrDefault(x => x.Slug == slug);
@@ -342,6 +301,15 @@ namespace ShiftCoderQuery.Query
             course.CommentList = comments;
 
             #endregion
+
+
+            //Keywords
+            var keywords = new CourseQueryModel()
+            {
+                Keywords = course.KeyWords.Split("-").ToList(),
+            };
+            course.Keywords = keywords.Keywords;
+
 
             return course;
         }
@@ -436,34 +404,7 @@ namespace ShiftCoderQuery.Query
             }).ToList();
         }
 
-        private static List<CoursePrerequisiteViewModel> MapPrerequisiteCourse(
-            IEnumerable<CoursePrerequisite> coursePrerequisites)
-        {
-            return coursePrerequisites.Where(x => !x.IsRemove).Select(x => new CoursePrerequisiteViewModel()
-            {
-                Title = x.Title,
-                Id = x.Id
-            }).ToList();
-        }
-
-        private static List<AfterCourseViewModel> MapAfterCourse(IEnumerable<AfterTheCourse> afterTheCourses)
-        {
-            return afterTheCourses.Where(x => !x.IsRemove).Select(x => new AfterCourseViewModel()
-            {
-                Id = x.Id,
-                Title = x.Title
-            }).ToList();
-        }
-
-        private static List<CourseSuitableViewModel> MapSuitable(IEnumerable<CourseSuitable> courseSuitableList)
-        {
-            return courseSuitableList.Where(x => !x.IsRemove).Select(x => new CourseSuitableViewModel()
-            {
-                Id = x.Id,
-                Title = x.Title
-            }).ToList();
-        }
-
+        
         #endregion
     }
 }

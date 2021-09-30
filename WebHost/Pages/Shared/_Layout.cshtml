@@ -1,82 +1,30 @@
 ﻿<!DOCTYPE html>
-
-<html lang="en">
+<html lang="en" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    @if (ViewData["Title"] != null)
-    {
-        <title>@ViewData["Title"]-شیفت کدر</title>
-    }
-    else
-    {
-        <title>شیفت کدر</title>
-    }
-
-    <partial name="PartialViews/_Styles" />
+    <meta charset="utf-8">
+    <title>ECOURSES - Online Courses HTML Template</title>
+    
+   
+    <partial name="PartialViews/_Styles"/>
 
 </head>
-<body>
-    <div class="container-fluid" id="custom-container-fluid-header">
-        <div class="row">
-            <div class="col-6">
-                <div id="top-title">
-                    <div class="news">
-                        <span id="news-span">اخبار جدید</span>
-                        <cache expires-after="@TimeSpan.FromMinutes(50)">
-                            @await Component.InvokeAsync("LatestNews");
-                        </cache>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div id="social-container-header" class="float-start">
-                    <a href="#">
-                        <img src="~/icons/youtube.png" alt="youtube" class="social-media-header" title="youtube">
-                    </a>
-                    <a href="#">
-                        <img src="~/icons/telegram.png" alt="telegram" class="social-media-header" title="telegram">
-                    </a>
-                    <a href="#">
-                        <img src="~/icons/linkedin.png" alt="linkedin" class="social-media-header" title="linkedin">
-                    </a>
-                    <a href="#">
-                        <img src="~/icons/instagram.png" alt="instagram" class="social-media-header" title="instagram">
-                    </a>
-                </div>
-            </div>
-            <partial name="PartialViews/_Header" />
-        </div>
-    </div>
+
+<body dir="rtl">
+
+    <partial name="PartialViews/_Header"/>
+
+    @await Component.InvokeAsync("Menu")
+
     @RenderBody()
-    <partial name="PartialViews/_Footer" />
-    <section id="hero">
-        <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-             viewBox="0 24 150 28 " preserveAspectRatio="none">
-            <defs>
-                <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
-                </path>
-            </defs>
-            <g class="">
-                <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
-                </use>
-            </g>
-            <g class="wave2">
-                <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
-                </use>
-            </g>
-            <g class="wave3">
-                <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
-                </use>
-            </g>
-        </svg>
-    </section>
-    <partial name="PartialViews/_Scripts" />
-    @RenderSectionAsync("Scripts", required: false)
+
+<partial name="PartialViews/_Footer" />
+
+    <partial name="PartialViews/_Scripts"/>
+
+
+@await RenderSectionAsync("Scripts", required:false)
+
 </body>
 
 </html>
-

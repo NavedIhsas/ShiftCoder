@@ -3,6 +3,7 @@
 @model WebHost.Pages.AccountModel
 @{
     Layout = "Shared/_AccountLayout";
+    ViewData["Title"] = "ثبت نام در سایت";
 }
 
 <br/>
@@ -62,16 +63,10 @@
                 <div class="form-group">
                     <input type="submit" class="form-control btn btn-primary submit px-3" value="ثبت نام">
                 </div>
-
             </form>
 
-            <p class="w-100 text-center">&mdash; و یا انتخاب کنید &mdash;</p>
-            <div class="social-facebook d-flex text-center">
-
-                <a asp-page="Login" class="px-2 py-2 mr-4 text-center "> ورود به سایت</a>
-
-                <a asp-page="Account" asp-page-handler="Register"  class="px-2 py-2 ml-md-3  ">هنوز ثبت نام نکرده ام</a>
-            </div>
+            <p class="w-100 text-center">&mdash;  <a asp-page="Login">من قبلا ثبت نام کرده ام</a> &mdash;</p>
+       
         </div>
     </div>
 </div>

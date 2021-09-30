@@ -1,7 +1,11 @@
 ﻿
-@model List<ShiftCoderQuery.Contract.Course.GetAllCourseQueryModel>
+@using _0_Framework.Application
+@model List<ShiftCoderQuery.Contract.Course.LatestCourseViewModel>
 <div class="container container-cards">
     <div class="row">
-        <partial name="PartialViews/_Courses" model="Model"/>
+        <div class="row">
+         <partial name="PartialViews/_Courses" model="Model"/>
+
+        </div>
     </div>
 </div>

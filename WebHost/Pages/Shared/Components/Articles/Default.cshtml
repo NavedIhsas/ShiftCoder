@@ -1,38 +1,25 @@
-﻿@model IEnumerable<ShiftCoderQuery.Contract.Article.LatestArticleQueryModel>
-
-    <div class="container">
-        <div class="row container-article">
+﻿@using _0_Framework.Application
+@model IEnumerable<ShiftCoderQuery.Contract.Article.LatestArticleQueryModel>
+<div class="container-fluid py-5">
+    <div class="container pt-5 pb-3">
+        <div class="text-center mb-5">
+            <h5 class="text-primary text-uppercase mb-3" >مقالات</h5>
+            <h1>آخرین مقالات ما</h1>
+        </div>
+        <div class="row pb-3">
             @foreach (var article in Model)
             {
-                <div class="col-10 col-md-6 col-lg-4">
-                    <div class="card container-card-article">
-                        <a asp-page="SingleArticle" asp-route-id="@article.Slug" class="anchor-cards">
-                            <img src="~/FileUploader/@article.Picture" class="card-img-top img-card" alt="@article.PictureAtl" title="@article.PictureTitle">
-                            <div class="card-body">
-                                <h5 class="card-title title-card-article">@article.Title</h5>
-                                <div>
-                                    <p class="p-card-article">
-                                       @article.ShortDescription
-                                    </p>
-                                </div>
-                                <div class="container-items-card">
-                                    <div>
-                                        <img src="~/icons/teacher-3.png" alt="Teacher" class="img-teacher-card">
-                                        <span class="span-item-card span-item-card-article">@article.BloggerName</span>
-                                    </div>
-                                    <div class="chat-display-item-none">
-                                        <img src="~/icons/chat-2.png" alt="chat" class="img-teacher-card">
-                                        <span class="span-item-card">@article.Comments.Count</span>
-                                    </div>
-                                    <div>
-                                        <img src="~/icons/view.png" alt="student" class="img-teacher-card">
-                                        <span class="span-item-card">@article.VisitCount</span>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="blog-item position-relative overflow-hidden rounded mb-2">
+                        <img class="img-fluid" src="~/FileUploader/@article.Picture" title="@article.PictureTitle" alt="@article.PictureAtl">
+                        <a class="blog-overlay text-decoration-none" href="">
+                            <h5 class="text-white mb-3">@article.ShortDescription</h5>
+                            <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate,"M-MMMM / dddd")</p>
                         </a>
                     </div>
                 </div>
             }
+
         </div>
     </div>
+</div>

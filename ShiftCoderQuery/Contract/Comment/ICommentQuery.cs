@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using _0_FrameWork.Application;
-using CommentManagement.Domain.HomePageDetailsAgg;
 using ShiftCoderQuery.Query;
 
 namespace ShiftCoderQuery.Contract.Comment
@@ -11,6 +10,5 @@ namespace ShiftCoderQuery.Contract.Comment
        List<CommentManagement.Domain.CourseCommentAgg.Comment> GetAll();
        List<CommentModelForUserPanel> GetUserComment(string email);
        OperationResult Create(CommentQueryModel command);
-        List<News> GetAllNews();
   }
 }

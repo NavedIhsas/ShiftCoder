@@ -16,6 +16,7 @@ namespace ShiftCoderQuery.Contract.Article
         public string BloggerName { get; set; }
         public string Slug { get; set; }
         public string Keywords { get; set; }
+        public List<string> KeyWords { get; set; }
         public string MetaDescription { get; set; }
         public DateTime CreationDate { get; internal set; }
         public List<Teacher> Teachers { get; set; }

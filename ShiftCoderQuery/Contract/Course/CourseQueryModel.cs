@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CommentManagement.Domain.VisitAgg;
 using ShiftCoderQuery.Contract.Comment;
-using Shop.Management.Application.Contract.AfterCourse;
 using Shop.Management.Application.Contract.CourseEpisode;
-using Shop.Management.Application.Contract.CoursePrerequisite;
-using Shop.Management.Application.Contract.CourseSuitable;
 using Shop.Management.Application.Contract.OrderDetail;
 using Shop.Management.Application.Contract.UserCourse;
 using ShopManagement.Domain.OrderDetailAgg;
@@ -23,7 +19,9 @@ namespace ShiftCoderQuery.Contract.Course
         public string UpdateDate { get; set; }
         public string Picture { get; set; }
         public string PictureAlt { get; set; }
+        public string CourseGroupSlug { get; set; }
         public string PictureTitle { get; set; }
+        public List<string> Keywords { get; set; }
         public string KeyWords { get; set; }
         public string MetaDescription { get; set; }
         public string Slug { get; set; }
@@ -39,16 +37,12 @@ namespace ShiftCoderQuery.Contract.Course
         public List<CommentManagement.Domain.CourseCommentAgg.Comment> CommentList { get; set; }
 
         public List<UserCourseViewModel> UserCourse { get; set; }
-        public List<OrderDetailViewModel> OrderDetails { get; set; }
         public List<CourseQueryModel> CourseTeacher { get; set; }
         public long CourseGroupId { get; set; }
         public long Id { get; set; }
         public string CourseLevel { get; set; }
         public int? VisitCount { get; set; }
         public string CourseStatus { get; set; }
-        public List<CourseSuitableViewModel> SuitableCourse { get; set; }
-        public List<AfterCourseViewModel> AfterCourse { get; set; }
-        public List<CoursePrerequisiteViewModel> PrerequisiteCourse { get; set; }
         public  List<CourseEpisodeViewModel> EpisodeCourse { get; set; }
         public List<CommentQueryModel> Comments { get; set; }
         public DateTime CreationDate { get; internal set; }
@@ -56,8 +50,48 @@ namespace ShiftCoderQuery.Contract.Course
         public long TeacherId { get; internal set; }
     }
 
-  
-   public class GetAllCourseQueryModel
+  public class GetCourseGroupViewModel
+    {
+        public string Name { get; set; }
+        public string Picture { get; set; }
+        public string PictureTitle { get; set; }
+        public string PictureAlt { get; set; }
+        public string Slug { get; set; }
+        public double Price { get; set; }
+        public TimeSpan TotalTime { get; set; }
+        public List<UserCourseViewModel> UserCourse { get; set; }
+        public long Id { get; internal set; }
+    }
+
+  public class LatestCourseViewModel
+    {
+        public string Name { get; set; }
+        public string Picture { get; set; }
+        public string PictureAlt { get; set; }
+        public string PictureTitle { get; set; }
+        public string Slug { get; set; }
+        public double Price { get; set; }
+        public string ShortDescription { get; set; }
+        public DateTime CreationDate { get; set; }
+        public TimeSpan TotalTime { get; set; }
+        public List<UserCourseViewModel> UserCourse { get; set; }
+    }
+
+    public class GetPopularCourseViewModel
+  {
+      public string Name { get; set; }
+      public string Picture { get; set; }
+      public string PictureTitle { get; set; }
+      public string PictureAlt { get; set; }
+      public string Slug { get; set; }
+      public double Price { get; set; }
+      public TimeSpan TotalTime { get; set; }
+      public List<UserCourseViewModel> UserCourse { get; set; }
+      public long Id { get; internal set; }
+      public List<OrderDetail> OrderDetails { get; set; }
+    }
+
+    public class GetAllCourseQueryModel
    {
        public string Name { get; set; }
        public long Id { get; set; }
@@ -71,6 +105,7 @@ namespace ShiftCoderQuery.Contract.Course
        public string PictureAlt { get; set; }
        public string PictureTitle { get; set; }
        public string KeyWords { get; set; }
+       public List<string> Keywords { get; set; }
        public string MetaDescription { get; set; }
        public string Slug { get; set; }
        public string CourseGroup { get; set; }

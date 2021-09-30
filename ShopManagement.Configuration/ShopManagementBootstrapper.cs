@@ -1,5 +1,4 @@
-﻿using System.Collections.Specialized;
-using _0_FrameWork.Domain.Infrastructure;
+﻿using _0_FrameWork.Domain.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Shop.Management.Application.Contract.CourseGroup;
 using ShopManagement.Application;
@@ -16,16 +15,10 @@ using ShopManagement.Domain.CourseStatusAgg;
 using ShiftCoderQuery.Contract.Course;
 using ShiftCoderQuery.Query;
 using ShiftCoderQuery.Contract.CourseGroup;
-using Shop.Management.Application.Contract.AfterCourse;
 using Shop.Management.Application.Contract.CourseEpisode;
-using Shop.Management.Application.Contract.CoursePrerequisite;
-using Shop.Management.Application.Contract.CourseSuitable;
 using Shop.Management.Application.Contract.Order;
 using ShopManagement.Configuration.Permission;
-using ShopManagement.Domain.AfterTheCourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
-using ShopManagement.Domain.CoursePrerequisiteAgg;
-using ShopManagement.Domain.CourseSuitableAgg;
 using ShopManagement.Domain.OrderAgg;
 using ShopManagement.Domain.OrderDetailAgg;
 
@@ -50,14 +43,6 @@ namespace ShopManagement.Configuration
             service.AddTransient<ICourseQuery, CourseQuery>();
 
             service.AddTransient<ICourseGroupQuery, CourseGroupQuery>();
-
-            service.AddTransient<ICoursePrerequisiteApplication, CoursePrerequisiteApplication>();
-            service.AddTransient<ICourseSuitableApplication, CourseSuitableApplication>();
-            service.AddTransient<IAfterCourseApplication, AfterTheCourseApplication>();
-
-            service.AddTransient<IPrerequisiteRepository, PrerequisiteRepository>();
-            service.AddTransient<ICourseSuitableRepository, CourseSuitableRepository>();
-            service.AddTransient<IAfterTheCourseRepository, AfterCourseRepository>();
 
 
             service.AddTransient<ICourseEpisodeApplication, CourseEpisodeApplication>();

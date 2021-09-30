@@ -9,10 +9,10 @@ namespace ShiftCoderQuery.Contract.Course
 {
     public interface ICourseQuery
     {
-        CoursePaginationViewModel GetAllCourse(CourseQuerySearchModel searchQuery, List<string> categories, int pageId = 1);
-           
-        List<GetAllCourseQueryModel> LatestCourses(string ipAddress);
-        List<GetAllCourseQueryModel> PopularCourses();
+        CoursePaginationViewModel GetAllCourse(CourseQuerySearchModel searchQuery, int pageId = 1);
+        List<GetCourseGroupViewModel> GetCourseGroup(string slug);
+        List<LatestCourseViewModel> LatestCourses();
+        List<GetPopularCourseViewModel> PopularCourses();
         CourseQueryModel GetCourseBySlug(string slug,string ipAddress);
         bool UserInCourse(string email, long courseId);
         CourseEpisode GetEpisodeFile(long episodeId);

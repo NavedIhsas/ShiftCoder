@@ -1,0 +1,152 @@
+﻿@page
+@using _0_Framework.Application
+@model WebHost.Pages.GetAllCoursesModel
+@{
+}
+
+<!-- Header Start -->
+<div class="container-fluid page-header" style="margin-bottom: 90px;">
+    <div class="container">
+        <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+            <h3 class="display-4 text-white text-uppercase">همه دوره ها</h3>
+            <div class="d-inline-flex text-white">
+                <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>
+                <i class="fa fa-angle-double-left pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">دوره ها</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Courses Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row pb-3">
+                    <div class="text-center mb-5">
+                        <h5 class="text-primary text-uppercase mb-3" >دوره ها</h5>
+                        <h1>همه دوره های لرن هاب</h1>
+                    </div>
+
+                    <div class="row">
+                        @foreach (var course in Model.Course.Courses)
+                        {
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="rounded overflow-hidden mb-2">
+                                    <img class="img-fluid" src="~/FileUploader/@course.Picture" title="@course.PictureTitle" alt="@course.PictureAlt">
+                                    <div class="bg-secondary p-4">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>@course.UserCourse.Count دانشجو</small>
+                                            <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>@course.TotalTime</small>
+                                        </div>
+                                        <a class="h5" href="">@course.Name</a>
+                                        <div class="border-top mt-4 pt-4">
+                                            <div class="d-flex justify-content-between">
+                                                <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                                @if (course.Price > 0)
+                                                {
+                                                    <h5 class="m-0">@course.Price.ToMoney() تومان</h5>
+                                                }
+                                                else
+                                                {
+                                                    <h5 class="m-0 text-success">رایگان</h5>
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        
+                        @if (Model.Course.PageCount > 1)
+                        {
+                            <div class="col-12">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination pagination-lg justify-content-center mb-0">
+                                        <li class="page-item @(Model.Course.CurrentPage<2?"disabled":"")">
+                                            <a class="page-link" href="AllCourses?PageId=@(Model.Course.CurrentPage-1)" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">قبلی</span>
+                                            </a>
+                                        </li>
+                                        @for (int i = 1; i <= Model.Course.PageCount; i++)
+                                        {
+                                            <li class="page-item @(i==Model.Course.CurrentPage?"active":"")"><a class="page-link" href="AllCourses?PageId=@i">@i</a></li>
+                                        }
+                              
+                                        <li class="page-item @(Model.Course.CurrentPage>=Model.Course.PageCount?"disabled":"")">
+                                            <a class="page-link" href="AllCourses?PageId=@(Model.Course.CurrentPage+1)" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">بعدی</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mt-5 mt-lg-0">
+                <!-- Search Form -->
+                <div class="mb-5">
+                    <form form method="get" id="submitSearch">
+                        <div class="input-group">
+                            <input type="text" name="Search" class="form-control form-control-lg" placeholder="جستجو...">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-transparent text-primary">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Category List -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4" >دسته بندی ها</h3>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var category in Model.CourseGroups)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a asp-page="Courses" asp-route-id="@category.Slug" class="text-decoration-none h6 m-0">@category.Title</a>
+                                <span class="badge badge-primary badge-pill">@category.CourseCount</span>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+
+                <!-- Recent Post -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4">آخرین دوره ها</h3>
+                    @foreach (var recentPost in Model.LatestCourse)
+                    {
+                        <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleCourse" asp-route-id="@recentPost.Slug">
+                            <img class="img-fluid rounded photo-size" src="~/FileUploader/@recentPost.Picture" title="@recentPost.PictureTitle" alt="@recentPost.PictureAlt">
+                            <div class="pl-3">
+                                <h6 class="m-1">@recentPost.ShortDescription</h6>
+                                <small>@Tools.ChangeTimeToFarsi(recentPost.CreationDate,"M - MMMM /yyyy")</small>
+                            </div>
+                        </a>
+                    }
+                </div>
+
+                <!-- Tag Cloud -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4" >کلمات کلیدی</h3>
+                    <div class="d-flex flex-wrap m-n1">
+                        @foreach (var item in Model.Course.Courses.SelectMany(tag => tag.Keywords).Take(8))
+                        {
+                            <a asp-page="AllCourses" asp-route-search="@item" class="btn btn-outline-primary m-1">@item</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

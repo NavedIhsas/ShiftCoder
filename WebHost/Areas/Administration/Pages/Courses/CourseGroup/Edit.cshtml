@@ -25,12 +25,42 @@
                     <div class="form-group">
                         <label asp-for="SubGroupId" class="control-label">گروه اصلی <span class="text-danger">*</span></label>
                         <select type="text" class="form-control" asp-for="SubGroupId" asp-items="@(new SelectList(Model.CourseGroupSelectList, "Id", "Title"))">
-                            <option >ندارد</option>
+                            <option>ندارد</option>
                         </select>
                         <span class="text-danger" asp-validation-for="SubGroupId"></span>
                     </div>
                 </div>
 
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PictureAlt" class="control-label">Alt تصویر <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="PictureAlt" placeholder="Alt">
+                        <span class="text-danger" asp-validation-for="PictureAlt"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PictureTitle" class="control-label">عنوان تصویر <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" asp-for="PictureTitle" placeholder="عنوان">
+                        <span class="text-danger" asp-validation-for="PictureTitle"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Picture" class="control-label"> تصویر <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" asp-for="Picture" accept="image">
+                        <span class="text-danger" asp-validation-for="Picture"></span>
+                    </div>
+                </div>
             </div>
 
             <div class="row">

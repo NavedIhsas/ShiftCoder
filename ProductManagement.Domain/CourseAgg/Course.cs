@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using _0_FrameWork.Domain;
-using ShopManagement.Domain.AfterTheCourseAgg;
 using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.CourseGroupAgg;
 using ShopManagement.Domain.CourseLevelAgg;
-using ShopManagement.Domain.CoursePrerequisiteAgg;
 using ShopManagement.Domain.CourseStatusAgg;
-using ShopManagement.Domain.CourseSuitableAgg;
-using ShopManagement.Domain.OrderAgg;
 using ShopManagement.Domain.OrderDetailAgg;
 using ShopManagement.Domain.UserCoursesAgg;
 
@@ -39,9 +35,6 @@ namespace ShopManagement.Domain.CourseAgg
         public List<OrderDetail> OrderDetails { get; private set; }
         public CourseLevel CourseLevel { get; private set; }
         public CourseStatus CourseStatus { get; private set; }
-        public List<CoursePrerequisite> CoursePrerequisites { get; private set; }
-        public List<CourseSuitable> CourseSuitableList { get; private set; }
-        public List<AfterTheCourse> AfterTheCourses { get; private set; }
         public List<CourseEpisode> CourseEpisodes { get;private set; }
         public List<UserCourse> UserCourses { get; set; }
 

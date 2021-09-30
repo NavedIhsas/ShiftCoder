@@ -17,14 +17,14 @@ namespace WebHost.Pages
             _group = group;
         }
 
-        public CoursePaginationViewModel Course;
+        public List<GetCourseGroupViewModel> Course;
         public List<CourseGroupQueryModel> CourseGroups;
         public CourseQuerySearchModel SearchModel;
-        public void OnGet(CourseQuerySearchModel searchModel,List<string> categories, int pageId=1)
+        public void OnGet(CourseQuerySearchModel searchModel,List<int> groupId, string id)
         {
-            Course = _course.GetAllCourse(searchModel, categories, pageId);
+            Course = _course.GetCourseGroup(id);
             CourseGroups = _group.GetAllCourseGroup();
-            ViewData["checked"] = categories;
+            ViewData["checked"] = groupId;
             ViewData["SearchModel"] = searchModel;
 
         }

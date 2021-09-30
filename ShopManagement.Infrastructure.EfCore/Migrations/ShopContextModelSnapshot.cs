@@ -19,31 +19,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ShopManagement.Domain.AfterTheCourseAgg.AfterTheCourse", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("CourseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsRemove")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("AfterTheCourses");
-                });
-
             modelBuilder.Entity("ShopManagement.Domain.CourseAgg.Course", b =>
                 {
                     b.Property<long>("Id")
@@ -195,6 +170,17 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<string>("Picture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PictureAlt")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("PictureTitle")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -249,31 +235,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagement.Domain.CoursePrerequisiteAgg.CoursePrerequisite", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("CourseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsRemove")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("CoursePrerequisites");
-                });
-
             modelBuilder.Entity("ShopManagement.Domain.CourseStatusAgg.CourseStatus", b =>
                 {
                     b.Property<long>("Id")
@@ -306,31 +267,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                             Id = 3L,
                             Title = "اتمام"
                         });
-                });
-
-            modelBuilder.Entity("ShopManagement.Domain.CourseSuitableAgg.CourseSuitable", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("CourseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsRemove")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("CourseSuitableList");
                 });
 
             modelBuilder.Entity("ShopManagement.Domain.OrderAgg.Order", b =>
@@ -408,17 +344,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                     b.ToTable("UserCourses");
                 });
 
-            modelBuilder.Entity("ShopManagement.Domain.AfterTheCourseAgg.AfterTheCourse", b =>
-                {
-                    b.HasOne("ShopManagement.Domain.CourseAgg.Course", "Courses")
-                        .WithMany("AfterTheCourses")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Courses");
-                });
-
             modelBuilder.Entity("ShopManagement.Domain.CourseAgg.Course", b =>
                 {
                     b.HasOne("ShopManagement.Domain.CourseGroupAgg.CourseGroup", "CourseGroup")
@@ -466,28 +391,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                     b.Navigation("SubGroup");
                 });
 
-            modelBuilder.Entity("ShopManagement.Domain.CoursePrerequisiteAgg.CoursePrerequisite", b =>
-                {
-                    b.HasOne("ShopManagement.Domain.CourseAgg.Course", "Courses")
-                        .WithMany("CoursePrerequisites")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("ShopManagement.Domain.CourseSuitableAgg.CourseSuitable", b =>
-                {
-                    b.HasOne("ShopManagement.Domain.CourseAgg.Course", "Courses")
-                        .WithMany("CourseSuitableList")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Courses");
-                });
-
             modelBuilder.Entity("ShopManagement.Domain.OrderDetailAgg.OrderDetail", b =>
                 {
                     b.HasOne("ShopManagement.Domain.CourseAgg.Course", "Course")
@@ -520,13 +423,7 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("ShopManagement.Domain.CourseAgg.Course", b =>
                 {
-                    b.Navigation("AfterTheCourses");
-
                     b.Navigation("CourseEpisodes");
-
-                    b.Navigation("CoursePrerequisites");
-
-                    b.Navigation("CourseSuitableList");
 
                     b.Navigation("OrderDetails");
 

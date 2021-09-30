@@ -1,4 +1,70 @@
-﻿@using _0_FrameWork.Application
+﻿<div class="container-fluid d-none d-lg-block">
+    <div class="row align-items-center py-4 px-xl-5">
+        <div class="col-lg-3">
+            <a href="" class="text-decoration-none">
+                <h1 class="m-0"><span class="text-primary">Learn</span>Hub</h1>
+            </a>
+        </div>
+        <div class="col-lg-3 text-right">
+            <div class="d-inline-flex align-items-center">
+                <i class="fa fa-2x fa-map-marker-alt text-primary mr-3"></i>
+                <div class="text-right">
+                    <h6 class="font-weight-semi-bold mb-1">دفتر</h6>
+                    <small>مشهد ، خیابان  ساجدی...</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 text-right">
+            <div class="d-inline-flex align-items-center">
+                <i class="fa fa-2x fa-envelope text-primary mr-3"></i>
+                <div class="text-right">
+                    <h6 class="font-weight-semi-bold mb-1">ایمیل ما</h6>
+                    <small>navedahsas77@gmail.com</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 text-right">
+            <div class="d-inline-flex align-items-center">
+                <i class="fa fa-2x fa-phone text-primary mr-3"></i>
+                <div class="text-right">
+                    <h6 class="font-weight-semi-bold mb-1">تلفن</h6>
+                    <small>5138032</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--using _0_FrameWork.Application
 <nav class="navbar navbar-expand-lg navbar-dark" id="custom-navbar-header">
     <div class="container-fluid">
         <h1>
@@ -8,11 +74,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            @await Component.InvokeAsync("Menu")
-            @*<cache expires-after="@TimeSpan.FromMinutes(5)">
-                @await Component.InvokeAsync("Menu")
-            </cache>*@
-            @if (User.Identity.IsAuthenticated)
+            await Component.InvokeAsync("Menu")
+            <!----><!--<cache expires-after="TimeSpan.FromMinutes(5)">
+                await Component.InvokeAsync("Menu")
+            </cache>-->
+            <!--if (User.Identity.IsAuthenticated)
             {
                 <li class="nav-item dropdown list-style-li-header" id="setting-list-item-header">
                     <a class="nav-link dropdown-toggle link-navbar-header" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -20,7 +86,7 @@
                             <img src="~/icons/settings.png" alt="settings" width="28">
                         </span>
                     </a>
-                    <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
+                    <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">-->
                         @*<li>
                             <a class="dropdown-item text-white hover-link-dropdown" href="#">
                                 <img src="~/icons/settings-3.png" alt="settings" class="icons-img-header">
@@ -33,14 +99,14 @@
                                 ارسال مطالب
                             </a>
                         </li>*@
-                        <li>
+                        <!--<li>
                             <a asp-page="Index" asp-page-handler="Comments" asp-area="UserPanel" class="dropdown-item text-white hover-link-dropdown">
                                 <img src="~/icons/conversation.png" alt="comments" class="icons-img-header">
                                  نظرات من
                             </a>
                         </li>
                         <li>
-                            <a permission="@Permission.AdministrationNotifications" asp-page="Index" asp-area="Administration" class="dropdown-item text-white hover-link-dropdown">
+                            <a permission="Permission.AdministrationNotifications" asp-page="Index" asp-area="Administration" class="dropdown-item text-white hover-link-dropdown">
                                 <img src="~/icons/notification.png" alt="notification" class="icons-img-header">
                                 اعلان ها
                             </a>
@@ -62,7 +128,7 @@
                         <span id="span-profile">پروفایل</span>
                     </a>
                     <ul class="dropdown-menu bgcolo-ul-header" aria-labelledby="navbarDropdown-2">
-                        <li permission="@Permission.AdministrationHomepage">
+                        <li permission="Permission.AdministrationHomepage">
                                 <a asp-page="Index" asp-area="Administration" class="dropdown-item text-white hover-link-dropdown">
                                     <img src="~/icons/control-panel.png" alt="control panel" class="icons-img-header">
                                     پنل ادمین
@@ -82,14 +148,14 @@
                             </a>
                         </li>
                         <li>
-                        </li>
+                        </li>-->
                         @*<li>
                             <a class="dropdown-item text-white hover-link-dropdown" >
                                 <img src="~/icons/invoice.png" alt="invoice" class="icons-img-header">
                                 ارسال تیکت
                             </a>
                         </li>*@
-                        <li>
+                        <!--<li>
                             <hr class="dropdown-divider">
                         </li>
                         <li>
@@ -104,4 +170,4 @@
 
         </div>
     </div>
-</nav>
+</nav>-->

@@ -34,7 +34,7 @@ namespace ShopManagement.Application
             var course = new Course(command.Name, command.Description, command.ShortDescription, fileName,
                  command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
                  command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId,poster,command.TeacherId);
-
+            
             _course.Create(course);
             _course.SaveChanges();
             return operation.Succeeded();

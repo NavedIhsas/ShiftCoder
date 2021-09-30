@@ -27,6 +27,9 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 MetaDescription = x.MetaDescription,
                 Slug = x.Slug,
                 Id = x.Id,
+                PictureName = x.Picture,
+                PictureAlt = x.PictureAlt,
+                PictureTitle = x.PictureTitle,
                 SubGroupId = x.SubGroupId
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
             return getDetails;

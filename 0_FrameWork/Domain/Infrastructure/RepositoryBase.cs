@@ -13,7 +13,6 @@ namespace _0_FrameWork.Domain.Infrastructure
         public void Create(T entity) => _dbContext.Add(entity);
         public void Update(T entity) => _dbContext.Update(entity);
         public void SaveChanges() => _dbContext.SaveChanges();
-        public List<T> GetAll()=> _dbContext.Set<T>().ToList();
         public T GetById(TKey id)=> _dbContext.Find<T>(id);
         public bool IsExist(System.Linq.Expressions.Expression<Func<T, bool>> expression) => _dbContext.Set<T>().Any(expression);
 

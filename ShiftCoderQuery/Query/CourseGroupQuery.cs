@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.CourseGroup;
+using ShopManagement.Domain.CourseGroupAgg;
 using ShopManagement.Infrastructure.EfCore;
 
 namespace ShiftCoderQuery.Query
@@ -24,11 +25,26 @@ namespace ShiftCoderQuery.Query
               Slug = x.Slug,
               SubGroupId = x.SubGroupId,
               SubGroup = x.SubGroup.Title,
-              Id=x.Id
+              Id=x.Id,
+              Picture = x.Picture,
+              PictureTitle = x.PictureTitle,
+              PictureAlt = x.PictureAlt,
+              CourseCount=x.Courses.Count,
           }).AsNoTracking().ToList();
       }
 
-      public List<CourseGroupQueryModel> SearchQuery(CourseGroupSearchQuery categories)
+
+      public List<LatestCourseGroupViewModel> LatestCourseGroup()
+      {
+          return _context.CourseGroups.Where(x => !x.IsRemove).Select(x => new LatestCourseGroupViewModel
+          {
+              Title = x.Title,
+              Slug = x.Slug,
+              CourseCount = x.Courses.Count,
+          }).Take(4).AsNoTracking().ToList();
+      }
+
+        public List<CourseGroupQueryModel> SearchQuery(CourseGroupSearchQuery categories)
       {
           var query = _context.CourseGroups.Select(x => new CourseGroupQueryModel
           {
