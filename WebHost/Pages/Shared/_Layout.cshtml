@@ -3,9 +3,17 @@
 
 <head>
     <meta charset="utf-8">
-    <title>ECOURSES - Online Courses HTML Template</title>
-    
-   
+   @if (ViewData["Title"] != null)
+   {
+       <title>@ViewData["Title"]-لرن هاب</title>
+   }
+   else
+   {
+       <title>لرن هاب</title>
+   }
+
+
+
     <partial name="PartialViews/_Styles"/>
 
 </head>

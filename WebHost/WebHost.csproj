@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\Shared\Components\Group\Default.cshtml~RF1552970c.TMP" />
     <None Remove="Pages\_ViewImports.cshtml~RF147c9eae.TMP" />
   </ItemGroup>
 
@@ -29,10 +30,6 @@
     <ProjectReference Include="..\ShiftCoderQuery\ShiftCoderQuery.csproj" />
     <ProjectReference Include="..\ShopManagement.Configuration\ShopManagement.Configuration.csproj" />
     <ProjectReference Include="..\ShopManagement.Infrastructure.EfCore\ShopManagement.Infrastructure.EfCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

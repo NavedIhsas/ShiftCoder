@@ -1,5 +1,7 @@
 ﻿@page
+@using _0_FrameWork.Application
 @model WebHost.Pages.ContactUsModel
+@inject IAuthHelper _authHelper;
 @{
     ViewData["Title"] = "تماس با ما";
 }
@@ -8,11 +10,26 @@
 <div class="container-fluid page-header" style="margin-bottom: 90px;">
     <div class="container">
         <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
-            <h3 class="display-4 text-white text-uppercase">Contact</h3>
+            @if (!_authHelper.IsAuthenticated())
+            {
+                <h3 class="text-white text-uppercase text-left account-link">
+                    <a asp-page="Login"> ورود </a> <a>/</a> 
+                    <a asp-page="Account" asp-page-handler="Register"> عضویت </a>
+                </h3>
+            }
+            else
+            {
+                <h3 class="text-white  text-uppercase text-left account-link">
+                    <a class="fas fa-user-tie" asp-page="UserPanel"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a> 
+                    <a>/</a> <a  asp-page="Account" asp-page-handler="Logout"> خروج </a>
+
+                </h3>
+            }
+            <h3 class="display-4 text-white text-uppercase">تماس با ما</h3>
             <div class="d-inline-flex text-white">
-                <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
-                <i class="fa fa-angle-double-right pt-1 px-3"></i>
-                <p class="m-0 text-uppercase">Contact</p>
+                <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>
+                <i class="fa fa-angle-double-left pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">تماس با ما</p>
             </div>
         </div>
     </div>
@@ -22,8 +39,8 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="text-center mb-5">
-            <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Contact</h5>
-            <h1>Contact For Any Query</h1>
+            <h5 class="text-primary text-uppercase mb-3" >سوالات و پیشنهادات خود را با ما در میان بیگذراید</h5>
+            <h2>هر سوالی دارید از ما بپرسید ما در اسرع وقت پاسخ میدهیم</h2>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -31,23 +48,23 @@
                     <div id="success"></div>
                     <form name="sentMessage" id="contactForm" novalidate="novalidate">
                         <div class="control-group">
-                            <input type="text" class="form-control border-0 p-4" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
+                            <input type="text" class="form-control border-0 p-4" id="name" placeholder="نام و فامیلی" required="required" data-validation-required-message="لطفا نام خود را وارد کنید" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="email" class="form-control border-0 p-4" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
+                            <input type="email" class="form-control border-0 p-4" id="email" placeholder="ایمیل آدرس" required="required" data-validation-required-message="ایمیل خود را وارد کنید" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="text" class="form-control border-0 p-4" id="subject" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject" />
+                            <input type="text" class="form-control border-0 p-4" id="subject" placeholder="موضوع" required="required" data-validation-required-message="لطفا یک موضوعی را بنویسید" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <textarea class="form-control border-0 py-3 px-4" rows="5" id="message" placeholder="Message" required="required" data-validation-required-message="Please enter your message"></textarea>
+                            <textarea class="form-control border-0 py-3 px-4" rows="5" id="message" placeholder="پیام" required="required" data-validation-required-message="لطفا پیام تان را بنویسید"></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary py-3 px-5" type="submit" id="sendMessageButton">Send Message</button>
+                            <button class="btn btn-primary py-3 px-5" type="submit" id="sendMessageButton">ارسال پیام</button>
                         </div>
                     </form>
                 </div>

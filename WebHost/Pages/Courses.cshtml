@@ -1,15 +1,10 @@
 ﻿@page "{id}"
-@using _0_Framework.Application
-@using ShiftCoderQuery.Contract.Course
 @model WebHost.Pages.CoursesModel
 @{
     ViewData["Title"] = "دوره های آموزشی";
-    var courseGroup = ViewData["checked"] as List<int>;
-    var searchModel = ViewData["SearchModel"] as CourseQuerySearchModel;
 }
 
-
-<div class="container-fluid py-5">
+    <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="text-center mb-5">
             <h5 class="text-primary text-uppercase mb-3">دوره ها</h5>
@@ -25,4 +20,4 @@
             $("#submitSearch").submit();
         }
     </script>
-}
+}    ;

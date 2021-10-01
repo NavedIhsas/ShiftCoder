@@ -49,10 +49,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                                <label asp-for="Title" class="control-label">متن بزرگ<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" asp-for="Title">
-                                <span class="text-danger" asp-validation-for="Title" ></span>
-                            </div>
+                            <label asp-for="Title" class="control-label">متن بزرگ<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" asp-for="Title">
+                            <span class="text-danger" asp-validation-for="Title" ></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="ButtonLink" class="control-label">لینک دکمه<span class="text-danger">*</span></label>
+                            <input type="url" class="form-control" asp-for="ButtonLink">
+                            <span class="text-danger" asp-validation-for="ButtonLink" ></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,7 +72,7 @@
                 <img id="imgCourse" class="thumbnail" src="/FileUploader/@Model.PictureStringFormat" />
                 <div class="form-group">
                     <label asp-for="Picture" class="control-label">عکس<span class="text-danger">*</span></label>
-                    <input id="imgCourseUp" type="file" asp-for="Picture" class="form-control" accept="image/*" required>
+                    <input id="imgCourseUp" type="file" asp-for="Picture" class="form-control" accept="image/*">
                     <span class="text-danger" asp-validation-for="Picture"></span>
                 </div>
             </div>

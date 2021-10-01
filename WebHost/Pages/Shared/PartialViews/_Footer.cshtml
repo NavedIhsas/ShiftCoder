@@ -4,10 +4,10 @@
         <div class="col-lg-7 col-md-12">
             <div class="row">
                 <div class="col-md-6 mb-5">
-                    <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Get In Touch</h5>
-                    <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
+                    <h5 class="text-primary text-uppercase mb-4"  >با ما در تماس باشید</h5>
+                    <p><i class="fa fa-map-marker-alt mr-2"></i>مشهد-بلوار ساجدی-خیابان بنفشه-پلاک 135</p>
                     <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                    <p><i class="fa fa-envelope mr-2"></i>NavedAhsas77@gmail.com</p>
                     <div class="d-flex justify-content-start mt-4">
                         <a class="btn btn-outline-light btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-outline-light btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -16,25 +16,21 @@
                     </div>
                 </div>
                 <div class="col-md-6 mb-5">
-                    <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Our Courses</h5>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Web Design</a>
-                        <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Apps Design</a>
-                        <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Marketing</a>
-                        <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Research</a>
-                        <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>SEO</a>
-                    </div>
+                    <h5 class="text-primary text-uppercase mb-4"  >دوره های ما</h5>
+                    <cache expires-after="TimeSpan.FromDays(1)">
+                        @await Component.InvokeAsync("Group")
+                    </cache>
                 </div>
             </div>
         </div>
         <div class="col-lg-5 col-md-12 mb-5">
-            <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Newsletter</h5>
-            <p>Rebum labore lorem dolores kasd est, et ipsum amet et at kasd, ipsum sea tempor magna tempor. Accu kasd sed ea duo ipsum. Dolor duo eirmod sea justo no lorem est diam</p>
+            <h5 class="text-primary text-uppercase mb-4"  >آخرین خبر ها</h5>
+            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم  تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی</p>
             <div class="w-100">
                 <div class="input-group">
-                    <input type="text" class="form-control border-light" style="padding: 30px;" placeholder="Your Email Address">
+                    <input type="text" class="form-control border-light" style="padding: 30px;" placeholder="ایمیل آدرس">
                     <div class="input-group-append">
-                        <button class="btn btn-primary px-4">Sign Up</button>
+                        <button class="btn btn-primary px-4">عضویت در خبرنامه</button>
                     </div>
                 </div>
             </div>
@@ -45,22 +41,22 @@
     <div class="row">
         <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
             <p class="m-0 text-white">
-                &copy; <a href="#">Domain Name</a>. All Rights Reserved. Designed by <a href="https://htmlcodex.com">HTML Codex</a>
+                &copy; تمامی حقوق مادی و معنوی برای مجتمع <a asp-page="Index">لرن هاب</a> محفوظ میباشد
             </p>
         </div>
         <div class="col-lg-6 text-center text-md-right">
             <ul class="nav d-inline-flex">
                 <li class="nav-item">
-                    <a class="nav-link text-white py-0" href="#">Privacy</a>
+                    <a class="nav-link text-white py-0" href="#">حریم خصوصی</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white py-0" href="#">Terms</a>
+                    <a class="nav-link text-white py-0" href="#">مقررات</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white py-0" href="#">FAQs</a>
+                    <a class="nav-link text-white py-0" href="#">سوالات متداول</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white py-0" href="#">Help</a>
+                    <a class="nav-link text-white py-0" href="#">کمک</a>
                 </li>
             </ul>
         </div>

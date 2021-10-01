@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
 using Shop.Management.Application.Contract.Course;
@@ -33,8 +34,8 @@ namespace ShopManagement.Application
 
             var course = new Course(command.Name, command.Description, command.ShortDescription, fileName,
                  command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
-                 command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId,poster,command.TeacherId);
-            
+                 command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId);
+
             _course.Create(course);
             _course.SaveChanges();
             return operation.Succeeded();
@@ -47,18 +48,49 @@ namespace ShopManagement.Application
             var course = _course.GetById(command.Id);
             if (course == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
+
+            //delete current file
+
+            if (command.Picture != null)
+            {
+                var coursePictureDelete = $"wwwroot/FileUploader/{course.Picture}";
+                if (File.Exists(coursePictureDelete))
+                    File.Delete(coursePictureDelete);
+            }
+
+            if (command.File != null)
+            {
+                var demoDelete = $"wwwroot/FileUploader/{course.File}";
+                if (File.Exists(demoDelete))
+                    File.Delete(demoDelete);
+            }
+
+            if (command.DemoPoster != null)
+            {
+                var posterDelete = $"wwwroot/FileUploader/{course.DemoVideoPoster}";
+                if (File.Exists(posterDelete))
+                    File.Delete(posterDelete);
+            }
+
+
+            //get group slug
             var courseGroupSlug = _courseGroup.GetSlug(command.CourseGroupId);
+
+            //get path for save file
             var pictureName = _fileUploader.Uploader(command.Picture, courseGroupSlug);
             var fileName = _fileUploader.Uploader(command.File, courseGroupSlug + "/DemoFile");
             var poster = _fileUploader.Uploader(command.DemoPoster, courseGroupSlug + "/DemoFile");
 
+            //edit
             course.Edit(command.Name, command.Description, command.ShortDescription, fileName,
                 command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
-                command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId,poster,command.TeacherId);
+                command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId);
 
-            if (_course.IsExist(x => x.Name == command.Name.Trim() && x.CourseGroupId == command.CourseGroupId &&x.Id!=command.Id))
+            //check duplicate course
+            if (_course.IsExist(x => x.Name == command.Name.Trim() && x.CourseGroupId == command.CourseGroupId && x.Id != command.Id))
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
+            //update and save change 
             _course.Update(course);
             _course.SaveChanges();
             return operation.Succeeded();

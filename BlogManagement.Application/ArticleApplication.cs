@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
 using BlogManagement.Application.Contract.Article;
@@ -73,6 +74,14 @@ namespace BlogManagement.Application
             }
 
             var article = _repository.GetById(command.Id);
+
+            if (command.Picture != null)
+            {
+                var deletePath = $"wwwroot/FileUploader/{article.Picture}";
+                if (File.Exists(deletePath))
+                    File.Delete(deletePath);
+            }
+
             if (article == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
             var categoryName = _articleCategory.GetArticleCategoryName(command.CategoryId);

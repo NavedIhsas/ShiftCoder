@@ -1,5 +1,6 @@
 ﻿using AccountManagement.Application.Contract.Account;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
@@ -81,6 +82,15 @@ namespace AccountManagement.Application
             var fileName = _fileUploader.Uploader(command.Avatar, "UserAvatar");
 
             var getUser = _repository.GetById(command.Id);
+
+
+            if (command.Avatar != null)
+            {
+                var deletePath = $"wwwroot/FileUploader/{getUser.Avatar}";
+                if (File.Exists(deletePath))
+                    File.Delete(deletePath);
+            }
+
             if (getUser == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
             switch (getUser.RoleId)

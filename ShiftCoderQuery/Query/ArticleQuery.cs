@@ -77,7 +77,7 @@ namespace ShiftCoderQuery.Query
                     ShortDescription = x.ShortDescription,
                     CreationDate = x.CreationDate,
                     Slug = x.Slug,
-                    Id=x.Id,
+                    Id = x.Id,
                     BloggerId = x.BloggerId,
                     Keywords = x.Keywords,
                     ArticleCategory = x.ArticleCategory.Name,
@@ -85,7 +85,7 @@ namespace ShiftCoderQuery.Query
                 }).AsNoTracking().OrderByDescending(x => x.CreationDate).ToList();
 
 
-            
+
             foreach (var item in query)
             {
                 var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Article)
@@ -103,7 +103,9 @@ namespace ShiftCoderQuery.Query
             //---search---//
             if (!string.IsNullOrEmpty(search.Title))
                 query = query.Where(x =>
-                        x.Title.ToLower().Contains(search.Title.ToLower().Trim()))
+                        x.Title.ToLower().Contains(search.Title.ToLower().Trim()) ||
+                        x.ShortDescription.ToLower().Contains(search.Title.ToLower().Trim()) ||
+                        x.Keywords.ToLower().Contains(search.Title.ToLower().Trim()))
                     .ToList();
 
             //---sort--//
@@ -154,7 +156,7 @@ namespace ShiftCoderQuery.Query
                 PictureTitle = x.PictureTitle,
                 PictureAtl = x.PictureAtl,
                 Slug = x.Slug,
-                CreationDate=x.CreationDate,
+                CreationDate = x.CreationDate,
                 Keywords = x.Keywords,
                 MetaDescription = x.MetaDescription,
                 CanonicalAddress = x.CanonicalAddress,

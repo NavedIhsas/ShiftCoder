@@ -15,6 +15,7 @@ namespace CommentManagement.Infrastructure.EfCore.Mapping
             builder.Property(x => x.PictureTitle).HasMaxLength(150);
             builder.Property(x => x.PictureAlt).HasMaxLength(150);
             builder.Property(x => x.ButtonText).HasMaxLength(20);
+            builder.Property(x => x.ButtonLink).HasMaxLength(500);
         }
     }
 }

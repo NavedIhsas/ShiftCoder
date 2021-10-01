@@ -1,11 +1,13 @@
 ﻿@page "{id}"
 
 @using _0_Framework.Application
+@using _0_FrameWork.Application
 @using ShiftCoderQuery.Contract.Course
 @using ShiftCoderQuery.Contract.CourseGroup
 @using Shop.Management.Application.Contract.CourseEpisode
 @model WebHost.Pages.SingleCourseModel
 @inject ICourseQuery _course;
+@inject IAuthHelper _authHelper;
 @inject ICourseGroupQuery _group
 @{
     ViewData["Title"] = Model.Course.Name;
@@ -20,9 +22,24 @@
 <div class="container-fluid page-header" style="margin-bottom: 90px;">
     <div class="container">
         <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+            @if (!_authHelper.IsAuthenticated())
+            {
+                <h3 class="text-white text-uppercase text-left account-link">
+                    <a asp-page="Login"> ورود </a> <a>/</a> 
+                    <a asp-page="Account" asp-page-handler="Register"> عضویت </a>
+                </h3>
+            }
+            else
+            {
+                <h3 class="text-white  text-uppercase text-left account-link">
+                    <a class="fas fa-user-tie" asp-page="UserPanel"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a> 
+                    <a>/</a> <a  asp-page="Account" asp-page-handler="Logout"> خروج </a>
+
+                </h3>
+            }
             <h3 class="display-4 text-white text-uppercase">جزئیات دوره</h3>
             <div class="d-inline-flex text-white">
-                <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">صفحه اصلی</a></p>
+                <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>
                 <i class="fa fa-angle-double-left pt-1 px-3"></i>
                 <p class="m-0 text-uppercase"><a class="text-white" asp-page="Courses" asp-route-id="@Model.Course.CourseGroupSlug">@Model.Course.CourseGroup</a></p>
                 <i class="fa fa-angle-double-left pt-1 px-3"></i>

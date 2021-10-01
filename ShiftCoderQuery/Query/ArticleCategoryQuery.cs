@@ -19,7 +19,8 @@ namespace ShiftCoderQuery.Query
           return _context.ArticleCategories.Select(x => new ArticleCategoryQueryModel()
            {
                Name = x.Name,
-               Id = x.Id
+               Id = x.Id,
+               ArticlesCount=x.Articles.Count
            }).AsNoTracking().ToList();
        }
     }

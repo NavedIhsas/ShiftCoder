@@ -1,13 +1,31 @@
 ﻿@page
 @using _0_Framework.Application
+@using _0_FrameWork.Application
 @model WebHost.Pages.GetAllCoursesModel
+@inject IAuthHelper _authHelper
 @{
+    ViewData["Title"] = "همه کورس ها";
 }
 
 <!-- Header Start -->
 <div class="container-fluid page-header" style="margin-bottom: 90px;">
     <div class="container">
         <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+         @if (!_authHelper.IsAuthenticated())
+         {
+             <h3 class="text-white text-uppercase text-left account-link">
+                 <a asp-page="Login"> ورود </a> <a>/</a> 
+                 <a asp-page="Account" asp-page-handler="Register"> عضویت </a>
+             </h3>
+         }
+         else
+         {
+        <h3 class="text-white  text-uppercase text-left account-link">
+            <a class="fas fa-user-tie" asp-page="Login"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a> 
+            <a>/</a> <a  asp-page="Account" asp-page-handler="Logout"> خروج </a>
+
+        </h3>
+         }
             <h3 class="display-4 text-white text-uppercase">همه دوره ها</h3>
             <div class="d-inline-flex text-white">
                 <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>
@@ -18,7 +36,6 @@
     </div>
 </div>
 <!-- Header End -->
-
 <!-- Courses Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
@@ -26,7 +43,7 @@
             <div class="col-lg-8">
                 <div class="row pb-3">
                     <div class="text-center mb-5">
-                        <h5 class="text-primary text-uppercase mb-3" >دوره ها</h5>
+                        <h5 class="text-primary text-uppercase mb-3">دوره ها</h5>
                         <h1>همه دوره های لرن هاب</h1>
                     </div>
 
@@ -41,7 +58,7 @@
                                             <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>@course.UserCourse.Count دانشجو</small>
                                             <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>@course.TotalTime</small>
                                         </div>
-                                        <a class="h5" href="">@course.Name</a>
+                                        <a class="h5"asp-page="SingleCourse" asp-route-id="@course.Slug">@course.Name</a>
                                         <div class="border-top mt-4 pt-4">
                                             <div class="d-flex justify-content-between">
                                                 <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
@@ -60,7 +77,7 @@
                                 </div>
                             </div>
                         }
-                        
+
                         @if (Model.Course.PageCount > 1)
                         {
                             <div class="col-12">
@@ -76,7 +93,7 @@
                                         {
                                             <li class="page-item @(i==Model.Course.CurrentPage?"active":"")"><a class="page-link" href="AllCourses?PageId=@i">@i</a></li>
                                         }
-                              
+
                                         <li class="page-item @(Model.Course.CurrentPage>=Model.Course.PageCount?"disabled":"")">
                                             <a class="page-link" href="AllCourses?PageId=@(Model.Course.CurrentPage+1)" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
@@ -108,7 +125,7 @@
 
                 <!-- Category List -->
                 <div class="mb-5">
-                    <h3 class="text-uppercase mb-4" >دسته بندی ها</h3>
+                    <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
                     <ul class="list-group list-group-flush">
                         @foreach (var category in Model.CourseGroups)
                         {
@@ -130,7 +147,7 @@
                             <img class="img-fluid rounded photo-size" src="~/FileUploader/@recentPost.Picture" title="@recentPost.PictureTitle" alt="@recentPost.PictureAlt">
                             <div class="pl-3">
                                 <h6 class="m-1">@recentPost.ShortDescription</h6>
-                                <small>@Tools.ChangeTimeToFarsi(recentPost.CreationDate,"M - MMMM /yyyy")</small>
+                                <small>@Tools.ChangeTimeToFarsi(recentPost.CreationDate, "M - MMMM /yyyy")</small>
                             </div>
                         </a>
                     }
@@ -138,7 +155,7 @@
 
                 <!-- Tag Cloud -->
                 <div class="mb-5">
-                    <h3 class="text-uppercase mb-4" >کلمات کلیدی</h3>
+                    <h3 class="text-uppercase mb-4">کلمات کلیدی</h3>
                     <div class="d-flex flex-wrap m-n1">
                         @foreach (var item in Model.Course.Courses.SelectMany(tag => tag.Keywords).Take(8))
                         {

@@ -18,8 +18,8 @@
         }
 
         <div class="media-body">
-            <h6>@sub.Name <small class="mr-3"><i>@Tools.ChangeTimeToFarsi(sub.CreateDateTime, "M-MMMM/dddd-HH:mm")</i></small></h6>
-            <p>
+            <h6 class="mr-3">@sub.Name <small class="mr-3" dir="rtl"><i>@sub.CreationDate</i></small></h6>
+            <p class="mr-3">
                 @sub.Message
             </p>
             <a href="#formPost" onclick='$("#commentParenId").val(@sub.Id)' class="btn btn-sm btn-secondary">پاسخ</a>

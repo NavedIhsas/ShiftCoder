@@ -4,6 +4,7 @@ using _0_Framework.Application;
 using _0_FrameWork.Application;
 using BlogManagement.Domain.ArticleAgg;
 using CommentManagement.Domain.CourseCommentAgg;
+using CommentManagement.Domain.SliderAgg;
 using CommentManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Comment;
@@ -103,5 +104,10 @@ namespace ShiftCoderQuery.Query
             return operation.Succeeded("نظر شما با موفقیت ثبت شد");
         }
 
+        public List<Slider> GetThreeSlider()
+        {
+            return _context.Sliders.Take(3).OrderBy(x=>x.CreationDate).ToList();
+        }
     }
 }
+

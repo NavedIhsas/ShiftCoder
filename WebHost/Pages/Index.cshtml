@@ -15,38 +15,22 @@
             <li data-target="#header-carousel" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active" style="min-height: 300px;">
-                <img class="position-relative w-100" src="img/carousel-1.jpg" style="min-height: 300px; object-fit: cover;">
-                <div class="carousel-caption d-flex align-items-center justify-content-center">
-                    <div class="p-5" style="width: 100%; max-width: 900px;">
-                        <h5 class="text-white text-uppercase mb-md-3">Best Online Courses</h5>
+            @foreach (var slid in Model.Sliders)
+            {
+                <div class="carousel-item @(slid==Model.Sliders.First()?"active":"")" style="min-height: 300px;">
+                    <img class="position-relative w-100" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt" style="min-height: 300px; object-fit: cover;">
+                    <div class="carousel-caption d-flex align-items-center justify-content-center">
+                        <div class="p-5" style="width: 100%; max-width: 900px;">
+                            <h5 class="text-white text-uppercase mb-md-3">@slid.ShortTitle</h5>
 
-                        <h1 class="display-3 text-white mb-md-4">Best Education From Your Home</h1>
+                            <h1 class="display-3 text-white mb-md-4">@slid.Title</h1>
                        
-                        <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Learn More</a>
+                            <a href="@slid.ButtonLink" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">@slid.ButtonText</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="carousel-item" style="min-height: 300px;">
-                <img class="position-relative w-100" src="img/carousel-2.jpg" style="min-height: 300px; object-fit: cover;">
-                <div class="carousel-caption d-flex align-items-center justify-content-center">
-                    <div class="p-5" style="width: 100%; max-width: 900px;">
-                        <h5 class="text-white text-uppercase mb-md-3">Best Online Courses</h5>
-                        <h1 class="display-3 text-white mb-md-4">Best Online Learning Platform</h1>
-                        <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item" style="min-height: 300px;">
-                <img class="position-relative w-100" src="img/carousel-3.jpg" style="min-height: 300px; object-fit: cover;">
-                <div class="carousel-caption d-flex align-items-center justify-content-center">
-                    <div class="p-5" style="width: 100%; max-width: 900px;">
-                        <h5 class="text-white text-uppercase mb-md-3">Best Online Courses</h5>
-                        <h1 class="display-3 text-white mb-md-4">New Way To Learn From Home</h1>
-                        <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Learn More</a>
-                    </div>
-                </div>
-            </div>
+            }
+
         </div>
     </div>
 </div>
@@ -61,10 +45,10 @@
             <div class="col-lg-7">
                 <div class="text-right mb-4">
                     <h5 class="text-primary text-uppercase mb-3">درباره ما</h5>
-                    <h1>لورم ایپسوم متن ساختگی</h1>
+                    <h1>روش ابتکاری برای یادگیری</h1>
                 </div>
                 <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی</p>
-                <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">جزئیات بیشتر</a>
+                <a asp-page="AboutUs" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">جزئیات بیشتر</a>
             </div>
         </div>
     </div>
@@ -118,13 +102,13 @@
                             <div class="form-group">
                                 <select class="custom-select border-0 px-4" style="height: 47px;">
                                     <option selected>دوره خود را انتخاب کنید</option>
-                                    <option value="1">Course 1</option>
-                                    <option value="2">Course 1</option>
-                                    <option value="3">Course 1</option>
+                                    <option value="1">Asp.NetCore</option>
+                                    <option value="2">PHP</option>
+                                    <option value="3">SEO</option>
                                 </select>
                             </div>
                             <div>
-                                <button class="btn btn-dark btn-block border-0 py-3" type="submit">ثبت نام</button>
+                                <button disabled="" class="btn btn-dark btn-block border-0 py-3" type="submit">ثبت نام</button>
                             </div>
                         </form>
                     </div>
@@ -136,179 +120,3 @@
 <!-- Registration End -->
 
 @await Component.InvokeAsync("Articles")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<div class="row justify-content-center" id="custom-container-fluid-header">
-        <div class="col-12 col-md-8">
-            <h3 id="header-top-text">شیفت کدر منبعی مملو از آموزشات</h3>
-            <h4 id="header-bottom-text">بدون هزینه برنامه نویس و طراح گرافیست شو</h4>
-            <form method="get" id="container-searchbox-header" asp-page="Courses">
-                <input type="text" asp-for="SearchModel.Name" id="searchbox-header" placeholder="میخواهی چی یاد بگیری ...">
-                <button id="container-icon-search-header">
-                    <img src="~/icons/search.png" alt="search" id="search-img-header">
-                </button>
-            </form>
-
-            <div class="col-6" id="container-signin-login">
-                <a asp-page="Account" asp-page-handler="Register" class="white" id="anchor-btn-signin">
-                    <p><span class="bg"></span><span class="base"></span><span class="text">ثبت نام</span></p>
-                </a>
-                <a asp-page="Login"  class="white" id="anchor-btn-signin">
-                    <p><span class="bg"></span><span class="base"></span><span class="text">ورود</span></p>
-                </a>
-            </div>
-
-            <cache expires-after="@TimeSpan.FromMinutes(50)">
-                @await Component.InvokeAsync("IndexDetails")
-            </cache>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div id="container-section-bottom-header">
-                    <div class="section-bottom-header">
-                        <img src="~/images/img-login.png" alt="moshavere" class="img-section-bottom-header">
-                        <div class="cotainer-p-bottom-header">
-                            <a class="anchor-section-bottom-header">
-                                <p class="p-section-top-header">مشاوره و رفع اشکال</p>
-                            </a>
-                            <a class="anchor-section-bottom-header">
-                                <p class="p-section-bottom-header">به صورت کاملا رایگان</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="section-bottom-header">
-                        <img src="~/images/img-marketing.png" alt="moshavere" class="img-section-bottom-header">
-                        <div class="cotainer-p-bottom-header">
-                            <a class="anchor-section-bottom-header">
-                                <p class="p-section-top-header">همکاری با شیفت کدر</p>
-                            </a>
-                            <a class="anchor-section-bottom-header">
-                                <p class="p-section-bottom-header">بدون هیچ گونه شرایط خاصی</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="section-bottom-header" id="section-bottom-header-video">
-                        <img src="~/images/img-learning.png" alt="moshavere" class="img-section-bottom-header">
-                        <div class="cotainer-p-bottom-header">
-                            <a  class="anchor-section-bottom-header">
-                                <p class="p-section-top-header">دوره ها ، مقالات و ویدئو ها</p>
-                            </a>
-                            <a  class="anchor-section-bottom-header">
-                                <p class="p-section-bottom-header">آپدیت روزانه و بدون محدودیت</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="container-name-section-content">
-                    <h2 class="name-section-content">
-                        <a class="link-section-content">جدیدترین دوره های شیفت کدر</a>
-                    </h2>
-                    <div class="line-section-content"></div>
-                    <a asp-page="Courses" class="container-full-packages">
-                        <p>مشاهده تمامی دوره ها</p>
-                        <img src="~/icons/double-left-arrows-symbol.png" alt="arrow" class="img-arrow-full-packages">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <cache expires-after="@TimeSpan.FromMinutes(50)">
-        @await Component.InvokeAsync("LatestCourses")
-    </cache>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="container-name-section-content">
-                    <h2 class="name-section-content">
-                        <a class="link-section-content">محبوب ترین دوره های شیفت کدر</a>
-                    </h2>
-                    <div class="line-section-content" id="line-section-content-blue"></div>
-                    <a asp-page="Courses" class="container-full-packages">
-                        <p>مشاهده تمامی دوره ها</p>
-                        <img src="~/icons/double-left-arrows-symbol.png" alt="arrow" class="img-arrow-full-packages">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <cache expires-after="@TimeSpan.FromMinutes(50)">
-        @await Component.InvokeAsync("PopularCourse")
-    </cache>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="container-name-section-content">
-                    <h2 class="name-section-content">
-                        <a class="link-section-content">آخرین مقالات شیفت کدر</a>
-                    </h2>
-                    <div class="line-section-content" id="line-section-content-yellow"></div>
-                    <a asp-page="Articles" class="container-full-packages">
-                        <p>مشاهده تمامی مقالات</p>
-                        <img src="~/icons/double-left-arrows-symbol.png" alt="arrow" class="img-arrow-full-packages">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <cache expires-after="@TimeSpan.FromMinutes(50)">
-        @await Component.InvokeAsync("Articles")
-    </cache>*@

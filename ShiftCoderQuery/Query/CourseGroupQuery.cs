@@ -44,6 +44,19 @@ namespace ShiftCoderQuery.Query
           }).Take(4).AsNoTracking().ToList();
       }
 
+
+
+      public List<LatestCourseGroupViewModel> GetSixGroup()
+      {
+          return _context.CourseGroups.Where(x => !x.IsRemove).Where(x=>x.SubGroup==null).Select(x => new LatestCourseGroupViewModel
+          {
+              Title = x.Title,
+              Slug = x.Slug,
+              CourseCount = x.Courses.Count,
+          }).Take(6).AsNoTracking().ToList();
+      }
+
+
         public List<CourseGroupQueryModel> SearchQuery(CourseGroupSearchQuery categories)
       {
           var query = _context.CourseGroups.Select(x => new CourseGroupQueryModel

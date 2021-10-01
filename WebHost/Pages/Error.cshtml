@@ -2,25 +2,62 @@
 @model ErrorModel
 @{
     ViewData["Title"] = "Error";
+    Layout = null;
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<br/>
+<br/>
+<br/>
+<div style="text-align: center;" >
+    
+    <h1 class="text-danger">Error.</h1>
+    <h2 class="text-danger">An error occurred while processing your request.</h2>
 
-@if (Model.ShowRequestId)
-{
+    @if (Model.ShowRequestId)
+    {
+        <p>
+            <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        </p>
+    }
+
+    <h3>Development Mode</h3>
     <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        Swapping to the <strong>Development</strong> environment displays detailed information about the error that occurred.
     </p>
-}
+    <p>
+        <strong>The Development environment shouldn't be enabled for deployed applications.<br/><br/></strong>
+        It can result in displaying sensitive information from exceptions to end users.<br/><br/>
+        For local debugging, enable the <strong>Development</strong> environment by setting the <br/><br/><strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
+        and restarting the app.
+    </p>
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to the <strong>Development</strong> environment displays detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+    <div class="row">
+        <a style="
+                  display: inline-block;
+                  font-weight: 400;
+                  color: #6C6A74;
+                  text-align: center;
+                  vertical-align: middle;
+                  user-select: none;
+        
+                  border: 1px solid transparent;
+                  padding: 0.375rem 0.75rem;
+                  font-size: 1rem;
+                  line-height: 1.5;
+                  border-radius: 8px;" href="https://ihsasdevelopment.ir">Home Page</a>
+
+        <a style="
+                  display: inline-block;
+                  font-weight: 400;
+                  color: #6C6A74;
+                  text-align: center;
+                  vertical-align: middle;
+                  user-select: none;
+        
+                  border: 1px solid transparent;
+                  padding: 0.375rem 0.75rem;
+                  font-size: 1rem;
+                  line-height: 1.5;
+                  border-radius: 8px;" href="https://ihsasdevelopment.ir/ContactUs">Report</a>
+    </div>
+</div>

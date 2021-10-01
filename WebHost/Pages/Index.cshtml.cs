@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using CommentManagement.Domain.SliderAgg;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ShiftCoderQuery.Contract.Comment;
 using ShiftCoderQuery.Contract.Course;
 using ShopManagement.Domain.CourseAgg;
 
@@ -12,18 +14,21 @@ namespace WebHost.Pages
     public class IndexModel : PageModel
     {
         private readonly ICourseQuery _course;
+        private readonly ICommentQuery _slider;
 
-        public IndexModel(ICourseQuery course)
+        public IndexModel(ICourseQuery course, ICommentQuery slider)
         {
             _course = course;
+            _slider = slider;
         }
 
         public List<Course> Courses;
+        public List<Slider> Sliders;
         public CourseQuerySearchModel SearchModel;
         public long Episodes;
         public void OnGet()
         {
-            // Episodes = _course.GetAllEpisodes();
+            Sliders = _slider.GetThreeSlider();
         }
 
 

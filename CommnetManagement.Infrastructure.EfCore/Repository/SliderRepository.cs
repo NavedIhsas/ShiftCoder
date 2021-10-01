@@ -38,7 +38,9 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
                 PictureTitle = x.PictureTitle,
                 ButtonText = x.ButtonText,
                 CreationDate = x.CreationDate,
-                Id = x.Id
+                Id = x.Id,
+                Title = x.Title,
+                ShortTitle = x.ShortTitle,
             }).FirstOrDefault(x=>x.Id==id);
         }
     }

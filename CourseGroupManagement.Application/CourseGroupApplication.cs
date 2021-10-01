@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
 using Shop.Management.Application.Contract.CourseGroup;
@@ -43,6 +44,14 @@ namespace ShopManagement.Application
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
             var courseGroup = _repository.GetById(command.Id);
+
+            if (command.Picture != null)
+            {
+                var deletePath = $"wwwroot/FileUploader/{courseGroup.Picture}";
+                if (File.Exists(deletePath))
+                    File.Delete(deletePath);
+            }
+
             if (courseGroup == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
             var filePath = $"CourseGroup/{command.Slug.Slugify()}";

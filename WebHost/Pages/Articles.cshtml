@@ -1,10 +1,12 @@
 ﻿@page
 @using AccountManagement.Domain.Account.Agg
 @using _0_Framework.Application
+@using _0_FrameWork.Application
 @using ShiftCoderQuery.Contract.Article
 @model WebHost.Pages.ArticlesModel
 @inject ITeacherRepository _repository;
 @inject IArticleQuery _article;
+@inject IAuthHelper _authHelper;
 @{
     ViewData["Title"] = "مقالات شیفت کدر";
 }
@@ -13,6 +15,22 @@
 <div class="container-fluid page-header" style="margin-bottom: 90px;">
     <div class="container">
         <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+            @if (!_authHelper.IsAuthenticated())
+            {
+                <h3 class="text-white text-uppercase text-left account-link">
+                    <a asp-page="Login"> ورود </a> <a>/</a> 
+                    <a asp-page="Account" asp-page-handler="Register"> عضویت </a>
+                </h3>
+            }
+            else
+            {
+                <h3 class="text-white  text-uppercase text-left account-link">
+                    <a class="fas fa-user-tie" asp-page="UserPanel"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a> 
+                    <a>/</a> <a  asp-page="Account" asp-page-handler="Logout"> خروج </a>
+
+                </h3>
+            }
+
             <h3 class="display-4 text-white text-uppercase">مقالات</h3>
             <div class="d-inline-flex text-white">
                 <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>
@@ -42,38 +60,41 @@
                         </div>
                     }
 
-                    <div class="col-12">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination pagination-lg justify-content-center mb-0">
-                                <li class="page-item @(Model.List.CurrentPage<2?"disabled":"")">
-                                    <a class="page-link" href="Articles?PageId=@(Model.List.CurrentPage-1)" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">قبلی</span>
-                                    </a>
-                                </li>
-                               @for (int i = 1; i <= Model.List.PageCount; i++)
-                               {
-                                   <li class="page-item @(i==Model.List.CurrentPage?"active":"")"><a class="page-link" href="Articles?PageId=@i">@i</a></li>
-                               }
+                   @if (Model.List.PageCount > 1)
+                   {
+                       <div class="col-12">
+                           <nav aria-label="Page navigation">
+                               <ul class="pagination pagination-lg justify-content-center mb-0">
+                                   <li class="page-item @(Model.List.CurrentPage<2?"disabled":"")">
+                                       <a class="page-link" href="Articles?PageId=@(Model.List.CurrentPage-1)" aria-label="Previous">
+                                           <span aria-hidden="true">&laquo;</span>
+                                           <span class="sr-only">قبلی</span>
+                                       </a>
+                                   </li>
+                                   @for (int i = 1; i <= Model.List.PageCount; i++)
+                                   {
+                                       <li class="page-item @(i==Model.List.CurrentPage?"active":"")"><a class="page-link" href="Articles?PageId=@i">@i</a></li>
+                                   }
                               
-                                <li class="page-item @(Model.List.CurrentPage>=Model.List.PageCount?"disabled":"")">
-                                    <a class="page-link" href="Articles?PageId=@(Model.List.CurrentPage+1)" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">بعدی</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                                   <li class="page-item @(Model.List.CurrentPage>=Model.List.PageCount?"disabled":"")">
+                                       <a class="page-link" href="Articles?PageId=@(Model.List.CurrentPage+1)" aria-label="Next">
+                                           <span aria-hidden="true">&raquo;</span>
+                                           <span class="sr-only">بعدی</span>
+                                       </a>
+                                   </li>
+                               </ul>
+                           </nav>
+                       </div>
+                   }
                 </div>
             </div>
 
             <div class="col-lg-4 mt-5 mt-lg-0">
                 <!-- Search Form -->
                 <div class="mb-5">
-                    <form action="">
+                    <form method="get" >
                         <div class="input-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="کلمات کلیدی">
+                            <input type="text" name="title" class="form-control form-control-lg" placeholder="جستجو...">
                             <div class="input-group-append">
                                 <span class="input-group-text bg-transparent text-primary">
                                     <i class="fa fa-search"></i>
@@ -90,8 +111,8 @@
                         @foreach (var category in Model.Category)
                         {
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                <a href="" class="text-decoration-none h6 m-0">@category.Name</a>
-                                <span class="badge badge-primary badge-pill">150</span>
+                                <a class="text-decoration-none h6 m-0">@category.Name</a>
+                                <span class="badge badge-primary badge-pill">@category.ArticlesCount</span>
                             </li>
                         }
 
@@ -103,7 +124,7 @@
                     <h3 class="text-uppercase mb-4" >آخرین پست ها</h3>
                     @foreach (var item in _article.LatestArticle())
                     {
-                        <a class="d-flex align-items-center text-decoration-none mb-3" href="">
+                        <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@item.Slug">
                             <img class="img-fluid rounded" src="~/FileUploader/@item.Picture" style="width: 80px; height: 80px" title="@item.PictureTitle" alt="@item.PictureAtl">
                             <div class="pl-3">
                                 <h6 class="m-1 mr-2">@item.ShortDescription</h6>
@@ -119,7 +140,7 @@
                     <div class="d-flex flex-wrap m-n1">
                         @foreach (var keywords in Model.List.Articles.SelectMany(articles => articles.KeyWords))
                         {
-                            <a href="" class="btn btn-outline-primary m-1">@keywords</a>
+                            <a asp-page="Articles" asp-route-title="@keywords" class="btn btn-outline-primary m-1">@keywords</a>
                         }
                     </div>
                 </div>
@@ -127,211 +148,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<div class="container">
-        <div class="row">
-            <form method="get" id="SearchForm">
-                <main>
-                    <div id="header-body">
-                        <h1 id="title-main">مقالات شیفت کدر <span>(@Model.List.Articles.Count)</span></h1>
-                        <div id="container-search">
-                            <i class="fal fa-search search-icon"></i>
-                            <input asp-for="Search.Title" type="text" placeholder="دنبال چه دوره ای میگردی ..." id="input-search">
-                        </div>
-                    </div>
-                    <section id="body-container" class="container">
-                        <div class="row">
-                            <aside id="sidebar-main" class="col-12 col-lg-3">
-                                <div class="accordion container-accoradion-sidebar" id="accordionExample">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingOne">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                <span type="submit" class="span-title-btn-accordion">مرتب سازی دوره ها</span>
-                                            </button>
-                                        </h2>
-                                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                <div class="content-first-accordion">
-                                                    <div id="content-second-accordion">
-                                                        <div class="form-check">
-                                                            <input asp-for="Search.Filter"  value="new" onchange="submitForm()" class="form-check-input" type="radio"  id="flexRadioDefault1" >
-                                                            <label   class="form-check-label" for="flexRadioDefault1">
-                                                                جدید ترین
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input asp-for="Search.Filter"  value="poplar" onchange="submitForm()" class="form-check-input" type="radio" id="flexRadioDefault2">
-                                                            <label class="form-check-label" for="flexRadioDefault2">
-                                                                پربازدید ترین
-                                                            </label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion container-accoradion-sidebar" id="accordionExample">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingThree">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                <span class="span-title-btn-accordion">دسته بندی مقالات</span>
-                                            </button>
-                                        </h2>
-                                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                @foreach (var category in Model.Category)
-                                                {
-                                                    <div class="form-check">
-                                                        <input name="categories" onchange="submitForm()" value="@category.Name" class="form-check-input" type="checkbox" id="programming-checkbox" >
-                                                        <label class="form-check-label" for="programming-checkbox">
-                                                            @category.Name
-                                                        </label>
-                                                    </div>
-                                                }
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion container-accoradion-sidebar" id="accordionExample">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingTwo">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                                <span class="span-title-btn-accordion">فیلتر نویسنده ها</span>
-                                            </button>
-                                        </h2>
-                                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                               @foreach (var blog in Model.Blogger)
-                                               {
-                                                   <div class="form-check">
-                                                           <input name="bloggerId" value="@blog.Id" onchange="submitForm()" class="form-check-input" type="checkbox" id="parnina">
-                                                           <label class="form-check-label" for="parnina">
-                                                               @blog.Account.FullName
-                                                           </label>
-                                                       </div>
-                                               }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </aside>
-
-                            <div class="col-12 col-lg-9">
-                                <div id="container-articles" class="container">
-                                    <div class="row">
-                                        <div class="container">
-                                            <div class="row container-article">
-                                                @foreach (var articles in Model.List.Articles)
-                                                {
-                                                    <div class="col-12 col-md-6 col-lg-4 container-main-card">
-                                                        <div class="card container-card-article">
-                                                            <a asp-page="SingleArticle" asp-route-id="@articles.Slug" class="anchor-cards">
-                                                                <img src="~/FileUploader/@articles.Picture" class="card-img-top img-card" alt="@articles.PictureAtl" title="@articles.PictureTitle">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title title-card-article">@articles.Title</h5>
-                                                                    <div>
-                                                                        <p class="p-card-article">
-                                                                            @articles.ShortDescription
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="container-items-card">
-                                                                        <div>
-                                                                            <img src="icons/teacher-3.png" alt="Teacher" class="img-teacher-card">
-                                                                            <span class="span-item-card span-item-card-article">@articles.BloggerName</span>
-                                                                        </div>
-                                                                        <div class="chat-display-item-none">
-                                                                            <img src="icons/chat-2.png" alt="chat" class="img-teacher-card">
-                                                                            <span class="span-item-card">@articles.Comments.Count</span>
-                                                                        </div>
-                                                                        <div>
-                                                                            <img src="icons/view.png" alt="student" class="img-teacher-card">
-                                                                            <span class="span-item-card">@articles.VisitCount</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                }
-
-                                                @if (Model.List.PageCount > 1)
-                                                {
-                                                    <div class="col-12" id="pagination">
-                                                        <nav aria-label="Page navigation example">
-                                                            <ul class="pagination">
-                                                                <li class="page-item @(Model.List.CurrentPage<2?"disabled":"")">
-                                                                    <a class="page-link" href="Articles?pageId=@(Model.List.CurrentPage-1)" aria-label="Previous">
-                                                                        <span aria-hidden="true">&laquo;</span>
-                                                                    </a>
-                                                                </li>
-                                                                @for (var i = 1; i <= Model.List.PageCount; i++)
-                                                                {
-                                                                    <li class="page-item"><a class="page-link" href="Articles?pageId=@i">@i</a></li>
-                                                                }
-
-                                                                <li class="page-item  @(Model.List.CurrentPage>=Model.List.PageCount?"disabled":"")">
-                                                                    <a class="page-link" href="Articles?pageId=@(Model.List.CurrentPage+1)" aria-label="Next">
-                                                                        <span aria-hidden="true">&raquo;</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </main>
-            </form>
-        </div>
-    </div>
-
-    @section Scripts
-    {
-        <script>
-            function submitForm() {
-                $("#SearchForm").submit();
-            }
-        </script>
-    }*@

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using _0_FrameWork.Application;
 using Shop.Management.Application.Contract.CourseEpisode;
 using ShopManagement.Domain.CourseAgg;
@@ -50,6 +51,13 @@ namespace ShopManagement.Application
             var fileName = _fileUploader.Uploader(command.File, pathFile);
 
             var courseEpisode = _repository.GetById(command.Id);
+
+            if (command.File != null)
+            {
+                var deletePath = $"wwwroot/FileUploader/EpisodeFiles/{courseSlug}/{courseEpisode.FileName}";
+                if (File.Exists(deletePath))
+                    File.Delete(deletePath);
+            }
             courseEpisode.Edit(fileName, command.Time, command.Title, command.CourseId,
                 command.IsFree);
 

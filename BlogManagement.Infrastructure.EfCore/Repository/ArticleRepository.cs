@@ -41,7 +41,7 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
                 IsPublish = x.IsPublish,
                 PictureName = x.Picture,
                 BloggerId = x.BloggerId,
-                
+
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 

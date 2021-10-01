@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Policy;
 using _0_FrameWork.Application;
 using Microsoft.AspNetCore.Http;
 
@@ -28,6 +29,9 @@ namespace CommentManagement.Application.Contract.HomePhoto
 
         [MaxLength(50, ErrorMessage = Validate.MaxLength)]
         public string ShortTitle { get; set; }
+
+        [MaxLength(500, ErrorMessage = Validate.MaxLength)]
+        public string ButtonLink { get; set; }
 
     }
 }

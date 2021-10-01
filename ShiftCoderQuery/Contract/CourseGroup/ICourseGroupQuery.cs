@@ -7,6 +7,7 @@ namespace ShiftCoderQuery.Contract.CourseGroup
         List<CourseGroupQueryModel> GetAllCourseGroup();
         List<CourseGroupQueryModel> SearchQuery(CourseGroupSearchQuery categories);
         List<LatestCourseGroupViewModel> LatestCourseGroup();
+        List<LatestCourseGroupViewModel> GetSixGroup();
 
     }
 }
