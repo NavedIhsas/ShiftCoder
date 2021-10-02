@@ -12,6 +12,5 @@
         public string CourseSlug { get; set; }
         public string ArticleSlug { get; set; }
         public int Type { get; set; }
-
     }
 }

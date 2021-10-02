@@ -10,14 +10,14 @@ namespace WebHost.Areas.Administration.Pages.Discount.DiscountCode
     public class IndexModel : PageModel
     {
         private readonly IDiscountCodeApplication _application;
+        public List<DiscountCodeViewModel> List;
+
+        public DiscountCodeSearchModel SearchModel;
 
         public IndexModel(IDiscountCodeApplication application)
         {
             _application = application;
         }
-
-        public DiscountCodeSearchModel SearchModel;
-        public List<DiscountCodeViewModel> List;
 
 
         [NeedPermission(Permission.ListDiscountCode)]

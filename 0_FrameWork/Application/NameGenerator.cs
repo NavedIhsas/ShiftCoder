@@ -2,7 +2,7 @@
 
 namespace _0_FrameWork.Application
 {
-   public class NameGenerator
+    public class NameGenerator
     {
         public static string UniqCode()
         {

@@ -27,13 +27,13 @@ namespace ShiftCoderQuery.Contract.Article
 
     public class PaginationArticlesViewModel
     {
-        public int CurrentPage { get; set; }
-        public int PageCount { get; set; }
-        public List<GetAllArticleQueryModel> Articles { get; set; }
-
         public PaginationArticlesViewModel()
         {
             Articles = new List<GetAllArticleQueryModel>();
         }
+
+        public int CurrentPage { get; set; }
+        public int PageCount { get; set; }
+        public List<GetAllArticleQueryModel> Articles { get; set; }
     }
 }

@@ -10,11 +10,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlogManagement.Infrastructure.EfCore.Repository
 {
-   public class ArticleRepository:RepositoryBase<long, Article>,IArticleRepository
-   {
-       private readonly BlogContext _context;
-       private readonly ITeacherRepository _blogger;
-        public ArticleRepository(BlogContext dbContext, BlogContext context, ITeacherRepository blogger) : base(dbContext)
+    public class ArticleRepository : RepositoryBase<long, Article>, IArticleRepository
+    {
+        private readonly ITeacherRepository _blogger;
+        private readonly BlogContext _context;
+
+        public ArticleRepository(BlogContext dbContext, BlogContext context, ITeacherRepository blogger) :
+            base(dbContext)
         {
             _context = context;
             _blogger = blogger;
@@ -22,7 +24,6 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
 
         public EditArticleViewModel GetDetails(long id)
         {
-           
             return _context.Articles.Select(x => new EditArticleViewModel
             {
                 Title = x.Title,
@@ -40,14 +41,13 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
                 ShortDescription = x.ShortDescription,
                 IsPublish = x.IsPublish,
                 PictureName = x.Picture,
-                BloggerId = x.BloggerId,
-
+                BloggerId = x.BloggerId
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
         public List<ArticleViewModel> Search(ArticleSearchModel search)
         {
-            var query= _context.Articles.Select(x => new ArticleViewModel
+            var query = _context.Articles.Select(x => new ArticleViewModel
             {
                 Title = x.Title,
                 Picture = x.Picture,
@@ -64,8 +64,8 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
             foreach (var item in query)
             {
                 var blogger = _blogger.GetBloggerBy(item.BloggerId);
-              if(blogger==null) continue;
-              item.BloggerName = blogger.Account.FullName;
+                if (blogger == null) continue;
+                item.BloggerName = blogger.Account.FullName;
             }
 
             if (!string.IsNullOrWhiteSpace(search.Title))
@@ -86,11 +86,15 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
 
         public DateTime? GetPublishDate(long articleId)
         {
-            var publishDate= _context.Articles.Select(x => new { x.Id, x.PublishDate }).FirstOrDefault(x => x.Id == articleId)?
+            var publishDate = _context.Articles.Select(x => new { x.Id, x.PublishDate })
+                .FirstOrDefault(x => x.Id == articleId)?
                 .PublishDate;
             return publishDate ?? null;
         }
 
-        public Article GetArticleBy(long articleId) => _context.Articles.Find(articleId);
-   }
+        public Article GetArticleBy(long articleId)
+        {
+            return _context.Articles.Find(articleId);
+        }
+    }
 }

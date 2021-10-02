@@ -11,20 +11,20 @@ namespace WebHost.Areas.Administration.Pages.Discount.CustomerDiscount
 {
     public class IndexModel : PageModel
     {
-
-
         private readonly ICustomerDiscountApplication _application;
         private readonly ICourseApplication _course;
+        public List<CustomerDiscountViewModel> List;
+        public CustomerDiscountSearchModel SearchModel;
+        public SelectList SelectList;
+
         public IndexModel(ICustomerDiscountApplication application, ICourseApplication course)
         {
             _application = application;
             _course = course;
         }
+
         [TempData] public string Message { get; set; }
-        public List<CustomerDiscountViewModel> List;
-        public CustomerDiscountSearchModel SearchModel;
-        public SelectList SelectList;
-      
+
         [NeedPermission(Permission.ListCostumerDiscount)]
         public void OnGet(CustomerDiscountSearchModel searchModel)
         {
@@ -35,9 +35,9 @@ namespace WebHost.Areas.Administration.Pages.Discount.CustomerDiscount
         [NeedPermission(Permission.CreateCostumerDiscount)]
         public IActionResult OnGetCreate()
         {
-            var select = new CreateCustomerDiscountViewModel()
+            var select = new CreateCustomerDiscountViewModel
             {
-                SelectList = _course.SelectCourses(),
+                SelectList = _course.SelectCourses()
             };
             return Partial("./Create", select);
         }
@@ -56,6 +56,7 @@ namespace WebHost.Areas.Administration.Pages.Discount.CustomerDiscount
             getDetails.SelectList = _course.SelectCourses();
             return Partial("./Edit", getDetails);
         }
+
         public JsonResult OnPostEdit(EditCustomerDiscountViewModel command)
         {
             var edit = _application.Edit(command);
@@ -81,8 +82,7 @@ namespace WebHost.Areas.Administration.Pages.Discount.CustomerDiscount
             if (getDetails.IsSucceeded)
                 return RedirectToPage("./Index");
             Message = getDetails.Message;
-            return  RedirectToPage("./Index");
+            return RedirectToPage("./Index");
         }
-
     }
 }

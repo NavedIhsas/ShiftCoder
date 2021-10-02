@@ -3,8 +3,13 @@ using System.Collections.Generic;
 
 namespace ShiftCoderQuery.Contract.Comment
 {
-   public class CommentQueryModel
+    public class CommentQueryModel
     {
+        public CommentQueryModel()
+        {
+            SubComment = new List<CommentQueryModel>();
+        }
+
         public string Name { get; set; }
         public string Email { get; set; }
         public string Message { get; set; }
@@ -16,10 +21,5 @@ namespace ShiftCoderQuery.Contract.Comment
         public List<CommentQueryModel> SubComment { get; set; }
         public string ParentName { get; internal set; }
         public string Picture { get; set; }
-        public CommentQueryModel()
-        {
-            SubComment = new List<CommentQueryModel>();
-        }
-
     }
 }

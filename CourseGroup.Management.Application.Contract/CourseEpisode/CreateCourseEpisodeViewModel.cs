@@ -15,13 +15,14 @@ namespace Shop.Management.Application.Contract.CourseEpisode
         public TimeSpan Time { get; set; }
 
         [Required(ErrorMessage = Validate.Required)]
-        [MaxLength(1000,ErrorMessage = Validate.MaxLength)]
+        [MaxLength(1000, ErrorMessage = Validate.MaxLength)]
         public string Title { get; set; }
+
         public bool IsFree { get; set; }
 
-        [Range(0,long.MaxValue,ErrorMessage = Validate.Required)]
+        [Range(0, long.MaxValue, ErrorMessage = Validate.Required)]
         public long CourseId { get; set; }
-        public List<CourseViewModel> CoursesSelectList { get; set; }
 
+        public List<CourseViewModel> CoursesSelectList { get; set; }
     }
 }

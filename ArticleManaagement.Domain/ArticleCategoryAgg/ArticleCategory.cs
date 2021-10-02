@@ -4,16 +4,10 @@ using BlogManagement.Domain.ArticleAgg;
 
 namespace BlogManagement.Domain.ArticleCategoryAgg
 {
-   public class ArticleCategory:EntityBase
+    public class ArticleCategory : EntityBase
     {
-        public string Name { get;private set; }
-        public string Keyword { get; private set; }
-        public string MetaDescription { get; private set; }
-        public int ShowOrder { get; private set; }
-        public string CanonicalAddress { get; private set; }
-        public List<Article> Articles { get; private set; }
-
-        public ArticleCategory(string name, string keyword, string metaDescription, int showOrder, string canonicalAddress)
+        public ArticleCategory(string name, string keyword, string metaDescription, int showOrder,
+            string canonicalAddress)
         {
             Name = name;
             Keyword = keyword;
@@ -21,6 +15,13 @@ namespace BlogManagement.Domain.ArticleCategoryAgg
             ShowOrder = showOrder;
             CanonicalAddress = canonicalAddress;
         }
+
+        public string Name { get; private set; }
+        public string Keyword { get; private set; }
+        public string MetaDescription { get; private set; }
+        public int ShowOrder { get; private set; }
+        public string CanonicalAddress { get; private set; }
+        public List<Article> Articles { get; private set; }
 
         public void Edit(string name, string keyword, string metaDescription, int showOrder, string canonicalAddress)
         {

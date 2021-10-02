@@ -16,13 +16,14 @@ namespace ShiftCoderQuery.Query
 {
     public class ArticleQuery : IArticleQuery
     {
-        private readonly BlogContext _context;
-        private readonly CommentContext _comment;
-        private readonly IVisitRepository _visit;
-        private readonly ITeacherRepository _teacher;
         private readonly AccountContext _account;
+        private readonly CommentContext _comment;
+        private readonly BlogContext _context;
+        private readonly ITeacherRepository _teacher;
+        private readonly IVisitRepository _visit;
 
-        public ArticleQuery(BlogContext context, CommentContext comment, IVisitRepository visit, ITeacherRepository teacher, AccountContext account)
+        public ArticleQuery(BlogContext context, CommentContext comment, IVisitRepository visit,
+            ITeacherRepository teacher, AccountContext account)
         {
             _context = context;
             _comment = comment;
@@ -33,7 +34,7 @@ namespace ShiftCoderQuery.Query
 
         public List<LatestArticleQueryModel> LatestArticle()
         {
-            var article = _context.Articles.Where(x => x.IsPublish).Select(x => new LatestArticleQueryModel()
+            var article = _context.Articles.Where(x => x.IsPublish).Select(x => new LatestArticleQueryModel
             {
                 Title = x.Title,
                 Picture = x.Picture,
@@ -45,13 +46,14 @@ namespace ShiftCoderQuery.Query
                 Keywords = x.Keywords,
                 BloggerId = x.BloggerId,
                 MetaDescription = x.MetaDescription,
-                Id = x.Id,
+                Id = x.Id
             }).AsNoTracking().OrderByDescending(x => x.CreationDate).Take(3).ToList();
 
             foreach (var item in article)
             {
                 var comments = _comment.Comments.Where(x => x.OwnerRecordId == item.Id && x.Type == ThisType.Article)
                     .ToList();
+                   
                 item.Comments = comments;
 
                 var blogger = _account.Teachers.Include(x => x.Account).FirstOrDefault(x => x.Id == item.BloggerId);
@@ -64,11 +66,12 @@ namespace ShiftCoderQuery.Query
             return article;
         }
 
-        public PaginationArticlesViewModel GetAllArticles(SearchArticleQueryModel search, List<long> bloggerId, List<string> categories, int pageId = 1)
+        public PaginationArticlesViewModel GetAllArticles(SearchArticleQueryModel search, List<long> bloggerId,
+            List<string> categories, int pageId = 1)
         {
             var query = _context.Articles
                 .Where(x => x.IsPublish).Include(x => x.ArticleCategory)
-                .Select(x => new GetAllArticleQueryModel()
+                .Select(x => new GetAllArticleQueryModel
                 {
                     Title = x.Title,
                     Picture = x.Picture,
@@ -81,9 +84,8 @@ namespace ShiftCoderQuery.Query
                     BloggerId = x.BloggerId,
                     Keywords = x.Keywords,
                     ArticleCategory = x.ArticleCategory.Name,
-                    MetaDescription = x.MetaDescription,
+                    MetaDescription = x.MetaDescription
                 }).AsNoTracking().OrderByDescending(x => x.CreationDate).ToList();
-
 
 
             foreach (var item in query)
@@ -110,14 +112,12 @@ namespace ShiftCoderQuery.Query
 
             //---sort--//
             if (!string.IsNullOrWhiteSpace(search.Filter))
-            {
                 query = search.Filter switch
                 {
                     "new" => query.OrderByDescending(x => x.CreationDate).ToList(),
                     "poplar" => query.OrderBy(x => x.CreationDate).ToList(),
                     _ => query
                 };
-            }
 
             //filter by category
             if (categories.Count != 0)
@@ -134,7 +134,7 @@ namespace ShiftCoderQuery.Query
             const int take = 6;
             var skip = (pageId - 1) * take;
 
-            var list = new PaginationArticlesViewModel()
+            var list = new PaginationArticlesViewModel
             {
                 CurrentPage = pageId,
                 PageCount = (int)Math.Ceiling(query.Count / (double)take),
@@ -167,6 +167,7 @@ namespace ShiftCoderQuery.Query
             }).AsNoTracking().FirstOrDefault(x => x.Slug == slug);
 
             if (article == null) return null;
+
             #region Visit
 
             //start-visit
@@ -183,6 +184,7 @@ namespace ShiftCoderQuery.Query
                 _visit.Create(visit);
                 _visit.SaveChanges();
             }
+
             article.VisitCount = visit.NumberOfVisit;
 
             #endregion
@@ -190,8 +192,7 @@ namespace ShiftCoderQuery.Query
             #region Comment
 
             //start-Comment//
-            var comment = _comment.Comments.
-                Where(x => x.Type == ThisType.Article && x.ParentId == null)
+            var comment = _comment.Comments.Where(x => x.Type == ThisType.Article && x.ParentId == null)
                 .Where(x => x.OwnerRecordId == article.Id)
                 .OrderByDescending(x => x.CreationDate)
                 .Select(x => new CommentQueryModel
@@ -205,20 +206,21 @@ namespace ShiftCoderQuery.Query
                     Picture = x.Picture,
                     CreateDateTime = x.CreationDate,
                     CreationDate = x.CreationDate.ToFarsi(),
-                    OwnerRecordId = x.OwnerRecordId,
+                    OwnerRecordId = x.OwnerRecordId
                 }).AsNoTracking().ToList();
 
             foreach (var item in comment)
                 MapChildren(item);
 
             article.Comments = comment;
-            article.CommentList = _comment.Comments.
-                Where(x => x.Type == ThisType.Article && x.OwnerRecordId == article.Id)
-              .ToList();
+            article.CommentList = _comment.Comments
+                .Where(x => x.Type == ThisType.Article && x.OwnerRecordId == article.Id)
+                .ToList();
 
             #endregion
 
             #region Blogger
+
             //start-blogger//
             var blogger = _teacher.GetBloggerBy(article.BloggerId);
             if (blogger == null) return article;
@@ -230,8 +232,8 @@ namespace ShiftCoderQuery.Query
 
             article.BloggerArticlesList = _context.Articles
                 .Where(x => x.BloggerId == blogger.Id)
-                .Select(selector: x => new { x.Title, x.Slug })
-                .Select(x => new BloggerArticlesViewModel()
+                .Select(x => new { x.Title, x.Slug })
+                .Select(x => new BloggerArticlesViewModel
                 {
                     Title = x.Title,
                     Slug = x.Slug
@@ -239,9 +241,9 @@ namespace ShiftCoderQuery.Query
 
             #endregion
 
-            var key = new SinglePageArticleQueryModel()
+            var key = new SinglePageArticleQueryModel
             {
-                KeyWords = article.Keywords.Split("-").ToList(),
+                KeyWords = article.Keywords.Split("-").ToList()
             };
             article.KeyWords = key.KeyWords;
             return article;
@@ -250,7 +252,8 @@ namespace ShiftCoderQuery.Query
         private void MapChildren(CommentQueryModel parent)
         {
             var sub = _comment.Comments
-                .OrderByDescending(x => x.CreationDate).Where(x => x.Type == ThisType.Article && x.ParentId == parent.Id)
+                .OrderByDescending(x => x.CreationDate)
+                .Where(x => x.Type == ThisType.Article && x.ParentId == parent.Id)
                 .Select(x => new CommentQueryModel
                 {
                     Name = x.Name,
@@ -262,7 +265,7 @@ namespace ShiftCoderQuery.Query
                     Picture = x.Picture,
                     CreateDateTime = x.CreationDate,
                     CreationDate = x.CreationDate.ToFarsi(),
-                    OwnerRecordId = x.OwnerRecordId,
+                    OwnerRecordId = x.OwnerRecordId
                 }).ToList();
 
             foreach (var item in sub)

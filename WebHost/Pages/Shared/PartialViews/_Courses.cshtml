@@ -11,7 +11,9 @@
                 <div class="bg-secondary p-4">
                     <div class="d-flex justify-content-between mb-3">
                         <small class="m-0"><i class="fa fa-users text-primary mr-3"></i>@course.UserCourse.Count دانشجو</small>
-                        <small class="m-0"><i class="far fa-clock text-primary mr-3"></i>@course.TotalTime</small>
+                        <small class="m-0">
+                            <i class="far fa-clock text-primary mr-3"></i>@course.TotalTime
+                        </small>
                     </div>
                     <a class="h5" asp-page="SingleCourse" asp-route-id="@course.Slug">@course.Name</a>
                     <div class="border-top mt-4 pt-4">
@@ -24,7 +26,6 @@
                             else
                             {
                                 <h5 class="m-0 text-success">رایگان</h5>
-
                             }
                         </div>
                     </div>
@@ -34,4 +35,3 @@
     }
 
 </div>
-   

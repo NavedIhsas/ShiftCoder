@@ -3,7 +3,6 @@ using _0_FrameWork.Application;
 using _0_FrameWork.Domain.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Shop.Management.Application.Contract.CourseGroup;
 using Shop.Management.Application.Contract.CourseStatus;
 
 namespace WebHost.Areas.Administration.Pages.Courses.CourseStatus
@@ -11,12 +10,14 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseStatus
     public class IndexModel : PageModel
     {
         private readonly ICourseStatusApplication _course;
+
+        public List<CourseStatusViewModel> CourseStatus;
+
         public IndexModel(ICourseStatusApplication course)
         {
             _course = course;
         }
 
-        public List<CourseStatusViewModel> CourseStatus;
         public void OnGet()
         {
             CourseStatus = _course.GetAll();
@@ -25,7 +26,7 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseStatus
         [NeedPermission(Permission.CreateCourseStatus)]
         public IActionResult OnGetCreate()
         {
-            return Partial("./Create",new CourseStatusViewModel());
+            return Partial("./Create", new CourseStatusViewModel());
         }
 
         public JsonResult OnPostCreate(CourseStatusViewModel command)
@@ -47,6 +48,5 @@ namespace WebHost.Areas.Administration.Pages.Courses.CourseStatus
             var courseStatus = _course.Edit(command);
             return new JsonResult(courseStatus);
         }
-
     }
 }

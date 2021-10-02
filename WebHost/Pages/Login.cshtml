@@ -6,7 +6,7 @@
 }
 
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
-<br />
+<br/>
 <div class="row justify-content-center">
     <div class="col-md-6 text-center mb-5">
         <h2 class="heading-section">ورود به سایت</h2>
@@ -15,7 +15,7 @@
 <div class="row justify-content-center">
     <div class="col-md-6 col-lg-4">
         <div class="login-wrap p-0">
-           
+
             @if (ViewData["Success"] != null)
             {
                 <span class="text-success float-right mr-5 mb-3">
@@ -25,17 +25,17 @@
                 <script>
                     // milliseconds
                     var delay = 2000;
-                    setTimeout(function () { window.location = "/Index"; }, delay);
+                    setTimeout(function() { window.location = "/Index"; }, delay);
                 </script>
             }
-                
+
             @if (ViewData["Message"] != null)
             {
                 <span class="text-success float-right mr-5 mb-3">رمز عبور و یا ایمیل شما درست نمیباشد</span>
             }
             <form method="post" class="signin-form">
 
-                <div class="form-group" >
+                <div class="form-group">
                     <input type="email" name="email" class="form-control" placeholder="ایمیل" required oninvalid="this.setCustomValidity('لطفا ایمیلی خود را وارد کنید')"
                            oninput="setCustomValidity('')">
                 </div>
@@ -72,7 +72,7 @@
 
                 <a class="px-2 py-2 mr-4 text-center facebook-icon rounded"><span class="iconify" data-icon="ion-social-facebook" data-inline="false"></span> فیسبوک</a>
 
-                <a  class="px-2 py-2 ml-md-3 rounded google-icon "><span class="iconify " data-icon="ant-design:google-plus-outlined" data-inline="false"></span>گوگل</a>
+                <a class="px-2 py-2 ml-md-3 rounded google-icon "><span class="iconify " data-icon="ant-design:google-plus-outlined" data-inline="false"></span>گوگل</a>
             </div>
         </div>
     </div>

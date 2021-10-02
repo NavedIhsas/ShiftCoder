@@ -4,6 +4,11 @@ namespace Shop.Management.Application.Contract.CourseGroup
 {
     public class CourseGroupViewModel
     {
+        public CourseGroupViewModel()
+        {
+            Sub = new List<CourseGroupViewModel>();
+        }
+
         public long Id { get; set; }
         public string Title { get; set; }
         public bool IsRemove { get; set; }
@@ -13,10 +18,5 @@ namespace Shop.Management.Application.Contract.CourseGroup
         public long? SubGroupId { get; set; }
 
         public List<CourseGroupViewModel> Sub { get; set; }
-
-        public CourseGroupViewModel()
-        {
-            Sub = new List<CourseGroupViewModel>();
-        }
     }
 }

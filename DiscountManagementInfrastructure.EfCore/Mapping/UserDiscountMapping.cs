@@ -1,5 +1,4 @@
-﻿using DiscountManagement.Domain.DiscountCode;
-using DiscountManagement.Domain.UserDiscountAgg;
+﻿using DiscountManagement.Domain.UserDiscountAgg;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

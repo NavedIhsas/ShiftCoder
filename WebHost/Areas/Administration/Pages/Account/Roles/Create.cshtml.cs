@@ -8,14 +8,14 @@ namespace WebHost.Areas.Administration.Pages.Account.Roles
 {
     public class CreateModel : PageModel
     {
-
         private readonly IRoleApplication _role;
+
+        public CreateRoleViewModel Role;
+
         public CreateModel(IRoleApplication role)
         {
             _role = role;
         }
-
-        public CreateRoleViewModel Role;
 
         [NeedPermission(Permission.CreateRoles)]
         public void OnGet()
@@ -28,7 +28,5 @@ namespace WebHost.Areas.Administration.Pages.Account.Roles
             var create = _role.Create(command);
             return RedirectToPage("Index");
         }
-
-
     }
 }

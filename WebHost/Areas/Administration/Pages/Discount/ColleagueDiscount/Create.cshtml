@@ -1,11 +1,10 @@
-﻿
-@model ColleagueDiscountManagementApplication.Contract.ColleagueDiscount.CreateColleagueDiscountViewModel
+﻿@model ColleagueDiscountManagementApplication.Contract.ColleagueDiscount.CreateColleagueDiscountViewModel
 @{
     ViewData["Title"] = "ایجاد تخفیف جدید";
 }
 
 <div class="container">
-    <partial name="Shared/_Create_View_Header" />
+    <partial name="Shared/_Create_View_Header"/>
 
     <form asp-page="./Index" asp-page-handler="Create"
           method="post"
@@ -27,7 +26,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="DiscountRate" class="control-label">درصد تخفیف<span class="text-danger">*</span></label>
-                        <input type="number" asp-for="DiscountRate" class="form-control" >
+                        <input type="number" asp-for="DiscountRate" class="form-control">
                         <span class="text-danger" asp-validation-for="DiscountRate"></span>
                     </div>
                 </div>
@@ -40,14 +39,3 @@
         </div>
     </form>
 </div>
-
-
-
-
-
-
-
-
-
-
-

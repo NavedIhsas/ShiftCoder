@@ -2,78 +2,79 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.CourseGroup;
-using ShopManagement.Domain.CourseGroupAgg;
 using ShopManagement.Infrastructure.EfCore;
 
 namespace ShiftCoderQuery.Query
 {
-  public  class CourseGroupQuery:ICourseGroupQuery
-  {
-      private readonly ShopContext _context;
+    public class CourseGroupQuery : ICourseGroupQuery
+    {
+        private readonly ShopContext _context;
 
-      public CourseGroupQuery(ShopContext context)
-      {
-          _context = context;
-      }
-      public List<CourseGroupQueryModel> GetAllCourseGroup()
-      {
-         return _context.CourseGroups.Where(x=>!x.IsRemove).Include(x=>x.SubGroup).Select(x => new CourseGroupQueryModel
-          {
-              Title = x.Title,
-              KeyWords = x.KeyWords,
-              MetaDescription = x.MetaDescription,
-              Slug = x.Slug,
-              SubGroupId = x.SubGroupId,
-              SubGroup = x.SubGroup.Title,
-              Id=x.Id,
-              Picture = x.Picture,
-              PictureTitle = x.PictureTitle,
-              PictureAlt = x.PictureAlt,
-              CourseCount=x.Courses.Count,
-          }).AsNoTracking().ToList();
-      }
+        public CourseGroupQuery(ShopContext context)
+        {
+            _context = context;
+        }
 
-
-      public List<LatestCourseGroupViewModel> LatestCourseGroup()
-      {
-          return _context.CourseGroups.Where(x => !x.IsRemove).Select(x => new LatestCourseGroupViewModel
-          {
-              Title = x.Title,
-              Slug = x.Slug,
-              CourseCount = x.Courses.Count,
-          }).Take(4).AsNoTracking().ToList();
-      }
+        public List<CourseGroupQueryModel> GetAllCourseGroup()
+        {
+            return _context.CourseGroups.Where(x => !x.IsRemove).Include(x => x.SubGroup).Select(x =>
+                new CourseGroupQueryModel
+                {
+                    Title = x.Title,
+                    KeyWords = x.KeyWords,
+                    MetaDescription = x.MetaDescription,
+                    Slug = x.Slug,
+                    SubGroupId = x.SubGroupId,
+                    SubGroup = x.SubGroup.Title,
+                    Id = x.Id,
+                    Picture = x.Picture,
+                    PictureTitle = x.PictureTitle,
+                    PictureAlt = x.PictureAlt,
+                    CourseCount = x.Courses.Count
+                }).AsNoTracking().ToList();
+        }
 
 
+        public List<LatestCourseGroupViewModel> LatestCourseGroup()
+        {
+            return _context.CourseGroups.Where(x => !x.IsRemove).Select(x => new LatestCourseGroupViewModel
+            {
+                Title = x.Title,
+                Slug = x.Slug,
+                CourseCount = x.Courses.Count
+            }).Take(4).AsNoTracking().ToList();
+        }
 
-      public List<LatestCourseGroupViewModel> GetSixGroup()
-      {
-          return _context.CourseGroups.Where(x => !x.IsRemove).Where(x=>x.SubGroup==null).Select(x => new LatestCourseGroupViewModel
-          {
-              Title = x.Title,
-              Slug = x.Slug,
-              CourseCount = x.Courses.Count,
-          }).Take(6).AsNoTracking().ToList();
-      }
+
+        public List<LatestCourseGroupViewModel> GetSixGroup()
+        {
+            return _context.CourseGroups.Where(x => !x.IsRemove).Where(x => x.SubGroup == null).Select(x =>
+                new LatestCourseGroupViewModel
+                {
+                    Title = x.Title,
+                    Slug = x.Slug,
+                    CourseCount = x.Courses.Count
+                }).Take(6).AsNoTracking().ToList();
+        }
 
 
         public List<CourseGroupQueryModel> SearchQuery(CourseGroupSearchQuery categories)
-      {
-          var query = _context.CourseGroups.Select(x => new CourseGroupQueryModel
-          {
-              Title = x.Title,
-              KeyWords = x.KeyWords,
-              MetaDescription = x.MetaDescription,
-              Slug = x.Slug,
-              SubGroupId = x.SubGroupId,
-              Id = x.Id,
-              CreationDate=x.CreationDate,
-          }).AsNoTracking().ToList();
-          if (!string.IsNullOrWhiteSpace(categories.Title))
-              query = query.Where(x => x.Title.Contains(categories.Title)).ToList();
+        {
+            var query = _context.CourseGroups.Select(x => new CourseGroupQueryModel
+            {
+                Title = x.Title,
+                KeyWords = x.KeyWords,
+                MetaDescription = x.MetaDescription,
+                Slug = x.Slug,
+                SubGroupId = x.SubGroupId,
+                Id = x.Id,
+                CreationDate = x.CreationDate
+            }).AsNoTracking().ToList();
+            if (!string.IsNullOrWhiteSpace(categories.Title))
+                query = query.Where(x => x.Title.Contains(categories.Title)).ToList();
 
-          var orderly = query.OrderByDescending(x => x.CreationDate).ToList();
-          return orderly;
-      }
-  }
+            var orderly = query.OrderByDescending(x => x.CreationDate).ToList();
+            return orderly;
+        }
+    }
 }

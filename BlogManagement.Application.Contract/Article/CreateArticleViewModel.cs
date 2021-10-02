@@ -17,12 +17,14 @@ namespace BlogManagement.Application.Contract.Article
         [Required(ErrorMessage = Validate.Required)]
         public string Description { get; set; }
 
-        [MaxLength(70,ErrorMessage = Validate.MaxLength)]
+        [MaxLength(70, ErrorMessage = Validate.MaxLength)]
         public string ShortDescription { get; set; }
+
         public int ShowOrder { get; set; }
 
         public IFormFile Picture { get; set; }
         public string PictureName { get; set; }
+
         [Required(ErrorMessage = Validate.Required)]
         [MaxLength(100, ErrorMessage = Validate.MaxLength)]
         public string PictureTitle { get; set; }
@@ -45,13 +47,15 @@ namespace BlogManagement.Application.Contract.Article
 
         [MaxLength(150, ErrorMessage = Validate.MaxLength)]
         public string CanonicalAddress { get; set; }
+
         public DateTime? PublishDate { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = Validate.Required)]
         public long CategoryId { get; set; }
 
-        [Range(1,Int32.MaxValue,ErrorMessage = Validate.Required)]
+        [Range(1, int.MaxValue, ErrorMessage = Validate.Required)]
         public long BloggerId { get; set; }
+
         public bool IsPublish { get; set; }
         public List<ArticleCategoryViewModel> SelectList { get; set; }
         public List<TeacherViewModel> BloggerSelectList { get; set; }

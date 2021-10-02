@@ -1,6 +1,6 @@
 ﻿namespace BlogManagement.Application.Contract.ArticleCategory
 {
-   public class ArticleCategoryViewModel
+    public class ArticleCategoryViewModel
     {
         public string Name { get; set; }
         public int ArticleCount { get; set; }

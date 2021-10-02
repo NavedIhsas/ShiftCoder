@@ -1,5 +1,4 @@
-﻿
-@model CommentManagement.Application.Contract.HomePhoto.SliderViewModel
+﻿@model CommentManagement.Application.Contract.HomePhoto.SliderViewModel
 @{
     ViewData["Title"] = "تغییر اسلایدر";
     Layout = "Shared/_AdminLayout";
@@ -8,16 +7,16 @@
 
 <div id="page-wrapper">
     <div class="container">
-        <partial name="Shared/_Create_View_Header" />
+        <partial name="Shared/_Create_View_Header"/>
 
-        <form method="post"  enctype="multiPart/form-data">
+        <form method="post" enctype="multiPart/form-data">
             <div class="modal-body col col-md-8">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="PictureAlt" class="control-label">Alt<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" asp-for="PictureAlt">
-                            <span class="text-danger" asp-validation-for="PictureAlt" ></span>
+                            <span class="text-danger" asp-validation-for="PictureAlt"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -49,9 +48,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label asp-for="Title" placeholder="حداکثر 70 کاراکتر"  class="control-label">متن بزرگ<span class="text-danger">*</span></label>
+                            <label asp-for="Title" placeholder="حداکثر 70 کاراکتر" class="control-label">متن بزرگ<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" asp-for="Title">
-                            <span class="text-danger" asp-validation-for="Title" ></span>
+                            <span class="text-danger" asp-validation-for="Title"></span>
                         </div>
                     </div>
                 </div>
@@ -60,7 +59,7 @@
                         <div class="form-group">
                             <label asp-for="ButtonLink" class="control-label">لینک دکمه<span class="text-danger">*</span></label>
                             <input type="url" class="form-control" asp-for="ButtonLink">
-                            <span class="text-danger" asp-validation-for="ButtonLink" ></span>
+                            <span class="text-danger" asp-validation-for="ButtonLink"></span>
                         </div>
                     </div>
                 </div>
@@ -68,7 +67,7 @@
 
             <div class="col-md-4">
                 <p></p>
-                <img id="imgCourse" class="thumbnail" src="/FileUploader/" />
+                <img id="imgCourse" class="thumbnail" src="/FileUploader/"/>
                 <div class="form-group">
                     <label asp-for="Picture" class="control-label">عکس<span class="text-danger">*</span></label>
                     <input id="imgCourseUp" type="file" asp-for="Picture" class="form-control" accept="image/*" required>
@@ -90,17 +89,17 @@
         function readURL(input) {
 
             if (input.files && input.files[0]) {
-                var reader = new FileReader();
+                const reader = new FileReader();
 
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     $('#imgCourse').attr('src', e.target.result);
-                }
+                };
 
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        $("#imgCourseUp").change(function () {
+        $("#imgCourseUp").change(function() {
             readURL(this);
         });
 

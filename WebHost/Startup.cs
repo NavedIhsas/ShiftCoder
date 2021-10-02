@@ -81,32 +81,32 @@ namespace WebHost
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-          //  این میدیلویر برای چک کردن اینه که کاربر نتواند با استفاده از یوآرال به فایل ها  دسترسی داشته باشد
-            app.Use(async (context, next) =>
-            {
-                if (context.Request.Path.Value != null &&
-                    context.Request.Path.Value.ToString().ToLower().StartsWith("/fileuploader"))
-                {
-                    var callingUrl = context.Request.Headers["Referer"].ToString();
+            //  این میدیلویر برای چک کردن اینه که کاربر نتواند با استفاده از یوآرال به فایل ها  دسترسی داشته باشد
+            //app.Use(async (context, next) =>
+            //{
+            //    if (context.Request.Path.Value != null &&
+            //        context.Request.Path.Value.ToString().ToLower().StartsWith("/fileuploader"))
+            //    {
+            //        var callingUrl = context.Request.Headers["Referer"].ToString();
 
-                    if (callingUrl != "" && (callingUrl.StartsWith("https://ihsasdevelopment.ir/") ||
-                                             callingUrl.StartsWith("http://ihsasdevelopment.ir/")))
-                    {
-                        await next.Invoke();
-                    }
-                    else
-                    {
-                        context.Response.Redirect("/Login");
-                    }
+            //        if (callingUrl != "" && (callingUrl.StartsWith("https://ihsasdevelopment.ir/") ||
+            //                                 callingUrl.StartsWith("http://ihsasdevelopment.ir/")))
+            //        {
+            //            await next.Invoke();
+            //        } 
+            //        else
+            //        {
+            //            context.Response.Redirect("/Login");
+            //        }
 
-                }
-                else
-                {
-                    await next.Invoke();
-                }
+            //    }
+            //    else
+            //    {
+            //        await next.Invoke();
+            //    }
 
 
-            });
+            //});
 
             if (env.IsDevelopment())
             {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebHost.Areas.Administration.Pages.ViewComponent
 {
-    public class Notification:Microsoft.AspNetCore.Mvc.ViewComponent
+    public class Notification : Microsoft.AspNetCore.Mvc.ViewComponent
     {
         private readonly INotificationRepository _notification;
 

@@ -2,8 +2,8 @@
 
 namespace ShiftCoderQuery.Contract.ArticleCategory
 {
-   public interface IArticleCategoryQuery
-   {
-       List<ArticleCategoryQueryModel> GetAll();
-   }
+    public interface IArticleCategoryQuery
+    {
+        List<ArticleCategoryQueryModel> GetAll();
+    }
 }

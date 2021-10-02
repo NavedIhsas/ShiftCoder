@@ -17,6 +17,7 @@ namespace WebHost.Areas.UserPanel.Pages.Order
         }
 
         public List<OrderViewModel> List { get; set; }
+
         public void OnGet()
         {
             List = _order.GetAllOrderUser(User.Identity.Name);

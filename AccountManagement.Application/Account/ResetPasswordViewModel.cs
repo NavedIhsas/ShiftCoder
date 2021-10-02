@@ -9,10 +9,9 @@ namespace AccountManagement.Application.Contract.Account
 
         [Required(ErrorMessage = Validate.Required)]
         public string Password { get; set; }
-      
-        [Compare("Password",ErrorMessage = "رمز عبور با تکرار آن مطابقت ندارد")]
+
+        [Compare("Password", ErrorMessage = "رمز عبور با تکرار آن مطابقت ندارد")]
         [Required(ErrorMessage = Validate.Required)]
         public string RePassword { get; set; }
-
     }
 }

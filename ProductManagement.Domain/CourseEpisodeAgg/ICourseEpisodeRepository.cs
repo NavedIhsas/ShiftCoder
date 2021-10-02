@@ -4,7 +4,7 @@ using Shop.Management.Application.Contract.CourseEpisode;
 
 namespace ShopManagement.Domain.CourseEpisodeAgg
 {
-    public interface ICourseEpisodeRepository:IRepository<long,CourseEpisode>
+    public interface ICourseEpisodeRepository : IRepository<long, CourseEpisode>
     {
         EditCourseEpisodeViewModel GetDetails(long id);
         List<CourseEpisodeViewModel> Search(CourseEpisodeSearchModel command);

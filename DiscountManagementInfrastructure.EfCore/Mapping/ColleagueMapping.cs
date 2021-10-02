@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DiscountManagementInfrastructure.EfCore.Mapping
 {
-   public class ColleagueMapping:IEntityTypeConfiguration<ColleagueDiscount>
+    public class ColleagueMapping : IEntityTypeConfiguration<ColleagueDiscount>
     {
         public void Configure(EntityTypeBuilder<ColleagueDiscount> builder)
         {

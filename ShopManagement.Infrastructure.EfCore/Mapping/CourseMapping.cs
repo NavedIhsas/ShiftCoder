@@ -4,7 +4,7 @@ using ShopManagement.Domain.CourseAgg;
 
 namespace ShopManagement.Infrastructure.EfCore.Mapping
 {
-  public  class CourseMapping:IEntityTypeConfiguration<Course>
+    public class CourseMapping : IEntityTypeConfiguration<Course>
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
@@ -22,27 +22,6 @@ namespace ShopManagement.Infrastructure.EfCore.Mapping
             builder.HasOne(x => x.CourseStatus).WithMany(x => x.Courses).HasForeignKey(x => x.CourseStatusId);
             builder.HasOne(x => x.CourseLevel).WithMany(x => x.Courses).HasForeignKey(x => x.CourseLevelId);
             builder.HasOne(x => x.CourseGroup).WithMany(x => x.Courses).HasForeignKey(x => x.CourseGroupId);
-            //builder.OwnsMany(x => x.AfterTheCourses, navigationBuilder =>
-            //{
-            //    navigationBuilder.HasKey(x => x.Id);
-            //    navigationBuilder.Property(x => x.Title).HasMaxLength(1000).IsRequired();
-            //    navigationBuilder.WithOwner(x => x.Courses).HasForeignKey(x => x.CourseId);
-            //});
-
-            //builder.OwnsMany(x => x.CourseSuitableList, navigationBuilder =>
-            //{
-            //    navigationBuilder.HasKey(x => x.Id);
-            //    navigationBuilder.Property(x => x.Title).HasMaxLength(1000).IsRequired();
-            //    navigationBuilder.WithOwner(x => x.Courses).HasForeignKey(x => x.CourseId);
-            //});
-
-            //builder.OwnsMany(x => x.CoursePrerequisites, navigationBuilder =>
-            //{
-            //    navigationBuilder.HasKey(x => x.Id);
-            //    navigationBuilder.Property(x => x.Title).HasMaxLength(1000).IsRequired();
-            //    navigationBuilder.WithOwner(x => x.Courses).HasForeignKey(x => x.CourseId);
-            //});
-
         }
     }
 }

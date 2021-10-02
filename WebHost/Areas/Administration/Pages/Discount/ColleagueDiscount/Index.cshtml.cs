@@ -2,7 +2,6 @@
 using _0_FrameWork.Application;
 using _0_FrameWork.Domain.Infrastructure;
 using ColleagueDiscountManagementApplication.Contract.ColleagueDiscount;
-using ColleagueDiscountManagementApplication.Contract.CustomerDiscount;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,20 +11,20 @@ namespace WebHost.Areas.Administration.Pages.Discount.ColleagueDiscount
 {
     public class IndexModel : PageModel
     {
-
-
         private readonly IColleagueApplication _application;
         private readonly ICourseApplication _course;
+        public List<ColleagueDiscountViewModel> List;
+        public SelectList SelectList;
+
         public IndexModel(IColleagueApplication application, ICourseApplication course)
         {
             _application = application;
             _course = course;
         }
+
         [TempData] public string Message { get; set; }
-        public List<ColleagueDiscountViewModel> List;
-        public SelectList SelectList;
-      
-        
+
+
         [NeedPermission(Permission.ListColleagueDiscount)]
         public void OnGet()
         {
@@ -36,9 +35,9 @@ namespace WebHost.Areas.Administration.Pages.Discount.ColleagueDiscount
         [NeedPermission(Permission.CreateColleagueDiscount)]
         public IActionResult OnGetCreate()
         {
-            var select = new CreateColleagueDiscountViewModel()
+            var select = new CreateColleagueDiscountViewModel
             {
-                SelectList = _course.SelectCourses(),
+                SelectList = _course.SelectCourses()
             };
             return Partial("./Create", select);
         }
@@ -57,6 +56,7 @@ namespace WebHost.Areas.Administration.Pages.Discount.ColleagueDiscount
             getDetails.SelectList = _course.SelectCourses();
             return Partial("./Edit", getDetails);
         }
+
         public JsonResult OnPostEdit(EditColleagueDiscountViewModel command)
         {
             var edit = _application.Edit(command);
@@ -82,8 +82,7 @@ namespace WebHost.Areas.Administration.Pages.Discount.ColleagueDiscount
             if (getDetails.IsSucceeded)
                 return RedirectToPage("./Index");
             Message = getDetails.Message;
-            return  RedirectToPage("./Index");
+            return RedirectToPage("./Index");
         }
-
     }
 }

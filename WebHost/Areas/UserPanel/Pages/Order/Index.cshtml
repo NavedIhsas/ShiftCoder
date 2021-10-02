@@ -8,11 +8,13 @@
         <header>
             <div>
                 <h1 id="head-title">
-                  سفارش های شما
+                    سفارش های شما
                 </h1>
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a asp-page="Index">پنل کاربری </a></li>
+                        <li class="breadcrumb-item">
+                            <a asp-page="Index">پنل کاربری </a>
+                        </li>
                         <li class="breadcrumb-item active" aria-current="page">سفارشات من</li>
                     </ol>
                 </nav>
@@ -20,45 +22,46 @@
         </header>
         <section id="body-container" class="container">
             <div class="row">
-                <partial name="Shared/_Left-bar-menu" />
+                <partial name="Shared/_Left-bar-menu"/>
                 <section id="content-container" class="col-12 col-lg-8 ">
                     <div class="col-12 container-table">
-                        <br />
+                        <br/>
                         <div class="container-info-aside price-course ">
                             <h1 id="text-price">فاکتور ها</h1>
                         </div>
                         <table class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <th scope="col">شماره فاکتور</th>
-                                    <th scope="col"> تاریخ</th>
-                                    <th scope="col">مبلغ</th>
-                                    <th scope="col">وضعیت</th>
-                                    <th scope="col">دستورات</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">شماره فاکتور</th>
+                                <th scope="col"> تاریخ</th>
+                                <th scope="col">مبلغ</th>
+                                <th scope="col">وضعیت</th>
+                                <th scope="col">دستورات</th>
+                            </tr>
                             </thead>
                             <tbody>
 
-                                @foreach (var item in Model.List)
-                                {
-                                    <tr>
-                                        <td>@item.Id</td>
-                                        <td>@item.CreationDate</td>
-                                        <td>@item.OrderSum</td>
-                                        <td>
-                                            @if (item.IsFinally)
-                                            {
-                                                <p class="text-success">پرداخت شده</p>
-                                            }
-                                            else
-                                            {
-                                                <p class="text-danger">پرداخت نشده</p>
-
-                                            }
-                                        </td>
-                                        <td><a asp-page="/Order/Orders" asp-route-id="@item.Id" class="btn btn-info btn-block">نمایش</a></td>
-                                    </tr>
-                                }
+                            @foreach (var item in Model.List)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.CreationDate</td>
+                                    <td>@item.OrderSum</td>
+                                    <td>
+                                        @if (item.IsFinally)
+                                        {
+                                            <p class="text-success">پرداخت شده</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-danger">پرداخت نشده</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-page="/Order/Orders" asp-route-id="@item.Id" class="btn btn-info btn-block">نمایش</a>
+                                    </td>
+                                </tr>
+                            }
 
                             </tbody>
                         </table>

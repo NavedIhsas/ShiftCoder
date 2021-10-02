@@ -9,11 +9,13 @@ using ShopManagement.Infrastructure.EfCore;
 
 namespace DiscountManagementInfrastructure.EfCore.Repository
 {
-   public class ColleagueRepository:RepositoryBase<long,ColleagueDiscount>,IColleagueRepository
-   {
-       private readonly DiscountContext _context;
-       private readonly ShopContext _course;
-        public ColleagueRepository(DiscountContext dbContext, DiscountContext context, ShopContext course) : base(dbContext)
+    public class ColleagueRepository : RepositoryBase<long, ColleagueDiscount>, IColleagueRepository
+    {
+        private readonly DiscountContext _context;
+        private readonly ShopContext _course;
+
+        public ColleagueRepository(DiscountContext dbContext, DiscountContext context, ShopContext course) :
+            base(dbContext)
         {
             _context = context;
             _course = course;
@@ -32,10 +34,10 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
         public List<ColleagueDiscountViewModel> GetAllList()
         {
             var courseName = _course.Courses.Select(x => new { x.Name, x.Id }).ToList();
-            var list= _context.ColleagueDiscounts.Select(x => new ColleagueDiscountViewModel
+            var list = _context.ColleagueDiscounts.Select(x => new ColleagueDiscountViewModel
             {
-                Id=x.Id,
-                CourseId=x.CourseId,
+                Id = x.Id,
+                CourseId = x.CourseId,
                 DiscountRate = x.DiscountRate,
                 IsRemove = x.IsRemove,
                 CreationDate = x.CreationDate.ToFarsi()

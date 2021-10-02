@@ -3,7 +3,7 @@ using ShiftCoderQuery.Contract.Article;
 
 namespace WebHost.Pages.ViewComponent
 {
-    public class ArticlesViewComponent:Microsoft.AspNetCore.Mvc.ViewComponent
+    public class ArticlesViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
         private readonly IArticleQuery _article;
 

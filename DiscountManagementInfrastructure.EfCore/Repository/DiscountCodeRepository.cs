@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
 using _0_FrameWork.Domain.Infrastructure;
 using ColleagueDiscountManagementApplication.Contract.DiscountCode;
 using DiscountManagement.Domain.DiscountCode;
-using Microsoft.EntityFrameworkCore;
 
 namespace DiscountManagementInfrastructure.EfCore.Repository
 {
     public class DiscountCodeRepository : RepositoryBase<long, DiscountCode>, IDiscountCodeRepository
     {
         private readonly DiscountContext _context;
+
         public DiscountCodeRepository(DiscountContext dbContext, DiscountContext context) : base(dbContext)
         {
             _context = context;
@@ -33,7 +32,7 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
 
         public List<DiscountCodeViewModel> SearchModel(DiscountCodeSearchModel searchModel)
         {
-            var query = _context.DiscountCodes.Select(x => new DiscountCodeViewModel()
+            var query = _context.DiscountCodes.Select(x => new DiscountCodeViewModel
             {
                 StartDate = x.StartDate,
                 EndDate = x.EndDate,
@@ -41,10 +40,11 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
                 DiscountCode = x.Code,
                 DiscountRate = x.DiscountRate,
                 Id = x.Id,
-                UseableCount = x.UseableCount,
+                UseableCount = x.UseableCount
             }).ToList();
             if (!string.IsNullOrWhiteSpace(searchModel.DiscountCode))
-                query = query.Where(x => x.DiscountCode.ToLower().Trim().Contains(searchModel.DiscountCode.ToLower().Trim())).ToList();
+                query = query.Where(x =>
+                    x.DiscountCode.ToLower().Trim().Contains(searchModel.DiscountCode.ToLower().Trim())).ToList();
 
             var orderly = query.OrderByDescending(x => x.Id).ToList();
             return orderly;
@@ -53,7 +53,7 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
         public DiscountCode GetDiscountBy(long id)
         {
             return _context.DiscountCodes
-                .FirstOrDefault(x=>x.Id==id);
+                .FirstOrDefault(x => x.Id == id);
         }
     }
 }

@@ -1,12 +1,11 @@
-﻿using BlogManagement.Application.Contract.ArticleCategory;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _0_FrameWork.Application;
+using BlogManagement.Application.Contract.ArticleCategory;
 using BlogManagement.Domain.ArticleCategoryAgg;
 
 namespace BlogManagement.Application
 {
-    public class ArticleCategoryApplication:IArticleCategoryApplication
+    public class ArticleCategoryApplication : IArticleCategoryApplication
     {
         private readonly IArticleCategoryRepository _repository;
 
@@ -31,13 +30,13 @@ namespace BlogManagement.Application
         {
             var operation = new OperationResult();
 
-            var articleCategory =_repository.GetById(command.Id);
-                if (articleCategory==null) return operation.Failed(ApplicationMessage.RecordNotFount);
-              
-                articleCategory.Edit(command.Name, command.Keyword, command.MetaDescription,
+            var articleCategory = _repository.GetById(command.Id);
+            if (articleCategory == null) return operation.Failed(ApplicationMessage.RecordNotFount);
+
+            articleCategory.Edit(command.Name, command.Keyword, command.MetaDescription,
                 command.ShowOrder, command.CanonicalAddress);
-           
-                _repository.Update(articleCategory);
+
+            _repository.Update(articleCategory);
             _repository.SaveChanges();
             return operation.Succeeded();
         }
@@ -49,7 +48,7 @@ namespace BlogManagement.Application
 
         public List<ArticleCategoryViewModel> Search(ArticleCategorySearchModel search)
         {
-           return _repository.Search(search);
+            return _repository.Search(search);
         }
 
         public List<ArticleCategoryViewModel> SelectList()

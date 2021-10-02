@@ -2,7 +2,6 @@
 using System.Linq;
 using _0_Framework.Application;
 using _0_FrameWork.Domain.Infrastructure;
-using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
 using Shop.Management.Application.Contract.Course;
@@ -42,14 +41,14 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 CourseLevelId = x.CourseLevelId,
                 CourseStatusId = x.CourseStatusId,
                 Id = x.Id,
-                TeacherId = x.TeacherId,
+                TeacherId = x.TeacherId
             }).FirstOrDefault(x => x.Id == id);
             return course;
         }
 
         public List<CourseViewModel> Search(CourseSearchModel searchModel)
         {
-            var query = _context.Courses.Include(x=>x.CourseGroup).Select(x => new CourseViewModel
+            var query = _context.Courses.Include(x => x.CourseGroup).Select(x => new CourseViewModel
             {
                 Name = x.Name,
                 Picture = x.Picture,
@@ -61,7 +60,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 CreationDate = x.CreationDate.ToFarsi(),
                 Price = x.Price,
                 TeacherId = x.TeacherId,
-                Slug = x.Slug,
+                Slug = x.Slug
             }).AsNoTracking().ToList();
 
             if (!string.IsNullOrWhiteSpace(searchModel.Name))
@@ -74,11 +73,12 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 query = query.Where(x => x.CourseGroupId == searchModel.CourseGroupId).ToList();
 
 
-            var teacherName = _teacher.Teachers.Include(x => x.Account).Select(x => new { x.Id, x.Account.FullName }).ToList();
+            var teacherName = _teacher.Teachers.Include(x => x.Account).Select(x => new { x.Id, x.Account.FullName })
+                .ToList();
 
             foreach (var item in query)
                 item.TeacherName = teacherName.FirstOrDefault(x => x.Id == item.TeacherId)?.FullName;
-            
+
 
             var orderly = query.OrderByDescending(x => x.Id).ToList();
             return orderly;
@@ -86,19 +86,22 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
 
         public List<CourseViewModel> SelectCourses()
         {
-            return _context.Courses.Select(x => new CourseViewModel()
+            return _context.Courses.Select(x => new CourseViewModel
             {
                 Name = x.Name,
-                Id = x.Id,
+                Id = x.Id
             }).AsNoTracking().ToList();
         }
 
-       public Course GetCourseBy(long courseId)
-       {
-           var course= _context.Courses.Find(courseId);
-           return course;
-       }
+        public Course GetCourseBy(long courseId)
+        {
+            var course = _context.Courses.Find(courseId);
+            return course;
+        }
 
-       public string GetCourseSlugBy(long courseId)=> _context.Courses.Find(courseId).Slug;
+        public string GetCourseSlugBy(long courseId)
+        {
+            return _context.Courses.Find(courseId).Slug;
+        }
     }
 }

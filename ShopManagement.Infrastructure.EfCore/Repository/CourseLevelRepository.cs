@@ -7,9 +7,10 @@ using ShopManagement.Domain.CourseLevelAgg;
 
 namespace ShopManagement.Infrastructure.EfCore.Repository
 {
-   public class CourseLevelRepository:RepositoryBase<long,CourseLevel>,ICourseLevelRepository
+    public class CourseLevelRepository : RepositoryBase<long, CourseLevel>, ICourseLevelRepository
     {
         private readonly ShopContext _context;
+
         public CourseLevelRepository(ShopContext dbContext, ShopContext context) : base(dbContext)
         {
             _context = context;
@@ -17,29 +18,28 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
 
         public EditCourseLevelViewModel GetDetails(long id)
         {
-            return _context.CourseLevels.Select(x => new EditCourseLevelViewModel()
+            return _context.CourseLevels.Select(x => new EditCourseLevelViewModel
             {
                 Title = x.Title,
-                Id = x.Id,
+                Id = x.Id
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
         public List<CourseLevelViewModel> GetAllCourseLevel()
         {
-            return _context.CourseLevels.Select(x => new CourseLevelViewModel()
+            return _context.CourseLevels.Select(x => new CourseLevelViewModel
             {
                 Title = x.Title,
-                Id = x.Id,
-
+                Id = x.Id
             }).AsNoTracking().ToList();
         }
 
         public List<CourseLevelViewModel> SelectList()
         {
-            return _context.CourseLevels.Select(x => new CourseLevelViewModel()
+            return _context.CourseLevels.Select(x => new CourseLevelViewModel
             {
                 Title = x.Title,
-                Id = x.Id,
+                Id = x.Id
             }).AsNoTracking().ToList();
         }
     }

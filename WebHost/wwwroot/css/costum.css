@@ -1,16 +1,11 @@
 ﻿.photo-size {
-    max-width: 80px;
     max-height: 80px;
-}
-.bg-aliceblue {
-    background-color: aliceblue !important;
-}
-.account-link a{
-    text-decoration: none;
-    color: white !important;
-    font-size: 15px;
+    max-width: 80px;
 }
 
-    .account-link a:hover {
-        color: #FF6600 !important;
-    }
+.bg-aliceblue { background-color: aliceblue !important; }
+
+.account-link a:hover {
+    color: #FF6600 !important;
+    text-decoration: none;
+}

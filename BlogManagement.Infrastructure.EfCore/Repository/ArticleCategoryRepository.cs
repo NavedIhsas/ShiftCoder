@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlogManagement.Infrastructure.EfCore.Repository
 {
-   public class ArticleCategoryRepository:RepositoryBase<long,ArticleCategory>,IArticleCategoryRepository
-   {
-       private readonly BlogContext _context;
+    public class ArticleCategoryRepository : RepositoryBase<long, ArticleCategory>, IArticleCategoryRepository
+    {
+        private readonly BlogContext _context;
 
         public ArticleCategoryRepository(BlogContext dbContext, BlogContext context) : base(dbContext)
         {
@@ -35,7 +35,7 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
             var query = _context.ArticleCategories.Select(x => new ArticleCategoryViewModel
             {
                 Name = x.Name,
-                Id=x.Id,
+                Id = x.Id,
                 ArticleCount = x.Articles.Count,
                 ShowOrder = x.ShowOrder,
                 CreationDate = x.CreationDate.ToFarsi()
@@ -50,16 +50,17 @@ namespace BlogManagement.Infrastructure.EfCore.Repository
 
         public List<ArticleCategoryViewModel> SelectList()
         {
-            return _context.ArticleCategories.Select(x => new ArticleCategoryViewModel()
+            return _context.ArticleCategories.Select(x => new ArticleCategoryViewModel
             {
                 Id = x.Id,
-                Name = x.Name,
+                Name = x.Name
             }).ToList();
         }
 
         public string GetArticleCategoryName(long articleCategoryId)
         {
-            return _context.ArticleCategories.Select(x => new { x.Name, x.Id }).FirstOrDefault(x => x.Id == articleCategoryId)
+            return _context.ArticleCategories.Select(x => new { x.Name, x.Id })
+                .FirstOrDefault(x => x.Id == articleCategoryId)
                 ?.Name;
         }
     }

@@ -11,14 +11,17 @@ namespace ShopManagement.Application
     public class CourseApplication : ICourseApplication
     {
         private readonly ICourseRepository _course;
-        private readonly IFileUploader _fileUploader;
         private readonly ICourseGroupRepository _courseGroup;
-        public CourseApplication(ICourseRepository course, IFileUploader fileUploader, ICourseGroupRepository courseGroup)
+        private readonly IFileUploader _fileUploader;
+
+        public CourseApplication(ICourseRepository course, IFileUploader fileUploader,
+            ICourseGroupRepository courseGroup)
         {
             _course = course;
             _fileUploader = fileUploader;
             _courseGroup = courseGroup;
         }
+
         public OperationResult Create(CreateCourseViewModel command)
         {
             var operation = new OperationResult();
@@ -33,8 +36,9 @@ namespace ShopManagement.Application
             var poster = _fileUploader.Uploader(command.DemoPoster, courseGroupSlug + "/DemoFile");
 
             var course = new Course(command.Name, command.Description, command.ShortDescription, fileName,
-                 command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
-                 command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId);
+                command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
+                command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId,
+                command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId);
 
             _course.Create(course);
             _course.SaveChanges();
@@ -84,10 +88,12 @@ namespace ShopManagement.Application
             //edit
             course.Edit(command.Name, command.Description, command.ShortDescription, fileName,
                 command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
-                command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId, command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId);
+                command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId,
+                command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId);
 
             //check duplicate course
-            if (_course.IsExist(x => x.Name == command.Name.Trim() && x.CourseGroupId == command.CourseGroupId && x.Id != command.Id))
+            if (_course.IsExist(x =>
+                x.Name == command.Name.Trim() && x.CourseGroupId == command.CourseGroupId && x.Id != command.Id))
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
             //update and save change 

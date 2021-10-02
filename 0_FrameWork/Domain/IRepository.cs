@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace _0_FrameWork.Domain
 {
-    public interface IRepository<TKey,T> where T:class
+    public interface IRepository<TKey, T> where T : class
     {
         T GetById(TKey id);
         void Create(T entity);

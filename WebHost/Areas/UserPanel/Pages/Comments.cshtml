@@ -1,5 +1,4 @@
-﻿@using _0_FrameWork.Application
-@using Type = _0_FrameWork.Application.ThisType
+﻿@using Type = _0_FrameWork.Application.ThisType
 @model IEnumerable<ShiftCoderQuery.Contract.Comment.CommentModelForUserPanel>
 @{
     ViewData["Title"] = "نظرات  من";
@@ -14,7 +13,9 @@
                 </h1>
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a asp-page="Index">پنل کاربری </a></li>
+                        <li class="breadcrumb-item">
+                            <a asp-page="Index">پنل کاربری </a>
+                        </li>
                         <li class="breadcrumb-item active" aria-current="page">نظرات من</li>
                     </ol>
                 </nav>
@@ -22,49 +23,49 @@
         </header>
         <section id="body-container" class="container">
             <div class="row">
-                <partial name="Shared/_Left-bar-menu" />
+                <partial name="Shared/_Left-bar-menu"/>
                 <section id="content-container" class="col-12 col-lg-8 ">
                     <div class="col-12 container-table">
-                        <br />
+                        <br/>
                         <div class="container-info-aside price-course ">
                             <h1 id="text-price">نظرات</h1>
                         </div>
                         <table class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">مسیج</th>
-                                    <th scope="col"> تاریخ</th>
-                                    <th scope="col">آدرس</th>
-                                    <th scope="col">دستورات</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">مسیج</th>
+                                <th scope="col"> تاریخ</th>
+                                <th scope="col">آدرس</th>
+                                <th scope="col">دستورات</th>
+                            </tr>
                             </thead>
                             <tbody>
 
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>@item.Id</td>
-                                        <td>@item.Message</td>
-                                        <td>@item.CreationDate</td>
-                                        <td>
-                                            @if (item.Type == Type.Course)
-                                            {
-                                                <a class="text-primary" href="/SingleCourse/@item.CourseSlug#comment-@item.Id"> @item.CourseName</a>
-                                            }
-                                            else
-                                            {
-                                                <a href="/SingleArticle/@item.ArticleSlug#comment-@item.Id" class="text-primary">@item.ArticleName</a>
-                                            }
-                                        </td>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Message</td>
+                                    <td>@item.CreationDate</td>
+                                    <td>
+                                        @if (item.Type == Type.Course)
+                                        {
+                                            <a class="text-primary" href="/SingleCourse/@item.CourseSlug#comment-@item.Id"> @item.CourseName</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/SingleArticle/@item.ArticleSlug#comment-@item.Id" class="text-primary">@item.ArticleName</a>
+                                        }
+                                    </td>
 
-                                        <td>
-                                            <a href="#" class="text-dark p-4">حذف</a>
-                                            <a href="#" class="text-warning">ویرایش</a>
-                                        </td>
+                                    <td>
+                                        <a href="#" class="text-dark p-4">حذف</a>
+                                        <a href="#" class="text-warning">ویرایش</a>
+                                    </td>
 
-                                    </tr>
-                                }
+                                </tr>
+                            }
 
                             </tbody>
                         </table>

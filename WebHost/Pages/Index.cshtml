@@ -1,5 +1,4 @@
 ﻿@page
-@using ShiftCoderQuery.Contract.Course
 @model IndexModel
 
 @{
@@ -17,14 +16,14 @@
         <div class="carousel-inner">
             @foreach (var slid in Model.Sliders)
             {
-                <div class="carousel-item @(slid==Model.Sliders.First()?"active":"")" style="min-height: 300px;">
+                <div class="carousel-item @(slid == Model.Sliders.First() ? "active" : "")" style="min-height: 300px;">
                     <img class="position-relative w-100" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt" style="min-height: 300px; object-fit: cover;">
                     <div class="carousel-caption d-flex align-items-center justify-content-center">
-                        <div class="p-5" style="width: 100%; max-width: 900px;">
+                        <div class="p-5" style="max-width: 900px; width: 100%;">
                             <h5 class="text-white text-uppercase mb-md-3">@slid.ShortTitle</h5>
 
                             <h1 class="display-3 text-white mb-md-4">@slid.Title</h1>
-                       
+
                             <a href="@slid.ButtonLink" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">@slid.ButtonText</a>
                         </div>
                     </div>
@@ -74,7 +73,7 @@
         <div class="row align-items-center">
             <div class="col-lg-7 mb-5 mb-lg-0">
                 <div class="mb-4">
-                    <h5 class="text-primary text-uppercase mb-3" >چی دورۀ را میخواهی یاد بگیری؟</h5>
+                    <h5 class="text-primary text-uppercase mb-3">چی دورۀ را میخواهی یاد بگیری؟</h5>
                     <h1 class="text-white">30% تخفیف برای دانشجویان جدید</h1>
                 </div>
                 <p class="text-white">
@@ -94,10 +93,10 @@
                     <div class="card-body rounded-bottom bg-primary p-5">
                         <form>
                             <div class="form-group">
-                                <input type="text" class="form-control border-0 p-4" placeholder="نام شما" required="required" />
+                                <input type="text" class="form-control border-0 p-4" placeholder="نام شما" required="required"/>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control border-0 p-4" placeholder="ایمیل شما" required="required" />
+                                <input type="email" class="form-control border-0 p-4" placeholder="ایمیل شما" required="required"/>
                             </div>
                             <div class="form-group">
                                 <select class="custom-select border-0 px-4" style="height: 47px;">

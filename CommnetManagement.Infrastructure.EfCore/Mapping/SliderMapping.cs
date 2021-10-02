@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CommentManagement.Infrastructure.EfCore.Mapping
 {
-    class SliderMapping:IEntityTypeConfiguration<Slider>
+    internal class SliderMapping : IEntityTypeConfiguration<Slider>
     {
         public void Configure(EntityTypeBuilder<Slider> builder)
         {

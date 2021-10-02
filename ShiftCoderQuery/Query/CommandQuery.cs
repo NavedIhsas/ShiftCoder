@@ -14,9 +14,9 @@ namespace ShiftCoderQuery.Query
 {
     public class CommandQuery : ICommentQuery
     {
+        private readonly IArticleRepository _article;
         private readonly CommentContext _context;
         private readonly ICourseRepository _course;
-        private readonly IArticleRepository _article;
 
         public CommandQuery(CommentContext context, ICourseRepository course, IArticleRepository article)
         {
@@ -24,12 +24,12 @@ namespace ShiftCoderQuery.Query
             _course = course;
             _article = article;
         }
+
         public List<CommentQueryModel> GetAllCommentCourse()
         {
             return _context.Comments
-                .Include(x => x.Children).
-                ThenInclude(x => x.Parent)
-                .Where(x => x.Type == ThisType.Course).Select(x => new CommentQueryModel()
+                .Include(x => x.Children).ThenInclude(x => x.Parent)
+                .Where(x => x.Type == ThisType.Course).Select(x => new CommentQueryModel
                 {
                     Id = x.Parent.Id,
                     Name = x.Parent.Name,
@@ -46,11 +46,11 @@ namespace ShiftCoderQuery.Query
         public List<Comment> GetAll()
         {
             return _context.Comments.AsNoTracking().ToList();
-
         }
+
         public List<CommentModelForUserPanel> GetUserComment(string email)
         {
-            var comment= _context.Comments.Where(x => x.Email == email)
+            var comment = _context.Comments.Where(x => x.Email == email)
                 .Where(x => x.IsConfirmed).Select(x => new CommentModelForUserPanel
                 {
                     Message = x.Message,
@@ -58,10 +58,9 @@ namespace ShiftCoderQuery.Query
                     ParentId = x.ParentId,
                     Id = x.Id,
                     Type = x.Type,
-                    OwnerRecordId = x.OwnerRecordId,
+                    OwnerRecordId = x.OwnerRecordId
                 }).ToList();
             foreach (var item in comment)
-            {
                 if (item.Type == ThisType.Course)
                 {
                     var course = _course.GetCourseBy(item.OwnerRecordId);
@@ -74,31 +73,19 @@ namespace ShiftCoderQuery.Query
                     item.ArticleSlug = article.Slug;
                     item.ArticleName = article.Title;
                 }
-            }
 
             return comment;
         }
 
-        private static List<CommentQueryModel> MapChildren(IEnumerable<Comment> children)
-        {
-            return children.Select(x => new CommentQueryModel()
-            {
-                Name = x.Name,
-                Message = x.Message,
-                Email = x.Email,
-                ParentId = x.ParentId,
-                ParentName = x.Parent.Name,
-            }).ToList();
-        }
         public OperationResult Create(CommentQueryModel command)
         {
             var operation = new OperationResult();
-            var comment = _context.Comments.Select(x => new CommentQueryModel()
+            var comment = _context.Comments.Select(x => new CommentQueryModel
             {
                 Id = x.Id,
                 Name = x.Name,
                 Message = x.Message,
-                Email = x.Email,
+                Email = x.Email
             }).AsNoTracking();
 
             return operation.Succeeded("نظر شما با موفقیت ثبت شد");
@@ -106,8 +93,19 @@ namespace ShiftCoderQuery.Query
 
         public List<Slider> GetThreeSlider()
         {
-            return _context.Sliders.Take(3).OrderBy(x=>x.CreationDate).ToList();
+            return _context.Sliders.Take(3).OrderBy(x => x.CreationDate).ToList();
+        }
+
+        private static List<CommentQueryModel> MapChildren(IEnumerable<Comment> children)
+        {
+            return children.Select(x => new CommentQueryModel
+            {
+                Name = x.Name,
+                Message = x.Message,
+                Email = x.Email,
+                ParentId = x.ParentId,
+                ParentName = x.Parent.Name
+            }).ToList();
         }
     }
 }
-

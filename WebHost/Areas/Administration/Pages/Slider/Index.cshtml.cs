@@ -11,12 +11,13 @@ namespace WebHost.Areas.Administration.Pages.Slider
     {
         private readonly ISliderApplication _application;
 
+        public List<SliderViewModel> List;
+
         public IndexModel(ISliderApplication application)
         {
             _application = application;
         }
 
-        public List<SliderViewModel> List;
         public void OnGet()
         {
             List = _application.GetAllList();

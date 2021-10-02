@@ -4,7 +4,7 @@ using Shop.Management.Application.Contract.CourseStatus;
 
 namespace ShopManagement.Domain.CourseStatusAgg
 {
-    public interface ICourseStatusRepository:IRepository<long,CourseStatus>
+    public interface ICourseStatusRepository : IRepository<long, CourseStatus>
     {
         EditCourseStatusViewModel GetDetails(long id);
         List<CourseStatusViewModel> GetAllCourseStatus();

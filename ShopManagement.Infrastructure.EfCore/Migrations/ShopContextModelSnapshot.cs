@@ -295,28 +295,18 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("ShopManagement.Domain.OrderDetailAgg.OrderDetail", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("CourseId")
+                    b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("OrderId")
+                    b.Property<long>("CourseId")
                         .HasColumnType("bigint");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderId", "CourseId");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -347,7 +337,7 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
             modelBuilder.Entity("ShopManagement.Domain.CourseAgg.Course", b =>
                 {
                     b.HasOne("ShopManagement.Domain.CourseGroupAgg.CourseGroup", "CourseGroup")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("CourseGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -432,6 +422,8 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("ShopManagement.Domain.CourseGroupAgg.CourseGroup", b =>
                 {
+                    b.Navigation("Courses");
+
                     b.Navigation("Groups");
                 });
 

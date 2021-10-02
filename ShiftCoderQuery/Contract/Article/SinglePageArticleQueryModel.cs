@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AccountManagement.Domain.Account.Agg;
 using ShiftCoderQuery.Contract.Comment;
 
 namespace ShiftCoderQuery.Contract.Article

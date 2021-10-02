@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CommentManagement.Infrastructure.EfCore.Mapping
 {
-   public class VisitMapping:IEntityTypeConfiguration<Visit>
+    public class VisitMapping : IEntityTypeConfiguration<Visit>
     {
         public void Configure(EntityTypeBuilder<Visit> builder)
         {

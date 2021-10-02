@@ -4,16 +4,17 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace WebHost
 {
-    [HtmlTargetElement(Attributes= "Permission")]
-    public class PermissionTagHelper:TagHelper
+    [HtmlTargetElement(Attributes = "Permission")]
+    public class PermissionTagHelper : TagHelper
     {
-        public int Permission { get; set; }
         private readonly IAuthHelper _authHelper;
 
         public PermissionTagHelper(IAuthHelper authHelper)
         {
             _authHelper = authHelper;
         }
+
+        public int Permission { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -22,12 +23,14 @@ namespace WebHost
                 output.SuppressOutput();
                 return;
             }
+
             var permissions = _authHelper.GetPermissions();
             if (permissions.All(x => x != Permission))
             {
                 output.SuppressOutput();
                 return;
             }
+
             base.Process(context, output);
         }
     }

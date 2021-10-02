@@ -11,13 +11,14 @@ namespace ShopManagement.Application
 {
     public class OrderApplication : IOrderApplication
     {
-        private readonly IOrderRepository _order;
         private readonly IAccountRepository _account;
         private readonly ICourseRepository _course;
-        private readonly IOrderDetailRepository _orderDetail;
         private readonly INotificationRepository _notification;
+        private readonly IOrderRepository _order;
+        private readonly IOrderDetailRepository _orderDetail;
 
-        public OrderApplication(IOrderRepository order, IAccountRepository account, ICourseRepository course, IOrderDetailRepository orderDetail, INotificationRepository notification)
+        public OrderApplication(IOrderRepository order, IAccountRepository account, ICourseRepository course,
+            IOrderDetailRepository orderDetail, INotificationRepository notification)
         {
             _order = order;
             _account = account;
@@ -26,19 +27,18 @@ namespace ShopManagement.Application
             _notification = notification;
         }
 
-      
+
         public long Create(string userName, long courseId)
         {
-          
             var userId = _account.GetUserIdBy(userName);
             var course = _course.GetCourseBy(courseId);
             var order = _order.GetOrderBy(userId);
 
             if (order == null)
             {
-                order = new Order(userId, false, course.Price, new List<OrderDetail>()
+                order = new Order(userId, false, course.Price, new List<OrderDetail>
                 {
-                    new OrderDetail(  course.Price, courseId,0),
+                    new(course.Price, courseId, 0)
                 });
                 _order.Create(order);
             }
@@ -55,17 +55,17 @@ namespace ShopManagement.Application
                     order.SumOrder(order.Id);
                     _order.Update(order);
                 }
-                
             }
+
             _orderDetail.SaveChanges();
             _order.SaveChanges();
 
-            var notification = new Notification($"کاربر سفارشی را برای ({course.Name}) ثبت کرد.", ThisType.Order,order.Id);
+            var notification =
+                new Notification($"کاربر سفارشی را برای ({course.Name}) ثبت کرد.", ThisType.Order, order.Id);
             _notification.Create(notification);
             _notification.SaveChanges();
 
             return order.Id;
         }
-      
     }
 }

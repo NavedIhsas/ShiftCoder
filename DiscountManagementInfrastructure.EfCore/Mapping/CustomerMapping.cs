@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DiscountManagementInfrastructure.EfCore.Mapping
 {
-  public  class CustomerMapping:IEntityTypeConfiguration<CustomerDiscount>
+    public class CustomerMapping : IEntityTypeConfiguration<CustomerDiscount>
     {
         public void Configure(EntityTypeBuilder<CustomerDiscount> builder)
         {

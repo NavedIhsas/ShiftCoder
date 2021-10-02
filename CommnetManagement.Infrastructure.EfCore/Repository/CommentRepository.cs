@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CommentManagement.Infrastructure.EfCore.Repository
 {
-    public class CommentRepository:RepositoryBase<long,Comment>,ICommentRepository
+    public class CommentRepository : RepositoryBase<long, Comment>, ICommentRepository
     {
         private readonly CommentContext _context;
 
@@ -28,8 +28,8 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
                 IsConfirmed = x.IsConfirmed,
                 OwnerRecordId = x.OwnerRecordId,
                 Type = x.Type,
-                Id=x.Id,
-                CreationDate = x.CreationDate.ToFarsi(),
+                Id = x.Id,
+                CreationDate = x.CreationDate.ToFarsi()
             }).AsNoTracking().ToList();
 
             if (!string.IsNullOrWhiteSpace(searchModel.Name))
@@ -37,7 +37,8 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
 
 
             if (!string.IsNullOrWhiteSpace(searchModel.Email))
-                query = query.Where(x => x.Email.ToLower().Trim().Contains(searchModel.Email.ToLower().Trim())).ToList();
+                query = query.Where(x => x.Email.ToLower().Trim().Contains(searchModel.Email.ToLower().Trim()))
+                    .ToList();
 
             if (searchModel.IsConfirm)
                 query = query.Where(x => x.IsConfirmed).ToList();
@@ -55,10 +56,10 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
 
         public List<CommentViewModel> GetCommentBy(long ownerId)
         {
-            var comment= _context.Comments.Where(x =>x.Id == ownerId).Select(x=>new CommentViewModel()
+            var comment = _context.Comments.Where(x => x.Id == ownerId).Select(x => new CommentViewModel
             {
                 IsCanceled = x.IsCanceled,
-                IsConfirmed = x.IsConfirmed,
+                IsConfirmed = x.IsConfirmed
             }).ToList();
             return comment;
         }

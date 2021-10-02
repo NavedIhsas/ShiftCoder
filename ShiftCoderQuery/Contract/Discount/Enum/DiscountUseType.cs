@@ -1,7 +1,11 @@
 ﻿namespace ShiftCoderQuery.Contract.Discount.Enum
 {
-   public enum DiscountUseType
+    public enum DiscountUseType
     {
-        NotFount,Success,ExpireDate,Finished,UserUsed
+        NotFount,
+        Success,
+        ExpireDate,
+        Finished,
+        UserUsed
     }
 }

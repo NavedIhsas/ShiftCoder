@@ -3,17 +3,10 @@ using _0_FrameWork.Domain;
 
 namespace DiscountManagement.Domain.CustomerDiscountAgg
 {
-   public class CustomerDiscount:EntityBase
+    public class CustomerDiscount : EntityBase
     {
-        public long CourseId { get; private set; }
-        public int DiscountRate { get; private set; }
-        public string Description { get; private set; }
-        public DateTime StartTime { get; private set; }
-        public DateTime EndTime { get; private set; }
-        public string Reason { get; private set; }
-        public bool IsRemove { get;private set; }
-
-        public CustomerDiscount(long courseId, int discountRate, string description, DateTime startTime, DateTime endTime, string reason)
+        public CustomerDiscount(long courseId, int discountRate, string description, DateTime startTime,
+            DateTime endTime, string reason)
         {
             CourseId = courseId;
             DiscountRate = discountRate;
@@ -24,7 +17,16 @@ namespace DiscountManagement.Domain.CustomerDiscountAgg
             IsRemove = false;
         }
 
-        public void Edit(long courseId, int discountRate, string description, DateTime startTime, DateTime endTime, string reason)
+        public long CourseId { get; private set; }
+        public int DiscountRate { get; private set; }
+        public string Description { get; private set; }
+        public DateTime StartTime { get; private set; }
+        public DateTime EndTime { get; private set; }
+        public string Reason { get; private set; }
+        public bool IsRemove { get; private set; }
+
+        public void Edit(long courseId, int discountRate, string description, DateTime startTime, DateTime endTime,
+            string reason)
         {
             CourseId = courseId;
             DiscountRate = discountRate;
@@ -33,6 +35,7 @@ namespace DiscountManagement.Domain.CustomerDiscountAgg
             EndTime = endTime;
             Reason = reason;
         }
+
         public void Remove(long id)
         {
             IsRemove = true;

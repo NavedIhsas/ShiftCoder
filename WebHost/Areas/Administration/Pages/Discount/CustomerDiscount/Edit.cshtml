@@ -4,7 +4,7 @@
 }
 
 <div class="container">
-    <partial name="Shared/_Create_View_Header" />
+    <partial name="Shared/_Create_View_Header"/>
 
     <form asp-page="./Index" asp-page-handler="Edit"
           method="post"
@@ -37,14 +37,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="StartTime" class="control-label">تاریخ شروع<span class="text-danger">*</span></label>
-                        <input type="datetime" asp-for="StartTime" class="form-control PersianDateInput"  required>
+                        <input type="datetime" asp-for="StartTime" class="form-control PersianDateInput" required>
                         <span class="text-danger" asp-validation-for="StartTime"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="EndTime" class="control-label">تاریخ پایان<span class="text-danger">*</span></label>
-                        <input type="datetime" asp-for="EndTime" class="form-control PersianDateInput"  required>
+                        <input type="datetime" asp-for="EndTime" class="form-control PersianDateInput" required>
                         <span class="text-danger" asp-validation-for="EndTime"></span>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="Id" value="@Model.Id"/>
         <div class="modal-footer">
             <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
             <button type="submit" class="btn btn-info waves-effect waves-light">ویرایش</button>

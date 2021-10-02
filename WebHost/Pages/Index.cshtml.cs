@@ -16,16 +16,17 @@ namespace WebHost.Pages
         private readonly ICourseQuery _course;
         private readonly ICommentQuery _slider;
 
+        public List<Course> Courses;
+        public long Episodes;
+        public CourseQuerySearchModel SearchModel;
+        public List<Slider> Sliders;
+
         public IndexModel(ICourseQuery course, ICommentQuery slider)
         {
             _course = course;
             _slider = slider;
         }
 
-        public List<Course> Courses;
-        public List<Slider> Sliders;
-        public CourseQuerySearchModel SearchModel;
-        public long Episodes;
         public void OnGet()
         {
             Sliders = _slider.GetThreeSlider();
@@ -43,7 +44,9 @@ namespace WebHost.Pages
                 fileName);
 
             using (var stream = new FileStream(path, FileMode.Create))
+            {
                 upload.CopyTo(stream);
+            }
 
             var url = $"{"/MyImages/"}{fileName}";
             return new JsonResult(new { uploaded = true, url });

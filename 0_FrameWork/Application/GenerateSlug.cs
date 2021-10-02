@@ -27,10 +27,10 @@ namespace _0_Framework.Application
             var normalizedString = text.Normalize(NormalizationForm.FormKC);
             var stringBuilder = new StringBuilder();
 
-            foreach (var c in from c in normalizedString let unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c) where unicodeCategory != UnicodeCategory.NonSpacingMark select c)
-            {
-                stringBuilder.Append(c);
-            }
+            foreach (var c in from c in normalizedString
+                let unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c)
+                where unicodeCategory != UnicodeCategory.NonSpacingMark
+                select c) stringBuilder.Append(c);
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }

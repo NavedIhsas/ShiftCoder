@@ -1,23 +1,22 @@
-﻿using AccountManagement.Application.Contract.Account;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using _0_FrameWork.Application;
+using AccountManagement.Application.Contract.Account;
 using AccountManagement.Domain.Account.Agg;
 using CommentManagement.Domain.Notification.Agg;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AccountManagement.Application
 {
     public class AccountApplication : IAccountApplication
     {
-        private readonly IAccountRepository _repository;
-        private readonly ITeacherRepository _teacher;
         private readonly IFileUploader _fileUploader;
         private readonly INotificationRepository _notification;
         private readonly IRazorPartialToStringRenderer _renderer;
+        private readonly IAccountRepository _repository;
+        private readonly ITeacherRepository _teacher;
 
-        public AccountApplication(IAccountRepository repository, IFileUploader fileUploader, 
+        public AccountApplication(IAccountRepository repository, IFileUploader fileUploader,
             ITeacherRepository teacher, INotificationRepository notification, IRazorPartialToStringRenderer renderer)
         {
             _repository = repository;
@@ -26,12 +25,14 @@ namespace AccountManagement.Application
             _notification = notification;
             _renderer = renderer;
         }
+
         public async Task<OperationResult> Create(RegisterUserViewModel command)
         {
             var operation = new OperationResult();
 
             //---check for IsExist--//
-            if (_repository.IsExist(x => x.Email == FixedText.FixEmail(command.Email))) return operation.Failed(ApplicationMessage.DuplicatedEmailAddress);
+            if (_repository.IsExist(x => x.Email == FixedText.FixEmail(command.Email)))
+                return operation.Failed(ApplicationMessage.DuplicatedEmailAddress);
 
             //---get path for save avatar--//
             var fileName = _fileUploader.Uploader(command.Avatar, "UserAvatar");
@@ -39,34 +40,38 @@ namespace AccountManagement.Application
             //---register user----//
             if (command.RoleId == 3)
             {
-                var create = new Account(command.FullName, FixedText.FixEmail(command.Email), command.Phone, command.Password, fileName,
-                    command.RoleId,NameGenerator.UniqCode(), new List<Teacher>()
+                var create = new Account(command.FullName, FixedText.FixEmail(command.Email), command.Phone,
+                    command.Password, fileName,
+                    command.RoleId, NameGenerator.UniqCode(), new List<Teacher>
                     {
-                        new Teacher("","","",command.Id,ThisType.Teacher)
+                        new("", "", "", command.Id, ThisType.Teacher)
                     });
                 _repository.Create(create);
             }
             else if (command.RoleId == 2)
             {
-                var create = new Account(command.FullName, FixedText.FixEmail(command.Email), command.Phone, command.Password, fileName,
-                    command.RoleId, NameGenerator.UniqCode(), new List<Teacher>()
+                var create = new Account(command.FullName, FixedText.FixEmail(command.Email), command.Phone,
+                    command.Password, fileName,
+                    command.RoleId, NameGenerator.UniqCode(), new List<Teacher>
                     {
-                        new Teacher("","","",command.Id,ThisType.Blogger)
+                        new("", "", "", command.Id, ThisType.Blogger)
                     });
                 _repository.Create(create);
             }
             else
             {
-                var create = new Account(command.FullName, FixedText.FixEmail(command.Email), command.Phone, command.Password, fileName,
+                var create = new Account(command.FullName, FixedText.FixEmail(command.Email), command.Phone,
+                    command.Password, fileName,
                     command.RoleId, NameGenerator.UniqCode());
                 _repository.Create(create);
 
                 var body = await _renderer.RenderPartialToStringAsync("_SentActivityEmail", create);
-                 SendEmail.Send(create.Email,  "تائید ایمیل", body);
-
+                SendEmail.Send(create.Email, "تائید ایمیل", body);
             }
+
             //---create notification--//
-            var notification = new Notification($"کاربری جدید با نام ({command.FullName}) در سایت ثبت نام کرد", ThisType.Account, command.Id);
+            var notification = new Notification($"کاربری جدید با نام ({command.FullName}) در سایت ثبت نام کرد",
+                ThisType.Account, command.Id);
             _notification.Create(notification);
             _notification.SaveChanges();
             _repository.SaveChanges();
@@ -77,7 +82,8 @@ namespace AccountManagement.Application
         public OperationResult Edit(EditAccountViewModel command)
         {
             var operation = new OperationResult();
-            if (_repository.IsExist(x => x.Email == FixedText.FixEmail(command.Email) && x.Id != command.Id)) return operation.Failed(ApplicationMessage.DuplicatedRecord);
+            if (_repository.IsExist(x => x.Email == FixedText.FixEmail(command.Email) && x.Id != command.Id))
+                return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
             var fileName = _fileUploader.Uploader(command.Avatar, "UserAvatar");
 
@@ -97,19 +103,19 @@ namespace AccountManagement.Application
             {
                 case 2:
                     getUser.Edit(command.FullName, FixedText.FixEmail(command.Email), command.Phone, fileName,
-                        command.RoleId, new List<Teacher>()
+                        command.RoleId, new List<Teacher>
                         {
-                            new Teacher("","","",command.Id,ThisType.Blogger),
-                        },command.ActiveCode);
+                            new("", "", "", command.Id, ThisType.Blogger)
+                        }, command.ActiveCode);
                     _repository.Update(getUser);
                     break;
 
                 case 3:
                     getUser.Edit(command.FullName, FixedText.FixEmail(command.Email), command.Phone, fileName,
-                        command.RoleId, new List<Teacher>()
+                        command.RoleId, new List<Teacher>
                         {
-                            new Teacher("","","",command.Id,ThisType.Teacher),
-                        },command.ActiveCode);
+                            new("", "", "", command.Id, ThisType.Teacher)
+                        }, command.ActiveCode);
                     _repository.Update(getUser);
                     break;
 
@@ -119,12 +125,13 @@ namespace AccountManagement.Application
                     _repository.Update(getUser);
                     break;
             }
+
             _repository.SaveChanges();
             _teacher.SaveChanges();
             return operation.Succeeded();
         }
 
-       
+
         public OperationResult Active(long id)
         {
             var operation = new OperationResult();
@@ -142,14 +149,14 @@ namespace AccountManagement.Application
             var operation = new OperationResult();
 
             var getUser = _repository.GetById(id);
-            
+
             if (getUser == null) return operation.Failed(ApplicationMessage.RecordNotFount);
             getUser.DeActive(id);
             _repository.SaveChanges();
             return operation.Succeeded();
         }
 
-     
+
         public OperationResult ChangePassword(ChangePasswordViewModel command)
         {
             var operation = new OperationResult();
@@ -179,12 +186,12 @@ namespace AccountManagement.Application
 
         public async Task<bool> ForgotPassword(ForgotPasswordViewModel command)
         {
-            var user =_repository.GetUserBy(FixedText.FixEmail(command.Email));
-            if (user==null ||user.IsActive==false) return false;
+            var user = _repository.GetUserBy(FixedText.FixEmail(command.Email));
+            if (user == null || user.IsActive == false) return false;
             command.ActiveCode = user.ActiveCode;
 
             var emailBody = _renderer.RenderPartialToStringAsync("_ResetPassword", command);
-            SendEmail.Send(command.Email,"بازیابی کلمه عبور",await emailBody);
+            SendEmail.Send(command.Email, "بازیابی کلمه عبور", await emailBody);
 
             return true;
         }
@@ -201,14 +208,49 @@ namespace AccountManagement.Application
             return true;
         }
 
-        public bool Login(LoginViewModel command) => _repository.Login(command);
-        public List<AccountViewModel> ShowBlockedUser() => _repository.ShowBlockedUser();
-        public EditTeacherViewModel GetTeacherDetails(long id) => _teacher.GetTeacherDetails(id);
-        public BlockUserViewModel GetUserForUnblock(long id) => _repository.GetUserForUnblock(id);
-        public List<AccountViewModel> Search(AccountSearchModel searchModel) => _repository.Search(searchModel);
-        public EditAccountViewModel GetDetails(long id) => _repository.GetDetails(id);
-        public BlockUserViewModel GetUserForBlock(long id) => _repository.GetUserForBlock(id);
-        public void ConfirmUnblockUser(long id) => _repository.ConfirmUnblockUser(id);
-        public void Logout() => _repository.Logout();
+        public bool Login(LoginViewModel command)
+        {
+            return _repository.Login(command);
+        }
+
+        public List<AccountViewModel> ShowBlockedUser()
+        {
+            return _repository.ShowBlockedUser();
+        }
+
+        public EditTeacherViewModel GetTeacherDetails(long id)
+        {
+            return _teacher.GetTeacherDetails(id);
+        }
+
+        public BlockUserViewModel GetUserForUnblock(long id)
+        {
+            return _repository.GetUserForUnblock(id);
+        }
+
+        public List<AccountViewModel> Search(AccountSearchModel searchModel)
+        {
+            return _repository.Search(searchModel);
+        }
+
+        public EditAccountViewModel GetDetails(long id)
+        {
+            return _repository.GetDetails(id);
+        }
+
+        public BlockUserViewModel GetUserForBlock(long id)
+        {
+            return _repository.GetUserForBlock(id);
+        }
+
+        public void ConfirmUnblockUser(long id)
+        {
+            _repository.ConfirmUnblockUser(id);
+        }
+
+        public void Logout()
+        {
+            _repository.Logout();
+        }
     }
 }

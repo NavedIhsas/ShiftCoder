@@ -1,18 +1,17 @@
-﻿using DiscountManagement.Domain.CustomerDiscountAgg;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using _0_FrameWork.Domain.Infrastructure;
+﻿using _0_FrameWork.Domain.Infrastructure;
 using ColleagueDiscountManagementApplication.Contract.ColleagueDiscount;
-using DiscountManagementInfrastructure.EfCore;
-using DiscountManagementInfrastructure.EfCore.Repository;
-using Microsoft.EntityFrameworkCore;
-using DiscountManagement.Domain.ColleagueDiscountAgg;
-using DiscountManagement.Application;
 using ColleagueDiscountManagementApplication.Contract.CustomerDiscount;
 using ColleagueDiscountManagementApplication.Contract.DiscountCode;
+using DiscountManagement.Application;
+using DiscountManagement.Domain.ColleagueDiscountAgg;
+using DiscountManagement.Domain.CustomerDiscountAgg;
 using DiscountManagement.Domain.DiscountCode;
 using DiscountManagement.Domain.UserDiscountAgg;
 using DiscountManagement.Infrastructure.Permissions;
+using DiscountManagementInfrastructure.EfCore;
+using DiscountManagementInfrastructure.EfCore.Repository;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using ShiftCoderQuery.Contract.Discount;
 using ShiftCoderQuery.Query;
 
@@ -38,10 +37,7 @@ namespace DiscountManagement.Infrastructure
             services.AddTransient<IPermissionExposer, DiscountPermissionExposer>();
 
 
-            services.AddDbContext<DiscountContext>(option =>
-            {
-                option.UseSqlServer(connectionString);
-            });
+            services.AddDbContext<DiscountContext>(option => { option.UseSqlServer(connectionString); });
         }
     }
 }

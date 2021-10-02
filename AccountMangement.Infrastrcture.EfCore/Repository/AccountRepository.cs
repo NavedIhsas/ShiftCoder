@@ -13,11 +13,12 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
 {
     public class AccountRepository : RepositoryBase<long, Account>, IAccountRepository
     {
-        private readonly AccountContext _context;
         private readonly IAuthHelper _authHelper;
+        private readonly AccountContext _context;
         private readonly IRoleRepository _role;
 
-        public AccountRepository(AccountContext dbContext, AccountContext context, IAuthHelper authHelper, IRoleRepository role) : base(dbContext)
+        public AccountRepository(AccountContext dbContext, AccountContext context, IAuthHelper authHelper,
+            IRoleRepository role) : base(dbContext)
         {
             _context = context;
             _authHelper = authHelper;
@@ -35,9 +36,8 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
                 RoleId = x.RoleId,
                 ActiveCode = x.ActiveCode,
                 AvatarName = x.Avatar,
-                Id = x.Id,
+                Id = x.Id
                 //  Teacher = MapTeacher(x.Teachers)
-
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
@@ -45,7 +45,7 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
         {
             return _context.Accounts.Select(x => new BlockUserViewModel
             {
-                Id = x.Id,
+                Id = x.Id
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
@@ -53,27 +53,16 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
         {
             return _context.Accounts.IgnoreQueryFilters().Select(x => new BlockUserViewModel
             {
-                Id = x.Id,
+                Id = x.Id
             }).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
-       
+
         public void ConfirmUnblockUser(long id)
         {
-          var user=  _context.Accounts.IgnoreQueryFilters().FirstOrDefault(x => x.Id == id);
-         user.Active(id);
-         _context.Accounts.Update(user);
+            var user = _context.Accounts.IgnoreQueryFilters().FirstOrDefault(x => x.Id == id);
+            user.Active(id);
+            _context.Accounts.Update(user);
             _context.SaveChanges();
-        }
-
-        private static List<TeacherViewModel> MapTeacher(IEnumerable<Teacher> teachers)
-        {
-            return teachers.Select(x => new TeacherViewModel()
-            {
-                AccountId = x.AccountId,
-                Bio = x.Bio,
-                Resumes = x.Resumes,
-                Skills = x.Skills,
-            }).ToList();
         }
 
         public List<AccountViewModel> Search(AccountSearchModel searchModel)
@@ -110,33 +99,41 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
         }
 
         public Account? GetUserBy(string email)
-       => _context.Accounts.SingleOrDefault(x => x.Email == FixedText.FixEmail(email));
+        {
+            return _context.Accounts.SingleOrDefault(x => x.Email == FixedText.FixEmail(email));
+        }
 
-        public Account GetUserBy(long id) => _context.Accounts.Find(id);
+        public Account GetUserBy(long id)
+        {
+            return _context.Accounts.Find(id);
+        }
 
         public Account GetUserByActiveCode(string activeCode)
-            => _context.Accounts.SingleOrDefault(x => x.ActiveCode == activeCode);
+        {
+            return _context.Accounts.SingleOrDefault(x => x.ActiveCode == activeCode);
+        }
 
 
         public List<AccountViewModel> ShowBlockedUser()
         {
-            return _context.Accounts.IgnoreQueryFilters().Where(x=>!x.IsActive).Select(x => new AccountViewModel()
+            return _context.Accounts.IgnoreQueryFilters().Where(x => !x.IsActive).Select(x => new AccountViewModel
             {
                 Id = x.Id,
                 FullName = x.FullName,
                 CreationDate = x.CreationDate.ToFarsi(),
-                Email = x.Email,
+                Email = x.Email
             }).ToList();
         }
 
         public bool Login(LoginViewModel login)
         {
-            var user = _context.Accounts.SingleOrDefault(x => x.Email == FixedText.FixEmail(login.Email) && x.Password == login.Password);
-            if (user == null||user.IsActive==false) return false;
+            var user = _context.Accounts.SingleOrDefault(x =>
+                x.Email == FixedText.FixEmail(login.Email) && x.Password == login.Password);
+            if (user == null || user.IsActive == false) return false;
 
-            var permission = _role.GetById(user.RoleId).Permissions.Select(x=>x.Code).ToList();
+            var permission = _role.GetById(user.RoleId).Permissions.Select(x => x.Code).ToList();
 
-            var authModel = new AuthHelperViewModel(user.Id, user.RoleId, user.FullName, user.Email,permission);
+            var authModel = new AuthHelperViewModel(user.Id, user.RoleId, user.FullName, user.Email, permission);
             _authHelper.Signin(authModel);
             return true;
         }
@@ -146,25 +143,36 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
             _authHelper.SignOut();
         }
 
-     
-       public bool EmailConfirm(string activeCode)
-       {
-           var user= _context.Accounts.SingleOrDefault(x => x.ActiveCode == activeCode);
-           if (user ==null || user.EmailConfirm) return false;
 
-           user.ConfirmEmail(activeCode);
-           user.ChangeActiveCode(user.Id);
-           _context.Update(user);
-           _context.SaveChanges();
-           return true;
-       }
+        public bool EmailConfirm(string activeCode)
+        {
+            var user = _context.Accounts.SingleOrDefault(x => x.ActiveCode == activeCode);
+            if (user == null || user.EmailConfirm) return false;
+
+            user.ConfirmEmail(activeCode);
+            user.ChangeActiveCode(user.Id);
+            _context.Update(user);
+            _context.SaveChanges();
+            return true;
+        }
 
         public List<AccountViewModel> SelectList()
         {
-            return _context.Accounts.Select(x => new AccountViewModel()
+            return _context.Accounts.Select(x => new AccountViewModel
             {
                 Id = x.Id,
-                FullName = x.FullName,
+                FullName = x.FullName
+            }).ToList();
+        }
+
+        private static List<TeacherViewModel> MapTeacher(IEnumerable<Teacher> teachers)
+        {
+            return teachers.Select(x => new TeacherViewModel
+            {
+                AccountId = x.AccountId,
+                Bio = x.Bio,
+                Resumes = x.Resumes,
+                Skills = x.Skills
             }).ToList();
         }
     }

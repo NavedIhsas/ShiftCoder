@@ -9,18 +9,18 @@ namespace AccountManagement.Application.Contract.Account
     public class RegisterUserViewModel
     {
         [Required(ErrorMessage = Validate.Required)]
-        [MaxLength(250,ErrorMessage = Validate.MaxLength)]
+        [MaxLength(250, ErrorMessage = Validate.MaxLength)]
         public string FullName { get; set; }
 
-        [MaxLength(250,ErrorMessage = Validate.MaxLength)]
-       
+        [MaxLength(250, ErrorMessage = Validate.MaxLength)]
+
         public string Email { get; set; }
 
-        [MaxLength(20,ErrorMessage = Validate.MaxLength)]
+        [MaxLength(20, ErrorMessage = Validate.MaxLength)]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = Validate.Required)]
-        [MaxLength(250,ErrorMessage = Validate.MaxLength)]
+        [MaxLength(250, ErrorMessage = Validate.MaxLength)]
         public string Password { get; set; }
 
         [Compare("Password ", ErrorMessage = "رمز عبور با تکرار آن مطابقت ندارد.")]
@@ -33,6 +33,5 @@ namespace AccountManagement.Application.Contract.Account
         public long Id { get; set; }
         public string ActiveCode { get; set; }
         public string AvatarName { get; set; }
-       
     }
 }

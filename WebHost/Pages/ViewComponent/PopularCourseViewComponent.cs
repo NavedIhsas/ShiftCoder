@@ -3,7 +3,7 @@ using ShiftCoderQuery.Contract.Course;
 
 namespace WebHost.Pages.ViewComponent
 {
-    public class PopularCourseViewComponent:Microsoft.AspNetCore.Mvc.ViewComponent
+    public class PopularCourseViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
         private readonly ICourseQuery _courseQuery;
 

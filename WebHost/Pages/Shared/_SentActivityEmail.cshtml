@@ -5,9 +5,9 @@
     <title>تائید ایمیل - شیفت کدر</title>
     <style>
         body {
+            color: #555;
             font-family: Calibri, sans-serif;
             font-size: 11pt;
-            color: #555;
         }
 
         blockquote {
@@ -19,14 +19,14 @@
     </style>
 </head>
 <body dir="rtl">
-    <h2>@Model.FullName عزیز</h2>
-    <blockquote>باتشکر از ثبت نام شما در سایت شیفت کدر لطفا برای تائید ایمیل خود بروی لینک زیر کلیک کنید</blockquote>
+<h2>@Model.FullName عزیز</h2>
+<blockquote>باتشکر از ثبت نام شما در سایت شیفت کدر لطفا برای تائید ایمیل خود بروی لینک زیر کلیک کنید</blockquote>
 <blockquote>این لینک فقط یکبار قابل استفاده میباشد</blockquote>
 
 
-    <h3>
-        @*//href="/Author/Index?id=@item.AuthorID&handler=Delete*@
-        <a href="https://ihsasdevelopment.ir/Account?id=@Model.ActiveCode&handler=ConfirmEmail"> تائید ایمیل</a>
-    </h3>
+<h3>
+    @*//href="/Author/Index?id=@item.AuthorID&handler=Delete*@
+    <a href="https://ihsasdevelopment.ir/Account?id=@Model.ActiveCode&handler=ConfirmEmail"> تائید ایمیل</a>
+</h3>
 </body>
 </html>

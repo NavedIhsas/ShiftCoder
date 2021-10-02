@@ -5,28 +5,27 @@ using _0_FrameWork.Domain.Infrastructure;
 namespace CommentManagement.Infrastructure.Permissions
 {
     // ReSharper disable  StringLiteralTypo
-    public class CommentPermissionExposer:IPermissionExposer
+    public class CommentPermissionExposer : IPermissionExposer
     {
         public Dictionary<string, List<PermissionDto>> Expose()
         {
-            return new Dictionary<string, List<PermissionDto>>()
+            return new Dictionary<string, List<PermissionDto>>
             {
                 {
-                    "Comments",new List<PermissionDto>()
+                    "Comments", new List<PermissionDto>
                     {
-                        new PermissionDto(Permission.ListComments,"لیست نظرات"),
-                        new PermissionDto(Permission.ApproveComments,"تایید نظرات"),
-                        new PermissionDto(Permission.CancelComments,"کنسل نظرات"),
-                        new PermissionDto(Permission.SearchComments,"سرچ در نظرات"),
+                        new(Permission.ListComments, "لیست نظرات"),
+                        new(Permission.ApproveComments, "تایید نظرات"),
+                        new(Permission.CancelComments, "کنسل نظرات"),
+                        new(Permission.SearchComments, "سرچ در نظرات")
                     }
                 },
 
-                 {
-                    "Slider",new List<PermissionDto>()
+                {
+                    "Slider", new List<PermissionDto>
                     {
-                        new PermissionDto(Permission.ChangePhotoHomePage,"تغییر عکس صفحه اصلی"),
-                        new PermissionDto(Permission.CreatePhotoHomePage,"ایجاد عکس صفحه اصلی"),
-                  
+                        new(Permission.ChangePhotoHomePage, "تغییر عکس صفحه اصلی"),
+                        new(Permission.CreatePhotoHomePage, "ایجاد عکس صفحه اصلی")
                     }
                 }
             };

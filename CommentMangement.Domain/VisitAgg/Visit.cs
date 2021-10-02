@@ -3,14 +3,8 @@ using _0_FrameWork.Domain;
 
 namespace CommentManagement.Domain.VisitAgg
 {
-   public class Visit:EntityBase
+    public class Visit : EntityBase
     {
-        public int Type { get;private set; }
-        public string IpAddress { get; private set; }
-        public long RecordOwnerId { get;private set; }
-        public DateTime LastVisitDateTime { get; private set; }
-        public int NumberOfVisit { get; private set; }
-
         public Visit(int type, string ipAddress, DateTime lastVisitDateTime, int numberOfVisit, long recordOwnerId)
         {
             Type = type;
@@ -20,6 +14,12 @@ namespace CommentManagement.Domain.VisitAgg
             RecordOwnerId = recordOwnerId;
         }
 
+        public int Type { get; private set; }
+        public string IpAddress { get; private set; }
+        public long RecordOwnerId { get; private set; }
+        public DateTime LastVisitDateTime { get; private set; }
+        public int NumberOfVisit { get; private set; }
+
         public void ReduceVisit(int numberOfVisit)
         {
             NumberOfVisit = numberOfVisit + 1;
@@ -28,6 +28,11 @@ namespace CommentManagement.Domain.VisitAgg
         public void SetDateTime()
         {
             LastVisitDateTime = DateTime.Now;
+        }
+
+        public Visit()
+        {
+            
         }
     }
 }

@@ -10,6 +10,5 @@ namespace Shop.Management.Application.Contract.Course
         EditCourseViewModel GetDetails(long id);
         List<CourseViewModel> Search(CourseSearchModel searchModel);
         List<CourseViewModel> SelectCourses();
-     
     }
 }

@@ -9,9 +9,11 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <br />
+            <br/>
             <div class="row col col-md-12">
-                <label style="margin-right: 30px"> <strong>جستجو...</strong></label>
+                <label style="margin-right: 30px">
+                    <strong>جستجو...</strong>
+                </label>
                 <form method="get">
                     <div class=" col-md-3">
                         <select asp-for="SearchModel.Type" asp-items="@Model.Types" type="text" class="form-control">
@@ -24,7 +26,7 @@
                     </div>
                 </form>
             </div>
-            <hr />
+            <hr/>
         </div>
     </div>
     <div class="row">
@@ -58,7 +60,7 @@
                                     break;
 
                                 case Type.Order:
-                                    <a asp-page="/Orders/Index"  class="list-group-item">
+                                    <a asp-page="/Orders/Index" class="list-group-item">
                                         <i class="fa fa-shopping-cart fa-fw"></i> @item.Text
                                         <span class="pull-left text-muted small">
                                             <em>@item.CreationDate.TimeAgo()</em>
@@ -75,7 +77,6 @@
                                     </a>
                                     break;
                             }
-
                         }
                     </div>
                 </div>

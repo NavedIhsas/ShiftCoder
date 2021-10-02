@@ -23,12 +23,12 @@ namespace ShiftCoderQuery.Query
     // ReSharper disable  CommentTypo
     public class CourseQuery : ICourseQuery
     {
-        private readonly ShopContext _context;
-        private readonly CommentContext _comment;
         private readonly AccountContext _account;
         private readonly IAccountRepository _accountRepository;
-        private readonly IVisitRepository _visit;
         private readonly BlogContext _article;
+        private readonly CommentContext _comment;
+        private readonly ShopContext _context;
+        private readonly IVisitRepository _visit;
 
 
         public CourseQuery(ShopContext context, CommentContext comment, AccountContext account,
@@ -87,25 +87,22 @@ namespace ShiftCoderQuery.Query
                 item.TeacherName = teacher.Account.FullName;
 
                 //tag
-                var tag = new GetAllCourseQueryModel()
+                var tag = new GetAllCourseQueryModel
                 {
-                    Keywords = item.KeyWords.Split("-").Take(8).ToList(),
+                    Keywords = item.KeyWords.Split("-").Take(8).ToList()
                 };
                 item.Keywords = tag.Keywords;
             }
 
             //search by name or short description
             if (!string.IsNullOrWhiteSpace(searchQuery.Search))
-            {
-                query = query.Where(x => x.Name.ToLower().Trim().
-                    Contains(searchQuery.Search.ToLower().Trim())
+                query = query.Where(x => x.Name.ToLower().Trim().Contains(searchQuery.Search.ToLower().Trim())
                                          || x.KeyWords.ToLower().Trim().Contains(searchQuery.Search.ToLower().Trim()) ||
-                                         x.ShortDescription.ToLower().Trim().Contains(searchQuery.Search.ToLower().Trim())).ToList();
-            }
+                                         x.ShortDescription.ToLower().Trim()
+                                             .Contains(searchQuery.Search.ToLower().Trim())).ToList();
 
             //sort by
             if (!string.IsNullOrWhiteSpace(searchQuery.Filter))
-            {
                 query = searchQuery.Filter switch
                 {
                     "maxPrice" => query.OrderByDescending(x => x.Price).ToList(),
@@ -117,7 +114,6 @@ namespace ShiftCoderQuery.Query
                     "all" => query,
                     _ => query
                 };
-            }
 
 
             //paging
@@ -132,7 +128,6 @@ namespace ShiftCoderQuery.Query
             };
 
             return list;
-
         }
 
 
@@ -268,8 +263,8 @@ namespace ShiftCoderQuery.Query
 
             //barrase kon k en rahe dorst ast ya na?
             course.CourseTeacher = _context.Courses.Where(x => x.TeacherId == teacher.Id)
-                .Select(selector: x => new { x.Name, x.Slug })
-                .Select(x => new CourseQueryModel() { Name = x.Name, Slug = x.Slug }).ToList();
+                .Select(x => new { x.Name, x.Slug })
+                .Select(x => new CourseQueryModel { Name = x.Name, Slug = x.Slug }).ToList();
 
             #endregion
 
@@ -286,8 +281,8 @@ namespace ShiftCoderQuery.Query
                     OwnerRecordId = x.OwnerRecordId,
                     Id = x.Id,
                     ParentId = x.ParentId,
-                    Picture=x.Picture,
-                    CreateDateTime=x.CreationDate,
+                    Picture = x.Picture,
+                    CreateDateTime = x.CreationDate,
                     ParentName = x.Parent.Name,
                     CreationDate = x.CreationDate.ToFarsi()
                 }).AsNoTracking().ToList();
@@ -304,9 +299,9 @@ namespace ShiftCoderQuery.Query
 
 
             //Keywords
-            var keywords = new CourseQueryModel()
+            var keywords = new CourseQueryModel
             {
-                Keywords = course.KeyWords.Split("-").ToList(),
+                Keywords = course.KeyWords.Split("-").ToList()
             };
             course.Keywords = keywords.Keywords;
 
@@ -321,15 +316,29 @@ namespace ShiftCoderQuery.Query
         }
 
         public CourseEpisode GetEpisodeFile(long episodeId)
-            => _context.CourseEpisodes.FirstOrDefault(x => x.Id == episodeId);
-        public List<Account> GetAllUsers() => _account.Accounts.AsNoTracking().ToList();
+        {
+            return _context.CourseEpisodes.FirstOrDefault(x => x.Id == episodeId);
+        }
+
+        public List<Account> GetAllUsers()
+        {
+            return _account.Accounts.AsNoTracking().ToList();
+        }
+
         public double GetTotalMinutesEpisodeVideos()
         {
             return _context.CourseEpisodes.AsNoTracking().ToList().Sum(c => Convert.ToInt32(c.Time.Minutes));
         }
 
-        public List<Article> GetAllArticle() => _article.Articles.AsNoTracking().ToList();
-        public List<Teacher> GetAllTeacher() => _account.Teachers.AsNoTracking().ToList();
+        public List<Article> GetAllArticle()
+        {
+            return _article.Articles.AsNoTracking().ToList();
+        }
+
+        public List<Teacher> GetAllTeacher()
+        {
+            return _account.Teachers.AsNoTracking().ToList();
+        }
 
 
         public List<UserCourseViewModel> GetUserCourseBy(string email)
@@ -351,17 +360,17 @@ namespace ShiftCoderQuery.Query
 
             return userCourse;
         }
+
         #region Mapping Single Course
 
         private static List<UserCourseViewModel> MapUserCourse(IEnumerable<UserCourse> userCourses)
         {
-            return userCourses.Select(x => new UserCourseViewModel()
+            return userCourses.Select(x => new UserCourseViewModel
             {
                 CourseId = x.CourseId,
-                AccountId = x.AccountId,
+                AccountId = x.AccountId
             }).ToList();
         }
-
 
 
         private void MapChildren(CommentQueryModel parent)
@@ -404,7 +413,6 @@ namespace ShiftCoderQuery.Query
             }).ToList();
         }
 
-        
         #endregion
     }
 }

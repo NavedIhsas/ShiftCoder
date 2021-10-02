@@ -1,6 +1,4 @@
-using _0_FrameWork.Application;
 using AccountManagement.Application.Contract.Account;
-using AccountManagement.Domain.Account.Agg;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -15,10 +13,9 @@ namespace WebHost.Pages
             _account = account;
         }
 
-       
+
         public void OnGet()
         {
-            
         }
 
         public IActionResult OnPost(LoginViewModel login, string ReturnUrl = "Index")

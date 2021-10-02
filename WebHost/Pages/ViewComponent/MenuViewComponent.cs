@@ -3,7 +3,7 @@ using ShiftCoderQuery.Contract.CourseGroup;
 
 namespace WebHost.Pages.ViewComponent
 {
-    public class MenuViewComponent:Microsoft.AspNetCore.Mvc.ViewComponent
+    public class MenuViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
         private readonly ICourseGroupQuery _courseGroup;
 
@@ -11,10 +11,11 @@ namespace WebHost.Pages.ViewComponent
         {
             _courseGroup = courseGroup;
         }
+
         public IViewComponentResult Invoke()
         {
             var courseGroup = _courseGroup.GetAllCourseGroup();
-            return View("Default",courseGroup);
+            return View("Default", courseGroup);
         }
     }
 }

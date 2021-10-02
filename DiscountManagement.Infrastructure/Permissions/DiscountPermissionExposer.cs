@@ -9,37 +9,36 @@ namespace DiscountManagement.Infrastructure.Permissions
         // ReSharper disable  StringLiteralTypo
         public Dictionary<string, List<PermissionDto>> Expose()
         {
-            return new Dictionary<string, List<PermissionDto>>()
+            return new Dictionary<string, List<PermissionDto>>
             {
                 {
-                    "CustomerDiscount", new List<PermissionDto>()
+                    "CustomerDiscount", new List<PermissionDto>
                     {
-                      
-                        new PermissionDto(Permission.ListCostumerDiscount, "مشاهده تخفیفات مشتری"),
-                        new PermissionDto(Permission.SearchCostumerDiscount, "جستجوی تخفیفات مشتری"),
-                        new PermissionDto(Permission.CreateCostumerDiscount, "ایجاد تخفیف مشتری"),
-                        new PermissionDto(Permission.EditCostumerDiscount, " ویرایش تخفیف مشتری")
+                        new(Permission.ListCostumerDiscount, "مشاهده تخفیفات مشتری"),
+                        new(Permission.SearchCostumerDiscount, "جستجوی تخفیفات مشتری"),
+                        new(Permission.CreateCostumerDiscount, "ایجاد تخفیف مشتری"),
+                        new(Permission.EditCostumerDiscount, " ویرایش تخفیف مشتری")
                     }
                 },
 
                 {
-                    "ColleagueDiscount",new List<PermissionDto>()
-                       {
-                            new PermissionDto(Permission.ListColleagueDiscount,"مشاهده تخفیفات همکار"),
-                            new PermissionDto(Permission.SearchColleagueDiscount,"جستجو"),
-                            new PermissionDto(Permission.CreateColleagueDiscount,"ایجاد تخفیف همکار"),
-                            new PermissionDto(Permission.EditColleagueDiscount,"ویرایش تخفیف همکار"),
-                            new PermissionDto(Permission.DeleteColleagueDiscount,"حذف تخفیف همکار"),
-                            new PermissionDto(Permission.RestoreColleagueDiscount,"لغو حذف تخفیف همکار"),
-                       }
+                    "ColleagueDiscount", new List<PermissionDto>
+                    {
+                        new(Permission.ListColleagueDiscount, "مشاهده تخفیفات همکار"),
+                        new(Permission.SearchColleagueDiscount, "جستجو"),
+                        new(Permission.CreateColleagueDiscount, "ایجاد تخفیف همکار"),
+                        new(Permission.EditColleagueDiscount, "ویرایش تخفیف همکار"),
+                        new(Permission.DeleteColleagueDiscount, "حذف تخفیف همکار"),
+                        new(Permission.RestoreColleagueDiscount, "لغو حذف تخفیف همکار")
+                    }
                 },
                 {
-                    "DiscountCode",new List<PermissionDto>()
+                    "DiscountCode", new List<PermissionDto>
                     {
-                        new PermissionDto(Permission.ListDiscountCode,"مشاهده تخفیفات اختصاصی"),
-                        new PermissionDto(Permission.SearchDiscountCode,"جستجو در کد های تخفیف"),
-                        new PermissionDto(Permission.CreateDiscountCode,"ایجاد کد تخفیف"),
-                        new PermissionDto(Permission.EditDiscountCode,"ویرایش کد تخفیف"),
+                        new(Permission.ListDiscountCode, "مشاهده تخفیفات اختصاصی"),
+                        new(Permission.SearchDiscountCode, "جستجو در کد های تخفیف"),
+                        new(Permission.CreateDiscountCode, "ایجاد کد تخفیف"),
+                        new(Permission.EditDiscountCode, "ویرایش کد تخفیف")
                     }
                 }
             };

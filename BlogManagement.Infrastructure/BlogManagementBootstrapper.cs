@@ -1,14 +1,14 @@
 ﻿using _0_FrameWork.Domain.Infrastructure;
-using BlogManagement.Domain.ArticleCategoryAgg;
-using BlogManagement.Infrastructure.EfCore.Repository;
-using Microsoft.Extensions.DependencyInjection;
-using BlogManagement.Application.Contract.ArticleCategory;
 using BlogManagement.Application;
 using BlogManagement.Application.Contract.Article;
+using BlogManagement.Application.Contract.ArticleCategory;
 using BlogManagement.Domain.ArticleAgg;
+using BlogManagement.Domain.ArticleCategoryAgg;
 using BlogManagement.Infrastructure.EfCore;
+using BlogManagement.Infrastructure.EfCore.Repository;
 using BlogManagement.Infrastructure.Permissions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using ShiftCoderQuery.Contract.Article;
 using ShiftCoderQuery.Contract.ArticleCategory;
 using ShiftCoderQuery.Query;
@@ -30,10 +30,7 @@ namespace BlogManagement.Infrastructure
 
             service.AddTransient<IPermissionExposer, BlogPermissionExposer>();
 
-            service.AddDbContext<BlogContext>(option =>
-            {
-                option.UseSqlServer(connectionString);
-            });
+            service.AddDbContext<BlogContext>(option => { option.UseSqlServer(connectionString); });
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Net.Mail;
-using System.Threading.Tasks;
+﻿using System.Net;
+using System.Net.Mail;
 
 namespace _0_FrameWork.Application
 {
@@ -15,11 +15,10 @@ namespace _0_FrameWork.Application
             mail.Body = body;
             mail.IsBodyHtml = true;
             smtpServer.Port = 587;
-            smtpServer.Credentials = new System.Net.NetworkCredential("ghzaladurani@gmail.com", "12Qudrat");
+            smtpServer.Credentials = new NetworkCredential("ghzaladurani@gmail.com", "12Qudrat");
             smtpServer.EnableSsl = true;
 
             smtpServer.Send(mail);
-
         }
     }
 }

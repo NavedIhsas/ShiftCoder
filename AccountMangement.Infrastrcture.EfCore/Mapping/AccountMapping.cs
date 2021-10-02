@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AccountManagement.Infrastructure.EfCore.Mapping
 {
-   public class AccountMapping:IEntityTypeConfiguration<Account>
+    public class AccountMapping : IEntityTypeConfiguration<Account>
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {

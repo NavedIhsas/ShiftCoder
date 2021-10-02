@@ -18,29 +18,28 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
 
         public EditCourseEpisodeViewModel GetDetails(long id)
         {
-            return _context.CourseEpisodes.Select(x => new EditCourseEpisodeViewModel()
+            return _context.CourseEpisodes.Select(x => new EditCourseEpisodeViewModel
             {
                 Id = x.Id,
                 Title = x.Title,
                 IsFree = x.IsFree,
                 Time = x.Time,
                 CourseId = x.CourseId,
-                FileName = x.FileName,
+                FileName = x.FileName
             }).FirstOrDefault(x => x.Id == id);
         }
 
         public List<CourseEpisodeViewModel> Search(CourseEpisodeSearchModel command)
         {
-            var query = _context.CourseEpisodes.Include(x => x.Course).Select(x => new CourseEpisodeViewModel()
+            var query = _context.CourseEpisodes.Include(x => x.Course).Select(x => new CourseEpisodeViewModel
             {
-
                 Title = x.Title,
                 IsFree = x.IsFree,
                 Time = x.Time,
                 CourseName = x.Course.Name,
                 FileName = x.FileName,
                 CourseId = x.CourseId,
-                Id = x.Id,
+                Id = x.Id
             }).ToList();
 
             if (!string.IsNullOrWhiteSpace(command.Title))
@@ -54,7 +53,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
             return orderly;
         }
 
-        public string  GetCourseGroupSlugBy(long courseId)
+        public string GetCourseGroupSlugBy(long courseId)
         {
             var course = _context.CourseEpisodes.Include(x => x.Course).ThenInclude(x => x.CourseGroup)
                 .FirstOrDefault(x => x.Course.Id == courseId)?.Course.CourseGroup.Slug;
@@ -63,12 +62,10 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
 
         public CourseEpisodeViewModel GetEpisodeIdBy(long courseId)
         {
-            return _context.CourseEpisodes.
-                Include(x => x.Course).
-                Select(x => new CourseEpisodeViewModel()
+            return _context.CourseEpisodes.Include(x => x.Course).Select(x => new CourseEpisodeViewModel
                 {
                     Id = x.Id,
-                    CourseId = x.CourseId,
+                    CourseId = x.CourseId
                 })
                 .FirstOrDefault(x => x.CourseId == courseId);
         }

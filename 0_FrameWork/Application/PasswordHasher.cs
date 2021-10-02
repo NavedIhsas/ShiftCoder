@@ -19,7 +19,8 @@ namespace _0_Framework.Application
 
         public string Hash(string password)
         {
-            using var algorithm = new Rfc2898DeriveBytes(password, SaltSize, Options.Iterations, HashAlgorithmName.SHA256);
+            using var algorithm =
+                new Rfc2898DeriveBytes(password, SaltSize, Options.Iterations, HashAlgorithmName.SHA256);
             var key = Convert.ToBase64String(algorithm.GetBytes(KeySize));
             var salt = Convert.ToBase64String(algorithm.Salt);
 
@@ -30,10 +31,7 @@ namespace _0_Framework.Application
         {
             var parts = hash.Split('.', 3);
 
-            if (parts.Length != 3)
-            {
-                return (false, false);
-            }
+            if (parts.Length != 3) return (false, false);
 
             var iterations = Convert.ToInt32(parts[0]);
             var salt = Convert.FromBase64String(parts[1]);

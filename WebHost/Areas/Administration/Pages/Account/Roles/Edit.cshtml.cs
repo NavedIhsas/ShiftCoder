@@ -11,16 +11,17 @@ namespace WebHost.Areas.Administration.Pages.Account.Roles
 {
     public class EditModel : PageModel
     {
-        private readonly IRoleApplication _role;
         private readonly IEnumerable<IPermissionExposer> _permissionExposers;
+        private readonly IRoleApplication _role;
+        public List<SelectListItem> Permissions = new();
+
+        public EditRoleViewModel Role;
+
         public EditModel(IRoleApplication role, IEnumerable<IPermissionExposer> permissionExposers)
         {
             _role = role;
             _permissionExposers = permissionExposers;
         }
-
-        public EditRoleViewModel Role;
-        public List<SelectListItem> Permissions = new List<SelectListItem>();
 
         [NeedPermission(Permission.EditRoles)]
         public void OnGet(long id)
@@ -32,10 +33,10 @@ namespace WebHost.Areas.Administration.Pages.Account.Roles
             foreach (var exposer in _permissionExposers)
             {
                 var exposerPermission = exposer.Expose();
-                foreach (var (key,value) in exposerPermission)
+                foreach (var (key, value) in exposerPermission)
                 {
                     permissionDto.AddRange(value);
-                    var group = new SelectListGroup() { Name = key };
+                    var group = new SelectListGroup { Name = key };
                     foreach (var permission in value)
                     {
                         var item = new SelectListItem(permission.Name, permission.Code.ToString())
@@ -50,9 +51,8 @@ namespace WebHost.Areas.Administration.Pages.Account.Roles
                     }
                 }
             }
-
-
         }
+
         [NeedPermission(Permission.EditRoles)]
         public IActionResult OnPost(EditRoleViewModel command)
         {
@@ -61,4 +61,3 @@ namespace WebHost.Areas.Administration.Pages.Account.Roles
         }
     }
 }
-

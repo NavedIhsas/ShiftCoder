@@ -1,5 +1,4 @@
-﻿using DiscountManagement.Domain.DiscountCode;
-using ShiftCoderQuery.Contract.Discount.Enum;
+﻿using ShiftCoderQuery.Contract.Discount.Enum;
 
 namespace ShiftCoderQuery.Contract.Discount
 {
@@ -7,6 +6,5 @@ namespace ShiftCoderQuery.Contract.Discount
     {
         DiscountUseType UseDiscount(long orderId, string code);
         bool? GetAllUserDiscount(long accountId, long discountCodeId);
-       
     }
 }

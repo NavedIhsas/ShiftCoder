@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "مدریت حساب کاربری";
 }
-<link href="~/style/style-userPanel.css" rel="stylesheet" />
+<link href="~/style/style-userPanel.css" rel="stylesheet"/>
 <main id="main-container" class="container">
     <div class="row">
         <header>
@@ -14,14 +14,16 @@
                 </h1>
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a asp-page="Index">حساب کاربری</a></li>
+                        <li class="breadcrumb-item">
+                            <a asp-page="Index">حساب کاربری</a>
+                        </li>
                     </ol>
                 </nav>
             </div>
         </header>
-        <section id="body-container" class="container" >
+        <section id="body-container" class="container">
             <div class="row">
-                <partial name="Shared/_Left-bar-menu" />
+                <partial name="Shared/_Left-bar-menu"/>
                 <section id="content-container" class="col-12 col-lg-8 ">
                     <div id="container-body">
 
@@ -62,7 +64,7 @@
                                         <h5 class="value-info-aside">@Model.AccountList.Email</h5>
                                     </div>
                                 </div>
-                               
+
 
                             </div>
                             <div class="col col-md-6">
@@ -85,8 +87,8 @@
                                         <h2 class="value-info-aside"> تومان</h2>
                                     </div>
                                 </div>
-                                
-                                 
+
+
                                 <div class="container-info-user">
                                     <div class="container-title-line-aside">
                                         <i class="fa fa-envelope icon-title-aside"></i>
@@ -107,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    <hr />
+                    <hr/>
                     <br/>
                     <br/>
                     <br/>
@@ -119,27 +121,27 @@
                         </div>
                         <table class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <th class="bg-info text-center" scope="col"> عنوان دوره</th>
-                                </tr>
+                            <tr>
+                                <th class="bg-info text-center" scope="col"> عنوان دوره</th>
+                            </tr>
                             </thead>
                             <tbody>
 
-                                @foreach (var item in Model.UserCourse)
-                                {
-                                    <tr class="text-center">
-                                        <td>
-                                            <a class="text-primary" asp-page="SingleCourse" asp-route-id="@item.CourseSlug">@item.CourseName</a>
-                                        </td>
-                                    </tr>
-                                }
+                            @foreach (var item in Model.UserCourse)
+                            {
+                                <tr class="text-center">
+                                    <td>
+                                        <a class="text-primary" asp-page="SingleCourse" asp-route-id="@item.CourseSlug">@item.CourseName</a>
+                                    </td>
+                                </tr>
+                            }
 
                             </tbody>
                         </table>
                     </div>
                 </section>
 
-                    <br />
+                <br/>
 
             </div>
         </section>

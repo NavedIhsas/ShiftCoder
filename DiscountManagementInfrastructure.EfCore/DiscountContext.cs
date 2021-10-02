@@ -7,11 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscountManagementInfrastructure.EfCore
 {
-    public class DiscountContext:DbContext
+    public class DiscountContext : DbContext
     {
-        public DiscountContext(DbContextOptions<DiscountContext> options):base(options)
+        public DiscountContext(DbContextOptions<DiscountContext> options) : base(options)
         {
-            
         }
 
         public DbSet<CustomerDiscount> CustomerDiscounts { get; set; }

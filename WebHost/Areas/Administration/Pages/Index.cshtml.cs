@@ -14,17 +14,17 @@ namespace WebHost.Areas.Administration.Pages
     [NeedPermission(Permission.AdministrationHomepage)]
     public class IndexModel : PageModel
     {
-        private readonly IOrderRepository _order;
         private readonly ICommentQuery _comment;
+        private readonly IOrderRepository _order;
+        public List<CommentManagement.Domain.CourseCommentAgg.Comment> CommentList;
 
-        public IndexModel( IOrderRepository order, ICommentQuery comment)
+        public List<OrderViewModel> List;
+
+        public IndexModel(IOrderRepository order, ICommentQuery comment)
         {
             _order = order;
             _comment = comment;
         }
-
-        public List<OrderViewModel> List;
-        public List<CommentManagement.Domain.CourseCommentAgg.Comment> CommentList;
 
         [NeedPermission(Permission.AdministrationHomepage)]
         public IActionResult OnGet()

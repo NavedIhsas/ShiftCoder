@@ -6,8 +6,7 @@ namespace _0_FrameWork.Application
     {
         public static string TimeAgo(this DateTime date)
         {
-
-            TimeSpan timeSince = DateTime.Now.Subtract(date);
+            var timeSince = DateTime.Now.Subtract(date);
 
             if (timeSince.TotalMilliseconds < 1)
                 return "not yet";
@@ -40,7 +39,6 @@ namespace _0_FrameWork.Application
 
             //last but not least...
             return string.Format("{0} years ago", Math.Round(timeSince.TotalDays / 365));
-
         }
     }
 }

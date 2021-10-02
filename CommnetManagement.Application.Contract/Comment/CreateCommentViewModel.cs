@@ -5,7 +5,6 @@ namespace CommentManagement.Application.Contract.Comment
 {
     public class CreateCommentViewModel
     {
-        
         [Required(ErrorMessage = Validate.Required)]
         public string Name { get; set; }
 
@@ -14,6 +13,7 @@ namespace CommentManagement.Application.Contract.Comment
 
         [Required(ErrorMessage = Validate.Required)]
         public string Message { get; set; }
+
         public bool IsCanceled { get; set; }
         public bool IsConfirmed { get; set; }
         public long OwnerRecordId { get; set; }

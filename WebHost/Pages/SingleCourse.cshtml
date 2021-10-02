@@ -25,15 +25,15 @@
             @if (!_authHelper.IsAuthenticated())
             {
                 <h3 class="text-white text-uppercase text-left account-link">
-                    <a asp-page="Login"> ورود </a> <a>/</a> 
-                    <a asp-page="Account" asp-page-handler="Register"> عضویت </a>
+                    <a class="text-white text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a>/</a>
+                    <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
                 </h3>
             }
             else
             {
                 <h3 class="text-white  text-uppercase text-left account-link">
-                    <a class="fas fa-user-tie" asp-page="UserPanel"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a> 
-                    <a>/</a> <a  asp-page="Account" asp-page-handler="Logout"> خروج </a>
+                    <a class="fas fa-user-tie text-white text-uppercase" style="font-size:15px" asp-page="Login"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a>
+                    <a class="text-white text-uppercase" style="font-size:15px">/</a> <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
 
                 </h3>
             }
@@ -99,7 +99,7 @@
                                     }
                                     if (!User.Identity.IsAuthenticated)
                                     {
-                                        <p class=" text-info mt-2 text-center"><b>برای تماشای آنلاین فایل های رایگان لطفا وارد حساب خود شوید</b></p>
+                                        <p class=" text-info mt-2 text-center"><b>برای تماشای آنلاین فایل های رایگان لطفا وارد <a asp-page="Account" asp-page-handler="RegisterUserViewModel">حساب </a>خود شوید</b></p>
                                     }
                                     <hr />
                                 }

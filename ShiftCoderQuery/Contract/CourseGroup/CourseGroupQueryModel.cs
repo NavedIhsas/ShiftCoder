@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ShiftCoderQuery.Contract.CourseGroup
 {
-   public class CourseGroupQueryModel
+    public class CourseGroupQueryModel
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -21,7 +21,7 @@ namespace ShiftCoderQuery.Contract.CourseGroup
         public int CourseCount { get; internal set; }
     }
 
-   public class LatestCourseGroupViewModel
+    public class LatestCourseGroupViewModel
     {
         public string Title { get; set; }
         public string Slug { get; set; }
@@ -37,6 +37,5 @@ namespace ShiftCoderQuery.Contract.CourseGroup
     {
         public string Title { get; set; }
         public long Id { get; set; }
-
     }
 }

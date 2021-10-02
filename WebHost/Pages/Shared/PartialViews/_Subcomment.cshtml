@@ -1,13 +1,11 @@
 ﻿@model IEnumerable<ShiftCoderQuery.Contract.Comment.CommentQueryModel>
-@using _0_Framework.Application
 @foreach (var sub in Model)
 {
-
     <div id="comment-@sub.Id" class="media mt-4">
 
         @if (!string.IsNullOrEmpty(sub.Picture))
         {
-            <img src="~/FileUploader/@sub.Picture" alt="@sub.Name" title="@sub.Name"  class="img-fluid rounded-circle mr-3 mt-1"
+            <img src="~/FileUploader/@sub.Picture" alt="@sub.Name" title="@sub.Name" class="img-fluid rounded-circle mr-3 mt-1"
                  style="width: 45px;">
         }
 
@@ -18,7 +16,12 @@
         }
 
         <div class="media-body">
-            <h6 class="mr-3">@sub.Name <small class="mr-3" dir="rtl"><i>@sub.CreationDate</i></small></h6>
+            <h6 class="mr-3">
+                @sub.Name
+                <small class="mr-3" dir="rtl">
+                    <i>@sub.CreationDate</i>
+                </small>
+            </h6>
             <p class="mr-3">
                 @sub.Message
             </p>

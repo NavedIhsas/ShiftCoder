@@ -1,7 +1,6 @@
 ﻿@using ShiftCoderQuery.Contract.Course
 @inject ICourseQuery _course;
 @{
-
     var userInCourse = false;
     if (User.Identity.IsAuthenticated)
         userInCourse = _course.UserInCourse(User.Identity.Name, Model.Course.Id);
@@ -19,13 +18,17 @@
             {
                 @if (Model.Course.Price != 0)
                 {
-                    <p class=" text-success mt-2 text-center"><b>بعد از ثبت نام در دوره و تایید فاکتور،  لینک های دانلود برای شما فعال خواهد شد</b></p>
+                    <p class=" text-success mt-2 text-center">
+                        <b>بعد از ثبت نام در دوره و تایید فاکتور، لینک های دانلود برای شما فعال خواهد شد</b>
+                    </p>
                 }
                 if (!User.Identity.IsAuthenticated)
                 {
-                    <p class=" text-info mt-2 text-center"><b>برای تماشای آنلاین فایل های رایگان لطفا وارد حساب خود شوید</b></p>
+                    <p class=" text-info mt-2 text-center">
+                        <b>برای تماشای آنلاین فایل های رایگان لطفا وارد حساب خود شوید</b>
+                    </p>
                 }
-                <hr />
+                <hr/>
             }
             @foreach (var episode in Model.Course.EpisodeCourse)
             {
@@ -46,7 +49,6 @@
                             else
                             {
                                 <p class="text-info">نقدی</p>
-
                             }
                         }
 
@@ -59,26 +61,41 @@
                             {
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a href="/SingleCourse/@Model.Course.Slug?episode=@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
-                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                    <a href="/SingleCourse/@Model.Course.Slug?episode=@episode.Id">
+                                        <i class="fas fa-play icon-left-section"></i>
+                                    </a>
+                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id">
+                                        <i class="fas fa-download icon-left-section"></i>
+                                    </a>
                                 }
                                 else
                                 {
-                                    <a><i class="fas fa-play icon-left-section"></i></a>
-                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                                    <a>
+                                        <i class="fas fa-play icon-left-section"></i>
+                                    </a>
+                                    <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id">
+                                        <i class="fas fa-download icon-left-section"></i>
+                                    </a>
                                 }
-
                             }
                             else
                             {
-                                <a><i class="fas fa-play icon-left-section"></i></a>
-                                <a><i class="fas fa-download icon-left-section"></i></a>
+                                <a>
+                                    <i class="fas fa-play icon-left-section"></i>
+                                </a>
+                                <a>
+                                    <i class="fas fa-download icon-left-section"></i>
+                                </a>
                             }
                         }
                         else
                         {
-                            <a href="/SingleCourse/@Model.Course.Slug?episode=@episode.Id"><i class="fas fa-play icon-left-section"></i></a>
-                            <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id"><i class="fas fa-download icon-left-section"></i></a>
+                            <a href="/SingleCourse/@Model.Course.Slug?episode=@episode.Id">
+                                <i class="fas fa-play icon-left-section"></i>
+                            </a>
+                            <a asp-page="SingleCourse" asp-page-handler="DownloadFile" asp-route-id="@episode.Id">
+                                <i class="fas fa-download icon-left-section"></i>
+                            </a>
                         }
                     </div>
                 </div>

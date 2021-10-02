@@ -1,26 +1,26 @@
 ﻿using _0_FrameWork.Domain.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
-using Shop.Management.Application.Contract.CourseGroup;
-using ShopManagement.Application;
-using ShopManagement.Infrastructure.EfCore.Repository;
-using ShopManagement.Domain.CourseGroupAgg;
-using ShopManagement.Infrastructure.EfCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ShiftCoderQuery.Contract.Course;
+using ShiftCoderQuery.Contract.CourseGroup;
+using ShiftCoderQuery.Query;
 using Shop.Management.Application.Contract.Course;
+using Shop.Management.Application.Contract.CourseEpisode;
+using Shop.Management.Application.Contract.CourseGroup;
 using Shop.Management.Application.Contract.CourseLevel;
 using Shop.Management.Application.Contract.CourseStatus;
+using Shop.Management.Application.Contract.Order;
+using ShopManagement.Application;
+using ShopManagement.Configuration.Permission;
 using ShopManagement.Domain.CourseAgg;
+using ShopManagement.Domain.CourseEpisodeAgg;
+using ShopManagement.Domain.CourseGroupAgg;
 using ShopManagement.Domain.CourseLevelAgg;
 using ShopManagement.Domain.CourseStatusAgg;
-using ShiftCoderQuery.Contract.Course;
-using ShiftCoderQuery.Query;
-using ShiftCoderQuery.Contract.CourseGroup;
-using Shop.Management.Application.Contract.CourseEpisode;
-using Shop.Management.Application.Contract.Order;
-using ShopManagement.Configuration.Permission;
-using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.OrderAgg;
 using ShopManagement.Domain.OrderDetailAgg;
+using ShopManagement.Infrastructure.EfCore;
+using ShopManagement.Infrastructure.EfCore.Repository;
 
 namespace ShopManagement.Configuration
 {
@@ -56,10 +56,7 @@ namespace ShopManagement.Configuration
             service.AddTransient<IPermissionExposer, ShopPermissionExposer>();
 
 
-            service.AddDbContext<ShopContext>(option =>
-            {
-                option.UseSqlServer(connection);
-            });
+            service.AddDbContext<ShopContext>(option => { option.UseSqlServer(connection); });
         }
     }
 }

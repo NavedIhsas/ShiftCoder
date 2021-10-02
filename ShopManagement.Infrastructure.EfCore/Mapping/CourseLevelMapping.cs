@@ -11,9 +11,9 @@ namespace ShopManagement.Infrastructure.EfCore.Mapping
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Title).HasMaxLength(200).IsRequired();
 
-            builder.HasData(new CourseLevel() { Title = "مقدماتی", Id = 1, });
-            builder.HasData(new CourseLevel() { Title = "متوسط", Id = 2, });
-            builder.HasData(new CourseLevel() { Title = "پیشرفته", Id = 3, });
+            builder.HasData(new CourseLevel { Title = "مقدماتی", Id = 1 });
+            builder.HasData(new CourseLevel { Title = "متوسط", Id = 2 });
+            builder.HasData(new CourseLevel { Title = "پیشرفته", Id = 3 });
         }
     }
 }

@@ -10,6 +10,5 @@ namespace CommentManagement.Domain.Notification.Agg
         List<Notification> GetFiveNotification();
         void GetNotificationBy(string email);
         List<Notification> GetActivityAdminsNotification();
-
     }
 }

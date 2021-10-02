@@ -19,7 +19,7 @@ namespace AccountManagement.Application.Contract.Account
         bool Login(LoginViewModel command);
         List<AccountViewModel> ShowBlockedUser();
         void Logout();
-         Task<bool> ForgotPassword(ForgotPasswordViewModel command);
+        Task<bool> ForgotPassword(ForgotPasswordViewModel command);
         bool ResetPassword(ResetPasswordViewModel command);
         OperationResult EditTeacher(EditTeacherViewModel edit);
         EditTeacherViewModel GetTeacherDetails(long id);

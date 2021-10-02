@@ -3,7 +3,7 @@
 <div class="container-fluid py-5">
     <div class="container pt-5 pb-3">
         <div class="text-center mb-5">
-            <h5 class="text-primary text-uppercase mb-3" >مقالات</h5>
+            <h5 class="text-primary text-uppercase mb-3">مقالات</h5>
             <h1>آخرین مقالات ما</h1>
         </div>
         <div class="row pb-3">
@@ -14,7 +14,7 @@
                         <img class="img-fluid" src="~/FileUploader/@article.Picture" title="@article.PictureTitle" alt="@article.PictureAtl">
                         <a class="blog-overlay text-decoration-none" asp-page="SingleArticle" asp-route-id="@article.Slug">
                             <h5 class="text-white mb-3">@article.ShortDescription</h5>
-                            <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate,"M-MMMM / dddd")</p>
+                            <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate, "M-MMMM / dddd")</p>
                         </a>
                     </div>
                 </div>

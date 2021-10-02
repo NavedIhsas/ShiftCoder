@@ -4,7 +4,7 @@ using CommentManagement.Application.Contract.HomePhoto;
 
 namespace CommentManagement.Domain.SliderAgg
 {
-    public interface ISliderRepository:IRepository<long,Slider>
+    public interface ISliderRepository : IRepository<long, Slider>
     {
         List<SliderViewModel> GetAll();
         SliderViewModel GetDetails(long id);

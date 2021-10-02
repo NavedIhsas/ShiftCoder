@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using _0_FrameWork.Application;
 
 namespace ColleagueDiscountManagementApplication.Contract.DiscountCode
@@ -12,7 +11,7 @@ namespace ColleagueDiscountManagementApplication.Contract.DiscountCode
         public int? UseableCount { get; set; }
 
         [Required(ErrorMessage = Validate.Required)]
-        [MaxLength(50,ErrorMessage = Validate.MaxLength)]
+        [MaxLength(50, ErrorMessage = Validate.MaxLength)]
         public string DiscountCode { get; set; }
 
         [Required(ErrorMessage = Validate.Required)]

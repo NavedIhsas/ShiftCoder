@@ -18,11 +18,13 @@ namespace _0_FrameWork.Application
     {
         Task<string> RenderPartialToStringAsync<TModel>(string partialName, TModel model);
     }
+
     public class RazorPartialToStringRenderer : IRazorPartialToStringRenderer
     {
-        private readonly IRazorViewEngine _viewEngine;
-        private readonly ITempDataProvider _tempDataProvider;
         private readonly IServiceProvider _serviceProvider;
+        private readonly ITempDataProvider _tempDataProvider;
+        private readonly IRazorViewEngine _viewEngine;
+
         public RazorPartialToStringRenderer(
             IRazorViewEngine viewEngine,
             ITempDataProvider tempDataProvider,
@@ -32,6 +34,7 @@ namespace _0_FrameWork.Application
             _tempDataProvider = tempDataProvider;
             _serviceProvider = serviceProvider;
         }
+
         public async Task<string> RenderPartialToStringAsync<TModel>(string partialName, TModel model)
         {
             var actionContext = GetActionContext();
@@ -41,8 +44,8 @@ namespace _0_FrameWork.Application
                 actionContext,
                 partial,
                 new ViewDataDictionary<TModel>(
-                    metadataProvider: new EmptyModelMetadataProvider(),
-                    modelState: new ModelStateDictionary())
+                    new EmptyModelMetadataProvider(),
+                    new ModelStateDictionary())
                 {
                     Model = model
                 },
@@ -55,24 +58,22 @@ namespace _0_FrameWork.Application
             await partial.RenderAsync(viewContext);
             return output.ToString();
         }
+
         private IView FindView(ActionContext actionContext, string partialName)
         {
             var getPartialResult = _viewEngine.GetView(null, partialName, false);
-            if (getPartialResult.Success)
-            {
-                return getPartialResult.View;
-            }
+            if (getPartialResult.Success) return getPartialResult.View;
             var findPartialResult = _viewEngine.FindView(actionContext, partialName, false);
-            if (findPartialResult.Success)
-            {
-                return findPartialResult.View;
-            }
+            if (findPartialResult.Success) return findPartialResult.View;
             var searchedLocations = getPartialResult.SearchedLocations.Concat(findPartialResult.SearchedLocations);
             var errorMessage = string.Join(
                 Environment.NewLine,
-                new[] { $"Unable to find partial '{partialName}'. The following locations were searched:" }.Concat(searchedLocations)); ;
+                new[] { $"Unable to find partial '{partialName}'. The following locations were searched:" }.Concat(
+                    searchedLocations));
+            ;
             throw new InvalidOperationException(errorMessage);
         }
+
         private ActionContext GetActionContext()
         {
             var httpContext = new DefaultHttpContext
@@ -81,6 +82,5 @@ namespace _0_FrameWork.Application
             };
             return new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
         }
-   
-}
+    }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using _0_Framework.Application;
 using _0_FrameWork.Domain.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +8,10 @@ using ShopManagement.Domain.CourseGroupAgg;
 
 namespace ShopManagement.Infrastructure.EfCore.Repository
 {
-    public class CourseGroupRepository : RepositoryBase<long, Domain.CourseGroupAgg.CourseGroup>, ICourseGroupRepository
+    public class CourseGroupRepository : RepositoryBase<long, CourseGroup>, ICourseGroupRepository
     {
         private readonly ShopContext _context;
+
         public CourseGroupRepository(ShopContext dbContext, ShopContext context) : base(dbContext)
         {
             _context = context;
@@ -38,16 +38,16 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
         public List<CourseGroupViewModel> Search(CourseGroupSearchModel searchModel)
         {
             var query = _context.CourseGroups
-                .Where(x=>x.SubGroupId==null)
+                .Where(x => x.SubGroupId == null)
                 .Select(x => new CourseGroupViewModel
-            {
-                Id = x.Id,
-                Title = x.Title,
-                IsRemove = x.IsRemove,
-                CreationDate = x.CreationDate.ToFarsi(),
-                SubGroupId = x.SubGroup.Id,
-                CourseCount = 0
-            }).ToList();
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    IsRemove = x.IsRemove,
+                    CreationDate = x.CreationDate.ToFarsi(),
+                    SubGroupId = x.SubGroup.Id,
+                    CourseCount = 0
+                }).ToList();
 
 
             foreach (var item in query)
@@ -60,40 +60,39 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
             return orderly;
         }
 
-        public void BindSubGroup(CourseGroupViewModel parent)
-        {
-            var sub = _context.CourseGroups
-                .Include(x => x.SubGroup)
-                .Where(x=>x.SubGroupId==parent.Id)
-                
-                .Select(x => new CourseGroupViewModel
-            {
-                Id = x.Id,
-                Title = x.Title,
-                IsRemove = x.IsRemove,
-                CreationDate = x.CreationDate.ToFarsi(),
-                SubGroupId = x.SubGroupId,
-            }).AsNoTracking().ToList();
-
-            foreach (var item in sub)
-            {
-                BindSubGroup(item);
-                parent.Sub.Add(item);
-              
-            }
-        }
         public List<CourseGroupViewModel> SelectList()
         {
-            return _context.CourseGroups.Select(x => new CourseGroupViewModel()
+            return _context.CourseGroups.Select(x => new CourseGroupViewModel
             {
                 Title = x.Title,
-                Id = x.Id,
+                Id = x.Id
             }).AsNoTracking().ToList();
         }
 
         public string GetSlug(long id)
         {
             return _context.CourseGroups.Select(x => new { x.Slug, x.Id }).FirstOrDefault(x => x.Id == id)?.Slug;
+        }
+
+        public void BindSubGroup(CourseGroupViewModel parent)
+        {
+            var sub = _context.CourseGroups
+                .Include(x => x.SubGroup)
+                .Where(x => x.SubGroupId == parent.Id)
+                .Select(x => new CourseGroupViewModel
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    IsRemove = x.IsRemove,
+                    CreationDate = x.CreationDate.ToFarsi(),
+                    SubGroupId = x.SubGroupId
+                }).AsNoTracking().ToList();
+
+            foreach (var item in sub)
+            {
+                BindSubGroup(item);
+                parent.Sub.Add(item);
+            }
         }
     }
 }

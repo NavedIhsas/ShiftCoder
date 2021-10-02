@@ -12,6 +12,7 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
     public class TeacherRepository : RepositoryBase<long, Teacher>, ITeacherRepository
     {
         private readonly AccountContext _context;
+
         public TeacherRepository(AccountContext dbContext, AccountContext context) : base(dbContext)
         {
             _context = context;
@@ -19,7 +20,7 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
 
         public EditTeacherViewModel GetTeacherDetails(long id)
         {
-            return _context.Teachers.Select(x => new EditTeacherViewModel()
+            return _context.Teachers.Select(x => new EditTeacherViewModel
             {
                 Bio = x.Bio,
                 Type = x.Type,
@@ -27,13 +28,13 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
                 Resumes = x.Resumes,
                 Id = x.Id,
                 AccountName = x.Account.FullName,
-                AccountId = x.AccountId,
+                AccountId = x.AccountId
             }).FirstOrDefault(x => x.Id == id);
         }
 
         public List<TeacherViewModel> GetAllTeachers()
         {
-            return _context.Teachers.Include(x => x.Account).Select(x => new TeacherViewModel()
+            return _context.Teachers.Include(x => x.Account).Select(x => new TeacherViewModel
             {
                 Bio = x.Bio.Substring(0, Math.Min(x.Bio.Length, 30)) + "...",
                 Skills = x.Skills,
@@ -46,7 +47,7 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
 
         public List<TeacherViewModel> SelectList()
         {
-            return _context.Teachers.Where(x => x.Type == ThisType.Teacher).Select(x => new TeacherViewModel()
+            return _context.Teachers.Where(x => x.Type == ThisType.Teacher).Select(x => new TeacherViewModel
             {
                 Id = x.Id,
                 AccountName = x.Account.FullName
@@ -55,13 +56,18 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
 
         public List<TeacherViewModel> SelectListForArticles()
         {
-            return _context.Teachers.Where(x => x.Type == ThisType.Blogger).Select(x => new TeacherViewModel()
+            return _context.Teachers.Where(x => x.Type == ThisType.Blogger).Select(x => new TeacherViewModel
             {
                 Id = x.Id,
                 AccountName = x.Account.FullName
             }).ToList();
         }
-        public Teacher GetTeacherBy(long id) => _context.Teachers.Find(id);
+
+        public Teacher GetTeacherBy(long id)
+        {
+            return _context.Teachers.Find(id);
+        }
+
         public Teacher GetBloggerBy(long id)
         {
             return _context.Teachers.Where(x => x.Type == ThisType.Blogger)
@@ -69,14 +75,16 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public List<Teacher> GetAllBlogger() => _context.Teachers.Include(x=>x.Account).Where(x => x.Type == ThisType.Blogger).ToList();
-        
+        public List<Teacher> GetAllBlogger()
+        {
+            return _context.Teachers.Include(x => x.Account).Where(x => x.Type == ThisType.Blogger).ToList();
+        }
+
         public void DeleteTeacher(long id)
         {
             var deleteTeacher = GetTeacherBy(id);
             _context.Teachers.Remove(_context.Teachers.Find(deleteTeacher.Id));
             _context.SaveChanges();
         }
-
     }
 }

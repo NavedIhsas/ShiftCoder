@@ -8,8 +8,8 @@ namespace CommentManagement.Application
 {
     public class SliderApplication : ISliderApplication
     {
-        private readonly ISliderRepository _repository;
         private readonly IFileUploader _fileUploader;
+        private readonly ISliderRepository _repository;
 
         public SliderApplication(ISliderRepository repository, IFileUploader fileUploader)
         {
@@ -22,7 +22,8 @@ namespace CommentManagement.Application
             var operation = new OperationResult();
 
             var fileName = _fileUploader.Uploader(command.Picture, "/Slider");
-            var create = new Slider(fileName, command.PictureAlt, command.PictureTitle, command.ButtonText, command.Title, command.ShortTitle,command.ButtonLink);
+            var create = new Slider(fileName, command.PictureAlt, command.PictureTitle, command.ButtonText,
+                command.Title, command.ShortTitle, command.ButtonLink);
             _repository.Create(create);
             _repository.SaveChanges();
             return operation.Succeeded();
@@ -44,7 +45,8 @@ namespace CommentManagement.Application
                     File.Delete(deletePath);
             }
 
-            getPhoto.Edit(fileName, command.PictureAlt, command.PictureTitle, command.ButtonText, command.Title, command.ShortTitle,command.ButtonLink);
+            getPhoto.Edit(fileName, command.PictureAlt, command.PictureTitle, command.ButtonText, command.Title,
+                command.ShortTitle, command.ButtonLink);
             _repository.Update(getPhoto);
             _repository.SaveChanges();
             return operation.Succeeded();

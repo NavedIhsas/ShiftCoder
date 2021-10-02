@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
 using _0_FrameWork.Domain.Infrastructure;
@@ -14,7 +12,9 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
     {
         private readonly DiscountContext _context;
         private readonly ShopContext _course;
-        public CustomerRepository(DiscountContext dbContext, DiscountContext context, ShopContext course) : base(dbContext)
+
+        public CustomerRepository(DiscountContext dbContext, DiscountContext context, ShopContext course) :
+            base(dbContext)
         {
             _context = context;
             _course = course;
@@ -44,19 +44,18 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
                 StartTime = x.StartTime,
                 EndTime = x.EndTime,
                 Id = x.Id,
-                Reason=x.Reason,
-                IsRemove = x.IsRemove,
-                
+                Reason = x.Reason,
+                IsRemove = x.IsRemove
             }).ToList();
 
             if (searchModel.CourseId > 0)
                 query = query.Where(x => x.CourseId == searchModel.CourseId).ToList();
 
             if (!string.IsNullOrWhiteSpace(searchModel.StartTime))
-                query = query.Where(x => x.StartTime<= searchModel.StartTime.ToGeorgianDateTime()).ToList();
+                query = query.Where(x => x.StartTime <= searchModel.StartTime.ToGeorgianDateTime()).ToList();
 
             if (!string.IsNullOrWhiteSpace(searchModel.EndTime))
-                query = query.Where(x => x.EndTime>= searchModel.EndTime.ToGeorgianDateTime()).ToList();
+                query = query.Where(x => x.EndTime >= searchModel.EndTime.ToGeorgianDateTime()).ToList();
 
             foreach (var item in query)
                 item.CourseName = course.FirstOrDefault(x => x.Id == item.CourseId)?.Name;
@@ -64,8 +63,6 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
 
             var orderly = query.OrderByDescending(x => x.Id).ToList();
             return orderly;
-
-
         }
 
         public int? CustomerDiscountRate(long courseId)
@@ -73,5 +70,4 @@ namespace DiscountManagementInfrastructure.EfCore.Repository
             return _context.CustomerDiscounts.FirstOrDefault(x => x.CourseId == courseId)?.DiscountRate;
         }
     }
-
 }

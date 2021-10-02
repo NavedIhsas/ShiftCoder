@@ -30,7 +30,6 @@ namespace WebHost
             using var stream = File.Create(filePath);
             file.CopyTo(stream);
             return $"{path}/{fileName}";
-
         }
     }
 

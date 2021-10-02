@@ -1,9 +1,6 @@
 ﻿@page "{id}"
-@using _0_Framework.Application
-@using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging
 @model WebHost.Areas.UserPanel.Pages.Order.OrdersModel
 @{
-
     ViewData["Title"] = "خرید دوره";
 }
 
@@ -16,117 +13,121 @@
                 </h1>
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a asp-page="Index">پنل کاربری کاربری</a></li>
-                        <li class="breadcrumb-item"><a asp-page="/Orders">فاکتور ها</a></li>
+                        <li class="breadcrumb-item">
+                            <a asp-page="Index">پنل کاربری کاربری</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a asp-page="/Orders">فاکتور ها</a>
+                        </li>
                     </ol>
                 </nav>
             </div>
         </header>
         <section id="body-container" class="container">
             <div class="row">
-                <partial name="Shared/_Left-bar-menu" />
+                <partial name="Shared/_Left-bar-menu"/>
                 <section id="content-container" class="col-12 col-lg-8 ">
                     <div class="col-12 container-table">
-                        <br />
+                        <br/>
                         <div class="container-info-aside price-course ">
                             <h1 id="text-price">فاکتور</h1>
                         </div>
                         <table class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <th scope="col">دوره</th>
-                                    <th scope="col">کد دوره</th>
-                                    <th scope="col">تخفیف دوره</th>
-                                    <th scope="col">قیمت</th>
-                                    @if (!Model.List.IsFinally)
-                                    {
-                                        <th scope="col">دستورات </th>
-                                    }
+                            <tr>
+                                <th scope="col">دوره</th>
+                                <th scope="col">کد دوره</th>
+                                <th scope="col">تخفیف دوره</th>
+                                <th scope="col">قیمت</th>
+                                @if (!Model.List.IsFinally)
+                                {
+                                    <th scope="col">دستورات </th>
+                                }
 
-                                </tr>
+                            </tr>
                             </thead>
                             <tbody>
 
-                                @foreach (var item in Model.List.OrderDetails)
-                                {
-                                    <tr>
-                                        <td>@item.CourseName</td>
-                                        <td>@item.CourseCode</td>
-                                        <td>مقدار تخفیف</td>
-                                        <td>@item.Price تومان</td>
-                                        @if (!Model.List.IsFinally)
-                                        {
-                                            <td><a href="" class="text-primary" disabled>حذف</a></td>
-                                        }
-                                    </tr>
-                                }
-
-                                @if (!Model.List.IsFinally)
-                                {
-                                    <tr>
-                                        <th class="text-left" colspan="3" scope="col">
-                                            اگر کد تخفیف دارید وارد کنید.
-                                        </th>
-                                        <td colspan="4">
-                                            <form asp-page="/Order/Orders" asp-page-handler="UseDiscount" asp-area="UserPanel" method="post">
-                                                <input type="hidden" name="orderId" value="@Model.List.Id" />
-                                                <input type="text" name="code" class="form-control" required />
-                                                <input type="submit" class="btn btn-primary mt-1 " style="float: left" value="اعمال" />
-                                            </form>
-
-                                            @{
-                                                var discount = ViewData["discountType"];
-                                            }
-                                            @if (discount != null)
-                                            {
-                                                @switch (discount)
-                                                {
-                                                    case "NotFount":
-                                                        <div class=" text-danger">
-                                                            <span>کد وارد شده معتبر نمیباشد</span>
-                                                        </div>
-                                                        break;
-
-                                                    case "Success":
-                                                        <div class=" text-success">
-                                                            <span>تخیفیف با موفقیت اعمال شد</span>
-                                                        </div>
-                                                        break;
-
-                                                    case "ExpireDate":
-                                                        <div class=" text-warning">
-                                                            <span>تاریخ این کد معتبر نمیباشد</span>
-                                                        </div>
-                                                        break;
-
-                                                    case "Finished":
-                                                        <div class=" text-warning">
-                                                            <span>تعداد این کد تخفیف به اتمام رسیده است</span>
-                                                        </div>
-                                                        break;
-
-                                                    case "UserUsed":
-                                                        <div class=" text-info">
-                                                            <span>شما یکبار از این کد تخفیف استفاده کرده اید</span>
-                                                        </div>
-                                                        break;
-                                                }
-                                            }
+                            @foreach (var item in Model.List.OrderDetails)
+                            {
+                                <tr>
+                                    <td>@item.CourseName</td>
+                                    <td>@item.CourseCode</td>
+                                    <td>مقدار تخفیف</td>
+                                    <td>@item.Price تومان</td>
+                                    @if (!Model.List.IsFinally)
+                                    {
+                                        <td>
+                                            <a href="" class="text-primary" disabled>حذف</a>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="4" scope="col">مبلغ قابل پرداخت</th>
-                                        <td>@Model.List.OrderSum تومان</td>
-                                    </tr>
+                                    }
+                                </tr>
+                            }
 
+                            @if (!Model.List.IsFinally)
+                            {
+                                <tr>
+                                    <th class="text-left" colspan="3" scope="col">
+                                        اگر کد تخفیف دارید وارد کنید.
+                                    </th>
+                                    <td colspan="4">
+                                        <form asp-page="/Order/Orders" asp-page-handler="UseDiscount" asp-area="UserPanel" method="post">
+                                            <input type="hidden" name="orderId" value="@Model.List.Id"/>
+                                            <input type="text" name="code" class="form-control" required/>
+                                            <input type="submit" class="btn btn-primary mt-1 " style="float: left" value="اعمال"/>
+                                        </form>
 
-                                }
+                                        @{
+                                            var discount = ViewData["discountType"];
+                                        }
+                                        @if (discount != null)
+                                        {
+                                            @switch (discount)
+                                            {
+                                                case "NotFount":
+                                                    <div class=" text-danger">
+                                                        <span>کد وارد شده معتبر نمیباشد</span>
+                                                    </div>
+                                                    break;
+
+                                                case "Success":
+                                                    <div class=" text-success">
+                                                        <span>تخیفیف با موفقیت اعمال شد</span>
+                                                    </div>
+                                                    break;
+
+                                                case "ExpireDate":
+                                                    <div class=" text-warning">
+                                                        <span>تاریخ این کد معتبر نمیباشد</span>
+                                                    </div>
+                                                    break;
+
+                                                case "Finished":
+                                                    <div class=" text-warning">
+                                                        <span>تعداد این کد تخفیف به اتمام رسیده است</span>
+                                                    </div>
+                                                    break;
+
+                                                case "UserUsed":
+                                                    <div class=" text-info">
+                                                        <span>شما یکبار از این کد تخفیف استفاده کرده اید</span>
+                                                    </div>
+                                                    break;
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="4" scope="col">مبلغ قابل پرداخت</th>
+                                    <td>@Model.List.OrderSum تومان</td>
+                                </tr>
+                            }
                             </tbody>
                         </table>
                         @if (!Model.List.IsFinally)
                         {
                             <a asp-page="Orders" asp-page-handler="FinallyOrder" class="btn btn-success text-center">تایید فاکتور و پرداخت</a>
-                            <hr />
+                            <hr/>
                         }
 
                     </div>
@@ -138,8 +139,3 @@
         </section>
     </div>
 </main>
-
-
-
-
-

@@ -18,19 +18,18 @@
             @if (!_authHelper.IsAuthenticated())
             {
                 <h3 class="text-white text-uppercase text-left account-link">
-                    <a asp-page="Login"> ورود </a> <a>/</a> 
-                    <a asp-page="Account" asp-page-handler="Register"> عضویت </a>
+                    <a class="text-white text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a>/</a> 
+                    <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
                 </h3>
             }
             else
             {
                 <h3 class="text-white  text-uppercase text-left account-link">
-                    <a class="fas fa-user-tie" asp-page="UserPanel"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a> 
-                    <a>/</a> <a  asp-page="Account" asp-page-handler="Logout"> خروج </a>
+                    <a class="fas fa-user-tie text-white text-uppercase" style="font-size:15px" asp-page="Login"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a> 
+                    <a class="text-white text-uppercase" style="font-size:15px">/</a> <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
 
                 </h3>
             }
-
             <h3 class="display-4 text-white text-uppercase">مقالات</h3>
             <div class="d-inline-flex text-white">
                 <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>

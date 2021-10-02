@@ -4,7 +4,7 @@ using ShopManagement.Domain.CourseEpisodeAgg;
 
 namespace ShopManagement.Infrastructure.EfCore.Mapping
 {
-   public class CourseEpisodeMapping:IEntityTypeConfiguration<CourseEpisode>
+    public class CourseEpisodeMapping : IEntityTypeConfiguration<CourseEpisode>
     {
         public void Configure(EntityTypeBuilder<CourseEpisode> builder)
         {

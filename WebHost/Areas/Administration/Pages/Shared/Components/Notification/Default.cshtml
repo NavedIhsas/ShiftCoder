@@ -1,5 +1,4 @@
-﻿
-@using _0_FrameWork.Application
+﻿@using _0_FrameWork.Application
 @using CommentManagement.Domain.CourseCommentAgg
 @using Type = _0_FrameWork.Application.ThisType
 @model IEnumerable<CommentManagement.Domain.Notification.Agg.Notification>
@@ -9,10 +8,10 @@
 <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-     
+
     </a>
     <ul class="dropdown-menu dropdown-alerts">
-        <br />
+        <br/>
         <p class=" alert-info text-center">آخرین گزارشات امروز</p>
         @foreach (var item in Model)
         {
@@ -37,7 +36,6 @@
 
             @if (item.Type == Type.Order)
             {
-
                 <li>
                     <a asp-page="/Notifications/Index" asp-area="Administration">
                         <div>
@@ -62,10 +60,9 @@
                     </a>
                 </li>
                 <li class="divider"></li>
-
             }
         }
-       
+
         @if (!Model.Any())
         {
             <li>
@@ -77,7 +74,7 @@
             </li>
             <li class="divider"></li>
         }
-        
+
         <li>
             <a class="text-center" asp-page="/Notifications/Index" asp-area="Administration">
                 <strong>همه اعلان ها</strong>

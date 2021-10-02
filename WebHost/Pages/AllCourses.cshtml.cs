@@ -9,22 +9,22 @@ namespace WebHost.Pages
     {
         private readonly ICourseQuery _course;
         private readonly ICourseGroupQuery _group;
+        public CoursePaginationViewModel Course;
+        public List<LatestCourseGroupViewModel> CourseGroups;
+        public List<LatestCourseViewModel> LatestCourse;
+        public CourseQuerySearchModel SearchModel;
 
         public GetAllCoursesModel(ICourseQuery course, ICourseGroupQuery group)
         {
             _course = course;
             _group = group;
         }
-        public CoursePaginationViewModel Course;
-        public List<LatestCourseGroupViewModel> CourseGroups;
-        public CourseQuerySearchModel SearchModel;
-        public List<LatestCourseViewModel> LatestCourse;
-        public void OnGet(CourseQuerySearchModel searchModel,  int pageId = 1)
+
+        public void OnGet(CourseQuerySearchModel searchModel, int pageId = 1)
         {
             Course = _course.GetAllCourse(searchModel, pageId);
             CourseGroups = _group.LatestCourseGroup();
             LatestCourse = _course.LatestCourses();
-
         }
     }
 }

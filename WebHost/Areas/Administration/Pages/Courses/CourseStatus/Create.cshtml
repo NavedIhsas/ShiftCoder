@@ -1,11 +1,10 @@
-﻿
-@model Shop.Management.Application.Contract.CourseStatus.CourseStatusViewModel
+﻿@model Shop.Management.Application.Contract.CourseStatus.CourseStatusViewModel
 @{
     ViewData["Title"] = "ایجاد وضعیت جدید برای دوره ها";
 }
 
 <div class="container">
-    <partial name="Shared/_Create_View_Header" />
+    <partial name="Shared/_Create_View_Header"/>
 
     <form asp-page="./Index" asp-page-handler="Create"
           method="post"
@@ -17,7 +16,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Title" class="control-label">عنوان <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="Title" >
+                        <input type="text" class="form-control" asp-for="Title">
                         <span class="text-danger" asp-validation-for="Title"></span>
                     </div>
                 </div>
@@ -29,14 +28,3 @@
         </div>
     </form>
 </div>
-
-
-
-
-
-
-
-
-
-
-

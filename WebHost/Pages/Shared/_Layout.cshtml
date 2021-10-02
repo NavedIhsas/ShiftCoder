@@ -3,15 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-   @if (ViewData["Title"] != null)
-   {
-       <title>@ViewData["Title"]-لرن هاب</title>
-   }
-   else
-   {
-       <title>لرن هاب</title>
-   }
-
+    @if (ViewData["Title"] != null)
+    {
+        <title>@ViewData["Title"]-لرن هاب</title>
+    }
+    else
+    {
+        <title>لرن هاب</title>
+    }
 
 
     <partial name="PartialViews/_Styles"/>
@@ -20,18 +19,18 @@
 
 <body dir="rtl">
 
-    <partial name="PartialViews/_Header"/>
+<partial name="PartialViews/_Header"/>
 
-    @await Component.InvokeAsync("Menu")
+@await Component.InvokeAsync("Menu")
 
-    @RenderBody()
+@RenderBody()
 
-<partial name="PartialViews/_Footer" />
+<partial name="PartialViews/_Footer"/>
 
-    <partial name="PartialViews/_Scripts"/>
+<partial name="PartialViews/_Scripts"/>
 
 
-@await RenderSectionAsync("Scripts", required:false)
+@await RenderSectionAsync("Scripts", false)
 
 </body>
 

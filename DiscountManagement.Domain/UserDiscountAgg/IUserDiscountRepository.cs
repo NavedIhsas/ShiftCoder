@@ -2,7 +2,7 @@
 
 namespace DiscountManagement.Domain.UserDiscountAgg
 {
-    public interface IUserDiscountRepository:IRepository<long, UserDiscount>
+    public interface IUserDiscountRepository : IRepository<long, UserDiscount>
     {
         UserDiscount GetUserDiscountBy(long accountId);
     }

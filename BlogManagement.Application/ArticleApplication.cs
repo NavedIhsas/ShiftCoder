@@ -11,12 +11,13 @@ namespace BlogManagement.Application
 {
     public class ArticleApplication : IArticleApplication
     {
+        private readonly IArticleCategoryRepository _articleCategory;
+        private readonly IFileUploader _fileUploader;
 
         private readonly IArticleRepository _repository;
-        private readonly IFileUploader _fileUploader;
-        private readonly IArticleCategoryRepository _articleCategory;
 
-        public ArticleApplication(IArticleRepository repository, IFileUploader fileUploader, IArticleCategoryRepository articleCategory)
+        public ArticleApplication(IArticleRepository repository, IFileUploader fileUploader,
+            IArticleCategoryRepository articleCategory)
         {
             _repository = repository;
             _fileUploader = fileUploader;
@@ -28,7 +29,7 @@ namespace BlogManagement.Application
             var operation = new OperationResult();
 
             DateTime? publish;
-            if (command.IsPublish == true)
+            if (command.IsPublish)
                 publish = DateTime.Now;
             else
                 publish = null;
@@ -40,7 +41,8 @@ namespace BlogManagement.Application
             var article = new Article(command.Title, command.Description, fileName, command.PictureTitle,
                 command.PictureAtl, command.Slug.Slugify()
                 , command.Keywords, command.CanonicalAddress, publish, command.CategoryId,
-                command.MetaDescription, command.ShortDescription, command.ShowOrder,command.IsPublish,command.BloggerId);
+                command.MetaDescription, command.ShortDescription, command.ShowOrder, command.IsPublish,
+                command.BloggerId);
 
             _repository.Create(article);
             _repository.SaveChanges();
@@ -51,27 +53,26 @@ namespace BlogManagement.Application
         {
             var operation = new OperationResult();
 
-            
-            var isPublish=command.IsPublish;
+
+            var isPublish = command.IsPublish;
             var publishStatus = _repository.GetPublishStatus(command.Id);
             var oldPublishDate = _repository.GetPublishDate(command.Id);
 
             var publish = oldPublishDate;
 
             if (publishStatus == false)
-            {
-                if (command.IsPublish == true)
+                if (command.IsPublish)
                 {
                     if (oldPublishDate == null)
+                    {
                         publish = DateTime.Now;
+                    }
                     else
                     {
                         isPublish = command.IsPublish;
                         publish = oldPublishDate;
                     }
                 }
-
-            }
 
             var article = _repository.GetById(command.Id);
 
@@ -91,7 +92,7 @@ namespace BlogManagement.Application
             article.Edit(command.Title, command.Description, fileName, command.PictureTitle,
                 command.PictureAtl, command.Slug.Slugify()
                 , command.Keywords, command.CanonicalAddress, publish, command.CategoryId,
-                command.MetaDescription, command.ShortDescription, command.ShowOrder,isPublish,command.BloggerId);
+                command.MetaDescription, command.ShortDescription, command.ShowOrder, isPublish, command.BloggerId);
 
             _repository.Update(article);
             _repository.SaveChanges();

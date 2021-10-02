@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ShopManagement.Domain.CourseGroupAgg;
 
 namespace ShopManagement.Infrastructure.EfCore.Mapping
 {
-  public  class CourseGroupMapping:IEntityTypeConfiguration<Domain.CourseGroupAgg.CourseGroup>
+    public class CourseGroupMapping : IEntityTypeConfiguration<CourseGroup>
     {
-        public void Configure(EntityTypeBuilder<Domain.CourseGroupAgg.CourseGroup> builder)
+        public void Configure(EntityTypeBuilder<CourseGroup> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Title).HasMaxLength(200).IsRequired();

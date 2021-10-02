@@ -1,16 +1,19 @@
-﻿using MD.PersianDateTime.Core;
-using System;
+﻿using System;
 using System.Globalization;
+using MD.PersianDateTime.Core;
 
 namespace _0_Framework.Application
 {
     public static class Tools
     {
         public static string[] MonthNames =
-            {"فروردین", "اردبیهشت", "خرداد", "تیر" , "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"};
+            { "فروردین", "اردبیهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند" };
 
-        public static string[] DayNames = {"شنبه", "یکشنبه", "دو شنبه", "سه شنبه", "چهار شنبه", "پنج شنبه", "جمعه"};
-        public static string[] DayNamesG = {"یکشنبه", "دو شنبه", "سه شنبه", "چهار شنبه", "پنج شنبه", "جمعه", "شنبه"};
+        public static string[] DayNames = { "شنبه", "یکشنبه", "دو شنبه", "سه شنبه", "چهار شنبه", "پنج شنبه", "جمعه" };
+        public static string[] DayNamesG = { "یکشنبه", "دو شنبه", "سه شنبه", "چهار شنبه", "پنج شنبه", "جمعه", "شنبه" };
+
+        private static readonly string[] Pn = { "۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹" };
+        private static readonly string[] En = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 
         public static string ToFarsi(this DateTime? date)
@@ -26,19 +29,20 @@ namespace _0_Framework.Application
 
             return "";
         }
-        
+
         public static string ChangeTimeToFarsi(DateTime date, string format)
         {
             var time = new PersianDateTime(date);
             return time.ToString(format);
         }
+
         public static string ToFarsi(this DateTime date)
         {
             if (date == new DateTime()) return "";
             var pc = new PersianCalendar();
             return $"{pc.GetYear(date)}/{pc.GetMonth(date):00}/{pc.GetDayOfMonth(date):00}";
         }
-        
+
         public static string ToDiscountFormat(this DateTime date)
         {
             if (date == new DateTime()) return "";
@@ -56,9 +60,6 @@ namespace _0_Framework.Application
             return
                 $"{pc.GetYear(date)}/{pc.GetMonth(date):00}/{pc.GetDayOfMonth(date):00} {date.Hour:00}:{date.Minute:00}:{date.Second:00}";
         }
-
-        private static readonly string[] Pn = {"۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"};
-        private static readonly string[] En = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
         public static string ToEnglishNumber(this string strNum)
         {

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using _0_FrameWork.Application;
 using Shop.Management.Application.Contract.CourseLevel;
-using Shop.Management.Application.Contract.CourseStatus;
 using ShopManagement.Domain.CourseLevelAgg;
-using ShopManagement.Domain.CourseStatusAgg;
 
 namespace ShopManagement.Application
 {
-  public class CourseLevelApplication:ICourseLevelApplication
+    public class CourseLevelApplication : ICourseLevelApplication
     {
         private readonly ICourseLevelRepository _repository;
 
@@ -31,14 +25,13 @@ namespace ShopManagement.Application
             _repository.Create(courseLevel);
             _repository.SaveChanges();
             return operation.Succeeded();
-
         }
 
-       
+
         public OperationResult Edit(EditCourseLevelViewModel command)
         {
             var operation = new OperationResult();
-            if (_repository.IsExist(x => x.Title == command.Title && x.Id!=command.Id))
+            if (_repository.IsExist(x => x.Title == command.Title && x.Id != command.Id))
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
             var courseLevel = _repository.GetById(command.Id);
@@ -48,7 +41,6 @@ namespace ShopManagement.Application
             _repository.Update(courseLevel);
             _repository.SaveChanges();
             return operation.Succeeded();
-
         }
 
 

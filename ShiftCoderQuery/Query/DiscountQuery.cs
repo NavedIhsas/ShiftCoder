@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Linq;
-using AccountManagement.Application.Contract.Account;
-using AccountManagement.Domain.Account.Agg;
-using DiscountManagement.Domain.DiscountCode;
 using DiscountManagement.Domain.UserDiscountAgg;
 using DiscountManagementInfrastructure.EfCore;
-using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Discount;
 using ShiftCoderQuery.Contract.Discount.Enum;
 using ShopManagement.Domain.OrderAgg;
-using ShopManagement.Infrastructure.EfCore;
 
 namespace ShiftCoderQuery.Query
 {
@@ -67,6 +62,5 @@ namespace ShiftCoderQuery.Query
                 x.AccountId == accountId && x.DiscountCodeId == discountCodeId);
             return user;
         }
-
     }
 }

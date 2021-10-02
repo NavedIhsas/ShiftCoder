@@ -1,9 +1,11 @@
-﻿@model System.Collections.Generic.List<ShiftCoderQuery.Contract.CourseGroup.LatestCourseGroupViewModel>
+﻿@model List<ShiftCoderQuery.Contract.CourseGroup.LatestCourseGroupViewModel>
 
 <div class="d-flex flex-column justify-content-start">
-  @foreach (var group in Model)
-  {
-      <a class="text-white mb-2" asp-page="Courses" asp-route-id="@group.Slug"><i class="fa fa-angle-right mr-2"></i>@group.Title</a>
-  }
+    @foreach (var group in Model)
+    {
+        <a class="text-white mb-2" asp-page="Courses" asp-route-id="@group.Slug">
+            <i class="fa fa-angle-right mr-2"></i>@group.Title
+        </a>
+    }
 
 </div>

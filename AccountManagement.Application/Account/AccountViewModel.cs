@@ -1,6 +1,6 @@
 ﻿namespace AccountManagement.Application.Contract.Account
 {
-   public class AccountViewModel
+    public class AccountViewModel
     {
         public long Id { get; set; }
         public string FullName { get; set; }
@@ -10,6 +10,5 @@
         public string CreationDate { get; set; }
         public string RoleName { get; set; }
         public long RoleId { get; set; }
-
     }
 }

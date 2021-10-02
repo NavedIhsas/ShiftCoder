@@ -13,13 +13,14 @@ namespace WebHost.Areas.UserPanel.Pages
     [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly ICommentQuery _comment;
         private readonly IAccountRepository _account;
+        private readonly ICommentQuery _comment;
         private readonly ICourseQuery _course;
+        public AccountManagement.Domain.Account.Agg.Account AccountList;
 
         public OrderViewModel List;
-        public AccountManagement.Domain.Account.Agg.Account AccountList;
         public List<UserCourseViewModel> UserCourse;
+
         public IndexModel(ICommentQuery comment, IAccountRepository account, ICourseQuery course)
         {
             _comment = comment;

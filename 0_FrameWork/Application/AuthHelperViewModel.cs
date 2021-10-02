@@ -4,11 +4,6 @@ namespace _0_FrameWork.Application
 {
     public class AuthHelperViewModel
     {
-        public long AccountId { get; set; }
-        public long RoleId { get; set; }
-        public string Fullname { get; set; }
-        public string Email { get; set; }
-        public List<int> Permissions { get; set; }
         public AuthHelperViewModel(long accountId, long roleId, string fullname, string email, List<int> permissions)
         {
             AccountId = accountId;
@@ -17,5 +12,11 @@ namespace _0_FrameWork.Application
             Email = email;
             Permissions = permissions;
         }
+
+        public long AccountId { get; set; }
+        public long RoleId { get; set; }
+        public string Fullname { get; set; }
+        public string Email { get; set; }
+        public List<int> Permissions { get; set; }
     }
 }

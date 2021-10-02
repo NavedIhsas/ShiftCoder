@@ -126,10 +126,10 @@
         public const int EditRoles = 822;
 
         //Comments
-        public const int ListComments =900;
-        public const int ApproveComments =901;
-        public const int CancelComments =902;
-        public const int SearchComments =903;
+        public const int ListComments = 900;
+        public const int ApproveComments = 901;
+        public const int CancelComments = 902;
+        public const int SearchComments = 903;
 
 
         //Homephoto
@@ -140,7 +140,5 @@
         public const int SystemAdministratorNotification = 1000;
         public const int SystemAdministratorOrders = 1001;
         public const int SystemAdministratorActivity = 1002;
-      
     }
-
 }
