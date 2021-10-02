@@ -1,31 +1,32 @@
 ﻿@page
 @using _0_Framework.Application
 @using _0_FrameWork.Application
+@using Microsoft.EntityFrameworkCore
 @model WebHost.Pages.GetAllCoursesModel
 @inject IAuthHelper _authHelper
 @{
-    ViewData["Title"] = "همه کورس ها";
+    ViewData["Title"] = "دوره های لرن هاب";
 }
 <link href="~/css/costum.css" rel="stylesheet" />
 <!-- Header Start -->
 <div class="container-fluid page-header" style="margin-bottom: 90px;">
     <div class="container">
         <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
-         @if (!_authHelper.IsAuthenticated())
-         {
-             <h3 class="text-white text-uppercase text-left account-link">
-                 <a class="text-white text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a>/</a> 
-                 <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
-             </h3>
-         }
-         else
-         {
-        <h3 class="text-white  text-uppercase text-left account-link">
-            <a class="fas fa-user-tie text-white text-uppercase" style="font-size:15px" asp-page="Login"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a> 
-            <a class="text-white text-uppercase" style="font-size:15px">/</a> <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
+            @if (!_authHelper.IsAuthenticated())
+            {
+                <h3 class="text-primary text-uppercase text-left account-link" style="margin-bottom: 8rem !important">
+                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a style="font-size:13px">/</a>
+                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
+                </h3>
+            }
+            else
+            {
+                <h3 class="text-primary  text-left account-link" style="margin-bottom: 8rem !important">
+                    <a class=" text-primary" style="font-size:15px" asp-page="Login"><i class="fas fa-user-tie"></i> @_authHelper.CurrentAccountFullName()، خوش آمدی </a>
+                    <a class="text-primary text-uppercase" style="font-size:15px">/</a> <a class="text-primary text-uppercase" style="font-size:13px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
 
-        </h3>
-         }
+                </h3>
+            }
             <h3 class="display-4 text-white text-uppercase">همه دوره ها</h3>
             <div class="d-inline-flex text-white">
                 <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>
@@ -40,9 +41,71 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="row">
+
+            <div class="col-lg-4 mt-5 mt-lg-0">
+                
+                <div class="text-center mb-5 d-lg-none d-sm-block d-md-block">
+                    <h5 class="text-primary text-uppercase mb-3 text-center">دوره ها</h5>
+                    <h1>دوره های لرن هاب</h1>
+                </div>
+                <!-- Search Form -->
+                <div class="mb-5">
+                    <form form method="get" id="submitSearch">
+                        <div class="input-group">
+                            <input type="text" name="Search" class="form-control form-control-lg" placeholder="جستجو...">
+                            <div class="input-group-append">
+                                <button type="submit" class="input-group-text bg-transparent text-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Category List -->
+                <div class="mb-5 d-none d-lg-block">
+                    <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var category in Model.CourseGroups)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a asp-page="Courses" asp-route-id="@category.Slug" class="text-decoration-none h6 m-0">@category.Title</a>
+                                <span class="badge badge-primary badge-pill">@category.CourseCount</span>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+
+                <!-- Recent Post -->
+                <div class="mb-5 d-none d-lg-block">
+                    <h3 class="text-uppercase mb-4">آخرین دوره ها</h3>
+                    @foreach (var recentPost in Model.LatestCourse)
+                    {
+                        <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleCourse" asp-route-id="@recentPost.Slug">
+                            <img class="img-fluid rounded photo-size" src="~/FileUploader/@recentPost.Picture" title="@recentPost.PictureTitle" alt="@recentPost.PictureAlt">
+                            <div class="pl-3">
+                                <h6 class="m-1">@recentPost.ShortDescription</h6>
+                                <small>@Tools.ChangeTimeToFarsi(recentPost.CreationDate, "M - MMMM /yyyy")</small>
+                            </div>
+                        </a>
+                    }
+                </div>
+
+                <!-- Tag Cloud -->
+                <div class="mb-5 d-none d-lg-block">
+                    <h3 class="text-uppercase mb-4">کلمات کلیدی</h3>
+                    <div class="d-flex flex-wrap m-n1">
+                        @foreach (var item in Model.Course.Courses.SelectMany(tag => tag.Keywords).Take(8))
+                        {
+                            <a asp-page="AllCourses" asp-route-search="@item" class="btn btn-outline-primary m-1">@item</a>
+                        }
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-8">
                 <div class="row pb-3">
-                    <div class="text-center mb-5">
+                    <div class="text-center mb-5 d-none d-lg-block">
                         <h5 class="text-primary text-uppercase mb-3">دوره ها</h5>
                         <h1>همه دوره های لرن هاب</h1>
                     </div>
@@ -58,7 +121,7 @@
                                             <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>@course.UserCourse.Count دانشجو</small>
                                             <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>@course.TotalTime</small>
                                         </div>
-                                        <a class="h5"asp-page="SingleCourse" asp-route-id="@course.Slug">@course.Name</a>
+                                        <a class="h5" asp-page="SingleCourse" asp-route-id="@course.Slug">@course.Name</a>
                                         <div class="border-top mt-4 pt-4">
                                             <div class="d-flex justify-content-between">
                                                 <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
@@ -83,19 +146,19 @@
                             <div class="col-12">
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination pagination-lg justify-content-center mb-0">
-                                        <li class="page-item @(Model.Course.CurrentPage<2?"disabled":"")">
-                                            <a class="page-link" href="AllCourses?PageId=@(Model.Course.CurrentPage-1)" aria-label="Previous">
+                                        <li class="page-item @(Model.Course.CurrentPage < 2 ? "disabled" : "")">
+                                            <a class="page-link" href="AllCourses?PageId=@(Model.Course.CurrentPage - 1)" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                                 <span class="sr-only">قبلی</span>
                                             </a>
                                         </li>
                                         @for (int i = 1; i <= Model.Course.PageCount; i++)
                                         {
-                                            <li class="page-item @(i==Model.Course.CurrentPage?"active":"")"><a class="page-link" href="AllCourses?PageId=@i">@i</a></li>
+                                            <li class="page-item @(i == Model.Course.CurrentPage ? "active" : "")"><a class="page-link" href="AllCourses?PageId=@i">@i</a></li>
                                         }
 
-                                        <li class="page-item @(Model.Course.CurrentPage>=Model.Course.PageCount?"disabled":"")">
-                                            <a class="page-link" href="AllCourses?PageId=@(Model.Course.CurrentPage+1)" aria-label="Next">
+                                        <li class="page-item @(Model.Course.CurrentPage >= Model.Course.PageCount ? "disabled" : "")">
+                                            <a class="page-link" href="AllCourses?PageId=@(Model.Course.CurrentPage + 1)" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                                 <span class="sr-only">بعدی</span>
                                             </a>
@@ -107,24 +170,10 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-lg-4 mt-5 mt-lg-0">
-                <!-- Search Form -->
-                <div class="mb-5">
-                    <form form method="get" id="submitSearch">
-                        <div class="input-group">
-                            <input type="text" name="Search" class="form-control form-control-lg" placeholder="جستجو...">
-                            <div class="input-group-append">
-                                <span class="input-group-text bg-transparent text-primary">
-                                    <i class="fa fa-search"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
+              
                 <!-- Category List -->
-                <div class="mb-5">
+                <div class="mb-5 d-lg-none d-md-block d-sm-block">
                     <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
                     <ul class="list-group list-group-flush">
                         @foreach (var category in Model.CourseGroups)
@@ -139,7 +188,7 @@
                 </div>
 
                 <!-- Recent Post -->
-                <div class="mb-5">
+                <div class="mb-5 d-lg-none d-sm-block d-md-block">
                     <h3 class="text-uppercase mb-4">آخرین دوره ها</h3>
                     @foreach (var recentPost in Model.LatestCourse)
                     {
@@ -154,7 +203,7 @@
                 </div>
 
                 <!-- Tag Cloud -->
-                <div class="mb-5">
+                <div class="mb-5 d-sm-block d-md-block d-lg-none ">
                     <h3 class="text-uppercase mb-4">کلمات کلیدی</h3>
                     <div class="d-flex flex-wrap m-n1">
                         @foreach (var item in Model.Course.Courses.SelectMany(tag => tag.Keywords).Take(8))

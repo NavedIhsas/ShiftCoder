@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
+	
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
+	
   <ItemGroup>
-    <None Remove="Pages\Shared\Components\Group\Default.cshtml~RF1552970c.TMP" />
-    <None Remove="Pages\_ViewImports.cshtml~RF147c9eae.TMP" />
+    <None Remove="Pages\Shared\PartialViews\_SocialSharing.cshtml~RF82eb0b9.TMP" />
   </ItemGroup>
-
-  <ItemGroup>
+	
+	
+	<ItemGroup>
 	  <PackageReference Include="MD.PersianDateTime.Core" Version="2.3.5" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">

@@ -6,6 +6,6 @@
 .bg-aliceblue { background-color: aliceblue !important; }
 
 .account-link a:hover {
-    color: #FF6600 !important;
+    color: white !important;
     text-decoration: none;
 }

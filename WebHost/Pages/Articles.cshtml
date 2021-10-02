@@ -17,16 +17,16 @@
         <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
             @if (!_authHelper.IsAuthenticated())
             {
-                <h3 class="text-white text-uppercase text-left account-link">
-                    <a class="text-white text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a>/</a> 
-                    <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
+                <h3 class="text-primary text-uppercase text-left account-link" style="margin-bottom: 8rem !important">
+                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a style="font-size:13px">/</a>
+                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
                 </h3>
             }
             else
             {
-                <h3 class="text-white  text-uppercase text-left account-link">
-                    <a class="fas fa-user-tie text-white text-uppercase" style="font-size:15px" asp-page="Login"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a> 
-                    <a class="text-white text-uppercase" style="font-size:15px">/</a> <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
+                <h3 class="text-primary  text-left account-link" style="margin-bottom: 8rem !important">
+                    <a class=" text-primary" style="font-size:15px" asp-page="Login"><i class="fas fa-user-tie"></i> @_authHelper.CurrentAccountFullName()، خوش آمدی </a>
+                    <a class="text-primary text-uppercase" style="font-size:15px">/</a> <a class="text-primary text-uppercase" style="font-size:13px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
 
                 </h3>
             }
@@ -34,7 +34,7 @@
             <div class="d-inline-flex text-white">
                 <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>
                 <i class="fa fa-angle-double-left pt-1 px-3"></i>
-                <p class="m-0 text-uppercase">مقاله</p>
+                <p class="m-0 text-uppercase">مقاله ها</p>
             </div>
         </div>
     </div>
@@ -44,54 +44,11 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="row">
-            <div class="col-lg-8">
-                <div class="row pb-3">
-                    @foreach (var article in Model.List.Articles)
-                    {
-                        <div class="col-lg-6 mb-4">
-                            <div class="blog-item position-relative overflow-hidden rounded mb-2">
-                                <img class="img-fluid" src="~/FileUploader/@article.Picture" title="@article.PictureTitle" alt="@article.PictureAtl">
-                                <a class="blog-overlay text-decoration-none" asp-page="SingleArticle" asp-route-id="@article.Slug">
-                                    <h5 class="text-white mb-3">@article.Title</h5>
-                                    <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate,"M-MMMM / yyyy")</p>
-                                </a>
-                            </div>
-                        </div>
-                    }
-
-                   @if (Model.List.PageCount > 1)
-                   {
-                       <div class="col-12">
-                           <nav aria-label="Page navigation">
-                               <ul class="pagination pagination-lg justify-content-center mb-0">
-                                   <li class="page-item @(Model.List.CurrentPage<2?"disabled":"")">
-                                       <a class="page-link" href="Articles?PageId=@(Model.List.CurrentPage-1)" aria-label="Previous">
-                                           <span aria-hidden="true">&laquo;</span>
-                                           <span class="sr-only">قبلی</span>
-                                       </a>
-                                   </li>
-                                   @for (int i = 1; i <= Model.List.PageCount; i++)
-                                   {
-                                       <li class="page-item @(i==Model.List.CurrentPage?"active":"")"><a class="page-link" href="Articles?PageId=@i">@i</a></li>
-                                   }
-                              
-                                   <li class="page-item @(Model.List.CurrentPage>=Model.List.PageCount?"disabled":"")">
-                                       <a class="page-link" href="Articles?PageId=@(Model.List.CurrentPage+1)" aria-label="Next">
-                                           <span aria-hidden="true">&raquo;</span>
-                                           <span class="sr-only">بعدی</span>
-                                       </a>
-                                   </li>
-                               </ul>
-                           </nav>
-                       </div>
-                   }
-                </div>
-            </div>
-
+            
             <div class="col-lg-4 mt-5 mt-lg-0">
                 <!-- Search Form -->
                 <div class="mb-5">
-                    <form method="get" >
+                    <form method="get">
                         <div class="input-group">
                             <input type="text" name="title" class="form-control form-control-lg" placeholder="جستجو...">
                             <div class="input-group-append">
@@ -104,8 +61,8 @@
                 </div>
 
                 <!-- Category List -->
-                <div class="mb-5">
-                    <h3 class="text-uppercase mb-4" >دسته بندی ها</h3>
+                <div class="mb-5 d-none d-lg-block">
+                    <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
                     <ul class="list-group list-group-flush">
                         @foreach (var category in Model.Category)
                         {
@@ -119,8 +76,8 @@
                 </div>
 
                 <!-- Recent Post -->
-                <div class="mb-5">
-                    <h3 class="text-uppercase mb-4" >آخرین پست ها</h3>
+                <div class="mb-5 d-none d-lg-block">
+                    <h3 class="text-uppercase mb-4">آخرین پست ها</h3>
                     @foreach (var item in _article.LatestArticle())
                     {
                         <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@item.Slug">
@@ -134,7 +91,95 @@
                 </div>
 
                 <!-- Tag Cloud -->
-                <div class="mb-5">
+                <div class="mb-5 d-none d-lg-block">
+                    <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">برچسپ ها</h3>
+                    <div class="d-flex flex-wrap m-n1">
+                        @foreach (var keywords in Model.List.Articles.SelectMany(articles => articles.KeyWords))
+                        {
+                            <a asp-page="Articles" asp-route-title="@keywords" class="btn btn-outline-primary m-1">@keywords</a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="row pb-3">
+                    @foreach (var article in Model.List.Articles)
+                    {
+                        <div class="col-lg-6 mb-4">
+                            <div class="blog-item position-relative overflow-hidden rounded mb-2">
+                                <img class="img-fluid" src="~/FileUploader/@article.Picture" title="@article.PictureTitle" alt="@article.PictureAtl">
+                                <a class="blog-overlay text-decoration-none" asp-page="SingleArticle" asp-route-id="@article.Slug">
+                                    <h5 class="text-white mb-3">@article.Title</h5>
+                                    <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate, "M-MMMM / yyyy")</p>
+                                </a>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.List.PageCount > 1)
+                    {
+                        <div class="col-12">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pagination-lg justify-content-center mb-0">
+                                    <li class="page-item @(Model.List.CurrentPage < 2 ? "disabled" : "")">
+                                        <a class="page-link" href="Articles?PageId=@(Model.List.CurrentPage - 1)" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">قبلی</span>
+                                        </a>
+                                    </li>
+                                    @for (int i = 1; i <= Model.List.PageCount; i++)
+                                    {
+                                        <li class="page-item @(i == Model.List.CurrentPage ? "active" : "")"><a class="page-link" href="Articles?PageId=@i">@i</a></li>
+                                    }
+
+                                    <li class="page-item @(Model.List.CurrentPage >= Model.List.PageCount ? "disabled" : "")">
+                                        <a class="page-link" href="Articles?PageId=@(Model.List.CurrentPage + 1)" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">بعدی</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-4 mt-5 mt-lg-0">
+               
+                <!-- Category List -->
+                <div class="mb-5 d-lg-none d-sm-block d-md-block">
+                    <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var category in Model.Category)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a class="text-decoration-none h6 m-0">@category.Name</a>
+                                <span class="badge badge-primary badge-pill">@category.ArticlesCount</span>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+
+                <!-- Recent Post -->
+                <div class="mb-5 d-lg-none d-sm-block d-md-block">
+                    <h3 class="text-uppercase mb-4">آخرین پست ها</h3>
+                    @foreach (var item in _article.LatestArticle())
+                    {
+                        <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@item.Slug">
+                            <img class="img-fluid rounded" src="~/FileUploader/@item.Picture" style="width: 80px; height: 80px" title="@item.PictureTitle" alt="@item.PictureAtl">
+                            <div class="pl-3">
+                                <h6 class="m-1 mr-2">@item.ShortDescription</h6>
+                                <small>@Tools.ChangeTimeToFarsi(item.CreationDate, "M-MMMM / yyyy")</small>
+                            </div>
+                        </a>
+                    }
+                </div>
+
+                <!-- Tag Cloud -->
+                <div class="mb-5 d-lg-none d-sm-block d-md-block">
                     <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">برچسپ ها</h3>
                     <div class="d-flex flex-wrap m-n1">
                         @foreach (var keywords in Model.List.Articles.SelectMany(articles => articles.KeyWords))

@@ -2,7 +2,35 @@
 <html lang="en" dir="rtl">
 
 <head>
+
     <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <meta property="og:url" content="https://ihsasdevelopment.ir" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="لرن هاب ابتکاری برای یادگیری" />
+    <meta property="og:image" content="https://ihsasdevelopment.ir/AllCourses" />
+
+    @if (ViewData["keyWords"] != null)
+    {
+        <meta content="@ViewData["keyWords"]" name="keywords">
+    }
+    else
+    {
+        <meta content="لرن هاب ابتکاری برای یادگیری" name="keywords">
+    }
+
+    @if (ViewData["description"] != null)
+    {
+        <meta content="@ViewData["metaDescription"]" name="description">
+    }
+    else
+    {
+        <meta content="لرن هاب مجمتمع برنامه نویسان و دانش آموزان از سراسر کشور" name="description">
+
+    }
+
     @if (ViewData["Title"] != null)
     {
         <title>@ViewData["Title"]-لرن هاب</title>
@@ -12,8 +40,7 @@
         <title>لرن هاب</title>
     }
 
-
-    <partial name="PartialViews/_Styles"/>
+    <partial name="PartialViews/_Styles" />
 
 </head>
 

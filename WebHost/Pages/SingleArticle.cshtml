@@ -7,6 +7,8 @@
 @inject IAuthHelper _authHelper;
 @{
     ViewData["Title"] = Model.Article.Title;
+    ViewData["keyWords"] = Model.Article.KeyWords;
+    ViewData["metaDescription"] = Model.Article.MetaDescription;
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -16,24 +18,24 @@
         <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
             @if (!_authHelper.IsAuthenticated())
             {
-                <h3 class="text-white text-uppercase text-left account-link">
-                    <a class="text-white text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a>/</a>
-                    <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
+                <h3 class="text-primary text-uppercase text-left account-link" style="margin-bottom: 8rem !important">
+                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a style="font-size:13px">/</a>
+                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
                 </h3>
             }
             else
             {
-                <h3 class="text-white  text-uppercase text-left account-link">
-                    <a class="fas fa-user-tie text-white text-uppercase" style="font-size:15px" asp-page="Login"> @_authHelper.CurrentAccountFullName()، خوش آمدی </a>
-                    <a class="text-white text-uppercase" style="font-size:15px">/</a> <a class="text-white text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
+                <h3 class="text-primary  text-left account-link" style="margin-bottom: 8rem !important">
+                    <a class=" text-primary" style="font-size:15px" asp-page="Login"><i class="fas fa-user-tie"></i> @_authHelper.CurrentAccountFullName()، خوش آمدی </a>
+                    <a class="text-primary text-uppercase" style="font-size:15px">/</a> <a class="text-primary text-uppercase" style="font-size:13px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
 
                 </h3>
             }
-            <h3 class="display-4 text-white text-uppercase">جزئیات مقاله</h3>
+            <h2 class="display-4 text-white text-uppercase">@Model.Article.Title</h2>
             <div class="d-inline-flex text-white">
                 <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>
                 <i class="fa fa-angle-double-left pt-1 px-3"></i>
-                <p class="m-0 text-uppercase">@Model.Article.Title</p>
+                <p class="m-0 text-uppercase"><a class="text-white" asp-page="Articles">مقاله ها</a></p>
             </div>
         </div>
     </div>
@@ -43,10 +45,68 @@
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="row">
+            
+        <div class="col-lg-4 mt-5 mt-lg-0">
+            <div class="mb-5">
+                <h6 class="text-primary mb-3 d-lg-none d-sm-block d-md-block">@Tools.ChangeTimeToFarsi(Model.Article.CreationDate, "M-MMMM/yyyy")</h6>
+                <h1 class="mb-5 d-lg-none d-sm-block d-md-block">@Model.Article.ShortDescription</h1>
+            </div>
+            <!-- Author Bio -->
+            <div class="d-flex flex-column bg-dark text-center rounded mb-5 py-5 px-4">
+                <img src="~/FileUploader/@Model.Article.BloggerPicture" alt="@Model.Article.BloggerName" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
+                <h3 class="text-primary mb-3">@Model.Article.BloggerName</h3>
+                <h6 class="text-white  mb-4">@Model.Article.BloggerSkills</h6>
+                <p class="text-white m-0">
+                    @Model.Article.BloggerBio
+                </p>
+            </div>
+
+            <!-- Category List -->
+            <div class="mb-5 d-none d-lg-block">
+                <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
+                <ul class="list-group list-group-flush">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <a class="text-decoration-none h6 m-0">@category.Name</a>
+                            <span class="badge badge-primary badge-pill">@category.ArticlesCount</span>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+
+            <!-- Recent Post -->
+            <div class="mb-5 d-none d-lg-block">
+                <h3 class="text-uppercase mb-4">آخرین پست ها</h3>
+                @foreach (var latest in _article.LatestArticle().Skip(3))
+                {
+                    <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@latest.Slug">
+                        <img class="img-fluid rounded photo-size" src="~/FileUploader/@latest.Picture" title="@latest.PictureTitle" alt="@latest.PictureAtl">
+                        <div class="pl-3">
+                            <h6 class="m-1">@latest.Title</h6>
+                            <small>@Tools.ChangeTimeToFarsi(latest.CreationDate, "M-MMMM / yyyy")</small>
+                        </div>
+                    </a>
+                }
+            </div>
+
+            <!-- Tag Cloud -->
+            <div class="mb-5 d-none d-lg-block">
+                <h3 class="text-uppercase mb-4">کلمات کلیدی</h3>
+                <div class="d-flex flex-wrap m-n1">
+                    @foreach (var kewWords in Model.Article.KeyWords)
+                    {
+                        <a asp-page="Articles" asp-route-title="@kewWords" class="btn btn-outline-primary m-1">@kewWords</a>
+                    }
+                </div>
+            </div>
+        </div>
+
             <div class="col-lg-8">
                 <div class="mb-5">
-                    <h6 class="text-primary mb-3">@Tools.ChangeTimeToFarsi(Model.Article.CreationDate, "M-MMMM/yyyy")</h6>
-                    <h1 class="mb-5">@Model.Article.ShortDescription</h1>
+                    <h6 class="text-primary mb-3 d-none d-lg-block">@Tools.ChangeTimeToFarsi(Model.Article.CreationDate, "M-MMMM/yyyy")</h6>
+                    <h1 class="mb-5 d-none d-lg-block">@Model.Article.ShortDescription</h1>
                     <img class="img-fluid rounded w-100 mb-4" src="~/FileUploader/@Model.Article.Picture" alt="@Model.Article.PictureAtl" title="@Model.Article.PictureTitle">
                     @Html.Raw(Model.Article.Description)
                 </div>
@@ -105,7 +165,7 @@
                                                 <a href="#formPost" onclick='$("#commentParenId").val(@sub.Id)' class="btn btn-sm btn-secondary">پاسخ</a>
                                             </div>
                                         </div>
-                                        <partial name="Shared/PartialViews/_Subcomment" model="sub.SubComment" />
+                                        <partial name="Shared/PartialViews/_Subcomment" model="sub.SubComment"/>
                                     }
                                 }
                             </div>
@@ -140,9 +200,9 @@
                                 <input type="submit" value="ارسال نظر" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
                             </div>
 
-                            <input type="hidden" name="ownerRecordId" value="@Model.Article.Id" />
-                            <input type="hidden" name="articleSlug" value="@Model.Article.Slug" />
-                            <input type="hidden" name="parentId" id="commentParenId" value="" />
+                            <input type="hidden" name="ownerRecordId" value="@Model.Article.Id"/>
+                            <input type="hidden" name="articleSlug" value="@Model.Article.Slug"/>
+                            <input type="hidden" name="parentId" id="commentParenId" value=""/>
                         }
                         else
                         {
@@ -166,9 +226,9 @@
                                 <input type="submit" value="ثبت نظر" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
                             </div>
 
-                            <input type="hidden" name="ownerRecordId" value="@Model.Article.Id" />
-                            <input type="hidden" name="articleSlug" value="@Model.Article.Slug" />
-                            <input type="hidden" name="parentId" id="commentParenId" value="" />
+                            <input type="hidden" name="ownerRecordId" value="@Model.Article.Id"/>
+                            <input type="hidden" name="articleSlug" value="@Model.Article.Slug"/>
+                            <input type="hidden" name="parentId" id="commentParenId" value=""/>
 
                         }
                     </form>
@@ -176,18 +236,9 @@
             </div>
 
             <div class="col-lg-4 mt-5 mt-lg-0">
-                <!-- Author Bio -->
-                <div class="d-flex flex-column bg-dark text-center rounded mb-5 py-5 px-4">
-                    <img src="~/FileUploader/@Model.Article.BloggerPicture" alt="@Model.Article.BloggerName" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
-                    <h3 class="text-primary mb-3">@Model.Article.BloggerName</h3>
-                    <h6 class="text-white  mb-4">@Model.Article.BloggerSkills</h6>
-                    <p class="text-white m-0">
-                        @Model.Article.BloggerBio
-                    </p>
-                </div>
-
+              
                 <!-- Category List -->
-                <div class="mb-5">
+                <div class="mb-5 d-lg-none d-sm-block d-md-block">
                     <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
                     <ul class="list-group list-group-flush">
                         @foreach (var category in Model.Categories)
@@ -202,7 +253,7 @@
                 </div>
 
                 <!-- Recent Post -->
-                <div class="mb-5">
+                <div class="mb-5 d-lg-none d-sm-block d-md-block">
                     <h3 class="text-uppercase mb-4">آخرین پست ها</h3>
                     @foreach (var latest in _article.LatestArticle().Skip(3))
                     {
@@ -217,7 +268,7 @@
                 </div>
 
                 <!-- Tag Cloud -->
-                <div class="mb-5">
+                <div class="mb-5 d-lg-none d-sm-block d-md-block">
                     <h3 class="text-uppercase mb-4">کلمات کلیدی</h3>
                     <div class="d-flex flex-wrap m-n1">
                         @foreach (var kewWords in Model.Article.KeyWords)
