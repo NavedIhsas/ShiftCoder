@@ -139,11 +139,18 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group no-margin">
                             <label asp-for="MetaDescription" class="control-label">توضیحات متا<span class="text-danger">*</span></label>
                             <textarea class="form-control autogrow" asp-for="MetaDescription" rows="2"></textarea>
                             <span class="text-danger" asp-validation-for="MetaDescription"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="CanonicalAddress" class="control-label">CanonicalAddress</label>
+                            <input type="url" asp-for="CanonicalAddress" class="form-control">
+                            <span class="text-danger" asp-validation-for="CanonicalAddress"></span>
                         </div>
                     </div>
                 </div>
@@ -170,7 +177,8 @@
                     <label asp-for="Picture" class="control-label">عکس<span class="text-danger">*</span></label>
                     <input id="imgCourseUp" type="file" asp-for="Picture" class="form-control" accept="image/*" required>
                     <span class="text-danger" asp-validation-for="Picture"></span>
-                </div>
+                    <p class="help-block"> width:600px; height:400px</p>
+                    </div>
 
                 <br />
                 <hr />

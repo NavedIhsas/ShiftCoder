@@ -41,6 +41,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 CourseLevelId = x.CourseLevelId,
                 CourseStatusId = x.CourseStatusId,
                 Id = x.Id,
+                CanonicalAddress = x.CanonicalAddress,
                 TeacherId = x.TeacherId
             }).FirstOrDefault(x => x.Id == id);
             return course;

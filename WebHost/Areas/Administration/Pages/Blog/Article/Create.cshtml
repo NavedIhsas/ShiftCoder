@@ -56,7 +56,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="CanonicalAddress" class="control-label">CanonicalAddress</label>
-                            <input type="text" asp-for="CanonicalAddress" class="form-control">
+                            <input type="url" asp-for="CanonicalAddress" class="form-control">
                             <span class="text-danger" asp-validation-for="CanonicalAddress"></span>
                         </div>
                     </div>
@@ -138,7 +138,8 @@
                         <label asp-for="Picture" class="control-label">عکس<span class="text-danger">*</span></label>
                         <input id="imgCourseUp" type="file" asp-for="Picture" class="form-control" accept="image/*" required>
                         <span class="text-danger" asp-validation-for="Picture"></span>
-                    </div>
+                        <p class="help-block"> width:500px; height:600px</p>
+                        </div>
                 </div>
 
                 <div class="row">

@@ -5,10 +5,15 @@
 @model WebHost.Pages.SingleArticleModel
 @inject IArticleQuery _article;
 @inject IAuthHelper _authHelper;
-@{
-    ViewData["Title"] = Model.Article.Title;
-    ViewData["keyWords"] = Model.Article.KeyWords;
+@{ ViewData["Title"] = Model.Article.Title;
+    ViewData["keyWords"] = Model.Article.Keywords;
     ViewData["metaDescription"] = Model.Article.MetaDescription;
+    ViewData["Type"] = "Article";
+    ViewData["CanonicalAddress"] = $"{Model.Article.CanonicalAddress}/SingleCourse/{Model.Article.Slug}";
+    ViewData["image"] = Model.Article.Picture;
+    ViewData["Url"] = $"SingleArticle/{Model.Article.Slug}";
+    ViewData["author"] = Model.Article.BloggerName;
+    ViewData["owner"] = Model.Article.BloggerName;
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -18,19 +23,17 @@
         <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
             @if (!_authHelper.IsAuthenticated())
             {
-                <h3 class="text-primary text-uppercase text-left account-link" style="margin-bottom: 8rem !important">
-                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a style="font-size:13px">/</a>
-                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
-                </h3>
-            }
-            else
-            {
-                <h3 class="text-primary  text-left account-link" style="margin-bottom: 8rem !important">
-                    <a class=" text-primary" style="font-size:15px" asp-page="Login"><i class="fas fa-user-tie"></i> @_authHelper.CurrentAccountFullName()، خوش آمدی </a>
-                    <a class="text-primary text-uppercase" style="font-size:15px">/</a> <a class="text-primary text-uppercase" style="font-size:13px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
+<h3 class="text-primary text-uppercase text-left account-link" style="margin-bottom: 8rem !important">
+    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a style="font-size:13px">/</a>
+    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
+</h3> }
+else
+{
+<h3 class="text-primary  text-left account-link" style="margin-bottom: 8rem !important">
+    <a class=" text-primary" style="font-size:15px" asp-page="Login"><i class="fas fa-user-tie"></i> @_authHelper.CurrentAccountFullName()، خوش آمدی </a>
+    <a class="text-primary text-uppercase" style="font-size:15px">/</a> <a class="text-primary text-uppercase" style="font-size:13px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
 
-                </h3>
-            }
+</h3>}
             <h2 class="display-4 text-white text-uppercase">@Model.Article.Title</h2>
             <div class="d-inline-flex text-white">
                 <p class="m-0 text-uppercase"><a class="text-white" asp-page="Index">خانه</a></p>
@@ -39,69 +42,64 @@
             </div>
         </div>
     </div>
-</div>
-<!-- Header End -->
-<!-- Detail Start -->
+</div> <!-- Header End --> <!-- Detail Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="row">
-            
-        <div class="col-lg-4 mt-5 mt-lg-0">
-            <div class="mb-5">
-                <h6 class="text-primary mb-3 d-lg-none d-sm-block d-md-block">@Tools.ChangeTimeToFarsi(Model.Article.CreationDate, "M-MMMM/yyyy")</h6>
-                <h1 class="mb-5 d-lg-none d-sm-block d-md-block">@Model.Article.ShortDescription</h1>
-            </div>
-            <!-- Author Bio -->
-            <div class="d-flex flex-column bg-dark text-center rounded mb-5 py-5 px-4">
-                <img src="~/FileUploader/@Model.Article.BloggerPicture" alt="@Model.Article.BloggerName" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
-                <h3 class="text-primary mb-3">@Model.Article.BloggerName</h3>
-                <h6 class="text-white  mb-4">@Model.Article.BloggerSkills</h6>
-                <p class="text-white m-0">
-                    @Model.Article.BloggerBio
-                </p>
-            </div>
 
-            <!-- Category List -->
-            <div class="mb-5 d-none d-lg-block">
-                <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
-                <ul class="list-group list-group-flush">
-                    @foreach (var category in Model.Categories)
+            <div class="col-lg-4 mt-5 mt-lg-0">
+                <div class="mb-5">
+                    <h6 class="text-primary mb-3 d-lg-none d-sm-block d-md-block">@Tools.ChangeTimeToFarsi(Model.Article.CreationDate, "M-MMMM/yyyy")</h6>
+                    <h1 class="mb-5 d-lg-none d-sm-block d-md-block">@Model.Article.ShortDescription</h1>
+                </div>
+                <!-- Author Bio -->
+                <div class="d-flex flex-column bg-dark text-center rounded mb-5 py-5 px-4">
+                    <img src="~/FileUploader/@Model.Article.BloggerPicture" alt="@Model.Article.BloggerName" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
+                    <h3 class="text-primary mb-3">@Model.Article.BloggerName</h3>
+                    <h6 class="text-white  mb-4">@Model.Article.BloggerSkills</h6>
+                    <p class="text-white m-0">
+                        @Model.Article.BloggerBio
+                    </p>
+                </div>
+
+                <!-- Category List -->
+                <div class="mb-5 d-none d-lg-block">
+                    <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var category in Model.Categories)
+                        {
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                <a class="text-decoration-none h6 m-0">@category.Name</a>
+                <span class="badge badge-primary badge-pill">@category.ArticlesCount</span>
+            </li>}
+
+                    </ul>
+                </div>
+
+                <!-- Recent Post -->
+                <div class="mb-5 d-none d-lg-block">
+                    <h3 class="text-uppercase mb-4">آخرین پست ها</h3>
+                    @foreach (var latest in _article.LatestArticle().Skip(3))
                     {
-                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <a class="text-decoration-none h6 m-0">@category.Name</a>
-                            <span class="badge badge-primary badge-pill">@category.ArticlesCount</span>
-                        </li>
-                    }
-
-                </ul>
+        <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@latest.Slug">
+            <img style="max-width: 80px;max-height: 80px" class="img-fluid rounded photo-size" src="~/FileUploader/@latest.Picture" title="@latest.PictureTitle" alt="@latest.PictureAtl">
+            <div class="pl-3">
+                <h6 class="m-1">@latest.Title</h6>
+                <small>@Tools.ChangeTimeToFarsi(latest.CreationDate, "M-MMMM / yyyy")</small>
             </div>
+        </a>}
+                </div>
 
-            <!-- Recent Post -->
-            <div class="mb-5 d-none d-lg-block">
-                <h3 class="text-uppercase mb-4">آخرین پست ها</h3>
-                @foreach (var latest in _article.LatestArticle().Skip(3))
-                {
-                    <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@latest.Slug">
-                        <img class="img-fluid rounded photo-size" src="~/FileUploader/@latest.Picture" title="@latest.PictureTitle" alt="@latest.PictureAtl">
-                        <div class="pl-3">
-                            <h6 class="m-1">@latest.Title</h6>
-                            <small>@Tools.ChangeTimeToFarsi(latest.CreationDate, "M-MMMM / yyyy")</small>
-                        </div>
-                    </a>
-                }
-            </div>
-
-            <!-- Tag Cloud -->
-            <div class="mb-5 d-none d-lg-block">
-                <h3 class="text-uppercase mb-4">کلمات کلیدی</h3>
-                <div class="d-flex flex-wrap m-n1">
-                    @foreach (var kewWords in Model.Article.KeyWords)
-                    {
-                        <a asp-page="Articles" asp-route-title="@kewWords" class="btn btn-outline-primary m-1">@kewWords</a>
-                    }
+                <!-- Tag Cloud -->
+                <div class="mb-5 d-none d-lg-block">
+                    <h3 class="text-uppercase mb-4">کلمات کلیدی</h3>
+                    <div class="d-flex flex-wrap m-n1">
+                        @foreach (var kewWords in Model.Article.KeyWords)
+                        {
+            <a asp-page="Articles" asp-route-title="@kewWords" class="btn btn-outline-primary m-1">@kewWords</a>}
+                    </div>
                 </div>
             </div>
-        </div>
 
             <div class="col-lg-8">
                 <div class="mb-5">
@@ -115,62 +113,54 @@
                 <div class="mb-5">
                     @if (Model.Article.CommentList.Count > 0)
                     {
-                        <h3 class="text-uppercase mb-4">@Model.Article.CommentList.Count نظر</h3>
-                    }
+        <h3 class="text-uppercase mb-4">@Model.Article.CommentList.Count نظر</h3>}
                     @foreach (var comment in Model.Article.Comments)
                     {
-                        <div id="comment-@comment.Id" class="media mb-4">
-                            @if (!string.IsNullOrEmpty(comment.Picture))
-                            {
-                                <img src="~/FileUploader/@comment.Picture" alt="@comment.Name" title="@comment.Name" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
-                                     style="width: 45px;">
-                            }
+        <div id="comment-@comment.Id" class="media mb-4">
+            @if (!string.IsNullOrEmpty(comment.Picture))
+            {
+<img src="~/FileUploader/@comment.Picture" alt="@comment.Name" title="@comment.Name" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+     style="width: 45px;"> }
 
-                            else
-                            {
-                                <img src="~/img/DefaultImg/comment-img.png" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
-                                     style="width: 45px;">
-                            }
-                            <div class="media-body">
-                                <h6 class="mr-3">@comment.Name <small class="mr-3" dir="rtl"><i>@comment.CreationDate</i></small></h6>
-                                <p class="mr-4">
-                                    @comment.Message
-                                </p>
-                                <a href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn btn-sm btn-secondary">پاسخ</a>
+else
+{
+<img src="~/img/DefaultImg/comment-img.png" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+     style="width: 45px;">}
+            <div class="media-body">
+                <h6 class="mr-3">@comment.Name <small class="mr-3" dir="rtl"><i>@comment.CreationDate</i></small></h6>
+                <p class="mr-4">
+                    @comment.Message
+                </p>
+                <a href="#formPost" onclick='$("#commentParenId").val(@comment.Id)' class="btn btn-sm btn-secondary">پاسخ</a>
 
-                                @if (comment.SubComment.Count != 0)
-                                {
-                                    @foreach (var sub in comment.SubComment)
-                                    {
+                @if (comment.SubComment.Count != 0)
+                {
+@foreach (var sub in comment.SubComment)
+{
 
-                                        <div id="comment-@sub.Id" class="media mt-4">
+<div id="comment-@sub.Id" class="media mt-4">
 
-                                            @if (!string.IsNullOrEmpty(sub.Picture))
-                                            {
-                                                <img src="~/FileUploader/@sub.Picture" alt="@sub.Name" title="@sub.Name" class="img-fluid rounded-circle mr-3 mt-1"
-                                                     style="width: 45px;">
-                                            }
+    @if (!string.IsNullOrEmpty(sub.Picture))
+    {
+<img src="~/FileUploader/@sub.Picture" alt="@sub.Name" title="@sub.Name" class="img-fluid rounded-circle mr-3 mt-1"
+     style="width: 45px;"> }
 
-                                            else
-                                            {
-                                                <img src="~/img/DefaultImg/comment-img.png" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
-                                                     style="width: 45px;">
-                                            }
+else
+{
+<img src="~/img/DefaultImg/comment-img.png" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+     style="width: 45px;">}
 
-                                            <div class="media-body">
-                                                <h6 class="mr-3">@sub.Name <small class="mr-3" dir="rtl"><i>@sub.CreationDate</i></small></h6>
-                                                <p class="mr-3">
-                                                    @sub.Message
-                                                </p>
-                                                <a href="#formPost" onclick='$("#commentParenId").val(@sub.Id)' class="btn btn-sm btn-secondary">پاسخ</a>
-                                            </div>
-                                        </div>
-                                        <partial name="Shared/PartialViews/_Subcomment" model="sub.SubComment"/>
-                                    }
-                                }
-                            </div>
-                        </div>
-                    }
+    <div class="media-body">
+        <h6 class="mr-3">@sub.Name <small class="mr-3" dir="rtl"><i>@sub.CreationDate</i></small></h6>
+        <p class="mr-3">
+            @sub.Message
+        </p>
+        <a href="#formPost" onclick='$("#commentParenId").val(@sub.Id)' class="btn btn-sm btn-secondary">پاسخ</a>
+    </div>
+</div>
+                        <partial name="Shared/PartialViews/_Subcomment" model="sub.SubComment" />}}
+            </div>
+        </div>}
 
                 </div>
 
@@ -179,10 +169,9 @@
 
                 @if (type is "send-comment")
                 {
-                    <script>
-                        swal("موفق", "نظر شما با موفقیت ثبت شد", "success");
-                    </script>
-                }
+    <script>
+        swal("موفق", "نظر شما با موفقیت ثبت شد", "success");
+    </script>}
 
 
                 <!-- Comment Form -->
@@ -191,63 +180,59 @@
                     <form method="post" id="formPost">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <div class="form-group">
-                                <label for="message">دیدگاه *</label>
-                                <textarea id="message" name="message" cols="30" rows="5" class="form-control border-0" required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
-                                          oninput="setCustomValidity('')"></textarea>
-                            </div>
+            <div class="form-group">
+                <label for="message">دیدگاه *</label>
+                <textarea id="message" name="message" cols="30" rows="5" class="form-control border-0" required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                          oninput="setCustomValidity('')"></textarea>
+            </div>
                             <div class="form-group mb-0">
                                 <input type="submit" value="ارسال نظر" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
                             </div>
 
-                            <input type="hidden" name="ownerRecordId" value="@Model.Article.Id"/>
-                            <input type="hidden" name="articleSlug" value="@Model.Article.Slug"/>
-                            <input type="hidden" name="parentId" id="commentParenId" value=""/>
-                        }
-                        else
-                        {
-                            <div class="form-group">
-                                <label for="name">نام *</label>
-                                <input name="name" type="text" class="form-control border-0" id="name" required oninvalid="this.setCustomValidity('نام خود را بنویسید.')"
-                                       oninput="setCustomValidity('')">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">ایمیل *</label>
-                                <input name="email" type="email" class="form-control border-0" id="email" required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
-                                       oninput="setCustomValidity('')">
-                            </div>
+                                            <input type="hidden" name="ownerRecordId" value="@Model.Article.Id" />
+                                                            <input type="hidden" name="articleSlug" value="@Model.Article.Slug" />
+                                                                            <input type="hidden" name="parentId" id="commentParenId" value="" /> }
+                                                                        else
+                                                                        {
+                                                            <div class="form-group">
+                                                                <label for="name">نام *</label>
+                                                                <input name="name" type="text" class="form-control border-0" id="name" required oninvalid="this.setCustomValidity('نام خود را بنویسید.')"
+                                                                       oninput="setCustomValidity('')">
+                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="email">ایمیل *</label>
+                                                                                <input name="email" type="email" class="form-control border-0" id="email" required oninvalid="this.setCustomValidity('لطفا ایمیل خود را وارد کنید، ایمیلی شما در جای منتشر نخواهد شد')"
+                                                                                       oninput="setCustomValidity('')">
+                                                                            </div>
 
-                            <div class="form-group">
-                                <label for="message">نظر *</label>
-                                <textarea name="message" id="message" cols="30" rows="5" class="form-control border-0" required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
-                                          oninput="setCustomValidity('')"></textarea>
-                            </div>
-                            <div class="form-group mb-0">
-                                <input type="submit" value="ثبت نظر" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
-                            </div>
+                                                                                            <div class="form-group">
+                                                                                                <label for="message">نظر *</label>
+                                                                                                <textarea name="message" id="message" cols="30" rows="5" class="form-control border-0" required oninvalid="this.setCustomValidity('دیدگاه خود را بنویسید.')"
+                                                                                                          oninput="setCustomValidity('')"></textarea>
+                                                                                            </div>
+                                                                                                            <div class="form-group mb-0">
+                                                                                                                <input type="submit" value="ثبت نظر" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
+                                                                                                            </div>
 
-                            <input type="hidden" name="ownerRecordId" value="@Model.Article.Id"/>
-                            <input type="hidden" name="articleSlug" value="@Model.Article.Slug"/>
-                            <input type="hidden" name="parentId" id="commentParenId" value=""/>
-
-                        }
+                                                                                                                            <input type="hidden" name="ownerRecordId" value="@Model.Article.Id" />
+                                                                                                                                            <input type="hidden" name="articleSlug" value="@Model.Article.Slug" />
+                                                                                                                                                            <input type="hidden" name="parentId" id="commentParenId" value="" />}
                     </form>
                 </div>
             </div>
 
             <div class="col-lg-4 mt-5 mt-lg-0">
-              
+
                 <!-- Category List -->
                 <div class="mb-5 d-lg-none d-sm-block d-md-block">
                     <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
                     <ul class="list-group list-group-flush">
                         @foreach (var category in Model.Categories)
                         {
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                <a class="text-decoration-none h6 m-0">@category.Name</a>
-                                <span class="badge badge-primary badge-pill">@category.ArticlesCount</span>
-                            </li>
-                        }
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                <a class="text-decoration-none h6 m-0">@category.Name</a>
+                <span class="badge badge-primary badge-pill">@category.ArticlesCount</span>
+            </li>}
 
                     </ul>
                 </div>
@@ -257,14 +242,13 @@
                     <h3 class="text-uppercase mb-4">آخرین پست ها</h3>
                     @foreach (var latest in _article.LatestArticle().Skip(3))
                     {
-                        <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@latest.Slug">
-                            <img class="img-fluid rounded photo-size" src="~/FileUploader/@latest.Picture" title="@latest.PictureTitle" alt="@latest.PictureAtl">
-                            <div class="pl-3">
-                                <h6 class="m-1">@latest.Title</h6>
-                                <small>@Tools.ChangeTimeToFarsi(latest.CreationDate, "M-MMMM / yyyy")</small>
-                            </div>
-                        </a>
-                    }
+        <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@latest.Slug">
+            <img class="img-fluid rounded photo-size" style="max-width: 80px;max-height: 80px" src="~/FileUploader/@latest.Picture" title="@latest.PictureTitle" alt="@latest.PictureAtl">
+            <div class="pl-3">
+                <h6 class="m-1">@latest.Title</h6>
+                <small>@Tools.ChangeTimeToFarsi(latest.CreationDate, "M-MMMM / yyyy")</small>
+            </div>
+        </a>}
                 </div>
 
                 <!-- Tag Cloud -->
@@ -273,8 +257,7 @@
                     <div class="d-flex flex-wrap m-n1">
                         @foreach (var kewWords in Model.Article.KeyWords)
                         {
-                            <a asp-page="Articles" asp-route-title="@kewWords" class="btn btn-outline-primary m-1">@kewWords</a>
-                        }
+            <a asp-page="Articles" asp-route-title="@kewWords" class="btn btn-outline-primary m-1">@kewWords</a>}
                     </div>
                 </div>
             </div>

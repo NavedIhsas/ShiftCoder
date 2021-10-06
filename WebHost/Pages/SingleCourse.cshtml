@@ -13,13 +13,19 @@
     ViewData["Title"] = Model.Course.Name;
     ViewData["keyWords"] = Model.Course.KeyWords;
     ViewData["metaDescription"] = Model.Course.MetaDescription;
+    ViewData["Type"] = "Course";
+    ViewData["CanonicalAddress"] = $"{Model.Course.CanonicalAddress}/SingleCourse/{Model.Course.Slug}";
+    ViewData["image"] = Model.Course.Picture;
+    ViewData["Url"] = $"SingleCourse/{Model.Course.Slug}";
+    ViewData["author"] = Model.Course.TeacherName;
+    ViewData["owner"] = Model.Course.TeacherName;
 
     var userInCourse = false;
     if (User.Identity.IsAuthenticated)
         userInCourse = _course.UserInCourse(User.Identity.Name, Model.Course.Id);
 
-        var time = new TimeSpan(Model.Course.EpisodeCourse.Sum(t => t.Time.Ticks));
-    
+    var time = new TimeSpan(Model.Course.EpisodeCourse.Sum(t => t.Time.Ticks));
+
 }
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -200,8 +206,8 @@
             <h3 class="text-uppercase mb-4">آخرین دوره ها</h3>
             @foreach (var latestCourse in _course.LatestCourses())
             {
-                <a asp-page="SingleCourse" asp-route-id="@latestCourse.Slug" class="d-flex align-items-center text-decoration-none mb-3">
-                    <img style="width: 80px; height: 80px" class="img-fluid rounded" src="~/FileUploader/@latestCourse.Picture" alt="@latestCourse.PictureAlt" title="@latestCourse.PictureTitle">
+                <a asp-page="SingleCourse"  asp-route-id="@latestCourse.Slug" class="d-flex align-items-center text-decoration-none mb-3">
+                    <img  class="img-fluid rounded" style="max-width: 80px;max-height: 80px" src="~/FileUploader/@latestCourse.Picture" alt="@latestCourse.PictureAlt" title="@latestCourse.PictureTitle">
                     <div class="pl-3">
                         <h6 class="m-1 mr-3">@latestCourse.ShortDescription</h6>
                         <small class="mr-3" dir="rtl">@Tools.ChangeTimeToFarsi(latestCourse.CreationDate, "M - MMMM / yyyy")</small>
@@ -348,7 +354,7 @@
             <div id="comment-@comment.Id" class="media mb-4">
                 @if (!string.IsNullOrEmpty(comment.Picture))
                 {
-                    <img src="~/FileUploader/@comment.Picture" alt="@comment.Name" title="@comment.Name" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                    <img src="~/FileUploader/@comment.Picture" alt="@comment.Name" title="@comment.Name"  class="img-fluid rounded-circle mr-3 mt-1"
                          style="width: 45px;">
                 }
 
@@ -373,7 +379,7 @@
 
                                 @if (!string.IsNullOrEmpty(sub.Picture))
                                 {
-                                    <img src="~/FileUploader/@sub.Picture" alt="@sub.Name" title="@sub.Name" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                                    <img src="~/FileUploader/@sub.Picture"  alt="@sub.Name" title="@sub.Name"  class="img-fluid rounded-circle mr-3 mt-1"
                                          style="width: 45px;">
                                 }
 
@@ -484,7 +490,7 @@
             @foreach (var latestCourse in _course.LatestCourses())
             {
                 <a asp-page="SingleCourse" asp-route-id="@latestCourse.Slug" class="d-flex align-items-center text-decoration-none mb-3">
-                    <img style="width: 80px; height: 80px" class="img-fluid rounded" src="~/FileUploader/@latestCourse.Picture" alt="@latestCourse.PictureAlt" title="@latestCourse.PictureTitle">
+                    <img  class="img-fluid rounded" style="max-width: 80px;max-height: 80px" src="~/FileUploader/@latestCourse.Picture" alt="@latestCourse.PictureAlt" title="@latestCourse.PictureTitle">
                     <div class="pl-3">
                         <h6 class="m-1 mr-3">@latestCourse.ShortDescription</h6>
                         <small class="mr-3" dir="rtl">@Tools.ChangeTimeToFarsi(latestCourse.CreationDate, "M - MMMM / yyyy")</small>

@@ -1,11 +1,15 @@
 ﻿using System;
+using System.IO;
 using System.Security.Policy;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
 using _0_Framework.Application.ZarinPal;
 using _0_FrameWork.Domain.Infrastructure;
 using AccountManagement.Domain.Account.Agg;
 using AccountManagement.Infrastructure;
+using AspNetCore.SEOHelper;
 using BlogManagement.Infrastructure;
 using CommentManagement.Infrastructure;
 using DiscountManagement.Infrastructure;
@@ -40,6 +44,11 @@ namespace WebHost
             services.AddRazorPages().AddMvcOptions(option => option.Filters.Add<SecurityPageFilter>());
             services.AddHttpContextAccessor();
 
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AddPageRoute("/Sitemap", "Sitemap.xml");
+            });
+
             #region IOC
             var connectionString = Configuration.GetConnectionString("ShiftCoderConnection");
             services.AddTransient<IFileUploader, FileUploader>();
@@ -49,6 +58,7 @@ namespace WebHost
             services.AddTransient<IZarinPalFactory, ZarinPalFactory>();
             services.AddTransient<IRazorPartialToStringRenderer, RazorPartialToStringRenderer>();
             services.AddTransient<IPermissionExposer, WebHostPermissionExposer>();
+            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Arabic));
             ShopManagementBootstrapper.Configure(services, connectionString);
             BlogManagementBootstrapper.Configure(services, connectionString);
             CommentManagementBootstrapper.Configure(services, connectionString);
@@ -80,6 +90,26 @@ namespace WebHost
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path.StartsWithSegments("/robots.txt"))
+                {
+                    var robotsTxtPath = Path.Combine(env.ContentRootPath, "robots.txt");
+                    string output = "User-agent: *  \nallow: /";
+                    if (File.Exists(robotsTxtPath))
+                    {
+                        output = await File.ReadAllTextAsync(robotsTxtPath);
+                    }
+                    context.Response.ContentType = "text/plain";
+                    await context.Response.WriteAsync(output);
+                }
+                else await next();
+            });
+
+
+           
 
             //  این میدیلویر برای چک کردن اینه که کاربر نتواند با استفاده از یوآرال به فایل ها  دسترسی داشته باشد
             //app.Use(async (context, next) =>
@@ -115,10 +145,10 @@ namespace WebHost
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
+            app.UseXMLSitemap(env.ContentRootPath);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -67,6 +67,10 @@ namespace Shop.Management.Application.Contract.Course
         [Range(1, int.MaxValue, ErrorMessage = Validate.Required)]
         public long TeacherId { get; set; }
 
+        [Required(ErrorMessage = Validate.Required)]
+        [MaxLength(500, ErrorMessage = Validate.MaxLength)]
+        public string CanonicalAddress { get; set; }
+
         public List<CourseGroupViewModel> CourseGroupSelectList { get; set; }
         public List<CourseStatusViewModel> CourseStatusSelectList { get; set; }
         public List<CourseLevelViewModel> CourseLevelSelectList { get; set; }

@@ -29,16 +29,21 @@ namespace ShopManagement.Application
             if (_course.IsExist(x => x.Name == command.Name.Trim() && x.CourseGroupId == command.CourseGroupId))
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
+           
+            //get slug for path
             var courseGroupSlug = _courseGroup.GetSlug(command.CourseGroupId);
 
+            //path
             var pictureName = _fileUploader.Uploader(command.Picture, courseGroupSlug);
             var fileName = _fileUploader.Uploader(command.File, courseGroupSlug + "/DemoFile");
             var poster = _fileUploader.Uploader(command.DemoPoster, courseGroupSlug + "/DemoFile");
 
+
+            //create
             var course = new Course(command.Name, command.Description, command.ShortDescription, fileName,
                 command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
                 command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId,
-                command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId);
+                command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId,command.CanonicalAddress);
 
             _course.Create(course);
             _course.SaveChanges();
@@ -52,9 +57,7 @@ namespace ShopManagement.Application
             var course = _course.GetById(command.Id);
             if (course == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
-
             //delete current file
-
             if (command.Picture != null)
             {
                 var coursePictureDelete = $"wwwroot/FileUploader/{course.Picture}";
@@ -76,7 +79,6 @@ namespace ShopManagement.Application
                     File.Delete(posterDelete);
             }
 
-
             //get group slug
             var courseGroupSlug = _courseGroup.GetSlug(command.CourseGroupId);
 
@@ -85,11 +87,33 @@ namespace ShopManagement.Application
             var fileName = _fileUploader.Uploader(command.File, courseGroupSlug + "/DemoFile");
             var poster = _fileUploader.Uploader(command.DemoPoster, courseGroupSlug + "/DemoFile");
 
+
+            ////resize image
+            //if (command.Picture != null)
+            //{ //resize image
+            //    var image = Image.FromStream(command.Picture.OpenReadStream());
+            //    var resized = new Bitmap(image, new System.Drawing.Size(80, 80));
+            //    using var imageStream = new MemoryStream();
+            //    resized.Save(imageStream, ImageFormat.Jpeg);
+            //    var imageBytes = imageStream.ToArray();
+
+
+            //    var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+            //    var path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/css",imgName);
+
+            //    if (!Directory.Exists(path))
+            //        Directory.CreateDirectory(path); 
+
+            //    using var stream = new FileStream(
+            //        path, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
+            //    stream.Write(imageBytes, 0, imageBytes.Length);
+            //}
+
             //edit
             course.Edit(command.Name, command.Description, command.ShortDescription, fileName,
                 command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
                 command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId,
-                command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId);
+                    command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId,command.CanonicalAddress);
 
             //check duplicate course
             if (_course.IsExist(x =>

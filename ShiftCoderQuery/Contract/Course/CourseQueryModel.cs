@@ -47,6 +47,7 @@ namespace ShiftCoderQuery.Contract.Course
         public DateTime CreationDate { get; internal set; }
         public int EpisodeCount { get; internal set; }
         public long TeacherId { get; internal set; }
+        public string CanonicalAddress { get; set; }
     }
 
     public class GetCourseGroupViewModel

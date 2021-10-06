@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
@@ -34,9 +36,13 @@ namespace BlogManagement.Application
             else
                 publish = null;
 
+
+          
+
             var categoryName = _articleCategory.GetArticleCategoryName(command.CategoryId);
-            var path = $"مقاله ها /{categoryName}";
+            var path = $"مقاله-ها /{categoryName.Slugify()}";
             var fileName = _fileUploader.Uploader(command.Picture, path);
+
 
             var article = new Article(command.Title, command.Description, fileName, command.PictureTitle,
                 command.PictureAtl, command.Slug.Slugify()
@@ -86,8 +92,10 @@ namespace BlogManagement.Application
             if (article == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
             var categoryName = _articleCategory.GetArticleCategoryName(command.CategoryId);
-            var path = $"مقاله ها /{categoryName}";
+            var path = $"Articles//{categoryName.Slugify()}";
             var fileName = _fileUploader.Uploader(command.Picture, path);
+
+
 
             article.Edit(command.Title, command.Description, fileName, command.PictureTitle,
                 command.PictureAtl, command.Slug.Slugify()

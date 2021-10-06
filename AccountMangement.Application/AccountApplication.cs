@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
+using _0_Framework.Application;
 using _0_FrameWork.Application;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Domain.Account.Agg;
@@ -92,6 +96,7 @@ namespace AccountManagement.Application
 
             if (command.Avatar != null)
             {
+                //delete image
                 var deletePath = $"wwwroot/FileUploader/{getUser.Avatar}";
                 if (File.Exists(deletePath))
                     File.Delete(deletePath);

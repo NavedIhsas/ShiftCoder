@@ -14,7 +14,7 @@ namespace ShopManagement.Domain.OrderDetailAgg
         }
 
         public long OrderId { get; private set; }
-        public double Price { get; set; }
+        public double Price { get;private set; }
         public long CourseId { get; private set; }
         public Order Order { get; private set; }
         public Course Course { get; private set; }

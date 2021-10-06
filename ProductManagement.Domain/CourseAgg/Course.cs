@@ -15,7 +15,7 @@ namespace ShopManagement.Domain.CourseAgg
         public Course(string name, string description, string shortDescription, string file, double price,
             string picture, string pictureAlt, string pictureTitle, string keyWords, string metaDescription,
             string slug, string code, long courseGroupId, long courseLevelId, long courseStatusId,
-            string demoVideoPoster, long teacherId)
+            string demoVideoPoster, long teacherId, string canonicalAddress)
         {
             Name = name;
             Description = description;
@@ -37,13 +37,15 @@ namespace ShopManagement.Domain.CourseAgg
             if (!string.IsNullOrWhiteSpace(demoVideoPoster))
                 DemoVideoPoster = demoVideoPoster;
             TeacherId = teacherId;
+            CanonicalAddress = canonicalAddress;
             UpdateDate = null;
         }
 
-        public Course(string demoVideoPoster, long teacherId)
+        public Course(string demoVideoPoster, long teacherId, string canonicalAddress)
         {
             DemoVideoPoster = demoVideoPoster;
             TeacherId = teacherId;
+            CanonicalAddress = canonicalAddress;
         }
 
         public string Name { get; private set; }
@@ -64,6 +66,7 @@ namespace ShopManagement.Domain.CourseAgg
         public long CourseLevelId { get; private set; }
         public long CourseStatusId { get; private set; }
         public long TeacherId { get; private set; }
+        public string CanonicalAddress { get;private set; }
 
         public CourseGroup CourseGroup { get; private set; }
         public List<OrderDetail> OrderDetails { get; private set; }
@@ -75,7 +78,7 @@ namespace ShopManagement.Domain.CourseAgg
         public void Edit(string name, string description, string shortDescription, string file, double price,
             string picture, string pictureAlt, string pictureTitle, string keyWords, string metaDescription,
             string slug, string code, long courseGroupId, long courseLevelId, long courseStatusId,
-            string demoVideoPoster, long teacherId)
+            string demoVideoPoster, long teacherId,string canonicalAddress)
         {
             Name = name;
             Description = description;
@@ -100,6 +103,7 @@ namespace ShopManagement.Domain.CourseAgg
             if (!string.IsNullOrWhiteSpace(picture))
                 DemoVideoPoster = demoVideoPoster;
             UpdateDate = DateTime.Now;
+            CanonicalAddress = canonicalAddress;
             TeacherId = teacherId;
         }
     }

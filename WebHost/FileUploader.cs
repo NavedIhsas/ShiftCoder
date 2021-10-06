@@ -4,6 +4,7 @@ using _0_Framework.Application;
 using _0_FrameWork.Application;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using SixLabors.ImageSharp;
 
 namespace WebHost
 {
@@ -16,6 +17,19 @@ namespace WebHost
             _webHostEnvironment = webHostEnvironment;
         }
 
+        public string ThumpPath(IFormFile file, string path)
+        {
+            var pathDirectory = $"{_webHostEnvironment.WebRootPath}//FileUploader//{path}";
+            if (!Directory.Exists(pathDirectory))
+                Directory.CreateDirectory(pathDirectory);
+
+            if (file == null) return null;
+
+            var fileName = $"{DateTime.Now.ToFileName()}-{file.FileName}";
+            var filePath = $"{pathDirectory}//{fileName}";
+            using var stream = File.Create(filePath);
+            return $"{path}/{fileName}";
+        }
         public string Uploader(IFormFile file, string path)
         {
             var pathDirectory = $"{_webHostEnvironment.WebRootPath}//FileUploader//{path}";

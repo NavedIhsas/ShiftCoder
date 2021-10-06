@@ -9,3 +9,16 @@
     color: white !important;
     text-decoration: none;
 }
+
+.men-height {
+    min-height: 300px !important;
+}
+.men-heightCover {
+    min-height: 300px !important;
+    object-fit: cover !important;
+}
+
+.set-WithHeight {
+    max-width: 900px !important;
+    width: 100% !important;
+}

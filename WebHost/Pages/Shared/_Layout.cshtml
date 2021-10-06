@@ -2,43 +2,38 @@
 <html lang="en" dir="rtl">
 
 <head>
-
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <meta property="og:url" content="https://ihsasdevelopment.ir" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="@ViewData["Title"]" />
-    <meta property="og:description" content="لرن هاب ابتکاری برای یادگیری" />
-    <meta property="og:image" content="https://ihsasdevelopment.ir/AllCourses" />
-
-    @if (ViewData["keyWords"] != null)
-    {
-        <meta content="@ViewData["keyWords"]" name="keywords">
-    }
-    else
-    {
-        <meta content="لرن هاب ابتکاری برای یادگیری" name="keywords">
-    }
+    <title>@ViewData["Title"]-لرن هاب</title>
 
     @if (ViewData["description"] != null)
     {
         <meta content="@ViewData["metaDescription"]" name="description">
-    }
-    else
-    {
-        <meta content="لرن هاب مجمتمع برنامه نویسان و دانش آموزان از سراسر کشور" name="description">
 
+    }else
+     {
+            <meta content="لرن هاب مجمتمع برنامه نویسان و دانش آموزان از سراسر کشور، لرن هاب به شما آموزش میدهد که
+              چگونه یک برنامه نویس حرفه یی شوی " name="description">
     }
 
-    @if (ViewData["Title"] != null)
-    {
-        <title>@ViewData["Title"]-لرن هاب</title>
-    }
-    else
-    {
-        <title>لرن هاب</title>
-    }
+    <link rel="canonical" href="@ViewData["CanonicalAddress"]" />
+    <meta content="@ViewData["keyWords"]" name="keywords">
+    <meta name="robots" content="index,follow">
+    <meta property="og:type" content="@ViewData["Type"]" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["metaDescription"]" />
+    <meta property="og:image" content="https://ihsasdevelopment.ir/FileUploader/@ViewData["image"]" />
+    <meta property="og:url" content="https://ihsasdevelopment.ir/@ViewData["Url"]" />
+    <meta property="og:site_name" content="لرن هاب" />
+
+    <!--Twitter-->
+    <meta name="twitter:title" content="@ViewData["Title"]">
+    <meta name="twitter:description" content="@ViewData["metaDescription"]">
+    <meta name="twitter:image" content="https://ihsasdevelopment.ir/FileUploader/@ViewData["image"]" />
+    <meta name="twitter:site" content="https://ihsasdevelopment.ir/@ViewData["Url"]" />
+    <meta name="author" content="@ViewData["author"]">
+    <meta name="owner" content="@ViewData["owner"]">
 
     <partial name="PartialViews/_Styles" />
 
@@ -46,18 +41,18 @@
 
 <body dir="rtl">
 
-<partial name="PartialViews/_Header"/>
+    <partial name="PartialViews/_Header" />
 
-@await Component.InvokeAsync("Menu")
+    @await Component.InvokeAsync("Menu")
 
-@RenderBody()
+    @RenderBody()
 
-<partial name="PartialViews/_Footer"/>
+    <partial name="PartialViews/_Footer" />
 
-<partial name="PartialViews/_Scripts"/>
+    <partial name="PartialViews/_Scripts" />
 
 
-@await RenderSectionAsync("Scripts", false)
+    @await RenderSectionAsync("Scripts", false)
 
 </body>
 

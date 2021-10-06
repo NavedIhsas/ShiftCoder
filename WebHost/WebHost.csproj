@@ -2,7 +2,15 @@
 	
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <StartupObject></StartupObject>
   </PropertyGroup>
+	
+  <ItemGroup>
+    <Compile Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
+    <Content Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
+    <None Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
+  </ItemGroup>
 	
   <ItemGroup>
     <None Remove="Pages\Shared\PartialViews\_SocialSharing.cshtml~RF82eb0b9.TMP" />
@@ -10,6 +18,7 @@
 	
 	
 	<ItemGroup>
+	  <PackageReference Include="AspNetCore.SEOHelper" Version="1.0.1" />
 	  <PackageReference Include="MD.PersianDateTime.Core" Version="2.3.5" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
@@ -19,6 +28,7 @@
     <PackageReference Include="Microsoft.NETCore.App" Version="2.2.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="SharpCompress" Version="0.29.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +40,14 @@
     <ProjectReference Include="..\ShiftCoderQuery\ShiftCoderQuery.csproj" />
     <ProjectReference Include="..\ShopManagement.Configuration\ShopManagement.Configuration.csproj" />
     <ProjectReference Include="..\ShopManagement.Infrastructure.EfCore\ShopManagement.Infrastructure.EfCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\FileUploader\UserAvatar\Thump\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\sitemap.xml" />
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,6 @@ namespace WebHost.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ICourseQuery _course;
         private readonly ICommentQuery _slider;
 
         public List<Course> Courses;
@@ -21,9 +20,8 @@ namespace WebHost.Pages
         public CourseQuerySearchModel SearchModel;
         public List<Slider> Sliders;
 
-        public IndexModel(ICourseQuery course, ICommentQuery slider)
+        public IndexModel(ICommentQuery slider)
         {
-            _course = course;
             _slider = slider;
         }
 

@@ -8,24 +8,16 @@ namespace WebHost.Pages
     public class CoursesModel : PageModel
     {
         private readonly ICourseQuery _course;
-        private readonly ICourseGroupQuery _group;
 
         public List<GetCourseGroupViewModel> Course;
-        public List<CourseGroupQueryModel> CourseGroups;
-        public CourseQuerySearchModel SearchModel;
-
-        public CoursesModel(ICourseQuery course, ICourseGroupQuery group)
+        public CoursesModel(ICourseQuery course)
         {
             _course = course;
-            _group = group;
         }
 
-        public void OnGet(CourseQuerySearchModel searchModel, List<int> groupId, string id)
+        public void OnGet(CourseQuerySearchModel searchModel, string id)
         {
             Course = _course.GetCourseGroup(id);
-            CourseGroups = _group.GetAllCourseGroup();
-            ViewData["checked"] = groupId;
-            ViewData["SearchModel"] = searchModel;
         }
     }
 }

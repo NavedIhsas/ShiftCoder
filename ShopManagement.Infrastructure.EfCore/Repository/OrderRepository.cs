@@ -163,11 +163,12 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
                 var user = _context.UserCourses.Any(x => x.AccountId == userId && x.CourseId == item.CourseId);
                 if (user) return false;
 
-                _context.UserCourses.Add(new UserCourse
+             var userCourse=   _context.UserCourses.Add(new UserCourse
                 {
                     AccountId = userId,
                     CourseId = item.CourseId
                 });
+             _context.SaveChanges();
             }
 
             _context.Update(order);
