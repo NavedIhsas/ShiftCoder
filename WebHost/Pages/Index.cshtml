@@ -2,7 +2,14 @@
 @model IndexModel
 
 @{
-    ViewData["Title"] = "خانه";
+    ViewData["Title"] = "لرن هاب ابتکاری برای یادگیری";
+    ViewData["keyWords"] = "لرن هاب ابتکاری برای یادگیری";
+    ViewData["Type"] = "public";
+    ViewData["CanonicalAddress"] = "https://ihsasdevelopment.ir/";
+    ViewData["Url"] = "https://ihsasdevelopment.ir";
+    ViewData["author"] = "Qudrat Ihsas";
+    ViewData["owner"] = "Qudrat Ihsas";
+
 }
 
 <!-- Carousel Start -->
@@ -16,10 +23,10 @@
         <div class="carousel-inner">
             @foreach (var slid in Model.Sliders)
             {
-                <div class="carousel-item @(slid == Model.Sliders.First() ? "active" : "")" style="min-height: 300px;">
-                    <img class="position-relative w-100" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt" style="min-height: 300px; object-fit: cover;">
+                <div class="men-height carousel-item @(slid == Model.Sliders.First() ? "active" : "")">
+                    <img class="position-relative w-100 .men-heightCover" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt">
                     <div class="carousel-caption d-flex align-items-center justify-content-center">
-                        <div class="p-5" style="max-width: 900px; width: 100%;">
+                        <div class="p-5 set-WithHeight">
                             <h5 class="text-white text-uppercase mb-md-3">@slid.ShortTitle</h5>
 
                             <h1 class="display-3 text-white mb-md-4">@slid.Title</h1>
@@ -53,8 +60,10 @@
     </div>
 </div>
 
-@await Component.InvokeAsync("CourseGroup")
 
+<cache expires-after="TimeSpan.FromHours(1)">
+    @await Component.InvokeAsync("CourseGroup")
+</cache>
 
 <div class="container-fluid py-5">
     <div class="container py-5">
@@ -62,7 +71,10 @@
             <h5 class="text-primary text-uppercase mb-3">دوره ها</h5>
             <h1>دوره های محبوب ما</h1>
         </div>
-        @await Component.InvokeAsync("PopularCourse")
+     
+        <cache expires-after="TimeSpan.FromHours(1)">
+            @await Component.InvokeAsync("PopularCourse")
+        </cache>
     </div>
 </div>
 
@@ -117,5 +129,6 @@
     </div>
 </div>
 <!-- Registration End -->
-
-@await Component.InvokeAsync("Articles")
+<cache expires-after="TimeSpan.FromHours(1)">
+    @await Component.InvokeAsync("Articles")
+</cache>
