@@ -4,6 +4,7 @@ using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.CourseGroupAgg;
 using ShopManagement.Domain.CourseLevelAgg;
 using ShopManagement.Domain.CourseStatusAgg;
+using ShopManagement.Domain.ForumAgg;
 using ShopManagement.Domain.OrderAgg;
 using ShopManagement.Domain.OrderDetailAgg;
 using ShopManagement.Domain.UserCoursesAgg;
@@ -25,6 +26,8 @@ namespace ShopManagement.Infrastructure.EfCore
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<UserCourse> UserCourses { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

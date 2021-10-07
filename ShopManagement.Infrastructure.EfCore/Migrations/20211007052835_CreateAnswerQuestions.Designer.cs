@@ -3,21 +3,80 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagement.Infrastructure.EfCore;
 
 namespace ShopManagement.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20211007052835_CreateAnswerQuestions")]
+    partial class CreateAnswerQuestions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ShopManagement.Domain.AnswerQuestionsAgg.Answer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("QuestionId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Answers");
+                });
+
+            modelBuilder.Entity("ShopManagement.Domain.AnswerQuestionsAgg.Question", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CourseId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Questions");
+                });
 
             modelBuilder.Entity("ShopManagement.Domain.CourseAgg.Course", b =>
                 {
@@ -274,69 +333,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagement.Domain.ForumAgg.Answer", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Body")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<long>("QuestionId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("Answers");
-                });
-
-            modelBuilder.Entity("ShopManagement.Domain.ForumAgg.Question", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Body")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CourseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Questions");
-                });
-
             modelBuilder.Entity("ShopManagement.Domain.OrderAgg.Order", b =>
                 {
                     b.Property<long>("Id")
@@ -402,6 +398,17 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                     b.ToTable("UserCourses");
                 });
 
+            modelBuilder.Entity("ShopManagement.Domain.AnswerQuestionsAgg.Answer", b =>
+                {
+                    b.HasOne("ShopManagement.Domain.AnswerQuestionsAgg.Question", "Question")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+                });
+
             modelBuilder.Entity("ShopManagement.Domain.CourseAgg.Course", b =>
                 {
                     b.HasOne("ShopManagement.Domain.CourseGroupAgg.CourseGroup", "CourseGroup")
@@ -449,17 +456,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                     b.Navigation("SubGroup");
                 });
 
-            modelBuilder.Entity("ShopManagement.Domain.ForumAgg.Answer", b =>
-                {
-                    b.HasOne("ShopManagement.Domain.ForumAgg.Question", "Question")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-                });
-
             modelBuilder.Entity("ShopManagement.Domain.OrderDetailAgg.OrderDetail", b =>
                 {
                     b.HasOne("ShopManagement.Domain.CourseAgg.Course", "Course")
@@ -490,6 +486,11 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("ShopManagement.Domain.AnswerQuestionsAgg.Question", b =>
+                {
+                    b.Navigation("Answers");
+                });
+
             modelBuilder.Entity("ShopManagement.Domain.CourseAgg.Course", b =>
                 {
                     b.Navigation("CourseEpisodes");
@@ -514,11 +515,6 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
             modelBuilder.Entity("ShopManagement.Domain.CourseStatusAgg.CourseStatus", b =>
                 {
                     b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("ShopManagement.Domain.ForumAgg.Question", b =>
-                {
-                    b.Navigation("Answers");
                 });
 
             modelBuilder.Entity("ShopManagement.Domain.OrderAgg.Order", b =>

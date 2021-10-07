@@ -67,7 +67,7 @@
 
         <!---display show for mobile--->
         <div class="mb-5">
-            <h6 class="text-primary mb-3 d-sm-block d-md-block d-lg-none">@Tools.ChangeTimeToFarsi(Model.Course.CreationDate, "yyyy / M - MMMM ، dddd")</h6>
+            <h6 class="text-primary mb-3 d-sm-block d-md-block d-lg-none">@Tools.ChangeTimeToFarsi(Model.Course.CreationDate, "yyyy / MM ، dddd")</h6>
             <h1 class="mb-5 d-sm-block d-md-block d-lg-none">@Model.Course.ShortDescription</h1>
         </div>
 
@@ -185,7 +185,9 @@
                 @Model.Course.TeacherBio
             </p>
         </div>
-
+        <!----Forum-->
+        <a asp-page="Forum" asp-page-handler="Question" asp-route-id="@Model.Course.Id" class="btn btn-block btn-info mb-3 qustion">پرسش و پاسخ</a>
+        <br />
         <!-- Category List -->
         <div class="mb-5 d-lg-block d-none">
             <h3 class="text-uppercase mb-4">دسته بندی ها</h3>
@@ -210,7 +212,7 @@
                     <img  class="img-fluid rounded" style="max-width: 80px;max-height: 80px" src="~/FileUploader/@latestCourse.Picture" alt="@latestCourse.PictureAlt" title="@latestCourse.PictureTitle">
                     <div class="pl-3">
                         <h6 class="m-1 mr-3">@latestCourse.ShortDescription</h6>
-                        <small class="mr-3" dir="rtl">@Tools.ChangeTimeToFarsi(latestCourse.CreationDate, "M - MMMM / yyyy")</small>
+                        <small class="mr-3" dir="rtl">@Tools.ChangeTimeToFarsi(latestCourse.CreationDate, "dddd- MM / yyyy")</small>
                     </div>
                 </a>
             }
@@ -231,7 +233,7 @@
 
     <div class="col-lg-8" style="position: relative; float: left">
     <div class="mb-5">
-            <h6 class="text-primary mb-3 d-lg-block d-none">@Tools.ChangeTimeToFarsi(Model.Course.CreationDate, "yyyy / M - MMMM ، dddd")</h6>
+            <h6 class="text-primary mb-3 d-lg-block d-none">@Tools.ChangeTimeToFarsi(Model.Course.CreationDate, "yyyy / MM ، dddd")</h6>
         <h1 class="mb-5 d-lg-block d-none">@Model.Course.ShortDescription</h1>
         <img class="img-fluid rounded w-100 mb-4" src="~/FileUploader/@Model.Course.Picture" alt="@Model.Course.PictureAlt" title="@Model.Course.PictureTitle">
         @Html.Raw(Model.Course.Description)
@@ -493,7 +495,7 @@
                     <img  class="img-fluid rounded" style="max-width: 80px;max-height: 80px" src="~/FileUploader/@latestCourse.Picture" alt="@latestCourse.PictureAlt" title="@latestCourse.PictureTitle">
                     <div class="pl-3">
                         <h6 class="m-1 mr-3">@latestCourse.ShortDescription</h6>
-                        <small class="mr-3" dir="rtl">@Tools.ChangeTimeToFarsi(latestCourse.CreationDate, "M - MMMM / yyyy")</small>
+                        <small class="mr-3" dir="rtl">@Tools.ChangeTimeToFarsi(latestCourse.CreationDate, "dddd- MM / yyyy")</small>
                     </div>
                 </a>
             }

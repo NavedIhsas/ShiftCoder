@@ -84,7 +84,7 @@
                             <img class="img-fluid rounded" src="~/FileUploader/@item.Picture" style="width: 80px; height: 80px" title="@item.PictureTitle" alt="@item.PictureAtl">
                             <div class="pl-3">
                                 <h6 class="m-1 mr-2">@item.ShortDescription</h6>
-                                <small>@Tools.ChangeTimeToFarsi(item.CreationDate, "M-MMMM / yyyy")</small>
+                                <small>@Tools.ChangeTimeToFarsi(item.CreationDate, "dddd- MM / yyyy")</small>
                             </div>
                         </a>
                     }
@@ -111,7 +111,7 @@
                                 <img class="img-fluid" src="~/FileUploader/@article.Picture" title="@article.PictureTitle" alt="@article.PictureAtl">
                                 <a class="blog-overlay text-decoration-none" asp-page="SingleArticle" asp-route-id="@article.Slug">
                                     <h5 class="text-white mb-3">@article.Title</h5>
-                                    <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate, "M-MMMM / yyyy")</p>
+                                    <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate, "dddd- MM / yyyy")</p>
                                 </a>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                             <img class="img-fluid rounded" src="~/FileUploader/@item.Picture" style="width: 80px; height: 80px" title="@item.PictureTitle" alt="@item.PictureAtl">
                             <div class="pl-3">
                                 <h6 class="m-1 mr-2">@item.ShortDescription</h6>
-                                <small>@Tools.ChangeTimeToFarsi(item.CreationDate, "M-MMMM / yyyy")</small>
+                                <small>@Tools.ChangeTimeToFarsi(item.CreationDate, "dddd- MM / yyyy")</small>
                             </div>
                         </a>
                     }

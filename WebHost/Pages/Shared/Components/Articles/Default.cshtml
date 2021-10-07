@@ -14,7 +14,7 @@
                         <img class="img-fluid" src="~/FileUploader/@article.Picture" title="@article.PictureTitle" alt="@article.PictureAtl">
                         <a class="blog-overlay text-decoration-none" asp-page="SingleArticle" asp-route-id="@article.Slug">
                             <h5 class="text-white mb-3">@article.ShortDescription</h5>
-                            <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate, "M-MMMM / dddd")</p>
+                            <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate, "dddd- MM / yyyy")</p>
                         </a>
                     </div>
                 </div>

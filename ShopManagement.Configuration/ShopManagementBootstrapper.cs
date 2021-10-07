@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ShiftCoderQuery.Contract.Course;
 using ShiftCoderQuery.Contract.CourseGroup;
+using ShiftCoderQuery.Contract.Forum.Question;
 using ShiftCoderQuery.Query;
 using Shop.Management.Application.Contract.Course;
 using Shop.Management.Application.Contract.CourseEpisode;
@@ -54,6 +55,7 @@ namespace ShopManagement.Configuration
             service.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
 
             service.AddTransient<IPermissionExposer, ShopPermissionExposer>();
+            service.AddTransient<IQuestionQuery, QuestionQuery>();
 
 
             service.AddDbContext<ShopContext>(option => { option.UseSqlServer(connection); });

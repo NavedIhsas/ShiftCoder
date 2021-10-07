@@ -545,9 +545,9 @@ pre code {
 @media (min-width: 992px) {
     .container, .container-sm, .container-md, .container-lg { max-width: 960px; }
 }
-
+/*change meta this*/
 @media (min-width: 1200px) {
-    .container, .container-sm, .container-md, .container-lg, .container-xl { max-width: 1140px; }
+    .container, .container-sm, .container-md, .container-lg, .container-xl { max-width: 1300px; }
 }
 
 .row {
@@ -2170,6 +2170,7 @@ fieldset:disabled a.btn { pointer-events: none; }
     border-color: #117a8b;
     color: #fff;
 }
+
 
 .btn-info:focus, .btn-info.focus {
     background-color: #138496;

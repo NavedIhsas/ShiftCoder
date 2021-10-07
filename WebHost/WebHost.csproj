@@ -5,6 +5,13 @@
     <StartupObject></StartupObject>
   </PropertyGroup>
 	
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+	
   <ItemGroup>
     <Compile Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
     <Content Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
@@ -43,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\FileUploader\CKEditorImages\" />
     <Folder Include="wwwroot\FileUploader\UserAvatar\Thump\" />
   </ItemGroup>
 

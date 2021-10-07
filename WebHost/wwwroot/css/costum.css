@@ -22,3 +22,58 @@
     max-width: 900px !important;
     width: 100% !important;
 }
+.qustion {
+    background-color: #eb1460 !important;
+    border-color: #eb1460 !important;
+}
+
+.ck-editor__editable {
+    height: 400px !important;
+}
+
+.full-hegiht {
+    width: 100% !important;
+}
+
+.container-name-job-teacher ul li {
+    position: relative;
+    padding: 0 14px 0 0;
+    line-height: 23px;
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: #686e71;
+    display: inline-table;
+    margin-left: 20px;
+}
+
+.ask-question {
+    position: relative;
+    padding: 0 14px 0 0;
+    line-height: 23px;
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: #686e71;
+    margin-left: 20px;
+    list-style-type: none;
+}
+
+.discussion:after {
+    content: "\22EE";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    color: #686e71;
+    border-radius: 50%;
+    line-height: 1;
+    text-align: center;
+}
+
+.text-earth {
+    color: #aabbc2;
+    font-weight: 500;
+}
+
+.forum-cover-photo {
+    max-width: 50px !important;
+    max-height: 50px !important;
+}
