@@ -100,6 +100,7 @@ namespace ShopManagement.Infrastructure.EfCore.Repository
             return course;
         }
 
+
         public string GetCourseSlugBy(long courseId)
         {
             return _context.Courses.Find(courseId).Slug;

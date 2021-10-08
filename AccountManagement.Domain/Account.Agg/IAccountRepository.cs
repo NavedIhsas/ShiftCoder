@@ -13,6 +13,7 @@ namespace AccountManagement.Domain.Account.Agg
         long GetUserIdBy(string email);
         Account? GetUserBy(string email);
         Account GetUserBy(long id);
+        Account GetUserBy(long? id);
         Account? GetUserByActiveCode(string activeCode);
         bool EmailConfirm(string activeCode);
         List<AccountViewModel> SelectList();

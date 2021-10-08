@@ -1,74 +1,81 @@
-﻿@page
-
+﻿@page "{id}"
+@inject IAuthHelper _authHelper;
+@using _0_FrameWork.Application
 @model WebHost.Pages.ForumModel
 @{
     ViewData["Title"] = "پرسش و پاسخ";
 }
 
-
-
 <div class="container py-5">
     <div Class="row">
+
         <div class="col-lg-8 col-sm-12 col-xs-12">
-            <section id="body-container" class="container">
-                <div class="condition-course condition-course-mb">
-                    <div id="container-profile-teacher">
-                        <div id="container-img-name-job-teacher">
-                            <img src="~/img/user.jpg" alt="Photo Teacher" id="img-info-teacher">
-                            <div id="container-name-job-teacher">
-                                <h2 id="name-info-teacher">ماهان فروزنده نیک</h2>
-                                <ul class="row ask-question">
-                                    <li class="p-1"><span><a href="/courses/4372/%D8%A2%D9%85%D9%88%D8%B2%D8%B4-asp-netcore%D9%BE%D8%B1%D9%88%DA%98%D9%87-%D9%85%D8%AD%D9%88%D8%B1">آموزش Asp.Net Core پروژه محور</a></span></li>
-                                    <li class="discussion" style="font-size: 2em;"></li>
-                                    <li class="p-1"><span>10 بازدید </span></li>
-                                    <li class="discussion" style="font-size: 2em;"></li>
-                                    <li class="p-1"><span>4 تا پاسخ </span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <a class="btn btn-primary btn-block" asp-page="Forum" asp-page-handler="Question" asp-route-id="@ViewData["CourseId"]">پرسش سوال</a>
 
-            <section id="body-container" class="container">
-                <div class="condition-course condition-course-mb">
-                    <div id="container-profile-teacher">
-                        <div id="container-img-name-job-teacher">
-                            <img src="~/img/user.jpg" alt="Photo Teacher" id="img-info-teacher">
-                            <div id="container-name-job-teacher">
-                                <h2 id="name-info-teacher">ماهان فروزنده نیک</h2>
-                                <ul class="row ask-question">
-                                    <li class="p-1"><span><a href="/courses/4372/%D8%A2%D9%85%D9%88%D8%B2%D8%B4-asp-netcore%D9%BE%D8%B1%D9%88%DA%98%D9%87-%D9%85%D8%AD%D9%88%D8%B1">آموزش Asp.Net Core پروژه محور</a></span></li>
-                                    <li class="discussion" style="font-size: 2em;"></li>
-                                    <li class="p-1"><span>10 بازدید </span></li>
-                                    <li class="discussion" style="font-size: 2em;"></li>
-                                    <li class="p-1"><span>4 تا پاسخ </span></li>
-                                </ul>
+            @foreach (var item in Model.Pagination.Questions)
+            {
+                <section id="body-container" class="container">
+                    <div class="condition-course condition-course-mb">
+                        <div id="container-profile-teacher">
+                            <div id="container-img-name-job-teacher">
+                                <img src="~/img/user.jpg" class="img-responsive d-none d-lg-block" alt="Photo Teacher" id="img-info-teacher">
+                                <div id="container-name-job-teacher">
+                                    <h2 id="name-info-teacher">
+                                        <a asp-page="Forum" asp-page-handler="ShowQuestion" asp-route-id="@item.Id">@item.Title</a>
+                                    </h2>
+                                    <ul class="row ask-question">
+                                        <li class="p-1">
+                                            <span>
+                                                <a asp-page="SingleCourse" asp-route-id="@item.CourseSlug">@item.CourseName</a>
+                                            </span>
+                                        </li>
+                                        <li class="discussion"></li>
+                                        <li class="p-1">
+                                            <span>10 بازدید </span>
+                                        </li>
+                                        <li class="discussion"></li>
+                                        <li class="p-1">
+                                            <span>@item.AnswerCount تا پاسخ </span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            }
 
-            <section id="body-container" class="container">
-                <div class="condition-course condition-course-mb">
-                    <div id="container-profile-teacher">
-                        <div id="container-img-name-job-teacher">
-                            <img src="~/img/user.jpg" alt="Photo Teacher" id="img-info-teacher">
-                            <div id="container-name-job-teacher">
-                                <h2 id="name-info-teacher">ماهان فروزنده نیک</h2>
-                                <ul class="row ask-question">
-                                    <li class="p-1"><span><a href="/courses/4372/%D8%A2%D9%85%D9%88%D8%B2%D8%B4-asp-netcore%D9%BE%D8%B1%D9%88%DA%98%D9%87-%D9%85%D8%AD%D9%88%D8%B1">آموزش Asp.Net Core پروژه محور</a></span></li>
-                                    <li class="discussion" style="font-size: 2em;"></li>
-                                    <li class="p-1"><span>10 بازدید </span></li>
-                                    <li class="discussion" style="font-size: 2em;"></li>
-                                    <li class="p-1"><span>4 تا پاسخ </span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+            @if (Model.Pagination.PageCount > 1)
+            {
+                <div class="col-12 mt-lg-4">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-lg justify-content-center mb-0">
+                            <li class="page-item @(Model.Pagination.CurrentPage < 2 ? "disabled" : "")">
+                                <a class="page-link" asp-page="Forum" asp-route-pageId=@(Model.Pagination.CurrentPage - 1) aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">قبلی</span>
+                                </a>
+                            </li>
+
+                            @for (var i = 1; i <= Model.Pagination.PageCount; i++)
+                            {
+                                <li class="page-item @(i == Model.Pagination.CurrentPage ? "active" : "")">
+
+                                    <a class="page-link" asp-page="Forum" asp-route-pageId="@i">@i</a>
+
+                                </li>
+                            }
+
+                            <li class="page-item @(Model.Pagination.CurrentPage >= Model.Pagination.PageCount ? "disabled" : "")">
+                                <a class="page-link" asp-page="Forum" asp-route-pageId=@(Model.Pagination.CurrentPage + 1) aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">بعدی</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-            </section>
+            }
         </div>
         <div class="col-lg-4 mt-5 mt-lg-0">
             <!-- Search Form -->
@@ -153,4 +160,3 @@
         </div>
     </div>
 </div>
-

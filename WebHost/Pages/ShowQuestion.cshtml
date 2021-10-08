@@ -1,125 +1,106 @@
-﻿@page
-@model WebHost.Pages.ShowQuestionModel
+﻿@using _0_FrameWork.Application
+@model ShiftCoderQuery.Contract.Forum.Question.QuestionQueryModel
 @{
+    ViewData["Title"] = "موضوع سوال";
+    Layout = "Shared/_Layout";
 }
+
 <div class="container py-5">
     <div Class="row">
         <div class="col-lg-8 col-sm-12 col-xs-12">
             <section id="body-container" class="container">
                 <div class="condition-course condition-course-mb">
-                    <div>
-                        <p class="paragraph-support">1400/06/03</p>
+                    <div class="img-responsive">
+                        <p class="paragraph-support">@Model.CreationDate.TimeAgo()</p>
 
                         <p class="text-earth">
-                            سشلام من ینمب ینبتن شمای ترنی بت
+                            @Model.Title:
                         </p>
-                        <br />
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه
-                            ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                        </p>
+                        <br/>
+                        @Html.Raw(Model.Body)
                     </div>
-                    <br />
+                    <br/>
                     <div id="container-img-name-job-teacher">
-                        <img src="~/img/user.jpg" alt="Photo Teacher" class="forum-cover-photo" id="img-info-teacher">
+                        <img src="~/img/user.jpg" alt="@Model.Name" class="forum-cover-photo d-lg-block d-none" id="img-info-teacher">
                         <div id="container-name-job-teacher">
-                            <h4 id="name-info-teacher"><a href="#">ماهان فروزنده نیک</a></h4>
+                            <h4 id="name-info-teacher">
+                                <a>@Model.Name</a>
+                            </h4>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section class="container row">
-                <br />
-                <br />
-                <div id="container-img-name-job-teacher " class="col-md-2 mt-lg-5">
-                    <img src="~/img/DefaultImg/answer-comment.png" alt="Photo Teacher" id="img-info-teacher">
-                    <p class="mt-4">قدرت احساس</p>
-                </div>
-
-
-                <div class="condition-course condition-course-mb col-md-10">
-                    <div>
-                        <p class="paragraph-support">1400/06/03</p>
-
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه
-                            ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                        </p>
+                @foreach (var answer in Model.Pagination.Answers)
+                {
+                    <br/>
+                    <br/>
+                    <div id="container-img-name-job-teacher " class="col-md-2 mt-lg-5">
+                        <img src="~/img/user.jpg" alt="@Model.Name" class="img-responsive" id="img-info-teacher">
+                        <p class="mt-2">@answer.Name</p>
                     </div>
-                </div>
-
+                    <div class="condition-course condition-course-mb col-md-10">
+                        <div>
+                            <p class="paragraph-support">@answer.CreationDate.TimeAgo()</p>
+                            @Html.Raw(answer.Body)
+                        </div>
+                    </div>
+                }
             </section>
 
+            @if (Model.Pagination.PageCount > 1)
+            {
+                <div class="col-12 mt-lg-4">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-lg justify-content-center mb-0">
+                            <li class="page-item @(Model.Pagination.CurrentPage < 2 ? "disabled" : "")">
+                                <a class="page-link" asp-page="Forum" asp-page-handler="ShowQuestion" asp-route-pageId=@(Model.Pagination.CurrentPage - 1) aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">قبلی</span>
+                                </a>
+                            </li>
+                            @for (var i = 1; i <= Model.Pagination.PageCount; i++)
+                            {
+                                <li class="page-item @(i == Model.Pagination.CurrentPage ? "active" : "")">
+                                    <a class="page-link" asp-page="Forum" asp-page-handler="ShowQuestion" asp-route-pageId="@i">@i</a>
 
-            <section class="container row">
-                <br />
-                <br />
-                <div id="container-img-name-job-teacher " class="col-md-2 mt-lg-5">
-                    <img src="~/img/DefaultImg/answer-comment.png" alt="Photo Teacher" id="img-info-teacher">
-                    <p class="mt-4">قدرت احساس</p>
+                                </li>
+                            }
+
+                            <li class="page-item @(Model.Pagination.CurrentPage >= Model.Pagination.PageCount ? "disabled" : "")">
+                                <a class="page-link" asp-page="Forum" asp-page-handler="ShowQuestion" asp-route-pageId=@(Model.Pagination.CurrentPage + 1) aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">بعدی</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
+            }
 
-
-                <div class="condition-course condition-course-mb col-md-10">
-                    <div>
-                        <p class="paragraph-support">1400/06/03</p>
-
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه
-                            ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                        </p>
+            <br/>
+            <div class="contact-form bg-secondary rounded p-5 mt-lg-5">
+                <div id="success" class="text-center text-primary">
+                    <h3>افزدون پاسخ جدید</h3>
+                </div>
+                <form method="post" asp-page="Forum" asp-page-handler="ShowAnswer">
+                    <input type="hidden" name="QuestionId" value="@Model.Id"/>
+                    <div class="form-group">
+                        <label for="name">نام *</label>
+                        <input name="name" type="text" class="form-control border-0" id="name" required oninvalid="this.setCustomValidity('نام خود را کنید ویا در سایت لاگین  نماید.')"
+                               oninput="setCustomValidity('')">
                     </div>
-                </div>
 
-            </section>
-
-
-            <section class="container row">
-                <br />
-                <br />
-                <div id="container-img-name-job-teacher " class="col-md-2 mt-lg-5">
-                    <img src="~/img/DefaultImg/answer-comment.png" alt="Photo Teacher" id="img-info-teacher">
-                    <p class="mt-4">قدرت احساس</p>
-                </div>
-
-
-                <div class="condition-course condition-course-mb col-md-10">
-                    <div>
-                        <p class="paragraph-support">1400/06/03</p>
-
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه
-                            ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                        </p>
+                    <div class="form-group">
+                        <label for="message">پاسخ خود را بنویسید</label>
+                        <textarea name="Body" id="editor" cols="30" class="form-control border-0"></textarea>
                     </div>
-                </div>
-
-            </section>
-
-
-
-            <section class="container row">
-                <br />
-                <br />
-                <div id="container-img-name-job-teacher " class="col-md-2 mt-lg-5">
-                    <img src="~/img/DefaultImg/answer-comment.png" alt="Photo Teacher" id="img-info-teacher">
-                    <p class="mt-4">قدرت احساس</p>
-                </div>
-
-
-                <div class="condition-course condition-course-mb col-md-10">
-                    <div>
-                        <p class="paragraph-support">1400/06/03</p>
-
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه
-                            ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                        </p>
+                    <div class="form-group mb-0 text-left">
+                        <input type="submit" value="ثبت پاسخ شما" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
                     </div>
-                </div>
-
-            </section>
+                </form>
+            </div>
 
         </div>
         <div class="col-lg-4 mt-5 mt-lg-0">
@@ -205,3 +186,40 @@
         </div>
     </div>
 </div>
+
+
+@section Scripts
+{
+    <script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/translations/fa.js"></script>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'),
+                {
+                    language: 'fa',
+                    ckfinder: { uploadUrl: '/index/?handler=UploadImage' },
+
+                    toolbar: {
+                        items: [
+                            'heading', '|',
+                            'fontsize', '|',
+                            'alignment', '|',
+                            'fontColor', 'fontBackgroundColor', '|',
+                            'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                            'outdent', 'indent', '|',
+                            'bulletedList', 'numberedList', 'todoList', '|',
+                            'code', 'codeBlock', '|',
+                            'insertTable', '|',
+                            'uploadImage', 'blockQuote', '|',
+                            'undo', 'redo'
+                        ],
+                        shouldNotGroupWhenFull: true
+
+                    }
+                })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+}

@@ -55,7 +55,7 @@ namespace ShopManagement.Configuration
             service.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
 
             service.AddTransient<IPermissionExposer, ShopPermissionExposer>();
-            service.AddTransient<IQuestionQuery, QuestionQuery>();
+            service.AddTransient<IForumQuery, ForumQuery>();
 
 
             service.AddDbContext<ShopContext>(option => { option.UseSqlServer(connection); });

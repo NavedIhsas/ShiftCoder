@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace ShiftCoderQuery.Contract.Forum.Answer
+﻿namespace ShiftCoderQuery.Contract.Forum.Answer
 {
-    public class AnswerQueryModel
+    public class AddAnswerQueryModel
     {
         public long QuestionId { get; set; }
         public long? AccountId { get; set; }
         public string Body { get; set; }
         public string Name { get; set; }
-        public DateTime CreationDate { get; set; }
     }
 }

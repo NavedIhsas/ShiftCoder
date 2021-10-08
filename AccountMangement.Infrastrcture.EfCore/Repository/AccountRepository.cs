@@ -102,6 +102,11 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
         {
             return _context.Accounts.SingleOrDefault(x => x.Email == FixedText.FixEmail(email));
         }
+        public Account GetUserBy(long? id)
+        {
+            return _context.Accounts.Find(id);
+        }
+
 
         public Account GetUserBy(long id)
         {
