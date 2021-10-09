@@ -5,6 +5,7 @@ using ShopManagement.Domain.CourseEpisodeAgg;
 using ShopManagement.Domain.CourseGroupAgg;
 using ShopManagement.Domain.CourseLevelAgg;
 using ShopManagement.Domain.CourseStatusAgg;
+using ShopManagement.Domain.ForumAgg;
 using ShopManagement.Domain.OrderDetailAgg;
 using ShopManagement.Domain.UserCoursesAgg;
 
@@ -73,7 +74,8 @@ namespace ShopManagement.Domain.CourseAgg
         public CourseLevel CourseLevel { get; private set; }
         public CourseStatus CourseStatus { get; private set; }
         public List<CourseEpisode> CourseEpisodes { get; private set; }
-        public List<UserCourse> UserCourses { get; set; }
+        public List<UserCourse> UserCourses { get;private set; }
+        public List<Question> Questions { get;private set; }
 
         public void Edit(string name, string description, string shortDescription, string file, double price,
             string picture, string pictureAlt, string pictureTitle, string keyWords, string metaDescription,

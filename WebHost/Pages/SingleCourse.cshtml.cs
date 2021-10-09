@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
@@ -10,7 +11,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SharpCompress.Archives;
 using ShiftCoderQuery.Contract.Course;
 using ShopManagement.Domain.CourseAgg;
-using ShopManagement.Domain.CourseEpisodeAgg;
 
 namespace WebHost.Pages
 {
@@ -22,37 +22,43 @@ namespace WebHost.Pages
         private readonly ICommentRepository _commentRepository;
         private readonly ICourseQuery _course;
         private readonly ICourseRepository _courseRepository;
-        private readonly ICourseEpisodeRepository _episode;
         private readonly INotificationRepository _notification; // ReSharper disable  CommentTypo
         public SingleCourseModel(ICourseQuery course, ICommentApplication aaApplication, IAccountRepository account,
-            ICourseEpisodeRepository episode, INotificationRepository notification,
+             INotificationRepository notification,
             ICommentRepository commentRepository, IAuthHelper authHelper, ICourseRepository courseRepository)
         {
             _course = course;
             _aaApplication = aaApplication;
             _account = account;
-            _episode = episode;
             _notification = notification;
             _commentRepository = commentRepository;
             _authHelper = authHelper;
             _courseRepository = courseRepository;
         }
 
-
         public CourseQueryModel Course;
         public Account Account;
+        public List<LatestCourseViewModel> LatestCourse;
+        public bool UserInCourse;
+        public bool IsAuthenticated;
+        public string CurrentFullName;
 
         public IActionResult OnGet(string id, long episode = 0, string type = "")
         {
             ViewData["Type"] = type;
-
             var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
-            Course = _course.GetCourseBySlug(id, ipAddress);
 
-            //get user avatar for comment
+            Course = _course.GetCourseBySlug(id, ipAddress);
+            UserInCourse = _course.UserInCourse(User.Identity.Name, Course.Id);
+            LatestCourse = _course.LatestCourses();
+            IsAuthenticated = _authHelper.IsAuthenticated();
+            CurrentFullName = _authHelper.CurrentAccountFullName();
+
+            //get user avatar for comment in View
             if (_authHelper.IsAuthenticated())
                 Account = _account.GetUserBy(User.Identity.Name);
 
+            #region download and play video
 
             if (episode != 0 && _authHelper.IsAuthenticated())
             {
@@ -104,6 +110,8 @@ namespace WebHost.Pages
 
                 ViewData["FilePath"] = filePath;
             }
+
+            #endregion
 
             return Page();
         }

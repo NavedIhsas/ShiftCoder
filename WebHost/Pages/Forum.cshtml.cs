@@ -42,7 +42,8 @@ namespace WebHost.Pages
 
         public IActionResult OnGetShowQuestion(long id,int pageId=1)
         {
-            Question = _question.ShowQuestion(id,pageId);
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            Question = _question.ShowQuestion(id,ipAddress,pageId);
             return Partial("ShowQuestion",Question);
         }
 

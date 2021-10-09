@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
@@ -34,10 +37,51 @@ namespace ShopManagement.Application
             var courseGroupSlug = _courseGroup.GetSlug(command.CourseGroupId);
 
             //path
-            var pictureName = _fileUploader.Uploader(command.Picture, courseGroupSlug);
+            var pictureName = _fileUploader.Uploader(command.Picture, $"/Courses/{courseGroupSlug}");
             var fileName = _fileUploader.Uploader(command.File, courseGroupSlug + "/DemoFile");
             var poster = _fileUploader.Uploader(command.DemoPoster, courseGroupSlug + "/DemoFile");
 
+            ////resize image
+            if (command.Picture != null)
+            {
+                //resize to 600 X 400
+                #region 600 X 400
+
+                var image = Image.FromStream(command.Picture.OpenReadStream());
+                var resized = new Bitmap(image, new Size(600, 400));
+
+                using var imageStream = new MemoryStream();
+                resized.Save(imageStream, ImageFormat.Jpeg);
+                var imageBytes = imageStream.ToArray();
+
+                var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/", imgName);
+
+                using var streamImg = new FileStream(
+                    path, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
+                streamImg.Write(imageBytes, 0, imageBytes.Length);
+
+                #endregion
+
+                //resize to 80 X 80
+                #region 80 x 80
+
+                var img = Image.FromStream(command.Picture.OpenReadStream());
+                var resizedImg = new Bitmap(img, new Size(80, 80));
+
+                using var imgStream = new MemoryStream();
+                resizedImg.Save(imgStream, ImageFormat.Jpeg);
+                var imgBytes = imgStream.ToArray();
+
+                var imageName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imgPath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/80X80", imageName);
+
+                using var stream = new FileStream(
+                    imgPath, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
+                stream.Write(imgBytes, 0, imgBytes.Length);
+
+                #endregion
+            }
 
             //create
             var course = new Course(command.Name, command.Description, command.ShortDescription, fileName,
@@ -83,37 +127,58 @@ namespace ShopManagement.Application
             var courseGroupSlug = _courseGroup.GetSlug(command.CourseGroupId);
 
             //get path for save file
-            var pictureName = _fileUploader.Uploader(command.Picture, courseGroupSlug);
+            var pictureName = _fileUploader.Uploader(command.Picture,$"/Courses/{courseGroupSlug}");
             var fileName = _fileUploader.Uploader(command.File, courseGroupSlug + "/DemoFile");
             var poster = _fileUploader.Uploader(command.DemoPoster, courseGroupSlug + "/DemoFile");
 
 
             ////resize image
-            //if (command.Picture != null)
-            //{ //resize image
-            //    var image = Image.FromStream(command.Picture.OpenReadStream());
-            //    var resized = new Bitmap(image, new System.Drawing.Size(80, 80));
-            //    using var imageStream = new MemoryStream();
-            //    resized.Save(imageStream, ImageFormat.Jpeg);
-            //    var imageBytes = imageStream.ToArray();
+            if (command.Picture != null)
+            {
+                //resize to 600 x 400
+                #region 600 X400
 
+                var image = Image.FromStream(command.Picture.OpenReadStream());
+                var resized = new Bitmap(image, new Size(600, 400));
 
-            //    var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
-            //    var path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/css",imgName);
+                using var imageStream = new MemoryStream();
+                resized.Save(imageStream, ImageFormat.Jpeg);
+                var imageBytes = imageStream.ToArray();
 
-            //    if (!Directory.Exists(path))
-            //        Directory.CreateDirectory(path); 
+                var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/", imgName);
 
-            //    using var stream = new FileStream(
-            //        path, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
-            //    stream.Write(imageBytes, 0, imageBytes.Length);
-            //}
+                using var stream = new FileStream(
+                    path, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
+                stream.Write(imageBytes, 0, imageBytes.Length);
+
+                #endregion
+
+                //resize to 80 X 80
+                #region 80 x 80
+
+                var img = Image.FromStream(command.Picture.OpenReadStream());
+                var resizedImg = new Bitmap(img, new Size(80, 80));
+
+                using var imgStream = new MemoryStream();
+                resizedImg.Save(imgStream, ImageFormat.Jpeg);
+                var imgBytes = imgStream.ToArray();
+
+                var imageName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imgPath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/80X80", imageName);
+
+                using var streamImg = new FileStream(
+                    imgPath, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
+                streamImg.Write(imgBytes, 0, imgBytes.Length);
+
+                #endregion
+            }
 
             //edit
             course.Edit(command.Name, command.Description, command.ShortDescription, fileName,
                 command.Price, pictureName, command.PictureAlt, command.PictureTitle, command.KeyWords,
                 command.MetaDescription, command.Slug.Slugify(), command.Code, command.CourseGroupId,
-                    command.CourseLevelId, command.CourseStatusId, poster, command.TeacherId,command.CanonicalAddress);
+                    command.CourseLevelId, command.CourseStatusId,poster, command.TeacherId,command.CanonicalAddress);
 
             //check duplicate course
             if (_course.IsExist(x =>
@@ -123,8 +188,7 @@ namespace ShopManagement.Application
             //update and save change 
             _course.Update(course);
             _course.SaveChanges();
-            return operation.Succeeded();
-        }
+            return operation.Succeeded(); }
 
         public EditCourseViewModel GetDetails(long id)
         {

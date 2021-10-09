@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _0_FrameWork.Domain;
+using ShopManagement.Domain.CourseAgg;
 
 namespace ShopManagement.Domain.ForumAgg
 {
@@ -31,6 +32,7 @@ namespace ShopManagement.Domain.ForumAgg
         public string Slug { get;private set; }
         public bool IsTrue { get; private set; }
         public DateTime ModifiedDate { get; private set; }
-        public List<Answer> Answers { get; set; }
+        public List<Answer> Answers { get;private set; }
+        public Course Course { get;private set; }
     }
 }

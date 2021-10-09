@@ -2,8 +2,10 @@
 @using _0_Framework.Application
 @using _0_FrameWork.Application
 @using Microsoft.EntityFrameworkCore
+@using ShopManagement.Domain.CourseGroupAgg
 @model WebHost.Pages.GetAllCoursesModel
 @inject IAuthHelper _authHelper
+@inject ICourseGroupRepository _courseGroup
 @{
     ViewData["Title"] = "دوره های لرن هاب";
 }
@@ -82,8 +84,11 @@
                     <h3 class="text-uppercase mb-4">آخرین دوره ها</h3>
                     @foreach (var recentPost in Model.LatestCourse)
                     {
+                        var courseGroupSlug = _courseGroup.GetSlug(recentPost.CourseGroupId);
+                        var picture = recentPost.Picture.Replace($"/Courses/{courseGroupSlug}/",string.Empty);
+
                         <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleCourse" asp-route-id="@recentPost.Slug">
-                            <img class="img-fluid rounded photo-size" src="~/FileUploader/@recentPost.Picture" title="@recentPost.PictureTitle" alt="@recentPost.PictureAlt">
+                            <img class="img-fluid rounded" src="~/FileUploader/Thumb/80X80/@picture" title="@recentPost.PictureTitle" alt="@recentPost.PictureAlt">
                             <div class="pl-3">
                                 <h6 class="m-1">@recentPost.ShortDescription</h6>
                                 <small>@Tools.ChangeTimeToFarsi(recentPost.CreationDate, "dddd- MM / yyyy")</small>
@@ -113,9 +118,11 @@
                     <div class="row">
                         @foreach (var course in Model.Course.Courses)
                         {
+                            var courseGroupSlug = _courseGroup.GetSlug(course.CourseGroupId);
+                            var picture = course.Picture.Replace($"/Courses/{courseGroupSlug}/",string.Empty);
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="rounded overflow-hidden mb-2">
-                                    <img class="img-fluid" src="~/FileUploader/@course.Picture" title="@course.PictureTitle" alt="@course.PictureAlt">
+                                    <img class="img-fluid" src="~/FileUploader/Thumb/@picture" title="@course.PictureTitle" alt="@course.PictureAlt">
                                     <div class="bg-secondary p-4">
                                         <div class="d-flex justify-content-between mb-3">
                                             <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>@course.UserCourse.Count دانشجو</small>
@@ -192,8 +199,11 @@
                     <h3 class="text-uppercase mb-4">آخرین دوره ها</h3>
                     @foreach (var recentPost in Model.LatestCourse)
                     {
+                        var courseGroupSlug = _courseGroup.GetSlug(recentPost.CourseGroupId);
+                        var picture = recentPost.Picture.Replace($"/Courses/{courseGroupSlug}/",string.Empty);
+
                         <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleCourse" asp-route-id="@recentPost.Slug">
-                            <img class="img-fluid rounded photo-size" src="~/FileUploader/@recentPost.Picture" title="@recentPost.PictureTitle" alt="@recentPost.PictureAlt">
+                            <img class="img-fluid rounded" src="~/FileUploader/Thumb/80X80/@picture" title="@recentPost.PictureTitle" alt="@recentPost.PictureAlt">
                             <div class="pl-3">
                                 <h6 class="m-1">@recentPost.ShortDescription</h6>
                                 <small>@Tools.ChangeTimeToFarsi(recentPost.CreationDate, "dddd- MM / yyyy")</small>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ShiftCoderQuery": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

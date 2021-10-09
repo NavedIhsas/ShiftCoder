@@ -1,13 +1,18 @@
 ﻿@using _0_Framework.Application
+@using ShopManagement.Domain.CourseGroupAgg
 @model IEnumerable<ShiftCoderQuery.Contract.Course.GetCourseGroupViewModel>
-
+@inject ICourseGroupRepository _courseGroup
 
 <div class="row">
     @foreach (var course in Model)
     {
+        var courseGroupSlug = _courseGroup.GetSlug(course.CourseGroupId);
+                
+        var picture = course.Picture.Replace($"/Courses/{courseGroupSlug}/",string.Empty);
+       
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="rounded overflow-hidden mb-2">
-                <img class="img-fluid" src="~/FileUploader/@course.Picture" title="@course.PictureTitle" alt="@course.PictureAlt">
+                <img class="img-fluid" src="~/FileUploader/Thumb/@picture" title="@course.PictureTitle" alt="@course.PictureAlt">
                 <div class="bg-secondary p-4">
                     <div class="d-flex justify-content-between mb-3">
                         <small class="m-0"><i class="fa fa-users text-primary mr-3"></i>@course.UserCourse.Count دانشجو</small>

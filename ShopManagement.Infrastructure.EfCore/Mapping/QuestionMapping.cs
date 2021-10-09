@@ -14,6 +14,7 @@ namespace ShopManagement.Infrastructure.EfCore.Mapping
             builder.Property(x => x.Title).HasMaxLength(100);
             builder.Property(x => x.Slug).HasMaxLength(100);
             builder.HasMany(x => x.Answers).WithOne(x => x.Question).HasForeignKey(x => x.QuestionId);
+            builder.HasOne(x => x.Course).WithMany(x => x.Questions).HasForeignKey(x => x.CourseId);
         }
     }
 }

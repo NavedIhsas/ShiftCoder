@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ShopManagement.Application": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

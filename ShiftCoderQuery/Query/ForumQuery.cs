@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
+using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
+using CommentManagement.Domain.VisitAgg;
+using CommentManagement.Infrastructure.EfCore;
 using Ganss.XSS;
 using ShiftCoderQuery.Contract.Forum.Answer;
 using ShiftCoderQuery.Contract.Forum.Question;
@@ -16,11 +19,14 @@ namespace ShiftCoderQuery.Query
     {
         private readonly ShopContext _context;
         private readonly ICourseRepository _course;
-
-        public ForumQuery(ShopContext context, IAccountRepository account, ICourseRepository course)
+        private readonly IVisitRepository _visit;
+        private static CommentContext _comment;
+        public ForumQuery(ShopContext context, IAccountRepository account, ICourseRepository course, IVisitRepository visit, CommentContext commnet)
         {
             _context = context;
             _course = course;
+            _visit = visit;
+            _comment = commnet;
         }
 
         public long AddQuestion(AddQuestionQueryModel command)
@@ -46,6 +52,7 @@ namespace ShiftCoderQuery.Query
                     Id = x.Id,
                     AnswerCount = x.Answers.Count,
                     CourseName = courseName,
+                    NumberOfVisit = MapVisit(x.Id),
                     CourseSlug = courseSlug
                 }).ToList();
 
@@ -59,11 +66,22 @@ namespace ShiftCoderQuery.Query
                 Questions = questions.Skip(skip).Take(take).ToList()
             };
             return paging;
+           
+        }
+        
+        
+        private static int MapVisit(long id)
+        {
+            var visit= _comment.Visits
+                .Count(x => x.Type == ThisType.ShowQuestion && x.RecordOwnerId == id);
+            return visit;
         }
 
-        public QuestionQueryModel ShowQuestion(long questionId, int pageId)
+        public QuestionQueryModel ShowQuestion(long questionId, string ipAddress, int pageId)
         {
-            return _context.Questions.Select(x => new QuestionQueryModel
+           
+               
+            var question= _context.Questions.Select(x => new QuestionQueryModel
             {
                 Title = x.Title,
                 Id = x.Id,
@@ -73,6 +91,22 @@ namespace ShiftCoderQuery.Query
                 Pagination = MapAnswer(x.Answers, pageId),
                 CreationDate = x.CreationDate
             }).FirstOrDefault(x => x.Id == questionId);
+
+            var visit = _visit.GetVisitBy(ipAddress, ThisType.ShowQuestion, questionId);
+            if (visit != null && visit.LastVisitDateTime.Date != DateTime.Now.Date)
+            {
+                visit.ReduceVisit(visit.NumberOfVisit);
+                visit.SetDateTime();
+                _visit.SaveChanges();
+            }
+            else if(visit==null)
+            {
+                var addVisit = new Visit(ThisType.ShowQuestion, ipAddress, DateTime.Now, 1, questionId);
+                _visit.Create(addVisit);
+                _visit.SaveChanges();
+            }
+
+            return question;
         }
 
         public void AddAnswer(AddAnswerQueryModel command)

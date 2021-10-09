@@ -45,6 +45,7 @@ namespace ShiftCoderQuery.Query
                 Slug = x.Slug,
                 Keywords = x.Keywords,
                 BloggerId = x.BloggerId,
+                CategoryId = x.CategoryId,
                 MetaDescription = x.MetaDescription,
                 Id = x.Id
             }).AsNoTracking().OrderByDescending(x => x.CreationDate).Take(3).ToList();

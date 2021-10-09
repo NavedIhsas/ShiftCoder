@@ -189,6 +189,7 @@ figure { margin: 0 0 1rem; }
 img {
     border-style: none;
     vertical-align: middle;
+    max-width: 100% !important;
 }
 
 svg {

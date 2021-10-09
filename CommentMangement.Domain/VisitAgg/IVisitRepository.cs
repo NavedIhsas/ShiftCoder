@@ -9,5 +9,6 @@ namespace CommentManagement.Domain.VisitAgg
         int? GetNumberOfVisit(int type, long ownerId);
         Visit GetVisitBy(string ipAddress);
         List<Visit> GetAllVisit();
+        Visit GetVisitForShowQuestion(string ipAddress,int type);
     }
 }

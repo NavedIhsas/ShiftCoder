@@ -18,7 +18,7 @@
                     <div class="condition-course condition-course-mb">
                         <div id="container-profile-teacher">
                             <div id="container-img-name-job-teacher">
-                                <img src="~/img/user.jpg" class="img-responsive d-none d-lg-block" alt="Photo Teacher" id="img-info-teacher">
+                                <img src="~/img/DefaultImg/photo_2021-06-25_03-08-16.jpg" class="img-responsive d-none d-md-block d-lg-block" alt="Photo Teacher" id="img-info-teacher">
                                 <div id="container-name-job-teacher">
                                     <h2 id="name-info-teacher">
                                         <a asp-page="Forum" asp-page-handler="ShowQuestion" asp-route-id="@item.Id">@item.Title</a>
@@ -31,7 +31,7 @@
                                         </li>
                                         <li class="discussion"></li>
                                         <li class="p-1">
-                                            <span>10 بازدید </span>
+                                            <span>@item.NumberOfVisit بازدید </span>
                                         </li>
                                         <li class="discussion"></li>
                                         <li class="p-1">

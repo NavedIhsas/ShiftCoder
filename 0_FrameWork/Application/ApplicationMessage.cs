@@ -32,6 +32,7 @@
         public const int Teacher = 9;
         public const int Blogger = 10;
         public const int AdminPanelIndex = 11;
+        public const int ShowQuestion = 12;
     }
 
     public static class Permission

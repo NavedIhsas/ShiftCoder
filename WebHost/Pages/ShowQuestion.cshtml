@@ -16,12 +16,12 @@
                         <p class="text-earth">
                             @Model.Title:
                         </p>
-                        <br/>
+                        <br />
                         @Html.Raw(Model.Body)
                     </div>
-                    <br/>
+                    <br />
                     <div id="container-img-name-job-teacher">
-                        <img src="~/img/user.jpg" alt="@Model.Name" class="forum-cover-photo d-lg-block d-none" id="img-info-teacher">
+                        <img src="~/img/DefaultImg/photo_2021-06-25_03-08-16.jpg" alt="@Model.Name" class="forum-cover-photo" id="img-info-teacher">
                         <div id="container-name-job-teacher">
                             <h4 id="name-info-teacher">
                                 <a>@Model.Name</a>
@@ -30,17 +30,17 @@
                     </div>
                 </div>
             </section>
-
-            <section class="container row">
+            <!-----lg display-->
+            <section class="container row ">
                 @foreach (var answer in Model.Pagination.Answers)
                 {
-                    <br/>
-                    <br/>
-                    <div id="container-img-name-job-teacher " class="col-md-2 mt-lg-5">
-                        <img src="~/img/user.jpg" alt="@Model.Name" class="img-responsive" id="img-info-teacher">
+                    <br class="d-lg-block d-none" />
+                    <br class="d-lg-block d-none" />
+                    <div id="container-img-name-job-teacher " class="col-md-2 d-lg-block d-none mt-lg-5">
+                        <img src="~/img/DefaultImg/photo_2021-06-24_00-36-30.jpg" alt="@Model.Name" class="img-responsive" id="img-info-teacher">
                         <p class="mt-2">@answer.Name</p>
                     </div>
-                    <div class="condition-course condition-course-mb col-md-10">
+                    <div class="condition-course condition-course-mb col-md-10 d-lg-block d-none">
                         <div>
                             <p class="paragraph-support">@answer.CreationDate.TimeAgo()</p>
                             @Html.Raw(answer.Body)
@@ -48,6 +48,28 @@
                     </div>
                 }
             </section>
+            <!----md and sm display-->
+            <section class="container row d-lg-none d-sm-block d-md-block">
+                @foreach (var answer in Model.Pagination.Answers)
+                {
+                    <br />
+                    <br />
+
+                    <div class="condition-course condition-course-mb col-md-12">
+
+                        <div id="container-img-name-job-teacher " class="col-md-2 mt-lg-3">
+                            <img src="~/img/user.jpg" alt="@Model.Name" class="img-responsive" id="img-info-teacher">
+                            <p class="mt-2">@answer.Name</p>
+                        </div>
+
+                        <div class="col-md-10">
+                            <p class="paragraph-support">@answer.CreationDate.TimeAgo()</p>
+                            @Html.Raw(answer.Body)
+                        </div>
+                    </div>
+                }
+            </section>
+            <!----md and sm display-->
 
             @if (Model.Pagination.PageCount > 1)
             {
@@ -79,13 +101,13 @@
                 </div>
             }
 
-            <br/>
+            <br />
             <div class="contact-form bg-secondary rounded p-5 mt-lg-5">
                 <div id="success" class="text-center text-primary">
                     <h3>افزدون پاسخ جدید</h3>
                 </div>
                 <form method="post" asp-page="Forum" asp-page-handler="ShowAnswer">
-                    <input type="hidden" name="QuestionId" value="@Model.Id"/>
+                    <input type="hidden" name="QuestionId" value="@Model.Id" />
                     <div class="form-group">
                         <label for="name">نام *</label>
                         <input name="name" type="text" class="form-control border-0" id="name" required oninvalid="this.setCustomValidity('نام خود را کنید ویا در سایت لاگین  نماید.')"

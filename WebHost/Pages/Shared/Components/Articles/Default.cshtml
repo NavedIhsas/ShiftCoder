@@ -1,5 +1,7 @@
 ﻿@using _0_Framework.Application
+@using BlogManagement.Domain.ArticleCategoryAgg
 @model IEnumerable<ShiftCoderQuery.Contract.Article.LatestArticleQueryModel>
+@inject IArticleCategoryRepository _articleCategories;
 <div class="container-fluid py-5">
     <div class="container pt-5 pb-3">
         <div class="text-center mb-5">
@@ -9,9 +11,11 @@
         <div class="row pb-3">
             @foreach (var article in Model)
             {
+                var articleName = _articleCategories.GetArticleCategoryName(article.CategoryId);
+                var picture = article.Picture.Replace($"مقاله-ها /{articleName.Slugify()}/",string.Empty);
                 <div class="col-lg-4 mb-4">
                     <div class="blog-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="~/FileUploader/@article.Picture" title="@article.PictureTitle" alt="@article.PictureAtl">
+                        <img class="img-fluid" src="~/FileUploader/Thumb/@picture" title="@article.PictureTitle" alt="@article.PictureAtl">
                         <a class="blog-overlay text-decoration-none" asp-page="SingleArticle" asp-route-id="@article.Slug">
                             <h5 class="text-white mb-3">@article.ShortDescription</h5>
                             <p class="text-primary m-0">@Tools.ChangeTimeToFarsi(article.CreationDate, "dddd- MM / yyyy")</p>
@@ -19,7 +23,6 @@
                     </div>
                 </div>
             }
-
         </div>
     </div>
 </div>

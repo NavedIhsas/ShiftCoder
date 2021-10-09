@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using _0_Framework.Application;
 using _0_FrameWork.Application;
 using AccountManagement.Application.Contract.Account;
 using AccountManagement.Domain.Account.Agg;
@@ -69,8 +65,8 @@ namespace AccountManagement.Application
                     command.RoleId, NameGenerator.UniqCode());
                 _repository.Create(create);
 
-                var body = await _renderer.RenderPartialToStringAsync("_SentActivityEmail", create);
-                SendEmail.Send(create.Email, "تائید ایمیل", body);
+                //var body = await _renderer.RenderPartialToStringAsync("_SentActivityEmail", create);
+                //SendEmail.Send(create.Email, "تائید ایمیل", body);
             }
 
             //---create notification--//

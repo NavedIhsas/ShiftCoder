@@ -1,16 +1,13 @@
 ﻿@page
 @model IndexModel
 
-@{
-    ViewData["Title"] = "لرن هاب ابتکاری برای یادگیری";
+@{ ViewData["Title"] = "لرن هاب ابتکاری برای یادگیری";
     ViewData["keyWords"] = "لرن هاب ابتکاری برای یادگیری";
     ViewData["Type"] = "public";
     ViewData["CanonicalAddress"] = "https://ihsasdevelopment.ir/";
     ViewData["Url"] = "https://ihsasdevelopment.ir";
     ViewData["author"] = "Qudrat Ihsas";
-    ViewData["owner"] = "Qudrat Ihsas";
-
-}
+    ViewData["owner"] = "Qudrat Ihsas"; }
 
 <!-- Carousel Start -->
 <div class="container-fluid p-0 pb-5 mb-5">
@@ -23,19 +20,18 @@
         <div class="carousel-inner">
             @foreach (var slid in Model.Sliders)
             {
-                <div class="men-height carousel-item @(slid == Model.Sliders.First() ? "active" : "")">
-                    <img class="position-relative w-100 .men-heightCover" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt">
-                    <div class="carousel-caption d-flex align-items-center justify-content-center">
-                        <div class="p-5 set-WithHeight">
-                            <h5 class="text-white text-uppercase mb-md-3">@slid.ShortTitle</h5>
+<div class="men-height carousel-item @(slid == Model.Sliders.First() ? "active" : "")">
+    <img class="position-relative w-100 .men-heightCover" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt">
+    <div class="carousel-caption d-flex align-items-center justify-content-center">
+        <div class="p-5 set-WithHeight">
+            <h5 class="text-white text-uppercase mb-md-3">@slid.ShortTitle</h5>
 
-                            <h1 class="display-3 text-white mb-md-4">@slid.Title</h1>
+            <h1 class="display-3 text-white mb-md-4">@slid.Title</h1>
 
-                            <a href="@slid.ButtonLink" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">@slid.ButtonText</a>
-                        </div>
-                    </div>
-                </div>
-            }
+            <a href="@slid.ButtonLink" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">@slid.ButtonText</a>
+        </div>
+    </div>
+</div>      }
 
         </div>
     </div>
@@ -60,9 +56,9 @@
     </div>
 </div>
 
-
+@await Component.InvokeAsync("CourseGroup")
 <cache expires-after="TimeSpan.FromHours(1)">
-    @await Component.InvokeAsync("CourseGroup")
+
 </cache>
 
 <div class="container-fluid py-5">
@@ -71,9 +67,9 @@
             <h5 class="text-primary text-uppercase mb-3">دوره ها</h5>
             <h1>دوره های محبوب ما</h1>
         </div>
-     
+        @await Component.InvokeAsync("PopularCourse")
         <cache expires-after="TimeSpan.FromHours(1)">
-            @await Component.InvokeAsync("PopularCourse")
+
         </cache>
     </div>
 </div>
@@ -105,10 +101,10 @@
                     <div class="card-body rounded-bottom bg-primary p-5">
                         <form>
                             <div class="form-group">
-                                <input type="text" class="form-control border-0 p-4" placeholder="نام شما" required="required"/>
+                                <input type="text" class="form-control border-0 p-4" placeholder="نام شما" required="required" />
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control border-0 p-4" placeholder="ایمیل شما" required="required"/>
+                                <input type="email" class="form-control border-0 p-4" placeholder="ایمیل شما" required="required" />
                             </div>
                             <div class="form-group">
                                 <select class="custom-select border-0 px-4" style="height: 47px;">
@@ -130,5 +126,6 @@
 </div>
 <!-- Registration End -->
 <cache expires-after="TimeSpan.FromHours(1)">
-    @await Component.InvokeAsync("Articles")
+
 </cache>
+@await Component.InvokeAsync("Articles")

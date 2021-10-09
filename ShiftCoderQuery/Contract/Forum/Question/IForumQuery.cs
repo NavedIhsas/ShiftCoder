@@ -6,7 +6,7 @@ namespace ShiftCoderQuery.Contract.Forum.Question
     {
         long AddQuestion(AddQuestionQueryModel command);
         QuestionPagination QuestionCourse(long id, int pageId = 1);
-        QuestionQueryModel ShowQuestion(long questionId, int pageId = 1);
+        QuestionQueryModel ShowQuestion(long questionId,string ipAddress, int pageId = 1);
         void AddAnswer(AddAnswerQueryModel command);
     }
 }

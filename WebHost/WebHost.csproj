@@ -13,13 +13,6 @@
   </PropertyGroup>
 	
   <ItemGroup>
-    <Compile Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
-    <Content Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
-    <EmbeddedResource Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
-    <None Remove="wwwroot\FileUploader\طراحی-سایت\NewFolder\**" />
-  </ItemGroup>
-	
-  <ItemGroup>
     <None Remove="Pages\Shared\PartialViews\_SocialSharing.cshtml~RF82eb0b9.TMP" />
   </ItemGroup>
 	
@@ -51,7 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\FileUploader\Articles\برنامه-نویسی\" />
     <Folder Include="wwwroot\FileUploader\CKEditorImages\" />
+    <Folder Include="wwwroot\FileUploader\CourseGroup\" />
+    <Folder Include="wwwroot\FileUploader\Courses\" />
+    <Folder Include="wwwroot\FileUploader\Thumb\80X80\" />
     <Folder Include="wwwroot\FileUploader\UserAvatar\Thump\" />
   </ItemGroup>
 

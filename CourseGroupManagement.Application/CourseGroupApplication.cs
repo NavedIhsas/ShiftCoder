@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using _0_Framework.Application;
 using _0_FrameWork.Application;
@@ -25,11 +28,27 @@ namespace ShopManagement.Application
             if (_repository.IsExist(x => x.Title == command.Title))
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
-            var filePath = $"CourseGroup/{command.Slug.Slugify()}";
-            var fileName = _fileUploader.Uploader(command.Picture, filePath);
+            //resize to 400 X 250
+            #region 600 X 400
+
+            var image = Image.FromStream(command.Picture.OpenReadStream());
+            var resized = new Bitmap(image, new Size(400, 250));
+
+            using var imageStream = new MemoryStream();
+            resized.Save(imageStream, ImageFormat.Jpeg);
+            var imageBytes = imageStream.ToArray();
+
+            var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+            var path1 = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/CourseGroup/", imgName);
+
+            using var streamImg = new FileStream(
+                path1, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
+            streamImg.Write(imageBytes, 0, imageBytes.Length);
+
+            #endregion
 
             var courseGroup = new CourseGroup(command.Title, command.KeyWords,
-                command.MetaDescription, command.Slug.Slugify(), command.SubGroupId, fileName, command.PictureAlt,
+                command.MetaDescription, command.Slug.Slugify(), command.SubGroupId, imgName, command.PictureAlt,
                 command.PictureTitle);
 
             _repository.Create(courseGroup);
@@ -45,21 +64,39 @@ namespace ShopManagement.Application
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
             var courseGroup = _repository.GetById(command.Id);
-
             if (command.Picture != null)
             {
-                var deletePath = $"wwwroot/FileUploader/{courseGroup.Picture}";
+                var deletePath = $"wwwroot/FileUploader/CourseGroup/{courseGroup.Picture}";
                 if (File.Exists(deletePath))
                     File.Delete(deletePath);
             }
 
             if (courseGroup == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
-            var filePath = $"CourseGroup/{command.Slug.Slugify()}";
-            var fileName = _fileUploader.Uploader(command.Picture, filePath);
+            var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture?.FileName}";
+            if (command.Picture != null)
+            {
+                //resize to 500 X 600
+                #region 400 X 250
+
+                var image = Image.FromStream(command.Picture.OpenReadStream());
+                var resized = new Bitmap(image, new Size(400, 250));
+
+                using var imageStream = new MemoryStream();
+                resized.Save(imageStream, ImageFormat.Jpeg);
+                var imageBytes = imageStream.ToArray();
+
+                var path1 = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/CourseGroup/", imgName);
+
+                using var streamImg = new FileStream(
+                    path1, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
+                streamImg.Write(imageBytes, 0, imageBytes.Length);
+
+                #endregion
+            }
 
             courseGroup.Edit(command.Title, command.KeyWords,
-                command.MetaDescription, command.Slug, command.SubGroupId, fileName, command.PictureAlt,
+                command.MetaDescription, command.Slug, command.SubGroupId, imgName, command.PictureAlt,
                 command.PictureTitle);
 
             _repository.Update(courseGroup);

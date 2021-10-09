@@ -54,6 +54,7 @@ namespace ShiftCoderQuery.Contract.Course
     {
         public string Name { get; set; }
         public string Picture { get; set; }
+        public long CourseGroupId { get; set; }
         public string PictureTitle { get; set; }
         public string PictureAlt { get; set; }
         public string Slug { get; set; }
@@ -71,6 +72,7 @@ namespace ShiftCoderQuery.Contract.Course
         public string PictureTitle { get; set; }
         public string Slug { get; set; }
         public double Price { get; set; }
+        public long CourseGroupId { get; set; }
         public string ShortDescription { get; set; }
         public DateTime CreationDate { get; set; }
         public TimeSpan TotalTime { get; set; }
@@ -83,6 +85,7 @@ namespace ShiftCoderQuery.Contract.Course
         public string Picture { get; set; }
         public string PictureTitle { get; set; }
         public string PictureAlt { get; set; }
+        public long CourseGroupId { get; set; }
         public string Slug { get; set; }
         public double Price { get; set; }
         public TimeSpan TotalTime { get; set; }

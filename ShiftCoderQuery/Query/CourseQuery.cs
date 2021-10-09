@@ -141,6 +141,7 @@ namespace ShiftCoderQuery.Query
                 {
                     Name = x.Name,
                     Price = x.Price,
+                    CourseGroupId = x.CourseGroupId,
                     Picture = x.Picture,
                     PictureAlt = x.PictureAlt,
                     PictureTitle = x.PictureTitle,
@@ -165,6 +166,7 @@ namespace ShiftCoderQuery.Query
                     Slug = x.Slug,
                     Price = x.Price,
                     CreationDate = x.CreationDate,
+                    CourseGroupId = x.CourseGroupId,
                     ShortDescription = x.ShortDescription,
                     UserCourse = MapUserCourse(x.UserCourses),
                     TotalTime = new TimeSpan(x.CourseEpisodes.Sum(t => t.Time.Ticks))
@@ -185,6 +187,7 @@ namespace ShiftCoderQuery.Query
                     PictureAlt = x.PictureAlt,
                     PictureTitle = x.PictureTitle,
                     Slug = x.Slug,
+                    CourseGroupId = x.CourseGroupId,
                     Id = x.Id,
                     OrderDetails = x.OrderDetails,
                     UserCourse = MapUserCourse(x.UserCourses),

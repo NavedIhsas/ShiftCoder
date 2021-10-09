@@ -30,14 +30,15 @@ namespace ShiftCoderQuery.Query
                     Picture = x.Picture,
                     PictureTitle = x.PictureTitle,
                     PictureAlt = x.PictureAlt,
+                    CreationDate = x.CreationDate,
                     CourseCount = x.Courses.Count
-                }).AsNoTracking().ToList();
+                }).AsNoTracking().OrderBy(x=>x.CreationDate).ToList();
         }
 
 
         public List<LatestCourseGroupViewModel> LatestCourseGroup()
         {
-            return _context.CourseGroups.Where(x => !x.IsRemove).Select(x => new LatestCourseGroupViewModel
+            return _context.CourseGroups.Where(x => !x.IsRemove).OrderBy(x => x.CreationDate).Select(x => new LatestCourseGroupViewModel
             {
                 Title = x.Title,
                 Slug = x.Slug,

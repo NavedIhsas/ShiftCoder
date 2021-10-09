@@ -33,6 +33,12 @@ namespace CommentManagement.Infrastructure.EfCore.Repository
                 .LastOrDefault(x => x.IpAddress == ipAddress && x.Type == ThisType.AdminPanelIndex);
         }
 
+        public Visit GetVisitForShowQuestion(string ipAddress,int type)
+        {
+            return _context.Visits .FirstOrDefault(x => x.IpAddress == ipAddress &&x.Type==type);
+               
+        }
+
         public List<Visit> GetAllVisit()
         {
             return _context.Visits.ToList();

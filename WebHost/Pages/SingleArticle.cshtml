@@ -1,10 +1,12 @@
 ﻿@page "{id}"
 @using _0_Framework.Application
 @using _0_FrameWork.Application
+@using BlogManagement.Domain.ArticleCategoryAgg
 @using ShiftCoderQuery.Contract.Article
 @model WebHost.Pages.SingleArticleModel
 @inject IArticleQuery _article;
 @inject IAuthHelper _authHelper;
+@inject IArticleCategoryRepository _articleCategories
 @{ ViewData["Title"] = Model.Article.Title;
     ViewData["keyWords"] = Model.Article.Keywords;
     ViewData["metaDescription"] = Model.Article.MetaDescription;
@@ -81,8 +83,10 @@ else
         <h3 class="text-uppercase mb-4">آخرین پست ها</h3>
         @foreach (var latest in _article.LatestArticle().Skip(3))
         {
+            var articleName = _articleCategories.GetArticleCategoryName(latest.CategoryId);
+            var picture = latest.Picture.Replace($"مقاله-ها /{articleName.Slugify()}/",string.Empty);
             <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@latest.Slug">
-                <img style="max-width: 80px;max-height: 80px" class="img-fluid rounded photo-size" src="~/FileUploader/@latest.Picture" title="@latest.PictureTitle" alt="@latest.PictureAtl">
+                <img class="img-fluid rounded photo-size" src="~/FileUploader/Thumb/80X80/@picture" title="@latest.PictureTitle" alt="@latest.PictureAtl">
                 <div class="pl-3">
                     <h6 class="m-1">@latest.Title</h6>
                     <small>@Tools.ChangeTimeToFarsi(latest.CreationDate, "dddd- MM / yyyy")</small>
@@ -242,8 +246,10 @@ else
         <h3 class="text-uppercase mb-4">آخرین پست ها</h3>
         @foreach (var latest in _article.LatestArticle().Skip(3))
         {
+            var articleName = _articleCategories.GetArticleCategoryName(latest.CategoryId);
+            var picture = latest.Picture.Replace($"مقاله-ها /{articleName.Slugify()}/",string.Empty);
             <a class="d-flex align-items-center text-decoration-none mb-3" asp-page="SingleArticle" asp-route-id="@latest.Slug">
-                <img class="img-fluid rounded photo-size" style="max-width: 80px;max-height: 80px" src="~/FileUploader/@latest.Picture" title="@latest.PictureTitle" alt="@latest.PictureAtl">
+                <img class="img-fluid rounded photo-size"  src="~/FileUploader/Thumb/80X80/@picture" title="@latest.PictureTitle" alt="@latest.PictureAtl">
                 <div class="pl-3">
                     <h6 class="m-1">@latest.Title</h6>
                     <small>@Tools.ChangeTimeToFarsi(latest.CreationDate, "MM / yyyy")</small>
