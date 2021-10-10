@@ -36,15 +36,17 @@
             <form method="post" class="signin-form">
 
                 <div class="form-group">
-                    <input type="email" name="email" class="form-control" placeholder="ایمیل" required oninvalid="this.setCustomValidity('لطفا ایمیلی خود را وارد کنید')"
+                    <input type="email" asp-for="Login.Email" class="form-control" placeholder="ایمیل" required oninvalid="this.setCustomValidity('لطفا ایمیلی خود را وارد کنید')"
                            oninput="setCustomValidity('')">
+                    <span asp-validation-for="Login.Email" class="text-danger pull-right"></span>
                 </div>
 
                 <div class="form-group">
-                    <input name="password" id="password-field" type="password" class="form-control" placeholder="رمز عبور" required oninvalid="this.setCustomValidity('رمز عبور خود را وارد نماید.')"
+                    <input asp-for="Login.Password" id="password-field" type="password" class="form-control" placeholder="رمز عبور" required oninvalid="this.setCustomValidity('رمز عبور خود را وارد نماید.')"
                            oninput="setCustomValidity('')">
                     <span toggle="#password-field" class="  fa fa-fw fa-eye field-icon toggle-password"></span>
-                </div>
+                    <span asp-validation-for="Login.Password" class="text-danger pull-right"></span>
+                    </div>
 
                 <div class="form-group">
                     <input type="submit" class="form-control btn btn-primary submit px-3" value="ورود">
@@ -54,7 +56,7 @@
 
                     <div class="w-50  ">
                         <label class="checkbox-wrap checkbox-primary">
-                            <input name="rememberMe" type="checkbox" checked>
+                            <input asp-for="Login.RememberMe" type="checkbox" checked>
                             <span class="checkmark mr-2"></span>
                             مرا بخاطر بسپار
                         </label>

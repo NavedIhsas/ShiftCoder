@@ -7,6 +7,7 @@ using AccountManagement.Domain.Account.Agg;
 using CommentManagement.Domain.VisitAgg;
 using CommentManagement.Infrastructure.EfCore;
 using Ganss.XSS;
+using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Forum.Answer;
 using ShiftCoderQuery.Contract.Forum.Question;
 using ShopManagement.Domain.CourseAgg;
@@ -41,7 +42,7 @@ namespace ShiftCoderQuery.Query
             return question.Id;
         }
 
-        public QuestionPagination QuestionCourse(long id, int pageId = 1)
+        public QuestionPagination QuestionCourse(long id, string filter, int pageId = 1)
         {
             var courseName = _course.GetCourseBy(id).Name;
             var courseSlug = _course.GetCourseBy(id).Slug;
@@ -54,7 +55,10 @@ namespace ShiftCoderQuery.Query
                     CourseName = courseName,
                     NumberOfVisit = MapVisit(x.Id),
                     CourseSlug = courseSlug
-                }).ToList();
+                }).AsNoTracking().ToList();
+
+            if (!string.IsNullOrWhiteSpace(filter))
+                questions = questions.Where(x => x.Title.ToLower().Contains(filter.Trim().ToLower())).ToList();
 
             const int take = 12;
             var skip = (pageId - 1) * take;
@@ -68,8 +72,20 @@ namespace ShiftCoderQuery.Query
             return paging;
            
         }
-        
-        
+
+        public List<QuestionQueryModel> LatestQuestion(long courseId)
+        {
+            var questions = _context.Questions.Where(x => x.CourseId == courseId)
+                .Select(x => new QuestionQueryModel
+                {
+                    Title = x.Title,
+                    Id = x.Id,
+                    AnswerCount = x.Answers.Count,
+                    NumberOfVisit = MapVisit(x.Id),
+                }).AsNoTracking().Take(6).ToList();
+            return questions;
+        }
+
         private static int MapVisit(long id)
         {
             var visit= _comment.Visits
@@ -79,13 +95,12 @@ namespace ShiftCoderQuery.Query
 
         public QuestionQueryModel ShowQuestion(long questionId, string ipAddress, int pageId)
         {
-           
-               
             var question= _context.Questions.Select(x => new QuestionQueryModel
             {
                 Title = x.Title,
                 Id = x.Id,
                 AccountId = x.AccountId,
+                CourseId = x.CourseId,
                 Body = x.Body,
                 Name = x.Name,
                 Pagination = MapAnswer(x.Answers, pageId),

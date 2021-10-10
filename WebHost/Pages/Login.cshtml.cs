@@ -6,6 +6,8 @@ namespace WebHost.Pages
 {
     public class LoginModel : PageModel
     {
+        [BindProperty]
+        public LoginViewModel Login { get; set; }
         private readonly IAccountApplication _account;
 
         public LoginModel(IAccountApplication account)
@@ -18,9 +20,10 @@ namespace WebHost.Pages
         {
         }
 
-        public IActionResult OnPost(LoginViewModel login, string ReturnUrl = "Index")
+        public IActionResult OnPost(string ReturnUrl = "Index")
         {
-            var user = _account.Login(login);
+            if (!ModelState.IsValid) return Page();
+            var user = _account.Login(Login);
             if (user == false)
             {
                 ViewData["Message"] = true;

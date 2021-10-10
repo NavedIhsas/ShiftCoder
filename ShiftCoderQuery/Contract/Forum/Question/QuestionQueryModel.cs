@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommentManagement.Domain.VisitAgg;
 
 namespace ShiftCoderQuery.Contract.Forum.Question
@@ -10,8 +11,8 @@ namespace ShiftCoderQuery.Contract.Forum.Question
         public string Body { get; set; }
         public string Title { get; set; }
         public string Name { get; set; }
-        public string AccountPicture { get; set; }
         public string CourseName { get; set; }
+        public long CourseId { get; set; }
         public int NumberOfVisit { get; set; }
         public string CourseSlug { get; set; }
         public int AnswerCount { get; set; }

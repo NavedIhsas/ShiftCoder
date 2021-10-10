@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ShiftCoderQuery.Contract.Forum.Question.QuestionQueryModel>
+
+@if (Model.Count() != 0)
+{
+    <div class="mb-5">
+        <h3 class="text-uppercase">آخرین پرسش ها</h3>
+        <ul class="list-group list-group-flush">
+            <li>
+                <div class="condition-course condition-course-mb">
+                    @foreach (var item in Model)
+                    {
+                        <div>
+                            <p id="text-share-media"><a asp-page="Forum" asp-page-handler="ShowQuestion" asp-route-id="@item.Id">@item.Title</a></p>
+                            <div id="container-icons-share-social">
+                                <div id="container-view-comment-number">
+                                    <div id="view-aside">
+                                        <i class="far fa-eye icon-view-comment-number"></i>
+                                        <p class="paragraph-view-comment-number">@item.NumberOfVisit</p>
+                                    </div>
+                                    <div id="line-y-aside"></div>
+                                    <div id="comment-aside">
+                                        <i class="fa fa-comments icon-view-comment-number"></i>
+                                        <p class="paragraph-view-comment-number">@item.AnswerCount</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </li>
+
+        </ul>
+    </div>
+}

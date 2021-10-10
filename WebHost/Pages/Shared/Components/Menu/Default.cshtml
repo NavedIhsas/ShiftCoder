@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ShiftCoderQuery.Contract.CourseGroup.CourseGroupQueryModel>
+﻿@using _0_FrameWork.Application
+@model IEnumerable<ShiftCoderQuery.Contract.CourseGroup.CourseGroupQueryModel>
 <div class="container-fluid">
     <div class="row border-top px-xl-5">
         <div class="col-lg-3 d-none d-lg-block">
@@ -28,7 +29,7 @@
                             </div>
                         </div>
                     }
-
+                  
                 </div>
             </nav>
         </div>
@@ -47,6 +48,16 @@
                         <a asp-page="AllCourses" class="nav-item nav-link  @Html.ActiveClass("/AllCourses")"> دوره ها</a>
                         <a asp-page="Articles" class="nav-item nav-link  @Html.ActiveClass("/Articles")">وبلاگ</a>
                         <a asp-page="ContactUs" class="nav-item nav-link  @Html.ActiveClass("/ContactUs")">تماس با ما</a>
+
+                        <div permission="@Permission.AdministrationHomepage" class="nav-item dropdown">
+                            <a asp-page="Index" asp-area="Administration" class="nav-link" data-toggle="dropdown">پنل ادمین <i class="fa fa-angle-down float-left mt-1  @Html.ActiveClass("/AllCourses")"></i></a>
+                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <a asp-page="Index" asp-area="Administration" class="dropdown-item">صفحه اصلی</a>
+                                <a asp-page="/Courses/Course/Index" asp-area="Administration"  class="dropdown-item">کورس ها</a>
+                                <a asp-page="/Blog/Article/Index" asp-area="Administration" class="dropdown-item">مقاله ها</a>
+                                <a asp-page="/Account/Users/Index" asp-area="Administration"  class="dropdown-item">کاربران</a>
+                            </div>
+                        </div>
                     </div>
                     @if (!User.Identity.IsAuthenticated)
                     {

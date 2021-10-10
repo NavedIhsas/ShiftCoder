@@ -138,7 +138,7 @@ namespace AccountManagement.Infrastructure.EfCore.Repository
 
             var permission = _role.GetById(user.RoleId).Permissions.Select(x => x.Code).ToList();
 
-            var authModel = new AuthHelperViewModel(user.Id, user.RoleId, user.FullName, user.Email, permission);
+            var authModel = new AuthHelperViewModel(user.Id, user.RoleId, user.FullName, user.Email,login.RememberMe, permission);
             _authHelper.Signin(authModel);
             return true;
         }

@@ -63,6 +63,37 @@ else
             @Model.Article.BloggerBio
         </p>
     </div>
+    
+    <div class="condition-course condition-course-mb">
+        <div id="container-view-comment-number">
+            <div id="view-aside">
+                <i class="far fa-eye icon-view-comment-number"></i>
+                <p class="paragraph-view-comment-number">@Model.Article.VisitCount بازدید</p>
+            </div>
+            <div id="line-y-aside"></div>
+            <div id="comment-aside">
+                <i class="fa fa-comments icon-view-comment-number"></i>
+                <p class="paragraph-view-comment-number">@Model.Article.CommentList.Count کامنت</p>
+            </div>
+        </div>
+        <div id="container-share-media">
+            <p id="text-share-media">با دوستانت به اشتراک بیگذار</p>
+            <div id="container-icons-share-social">
+                <div class="container-icon-share-social">
+                    <a><i class="fab fa-whatsapp icon-share-social icon-whatsapp-share"></i></a>
+                </div>
+                <div class="container-icon-share-social">
+                    <a href="https://twitter.com/intent/tweet?url=https://ihsasdevelopment.ir/SingleCourse/@Model.Article.Id"><i class="fab fa-twitter icon-share-social"></i></a>
+                </div>
+                <div class="container-icon-share-social">
+                    <a><i class="fab fa-telegram-plane icon-share-social icon-telegram-share"></i></a>
+                </div>
+                <div class="container-icon-share-social">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://ihsasdevelopment.ir/SingleCourse/@Model.Article.Id"><i class="fab fa-facebook-square icon-share-social"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Category List -->
     <div class="mb-5 d-none d-lg-block">

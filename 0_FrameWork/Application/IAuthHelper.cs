@@ -65,7 +65,8 @@ namespace _0_FrameWork.Application
 
             var authProperties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
+                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1),
+                IsPersistent = account.RememberMe,
             };
 
             _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,

@@ -7,10 +7,24 @@
 }
 
 <div class="container py-5">
+    <div class="col-lg-4 mt-5 mt-lg-0 pull-left">
+        <div class="mb-5 d-lg-none d-sm-block d-md-block">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" name="filter" class="form-control form-control-lg" placeholder="سوالت را جستجو کن">
+                    <div class="input-group-append">
+                        <button class="input-group-text bg-transparent text-primary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <div Class="row">
 
         <div class="col-lg-8 col-sm-12 col-xs-12">
-            <a class="btn btn-primary btn-block" asp-page="Forum" asp-page-handler="Question" asp-route-id="@ViewData["CourseId"]">پرسش سوال</a>
+            <a class="btn btn-primary btn-block col-lg-8 col-sm-12 col-xs-12 m-auto" asp-page="Forum" asp-page-handler="Question" asp-route-id="@ViewData["CourseId"]">سوال خود را بپرس</a>
 
             @foreach (var item in Model.Pagination.Questions)
             {
@@ -18,7 +32,7 @@
                     <div class="condition-course condition-course-mb">
                         <div id="container-profile-teacher">
                             <div id="container-img-name-job-teacher">
-                                <img src="~/img/DefaultImg/photo_2021-06-25_03-08-16.jpg" class="img-responsive d-none d-md-block d-lg-block" alt="Photo Teacher" id="img-info-teacher">
+                                <img src="~/img/DefaultImg/boy-qustion.jpg" class="img-responsive d-none d-md-block d-lg-block" alt="Photo Teacher" id="img-info-teacher">
                                 <div id="container-name-job-teacher">
                                     <h2 id="name-info-teacher">
                                         <a asp-page="Forum" asp-page-handler="ShowQuestion" asp-route-id="@item.Id">@item.Title</a>
@@ -79,84 +93,19 @@
         </div>
         <div class="col-lg-4 mt-5 mt-lg-0">
             <!-- Search Form -->
-            <div class="mb-5">
-                <form action="">
+            <div class="mb-5 d-lg-block d-none">
+                <form method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control form-control-lg" placeholder="Keyword">
+                        <input type="text" name="filter" class="form-control form-control-lg" placeholder="سوالت را جستجو کن">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+                            <button class="input-group-text bg-transparent text-primary" type="submit">
                                 <i class="fa fa-search"></i>
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>
-
-            <!-- Category List -->
-            <div class="mb-5">
-                <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Categories</h3>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Web Design</a>
-                        <span class="badge badge-primary badge-pill">150</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Web Development</a>
-                        <span class="badge badge-primary badge-pill">131</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Online Marketing</a>
-                        <span class="badge badge-primary badge-pill">78</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Keyword Research</a>
-                        <span class="badge badge-primary badge-pill">56</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Email Marketing</a>
-                        <span class="badge badge-primary badge-pill">98</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Recent Post -->
-            <div class="mb-5">
-                <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Recent Post</h3>
-                <a class="d-flex align-items-center text-decoration-none mb-3" href="">
-                    <img class="img-fluid rounded" src="img/blog-80x80.jpg" alt="">
-                    <div class="pl-3">
-                        <h6 class="m-1">Diam lorem dolore justo eirmod lorem dolore</h6>
-                        <small>Jan 01, 2050</small>
-                    </div>
-                </a>
-                <a class="d-flex align-items-center text-decoration-none mb-3" href="">
-                    <img class="img-fluid rounded" src="img/blog-80x80.jpg" alt="">
-                    <div class="pl-3">
-                        <h6 class="m-1">Diam lorem dolore justo eirmod lorem dolore</h6>
-                        <small>Jan 01, 2050</small>
-                    </div>
-                </a>
-                <a class="d-flex align-items-center text-decoration-none mb-3" href="">
-                    <img class="img-fluid rounded" src="img/blog-80x80.jpg" alt="">
-                    <div class="pl-3">
-                        <h6 class="m-1">Diam lorem dolore justo eirmod lorem dolore</h6>
-                        <small>Jan 01, 2050</small>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Tag Cloud -->
-            <div class="mb-5">
-                <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Tag Cloud</h3>
-                <div class="d-flex flex-wrap m-n1">
-                    <a href="" class="btn btn-outline-primary m-1">Design</a>
-                    <a href="" class="btn btn-outline-primary m-1">Development</a>
-                    <a href="" class="btn btn-outline-primary m-1">Marketing</a>
-                    <a href="" class="btn btn-outline-primary m-1">SEO</a>
-                    <a href="" class="btn btn-outline-primary m-1">Writing</a>
-                    <a href="" class="btn btn-outline-primary m-1">Consulting</a>
-                </div>
-            </div>
+            <partial name="Shared/PartialViews/_LatestQuestion" model="Model.LatestQuestion" />
         </div>
     </div>
 </div>

@@ -11,26 +11,30 @@ namespace WebHost.Pages
     {
         public QuestionPagination Pagination;
         public QuestionQueryModel Question;
+        public List<QuestionQueryModel> LatestQuestion;
         private readonly IForumQuery _question;
-        private readonly IAccountRepository _account;
-        public ForumModel(IForumQuery question, IAccountRepository account)
+
+        public ForumModel(IForumQuery question)
         {
             _question = question;
-            _account = account;
         }
 
-        public void OnGet(long id,int pageId=1)
+        public void OnGet(long id, string filter, int pageId = 1)
         {
-            Pagination = _question.QuestionCourse(id,pageId);
+            Pagination = _question.QuestionCourse(id, filter, pageId);
+            LatestQuestion = _question.LatestQuestion(id);
             ViewData["CourseId"] = id;
         }
 
         public IActionResult OnGetQuestion(long id)
         {
+
             var question = new AddQuestionQueryModel()
             {
-                CourseId = id
+                CourseId = id,
+                LatestQuestion = _question.LatestQuestion(id)
             };
+
             return Partial("Question", question);
         }
 
@@ -40,17 +44,17 @@ namespace WebHost.Pages
             return Redirect($"/Forum/{questionId}?handler=ShowQuestion");
         }
 
-        public IActionResult OnGetShowQuestion(long id,int pageId=1)
+        public IActionResult OnGetShowQuestion(long id, int pageId = 1)
         {
             var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
-            Question = _question.ShowQuestion(id,ipAddress,pageId);
-            return Partial("ShowQuestion",Question);
+            Question = _question.ShowQuestion(id, ipAddress, pageId);
+            return Partial("ShowQuestion", Question);
         }
 
         public IActionResult OnPostShowAnswer(AddAnswerQueryModel command)
         {
-             _question.AddAnswer(command);
-             return Redirect($"/Forum/{command.QuestionId}?handler=ShowQuestion");
+            _question.AddAnswer(command);
+            return Redirect($"/Forum/{command.QuestionId}?handler=ShowQuestion");
         }
     }
 }

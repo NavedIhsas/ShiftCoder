@@ -12,6 +12,8 @@ namespace WebHost.Pages
         [ViewData] public string Message { get; set; }
         [ViewData] public string Success { get; set; }
 
+        [BindProperty]
+        public RegisterUserViewModel Register { get; set; }
         private readonly IAccountApplication _account;
         private readonly IAccountRepository _accountRepository;
         private readonly IRazorPartialToStringRenderer _renderView;
@@ -28,9 +30,10 @@ namespace WebHost.Pages
         {
 
         }
-        public async Task<IActionResult> OnPostAsync(RegisterUserViewModel command)
+        public async Task<IActionResult> OnPostAsync()
         {
-            var register = await _account.Create(command);
+            if (!ModelState.IsValid) return Page();
+            var register = await _account.Create(Register);
             if (!register.IsSucceeded)
             {
                 ViewData["ExistEmail"] = true;

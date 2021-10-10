@@ -1,6 +1,6 @@
 ﻿@model ShiftCoderQuery.Contract.Forum.Question.AddQuestionQueryModel
 @{
-    ViewData["Title"] = "پرسش سوال";
+    ViewData["Title"] = Model.Title;
     Layout = "Shared/_Layout";
 }
 
@@ -17,7 +17,7 @@
                     </p>
 
                     <form method="post" asp-page="Forum" asp-page-handler="Question">
-                        <input type="hidden" asp-for="CourseId" value="@Model.CourseId"/>
+                        <input type="hidden" asp-for="CourseId" value="@Model.CourseId" />
                         <div class="form-group">
                             <label for="name">نام شما *</label>
                             <input asp-for="Name" type="text" class="form-control border-0" id="name" required oninvalid="this.setCustomValidity('نام خود را وارد کنید و یا در سایت لاگین نمائید.')"
@@ -32,7 +32,7 @@
 
                         <div class="form-group">
                             <label for="message">متن سوال</label>
-                            <textarea asp-for="Body" id="editor" cols="30"  class="form-control border-0" placeholder="سوال خود را بنویسید"></textarea>
+                            <textarea asp-for="Body" id="editor" cols="30" class="form-control border-0" placeholder="سوال خود را بنویسید"></textarea>
                         </div>
                         <div class="form-group mb-0">
                             <input type="submit" value="ایجاد سوال" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
@@ -40,6 +40,11 @@
                     </form>
                 </div>
             </div>
+          
+                <div class="col-lg-4 mt-5 mt-lg-0">
+                    <partial name="Shared/PartialViews/_LatestQuestion" model="Model.LatestQuestion" />
+                </div>
+          
         </div>
     </div>
 </div>

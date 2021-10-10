@@ -32,7 +32,7 @@
 }
 
 .ck-editor__editable {
-    height: 400px !important;
+    height: 200px !important;
 }
 
 .full-hegiht {
@@ -81,4 +81,11 @@
 .forum-cover-photo {
     max-width: 50px !important;
     max-height: 50px !important;
+}
+
+.mb-5 ul li {
+    list-style-type: none;
+}
+a:hover {
+    text-decoration: none;
 }

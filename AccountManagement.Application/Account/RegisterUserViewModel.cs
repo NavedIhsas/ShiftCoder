@@ -12,8 +12,9 @@ namespace AccountManagement.Application.Contract.Account
         [MaxLength(250, ErrorMessage = Validate.MaxLength)]
         public string FullName { get; set; }
 
+        [Required(ErrorMessage = Validate.Required)]
         [MaxLength(250, ErrorMessage = Validate.MaxLength)]
-
+        [EmailAddress(ErrorMessage = "ایمیل معتبر نمیباشد")]
         public string Email { get; set; }
 
         [MaxLength(20, ErrorMessage = Validate.MaxLength)]
@@ -23,7 +24,8 @@ namespace AccountManagement.Application.Contract.Account
         [MaxLength(250, ErrorMessage = Validate.MaxLength)]
         public string Password { get; set; }
 
-        [Compare("Password ", ErrorMessage = "رمز عبور با تکرار آن مطابقت ندارد.")]
+        [Required(ErrorMessage = Validate.Required)]
+        [Compare("Password", ErrorMessage = "کلمه های عبور مغایرت دارند")]
         public string RePassword { get; set; }
 
         public IFormFile Avatar { get; set; }

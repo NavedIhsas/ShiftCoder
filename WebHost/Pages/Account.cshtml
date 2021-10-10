@@ -8,7 +8,7 @@
 
 <br/>
 <div class="row justify-content-center">
-    <div class="col-md-6 text-center mb-5">
+    <div class="col-md-6 text-center mb-2">
         <h2 class="heading-section">فرم ثبت نام</h2>
     </div>
 </div>
@@ -20,7 +20,7 @@
             @if (ViewData["IsSuccess"] != null)
             {
                 <div class="alert alert-success text-center">
-                    <span>ایمیل حاوی کد فعال سازی به ایمیل ادرس شما ارسال شد، لطفا ایمیل خود تایید کنید.</span>
+                    <span>ایمیل حاوی کد فعال سازی به ایمیل ادرس شما ارسال شد، لطفا ایمیل خود را تایید کنید.</span>
                 </div>
 
                 <script>
@@ -40,25 +40,31 @@
             }
             <form method="post" class="signin-form">
                 <div class="form-group">
-                    <input type="text" name="fullname" class="form-control" placeholder="نام کامل" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                    <input type="text"asp-for="Register.FullName" class="form-control" placeholder="نام کامل" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
                            oninput="setCustomValidity('')">
+                    <span asp-validation-for="Register.FullName" class="text-danger pull-right"></span>
                 </div>
 
                 <div class="form-group">
-                    <input type="email" name="email" class="form-control" placeholder="ایمیل" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                    <input type="email" asp-for="Register.Email" class="form-control" placeholder="ایمیل" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
                            oninput="setCustomValidity('')">
+                    <span asp-validation-for="Register.Email" class="text-danger pull-right"></span></div>
+
+                <div class="form-group">
+                    <input type="tel" asp-for="Register.Phone" class="form-control" placeholder=" موبایل (اختیاری)" >
                 </div>
 
                 <div class="form-group">
-                    <input type="tel" name="phone" class="form-control" placeholder="شماره موبایل" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
-                           oninput="setCustomValidity('')">
-                </div>
-
-                <div class="form-group">
-                    <input name="password" id="password-field" type="password" class="form-control" placeholder="رمز عبور" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                    <input  asp-for="Register.Password" id="password-field" type="password" class="form-control" placeholder="رمز عبور" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
                            oninput="setCustomValidity('')">
                     <span toggle="#password-field" class="  fa fa-fw fa-eye field-icon toggle-password"></span>
-                </div>
+                    <span asp-validation-for="Register.Password" class="text-danger pull-right"></span>
+                    </div>
+                
+                <div class="form-group">
+                    <input asp-for="Register.RePassword" id="Password-field1" type="password" class="form-control" placeholder="تکرار عبور" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
+                           oninput="setCustomValidity('')">
+                    <span asp-validation-for="Register.RePassword" class="text-danger pull-right"></span></div>
 
                 <div class="form-group">
                     <input type="submit" class="form-control btn btn-primary submit px-3" value="ثبت نام">
@@ -66,7 +72,6 @@
             </form>
 
             <p class="w-100 text-center">&mdash; <a asp-page="Login">من قبلا ثبت نام کرده ام</a> &mdash;</p>
-
         </div>
     </div>
 </div>

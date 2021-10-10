@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using _0_FrameWork.Application;
 using CommentManagement.Domain.SliderAgg;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,28 +43,25 @@ namespace WebHost.Pages
         public async Task<JsonResult> OnPostUploadImage([FromForm] IFormFile upload)
         {
             if (upload.Length <= 0) return null;
+            var fileName = Guid.NewGuid() + Path.GetExtension(upload.FileName).ToLower();
 
             //your custom code logic here
 
             //1)check if the file is image
+            if (upload.IsImage())
+            {
+                //save file under wwwroot/CKEditorImages folder
+                var filePath = Path.Combine(
+                    Directory.GetCurrentDirectory(), "wwwroot/FileUploader/CKEditorImages",
+                    fileName);
+
+                await using var stream = System.IO.File.Create(filePath);
+                await upload.CopyToAsync(stream);
+            }
 
             //2)check if the file is too large
 
             //etc
-
-            var fileName = Guid.NewGuid() + Path.GetExtension(upload.FileName).ToLower();
-
-            //save file under wwwroot/CKEditorImages folder
-
-            var filePath = Path.Combine(
-                Directory.GetCurrentDirectory(), "wwwroot/FileUploader/CKEditorImages",
-                fileName);
-
-            await using (var stream = System.IO.File.Create(filePath))
-            {
-                await upload.CopyToAsync(stream);
-            }
-
             var url = $"{"/FileUploader/CKEditorImages/"}{fileName}";
 
             var success = new UploadSuccess

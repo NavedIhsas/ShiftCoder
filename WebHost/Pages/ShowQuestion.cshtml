@@ -1,7 +1,9 @@
 ﻿@using _0_FrameWork.Application
+@using ShiftCoderQuery.Contract.Forum.Question
 @model ShiftCoderQuery.Contract.Forum.Question.QuestionQueryModel
+@inject IForumQuery _forumQuery
 @{
-    ViewData["Title"] = "موضوع سوال";
+    ViewData["Title"] = Model.Title;
     Layout = "Shared/_Layout";
 }
 
@@ -21,10 +23,10 @@
                     </div>
                     <br />
                     <div id="container-img-name-job-teacher">
-                        <img src="~/img/DefaultImg/photo_2021-06-25_03-08-16.jpg" alt="@Model.Name" class="forum-cover-photo" id="img-info-teacher">
+                        <img src="~/img/DefaultImg/boy-qustion.jpg" alt="@Model.Name" class="forum-cover-photo" id="img-info-teacher">
                         <div id="container-name-job-teacher">
                             <h4 id="name-info-teacher">
-                                <a>@Model.Name</a>
+                                <a class="text-info">@Model.Name</a>
                             </h4>
                         </div>
                     </div>
@@ -37,8 +39,10 @@
                     <br class="d-lg-block d-none" />
                     <br class="d-lg-block d-none" />
                     <div id="container-img-name-job-teacher " class="col-md-2 d-lg-block d-none mt-lg-5">
-                        <img src="~/img/DefaultImg/photo_2021-06-24_00-36-30.jpg" alt="@Model.Name" class="img-responsive" id="img-info-teacher">
-                        <p class="mt-2">@answer.Name</p>
+                        <img src="~/img/DefaultImg/girl-question.jpg" alt="@Model.Name" class="img-responsive" id="img-info-teacher">
+                        <h4 id="name-info-teacher">
+                            <a class="text-success">@Model.Name</a>
+                        </h4>
                     </div>
                     <div class="condition-course condition-course-mb col-md-10 d-lg-block d-none">
                         <div>
@@ -56,21 +60,24 @@
                     <br />
 
                     <div class="condition-course condition-course-mb col-md-12">
-
+                        <p class="paragraph-support">@answer.CreationDate.TimeAgo()</p>
                         <div id="container-img-name-job-teacher " class="col-md-2 mt-lg-3">
-                            <img src="~/img/user.jpg" alt="@Model.Name" class="img-responsive" id="img-info-teacher">
-                            <p class="mt-2">@answer.Name</p>
+                            <img src="~/img/DefaultImg/girl-question.jpg" alt="@Model.Name" class="img-responsive" id="img-info-teacher">
+                            <h4 id="name-info-teacher">
+                                <a class="text-success">@Model.Name</a>
+                            </h4>
                         </div>
 
                         <div class="col-md-10">
-                            <p class="paragraph-support">@answer.CreationDate.TimeAgo()</p>
+                          
                             @Html.Raw(answer.Body)
                         </div>
                     </div>
                 }
             </section>
             <!----md and sm display-->
-
+            
+            <!----pagination-->
             @if (Model.Pagination.PageCount > 1)
             {
                 <div class="col-12 mt-lg-4">
@@ -104,7 +111,7 @@
             <br />
             <div class="contact-form bg-secondary rounded p-5 mt-lg-5">
                 <div id="success" class="text-center text-primary">
-                    <h3>افزدون پاسخ جدید</h3>
+                    <h3>پاسخ شما چیست؟</h3>
                 </div>
                 <form method="post" asp-page="Forum" asp-page-handler="ShowAnswer">
                     <input type="hidden" name="QuestionId" value="@Model.Id" />
@@ -116,7 +123,7 @@
 
                     <div class="form-group">
                         <label for="message">پاسخ خود را بنویسید</label>
-                        <textarea name="Body" id="editor" cols="30" class="form-control border-0"></textarea>
+                        <textarea name="Body" id="editor" cols="30" placeholder="متن پاسخ خود را بنویسید" class="form-control border-0"></textarea>
                     </div>
                     <div class="form-group mb-0 text-left">
                         <input type="submit" value="ثبت پاسخ شما" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
@@ -126,85 +133,7 @@
 
         </div>
         <div class="col-lg-4 mt-5 mt-lg-0">
-            <!-- Search Form -->
-            <div class="mb-5">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control form-control-lg" placeholder="Keyword">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Category List -->
-            <div class="mb-5">
-                <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Categories</h3>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Web Design</a>
-                        <span class="badge badge-primary badge-pill">150</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Web Development</a>
-                        <span class="badge badge-primary badge-pill">131</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Online Marketing</a>
-                        <span class="badge badge-primary badge-pill">78</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Keyword Research</a>
-                        <span class="badge badge-primary badge-pill">56</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        <a href="" class="text-decoration-none h6 m-0">Email Marketing</a>
-                        <span class="badge badge-primary badge-pill">98</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Recent Post -->
-            <div class="mb-5">
-                <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Recent Post</h3>
-                <a class="d-flex align-items-center text-decoration-none mb-3" href="">
-                    <img class="img-fluid rounded" src="img/blog-80x80.jpg" alt="">
-                    <div class="pl-3">
-                        <h6 class="m-1">Diam lorem dolore justo eirmod lorem dolore</h6>
-                        <small>Jan 01, 2050</small>
-                    </div>
-                </a>
-                <a class="d-flex align-items-center text-decoration-none mb-3" href="">
-                    <img class="img-fluid rounded" src="img/blog-80x80.jpg" alt="">
-                    <div class="pl-3">
-                        <h6 class="m-1">Diam lorem dolore justo eirmod lorem dolore</h6>
-                        <small>Jan 01, 2050</small>
-                    </div>
-                </a>
-                <a class="d-flex align-items-center text-decoration-none mb-3" href="">
-                    <img class="img-fluid rounded" src="img/blog-80x80.jpg" alt="">
-                    <div class="pl-3">
-                        <h6 class="m-1">Diam lorem dolore justo eirmod lorem dolore</h6>
-                        <small>Jan 01, 2050</small>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Tag Cloud -->
-            <div class="mb-5">
-                <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Tag Cloud</h3>
-                <div class="d-flex flex-wrap m-n1">
-                    <a href="" class="btn btn-outline-primary m-1">Design</a>
-                    <a href="" class="btn btn-outline-primary m-1">Development</a>
-                    <a href="" class="btn btn-outline-primary m-1">Marketing</a>
-                    <a href="" class="btn btn-outline-primary m-1">SEO</a>
-                    <a href="" class="btn btn-outline-primary m-1">Writing</a>
-                    <a href="" class="btn btn-outline-primary m-1">Consulting</a>
-                </div>
-            </div>
+            <partial name="Shared/PartialViews/_LatestQuestion" model="_forumQuery.LatestQuestion(Model.CourseId)"/>
         </div>
     </div>
 </div>

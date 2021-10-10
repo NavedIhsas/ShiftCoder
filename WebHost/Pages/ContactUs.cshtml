@@ -46,13 +46,13 @@
             <div class="col-lg-8">
                 <div class="contact-form bg-secondary rounded p-5">
                     <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                    <form  name="sentMessage" id="contactForm" novalidate="novalidate">
                         <div class="control-group">
                             <input type="text" class="form-control border-0 p-4" id="name" placeholder="نام و فامیلی" required="required" data-validation-required-message="لطفا نام خود را وارد کنید" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="email" class="form-control border-0 p-4" id="email" placeholder="ایمیل آدرس" required="required" data-validation-required-message="ایمیل خود را وارد کنید" />
+                            <input type="email" name="_replyto" class="form-control border-0 p-4" id="email" placeholder="ایمیل آدرس" required="required" data-validation-required-message="ایمیل خود را وارد کنید" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
@@ -60,9 +60,11 @@
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <textarea class="form-control border-0 py-3 px-4" rows="5" id="message" placeholder="پیام" required="required" data-validation-required-message="لطفا پیام تان را بنویسید"></textarea>
+                            <textarea class="form-control border-0 py-3 px-4" name="body" rows="5" id="message" placeholder="پیام" required="required" data-validation-required-message="لطفا پیام تان را بنویسید"></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
+
+
                         <div class="text-center">
                             <button class="btn btn-primary py-3 px-5" type="submit" id="sendMessageButton">ارسال پیام</button>
                         </div>
