@@ -11,6 +11,6 @@ namespace AccountManagement.Application.Contract.Account
 
         public List<TeacherViewModel> Teachers { get; set; }
 
-        public long Id { get; set; }
+       
     }
 }

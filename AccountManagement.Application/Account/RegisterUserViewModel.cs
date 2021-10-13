@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using _0_FrameWork.Application;
 using AccountManagement.Application.Contract.Role;
@@ -28,6 +29,13 @@ namespace AccountManagement.Application.Contract.Account
         [Compare("Password", ErrorMessage = "کلمه های عبور مغایرت دارند")]
         public string RePassword { get; set; }
 
+        public DateTime BirthDate { get; set; }
+
+        [MaxLength(10, ErrorMessage = Validate.MaxLength)]
+        public string Gander { get; set; }
+
+        [MaxLength(500,ErrorMessage = Validate.MaxLength)]
+        public string AboutMe { get; set; }
         public IFormFile Avatar { get; set; }
         public long RoleId { get; set; }
         public List<RoleViewModel> SelectList { get; set; }
@@ -35,5 +43,6 @@ namespace AccountManagement.Application.Contract.Account
         public long Id { get; set; }
         public string ActiveCode { get; set; }
         public string AvatarName { get; set; }
+        public long? ProvinceId { get; set; }
     }
 }

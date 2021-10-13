@@ -24,6 +24,15 @@ namespace AccountManagement.Infrastructure.Permissions
                         new(Permission.ListBlockedUsers, "مشاهده کاربران مسدود شده")
                     }
                 },
+
+                {
+                    "Roles", new List<PermissionDto>
+                    {
+                        new(Permission.ListRoles, "لیست نقش ها"),
+                        new(Permission.EditRoles, "ویرایش نقش ها"),
+                        new(Permission.CreateRoles, "ایجاد نقش"),
+                    }
+                },
                 {
                     "Teachers", new List<PermissionDto>
                     {

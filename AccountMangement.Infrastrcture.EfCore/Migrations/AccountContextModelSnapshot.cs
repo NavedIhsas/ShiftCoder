@@ -26,12 +26,22 @@ namespace AccountManagement.Infrastructure.EfCore.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AboutMe")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("ActiveCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Avatar")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CityId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -48,6 +58,10 @@ namespace AccountManagement.Infrastructure.EfCore.Migrations
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Gander")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -68,6 +82,8 @@ namespace AccountManagement.Infrastructure.EfCore.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("RoleId");
 
@@ -106,6 +122,203 @@ namespace AccountManagement.Infrastructure.EfCore.Migrations
                     b.ToTable("UserTeachers");
                 });
 
+            modelBuilder.Entity("AccountManagement.Domain.ProvinceAgg.City", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<long>("ProvinceId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProvinceId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("AccountManagement.Domain.ProvinceAgg.Province", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Provinces");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "کابل"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "هرات"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "بلخ"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Name = "غزنی"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Name = "قندهار"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Name = "بامیان"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Name = "بادغیس"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Name = "دایکندی"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Name = "ارزگان"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Name = "فاریاب"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Name = "فراه"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            Name = "پکتیا"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            Name = "پکتیکا"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            Name = "سمنگان"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            Name = "نورسان"
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            Name = "بدخشان"
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            Name = "نمیروز"
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            Name = "غور"
+                        },
+                        new
+                        {
+                            Id = 20L,
+                            Name = "هلمند"
+                        },
+                        new
+                        {
+                            Id = 21L,
+                            Name = "لوگر"
+                        },
+                        new
+                        {
+                            Id = 22L,
+                            Name = "پروان"
+                        },
+                        new
+                        {
+                            Id = 23L,
+                            Name = "میدان وردک"
+                        },
+                        new
+                        {
+                            Id = 24L,
+                            Name = "بغلان"
+                        },
+                        new
+                        {
+                            Id = 25L,
+                            Name = "پنجشیر"
+                        },
+                        new
+                        {
+                            Id = 26L,
+                            Name = "خوست"
+                        },
+                        new
+                        {
+                            Id = 27L,
+                            Name = "زابل"
+                        },
+                        new
+                        {
+                            Id = 28L,
+                            Name = "سرپل"
+                        },
+                        new
+                        {
+                            Id = 29L,
+                            Name = "کاپیسا"
+                        },
+                        new
+                        {
+                            Id = 30L,
+                            Name = "لغمان"
+                        },
+                        new
+                        {
+                            Id = 32L,
+                            Name = "ننگرهار"
+                        },
+                        new
+                        {
+                            Id = 33L,
+                            Name = "کنر"
+                        },
+                        new
+                        {
+                            Id = 34L,
+                            Name = "کندز"
+                        });
+                });
+
             modelBuilder.Entity("AccountManagement.Domain.RoleAgg.Role", b =>
                 {
                     b.Property<long>("Id")
@@ -128,11 +341,17 @@ namespace AccountManagement.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("AccountManagement.Domain.Account.Agg.Account", b =>
                 {
+                    b.HasOne("AccountManagement.Domain.ProvinceAgg.City", "City")
+                        .WithMany("Accounts")
+                        .HasForeignKey("CityId");
+
                     b.HasOne("AccountManagement.Domain.RoleAgg.Role", "Role")
                         .WithMany("Accounts")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("City");
 
                     b.Navigation("Role");
                 });
@@ -146,6 +365,17 @@ namespace AccountManagement.Infrastructure.EfCore.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("AccountManagement.Domain.ProvinceAgg.City", b =>
+                {
+                    b.HasOne("AccountManagement.Domain.ProvinceAgg.Province", "Province")
+                        .WithMany("Cities")
+                        .HasForeignKey("ProvinceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Province");
                 });
 
             modelBuilder.Entity("AccountManagement.Domain.RoleAgg.Role", b =>
@@ -181,6 +411,16 @@ namespace AccountManagement.Infrastructure.EfCore.Migrations
             modelBuilder.Entity("AccountManagement.Domain.Account.Agg.Account", b =>
                 {
                     b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("AccountManagement.Domain.ProvinceAgg.City", b =>
+                {
+                    b.Navigation("Accounts");
+                });
+
+            modelBuilder.Entity("AccountManagement.Domain.ProvinceAgg.Province", b =>
+                {
+                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("AccountManagement.Domain.RoleAgg.Role", b =>

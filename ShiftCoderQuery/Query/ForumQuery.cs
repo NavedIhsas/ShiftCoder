@@ -6,7 +6,7 @@ using _0_FrameWork.Application;
 using AccountManagement.Domain.Account.Agg;
 using CommentManagement.Domain.VisitAgg;
 using CommentManagement.Infrastructure.EfCore;
-using Ganss.XSS;
+using Ganss.XSS; 
 using Microsoft.EntityFrameworkCore;
 using ShiftCoderQuery.Contract.Forum.Answer;
 using ShiftCoderQuery.Contract.Forum.Question;
@@ -60,7 +60,7 @@ namespace ShiftCoderQuery.Query
             if (!string.IsNullOrWhiteSpace(filter))
                 questions = questions.Where(x => x.Title.ToLower().Contains(filter.Trim().ToLower())).ToList();
 
-            const int take = 12;
+            const int take = 8;
             var skip = (pageId - 1) * take;
 
             var paging = new QuestionPagination
@@ -82,7 +82,7 @@ namespace ShiftCoderQuery.Query
                     Id = x.Id,
                     AnswerCount = x.Answers.Count,
                     NumberOfVisit = MapVisit(x.Id),
-                }).AsNoTracking().Take(6).ToList();
+                }).AsNoTracking().Skip(8).Take(6).ToList();
             return questions;
         }
 

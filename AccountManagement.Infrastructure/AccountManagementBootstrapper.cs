@@ -9,6 +9,8 @@ using AccountManagement.Infrastructure.EfCore.Repository;
 using AccountManagement.Infrastructure.Permissions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ShiftCoderQuery.Contract.Account;
+using ShiftCoderQuery.Query;
 
 namespace AccountManagement.Infrastructure
 {
@@ -24,6 +26,7 @@ namespace AccountManagement.Infrastructure
             services.AddTransient<IRoleRepository, RoleRepository>();
 
             services.AddTransient<IPermissionExposer, AccountPermissionExposer>();
+            services.AddTransient<IAccountQuery, AccountQuery>();
 
             services.AddDbContext<AccountContext>(option => { option.UseSqlServer(connectionString); });
         }

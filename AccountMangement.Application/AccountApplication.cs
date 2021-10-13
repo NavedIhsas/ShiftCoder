@@ -62,7 +62,7 @@ namespace AccountManagement.Application
             {
                 var create = new Account(command.FullName, FixedText.FixEmail(command.Email), command.Phone,
                     command.Password, fileName,
-                    command.RoleId, NameGenerator.UniqCode());
+                    command.RoleId, NameGenerator.UniqCode(), command.ProvinceId, command.Gander, command.BirthDate,command.AboutMe);
                 _repository.Create(create);
 
                 //var body = await _renderer.RenderPartialToStringAsync("_SentActivityEmail", create);
@@ -122,7 +122,7 @@ namespace AccountManagement.Application
 
                 default:
                     getUser.Edit(command.FullName, FixedText.FixEmail(command.Email), command.Phone, fileName,
-                        command.RoleId);
+                        command.RoleId, command.ProvinceId, command.Gander, command.BirthDate, command.AboutMe);
                     _repository.Update(getUser);
                     break;
             }

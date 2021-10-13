@@ -16,6 +16,8 @@ namespace AccountManagement.Infrastructure.EfCore.Mapping
             builder.Property(x => x.Avatar).HasMaxLength(500);
             builder.Property(x => x.Password).HasMaxLength(250).IsRequired();
             builder.Property(x => x.Phone).HasMaxLength(20);
+            builder.Property(x => x.Gander).HasMaxLength(10);
+            builder.Property(x => x.AboutMe).HasMaxLength(500);
             builder.HasOne(x => x.Role).WithMany(x => x.Accounts).HasForeignKey(x => x.RoleId);
             builder.HasMany(x => x.Teachers).WithOne(x => x.Account).HasForeignKey(x => x.AccountId);
         }

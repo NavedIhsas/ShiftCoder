@@ -1,53 +1,220 @@
-﻿@page
-@model WebHost.Areas.UserPanel.Pages.Account.EditProfileModel
-@{
-    ViewData["Title"] = "ویرایش حساب کاربری";
-}
+﻿
+@using _0_Framework.Application
+@using ShiftCoderQuery.Contract.Account
+@model ShiftCoderQuery.Contract.Account.EditProfileQueryModel
+@inject IAccountQuery _account;
+@{ ViewData["Title"] = "ویرایش حساب کاربری";
+    Layout = "_Layout"; }
 
 
-<section id="content-container" class="col-12 col-lg-8" style="margin: 20px auto !important">
-    <div id="container-body">
-
-        <div class="col col-md-12">
-            <div class="row">
-                <div class="col col-md-8">
-                    <div class="card py-5 ">
-                        <div class="inputs px-4 ">
-                            <span class="text-uppercase">نام و نام خانوادگی</span>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="row mt-3 g-2">
-                            <div class="col-md-6">
-                                <div class="inputs px-4">
-                                    <span class="text-uppercase">ایمیل ادرس</span>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="inputs px-4">
-                                    <span class="text-uppercase">شماره موبایل</span>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-md-4">
-                    <br/>
-                    <span class="text-uppercase name">تصویر پروفایل</span>
-                    <div id="container-profile-teacher">
-                        <div id="container-img-name-job-teacher">
-                            <img src="~/images/profile-1.jpg" alt="Photo Teacher" id="img-info-user">
-                        </div>
-                    </div>
-                    <input type="file" vlue=""/>
-                    <br/>
-                </div>
-                <input type="submit" class="btn btn-warning col col-md-3 m-lg-4" value="ویرایش"/>
+<div class="container mt-lg-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="top-breadcrumb">
+                <nav aria-label="breadcrumb ">
+                    <ol class="breadcrumb nav-userpanel">
+                        <li class="breadcrumb-item nave-userpanel-mirgin-right"><a asp-page="/Account/Index" asp-area="UserPanel">پروفایل کاربری</a></li>
+                        <li class="breadcrumb-item nave-userpanel-mirgin-right active" aria-current="page">ویرایش حساب کاربری</li>
+                    </ol>
+                </nav>
             </div>
-
-            <br/>
         </div>
     </div>
+    <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="account-settings">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+                            </div>
+                            <h5 class="user-name">@Model.FullName</h5>
+                            <h6 class="user-email">@Model.Email</h6>
+                        </div>
+                        <div class="about">
+                            <h5>در باره من</h5>
+                            <p>@Model.AboutMe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <form asp-page="/Account/Index" asp-page-handler="Edit" method="post">
+                        <input type="hidden" asp-for="Email" value="@Model.Email"/>
+                        <input type="hidden" asp-for="RoleId" value="@Model.RoleId"/>
+                        <input type="hidden" asp-for="Id" value="@Model.Id"/>
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <h6 class="mb-2 text-primary">اطلاعات شخصی</h6>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="fullName">نام و نام خانوادگی</label>
+                                    <input type="text" asp-for="FullName" class="form-control" id="fullName" placeholder="نام کامل خود را وارد کنید">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="eMail">ایمیل</label>
+                                    <input type="email" asp-for="Email" class="form-control" id="eMail" placeholder="ایمیل" disabled="">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="phone">موبایل</label>
+                                    <input type="text" asp-for="Phone" class="form-control" id="phone" placeholder="شماره همراه">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="website">تاریخ تولد</label>
+                                    <input dir="ltr" type="text" asp-for="BirthDate" class="form-control PersianDateInput" id="InputBirthDate" placeholder="تاریخ تولد">
+                                    <p class="help-block">یک تاریخ معتبر به صورت دستی و یا از جدول انتخاب کنید</p>
+                                </div>
+                            </div>
 
-</section>
+
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="Street">جنسیت</label>
+                                    <select type="text" asp-for="Gander" class="form-control">
+                                        <option value="">--انتخاب کنید--</option>
+                                        <option value="مرد">مرد</option>
+                                        <option value="زن">زن</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col col-md-12">
+                                <div class="form-group">
+                                    <label for="website">در باره من</label>
+                                    <textarea type="text" asp-for="AboutMe" class="form-control" id="website" placeholder="در باره خود تان بنویسید" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <h6 class="mt-3 mb-2 text-primary">آدرس</h6>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="Street">ولایت</label>
+                                    <select id="province" type="text" asp-for="ProvinceId" asp-items="@(new SelectList(Model.ProvinceSelectList, "Id", "Name"))" class="form-control" placeholder="ولایت">
+                                        <option value="">--انتخاب کنید--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="city">شهر(ولسوالی)</label>
+                                    <select type="text" asp-for="CityId" asp-items="@(new SelectList(Model.CitySelectList, "Id", "Name"))" class="form-control" id="city" placeholder="شهر">
+                                        <option value="">--انتخاب کنید--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="sTate">State</label>
+                                    <input type="text" class="form-control" id="sTate" placeholder="Enter State">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="zIp">Zip Code</label>
+                                    <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="text-right">
+                                    <button asp-page="/Account/Index" id="submit" name="submit" class="btn btn-secondary">لغو عملیات</button>
+                                    <button type="submit" id="submit" name="submit" class="btn btn-primary">بروز رسانی</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/jquery.inputmask.bundle.js"></script>
+
+    <script>
+        $("#province").change(function () {
+            $("#city").empty();
+            $.getJSON(`Account?id=${$("#province :selected").val()}&handler=ChangeSubGroup`,
+                function (data) {
+
+                    $.each(data,
+                        function () {
+                            $("#city").append('<option value=' + this.value + '>' + this.text + '</option>');
+
+                        });
+
+                });
+
+        });
+
+        $(document).ready(function()
+        {
+            //Persian character and numbers (and space!)
+            Inputmask.extendDefinitions({
+                'f': {
+                    validator: "[۰-۹\u060C-\u0638\u0639-\u0648\u06A9\u06AF\u06CC\u067E\u0686\u064A\u0649\u0626\u0698 ]",
+                    cardinality: 1
+                },
+
+                'n':
+                {
+                    validator:"[1-9]",
+                },
+
+                'm':
+                {
+                    validator:"[۰-۹]",
+                },
+
+                'z':
+                {
+                    validator:"[۱-۹]",
+                } 
+            });
+
+            $("#InputBirthDate").inputmask("(n999|zmmm)/(0n|10|11|12|۰z|۱۰|۱۱|۱۲)/(0n|19|29|30|31|۰z|۱m|۲m|۳۰|۳۱)",{"placeholder":"_"});
+        });
+
+
+        $('.PersianDateInput').persianDatepicker({
+            autoClose: true,
+            format: 'YYYY/MM/DD',
+        });
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgCourse').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgCourseUp").change(function () {
+            readURL(this);
+        });
+    </script>
+}

@@ -23,7 +23,10 @@
     <meta property="og:type" content="@ViewData["Type"]" />
     <meta property="og:title" content="@ViewData["Title"]" />
     <meta property="og:description" content="@ViewData["metaDescription"]" />
+   
     <meta property="og:image" content="https://ihsasdevelopment.ir/FileUploader/@ViewData["image"]" />
+  
+
     <meta property="og:url" content="https://ihsasdevelopment.ir/@ViewData["Url"]" />
     <meta property="og:site_name" content="لرن هاب" />
 
@@ -51,7 +54,7 @@
 
     <partial name="PartialViews/_Scripts" />
 
-
+   
     @await RenderSectionAsync("Scripts", false)
 
 </body>

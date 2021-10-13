@@ -52,7 +52,7 @@ namespace BlogManagement.Application
                 resized.Save(imageStream, ImageFormat.Jpeg);
                 var imageBytes = imageStream.ToArray();
 
-                var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imgName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture.FileName}";
                 var path1 = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/", imgName);
 
                 using var streamImg = new FileStream(
@@ -71,7 +71,7 @@ namespace BlogManagement.Application
                 resizedImg.Save(imgStream, ImageFormat.Jpeg);
                 var imgBytes = imgStream.ToArray();
 
-                var imageName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imageName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture.FileName}";
                 var imgPath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/80X80", imageName);
 
                 using var stream = new FileStream(
@@ -131,7 +131,7 @@ namespace BlogManagement.Application
             if (command.Picture != null)
             {
                 //resize to 500 X 600
-                #region 600 X 400
+                #region 500 X 600
 
                 var image = Image.FromStream(command.Picture.OpenReadStream());
                 var resized = new Bitmap(image, new Size(500, 600));
@@ -140,7 +140,7 @@ namespace BlogManagement.Application
                 resized.Save(imageStream, ImageFormat.Jpeg);
                 var imageBytes = imageStream.ToArray();
 
-                var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imgName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture.FileName}";
                 var path1 = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/", imgName);
 
                 using var streamImg = new FileStream(
@@ -159,7 +159,7 @@ namespace BlogManagement.Application
                 resizedImg.Save(imgStream, ImageFormat.Jpeg);
                 var imgBytes = imgStream.ToArray();
 
-                var imageName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imageName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture.FileName}";
                 var imgPath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/80X80", imageName);
 
                 using var stream = new FileStream(

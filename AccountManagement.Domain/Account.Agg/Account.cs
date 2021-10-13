@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _0_FrameWork.Application;
 using _0_FrameWork.Domain;
+using AccountManagement.Domain.ProvinceAgg;
 using AccountManagement.Domain.RoleAgg;
 
 namespace AccountManagement.Domain.Account.Agg
@@ -30,13 +32,17 @@ namespace AccountManagement.Domain.Account.Agg
         }
 
         public Account(string fullName, string email, string phone, string password,
-            string avatar, long roleId, string activeCode)
+            string avatar, long roleId, string activeCode, long? cityId, string gander, DateTime birthDate, string aboutMe)
         {
             FullName = fullName;
             Email = email;
             Phone = phone;
             Password = password;
             ActiveCode = activeCode;
+            CityId = cityId;
+            Gander = gander;
+            BirthDate = birthDate;
+            AboutMe = aboutMe;
             if (!string.IsNullOrWhiteSpace(avatar))
                 Avatar = avatar;
             RoleId = roleId == 0 ? 10005 : roleId;
@@ -53,8 +59,13 @@ namespace AccountManagement.Domain.Account.Agg
         public bool IsActive { get; private set; }
         public bool EmailConfirm { get; private set; }
         public bool IsDelete { get; private set; }
+        public string Gander { get;private set; }
+        public DateTime BirthDate { get; private set; }
+        public long? CityId { get; private set; }
         public long RoleId { get; private set; }
+        public string AboutMe { get; private set; }
         public string ActiveCode { get; private set; }
+        public City City { get; private set; }
         public Role Role { get; private set; }
         public List<Teacher> Teachers { get; private set; }
 
@@ -70,9 +81,10 @@ namespace AccountManagement.Domain.Account.Agg
             RoleId = roleId;
             Teachers = teachers;
             ActiveCode = activeCode;
+           
         }
 
-        public void Edit(string fullName, string email, string phone, string avatar, long roleId)
+        public void Edit(string fullName, string email, string phone, string avatar, long roleId, long? cityId, string gander, DateTime birthDate, string aboutMe)
         {
             FullName = fullName;
             Email = email;
@@ -80,6 +92,10 @@ namespace AccountManagement.Domain.Account.Agg
             if (!string.IsNullOrWhiteSpace(avatar))
                 Avatar = avatar;
             RoleId = roleId;
+            CityId = cityId;
+            BirthDate = birthDate;
+            Gander = gander;
+            AboutMe = aboutMe;
         }
 
         public void DeActive(long id)

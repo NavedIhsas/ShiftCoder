@@ -56,22 +56,20 @@ namespace _0_FrameWork.Application
                 new("FullName", account.Fullname),
                 new("AccountId", account.AccountId.ToString()),
                 new(ClaimTypes.Name, account.Email),
+                new(ClaimTypes.NameIdentifier, account.AccountId.ToString()),
                 new(ClaimTypes.Role, account.RoleId.ToString()),
                 new("Email", account.Email), // Or Use ClaimTypes.NameIdentifier
-                new("Permissions", permission)
+                new("Permissions", permission) 
             };
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
 
-            var authProperties = new AuthenticationProperties
+            var properties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1),
-                IsPersistent = account.RememberMe,
+                IsPersistent = account.RememberMe
             };
-
-            _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
+            _httpContextAccessor.HttpContext.SignInAsync(principal, properties);
         }
 
         public bool IsAuthenticated()

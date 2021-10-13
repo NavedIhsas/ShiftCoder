@@ -14,7 +14,7 @@ namespace ShiftCoderQuery.Contract.Course
         CourseQueryModel GetCourseBySlug(string slug, string ipAddress);
         bool UserInCourse(string email, long courseId);
         CourseEpisode GetEpisodeFile(long episodeId);
-        List<Account> GetAllUsers();
+        List<AccountManagement.Domain.Account.Agg.Account> GetAllUsers();
         double GetTotalMinutesEpisodeVideos();
         List<BlogManagement.Domain.ArticleAgg.Article> GetAllArticle();
         List<Teacher> GetAllTeacher();

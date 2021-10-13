@@ -54,7 +54,7 @@ namespace ShopManagement.Application
                 resized.Save(imageStream, ImageFormat.Jpeg);
                 var imageBytes = imageStream.ToArray();
 
-                var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imgName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture.FileName}";
                 var path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/", imgName);
 
                 using var streamImg = new FileStream(
@@ -73,7 +73,7 @@ namespace ShopManagement.Application
                 resizedImg.Save(imgStream, ImageFormat.Jpeg);
                 var imgBytes = imgStream.ToArray();
 
-                var imageName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imageName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture.FileName}";
                 var imgPath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/80X80", imageName);
 
                 using var stream = new FileStream(
@@ -145,7 +145,7 @@ namespace ShopManagement.Application
                 resized.Save(imageStream, ImageFormat.Jpeg);
                 var imageBytes = imageStream.ToArray();
 
-                var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imgName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture.FileName}";
                 var path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/", imgName);
 
                 using var stream = new FileStream(
@@ -164,7 +164,7 @@ namespace ShopManagement.Application
                 resizedImg.Save(imgStream, ImageFormat.Jpeg);
                 var imgBytes = imgStream.ToArray();
 
-                var imageName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+                var imageName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture.FileName}";
                 var imgPath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/Thumb/80X80", imageName);
 
                 using var streamImg = new FileStream(

@@ -345,6 +345,8 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.ToTable("Questions");
                 });
 
@@ -471,6 +473,17 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                     b.Navigation("Question");
                 });
 
+            modelBuilder.Entity("ShopManagement.Domain.ForumAgg.Question", b =>
+                {
+                    b.HasOne("ShopManagement.Domain.CourseAgg.Course", "Course")
+                        .WithMany("Questions")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("ShopManagement.Domain.OrderDetailAgg.OrderDetail", b =>
                 {
                     b.HasOne("ShopManagement.Domain.CourseAgg.Course", "Course")
@@ -506,6 +519,8 @@ namespace ShopManagement.Infrastructure.EfCore.Migrations
                     b.Navigation("CourseEpisodes");
 
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("Questions");
 
                     b.Navigation("UserCourses");
                 });

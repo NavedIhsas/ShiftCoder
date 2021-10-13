@@ -13,6 +13,7 @@
     <ProjectReference Include="..\AccountManagement.Domain\AccountManagement.Domain.csproj" />
     <ProjectReference Include="..\AccountMangement.Application\AccountManagement.Application.csproj" />
     <ProjectReference Include="..\AccountMangement.Infrastrcture.EfCore\AccountManagement.Infrastructure.EfCore.csproj" />
+    <ProjectReference Include="..\ShiftCoderQuery\ShiftCoderQuery.csproj" />
   </ItemGroup>
 
 </Project>

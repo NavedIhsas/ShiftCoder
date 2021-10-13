@@ -25,7 +25,7 @@ namespace WebHost
 
             if (file == null) return null;
 
-            var fileName = $"{DateTime.Now.ToFileName()}-{file.FileName}";
+            var fileName = $"{DateTime.Now.Date.ToFileName()}-{file.FileName}";
             var filePath = $"{pathDirectory}//{fileName}";
             using var stream = File.Create(filePath);
             return $"{path}/{fileName}";
@@ -38,7 +38,7 @@ namespace WebHost
 
             if (file == null) return null;
 
-            var fileName = $"{DateTime.Now.ToFileName()}-{file.FileName}";
+            var fileName = $"{DateTime.Now.Date.ToFileName()}-{file.FileName}";
             var filePath = $"{pathDirectory}//{fileName}";
 
             using var stream = File.Create(filePath);

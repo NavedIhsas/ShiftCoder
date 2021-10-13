@@ -38,12 +38,15 @@ namespace ShiftCoderQuery.Query
 
         public List<LatestCourseGroupViewModel> LatestCourseGroup()
         {
-            return _context.CourseGroups.Where(x => !x.IsRemove).OrderBy(x => x.CreationDate).Select(x => new LatestCourseGroupViewModel
+            return _context.CourseGroups.Where(x => !x.IsRemove).OrderByDescending(x => x.CreationDate).Select(x => new LatestCourseGroupViewModel
             {
+                Picture = x.Picture,
+                PictureTitle = x.PictureTitle,
+                PictureAlt = x.PictureAlt,
                 Title = x.Title,
                 Slug = x.Slug,
                 CourseCount = x.Courses.Count
-            }).Take(4).AsNoTracking().ToList();
+            }).AsNoTracking().ToList();
         }
 
 

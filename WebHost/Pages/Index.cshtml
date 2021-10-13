@@ -1,13 +1,17 @@
 ﻿@page
+@using CommentManagement.Domain.SliderAgg
 @model IndexModel
 
 @{ ViewData["Title"] = "لرن هاب ابتکاری برای یادگیری";
     ViewData["keyWords"] = "لرن هاب ابتکاری برای یادگیری";
-    ViewData["Type"] = "public";
     ViewData["CanonicalAddress"] = "https://ihsasdevelopment.ir/";
     ViewData["Url"] = "https://ihsasdevelopment.ir";
     ViewData["author"] = "Qudrat Ihsas";
-    ViewData["owner"] = "Qudrat Ihsas"; }
+    ViewData["owner"] = "Qudrat Ihsas";
+    ViewData["metaDescription"] = " مجموعۀ لرن با استادان متخصص و مجرب با ارابه خدمات رایگان در خدمت تمام محصلین و دانش آموزان عزیز قرار دارد ";
+    ViewData["Type"] = "مجموعه آموزشی";
+
+}
 
 <!-- Carousel Start -->
 <div class="container-fluid p-0 pb-5 mb-5">
@@ -20,8 +24,9 @@
         <div class="carousel-inner">
             @foreach (var slid in Model.Sliders)
             {
+                ViewData["image"] = slid.Picture;
 <div class="men-height carousel-item @(slid == Model.Sliders.First() ? "active" : "")">
-    <img class="position-relative w-100 .men-heightCover" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt">
+    <img class="position-relative w-100 men-heightCover" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt">
     <div class="carousel-caption d-flex align-items-center justify-content-center">
         <div class="p-5 set-WithHeight">
             <h5 class="text-white text-uppercase mb-md-3">@slid.ShortTitle</h5>

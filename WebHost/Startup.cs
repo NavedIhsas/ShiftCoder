@@ -160,7 +160,6 @@ namespace WebHost
             app.UseXMLSitemap(env.ContentRootPath);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseAuthentication();
             app.UseCookiePolicy();

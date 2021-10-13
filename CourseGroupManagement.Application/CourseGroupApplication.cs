@@ -38,7 +38,7 @@ namespace ShopManagement.Application
             resized.Save(imageStream, ImageFormat.Jpeg);
             var imageBytes = imageStream.ToArray();
 
-            var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture.FileName}";
+            var imgName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture.FileName}";
             var path1 = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/CourseGroup/", imgName);
 
             using var streamImg = new FileStream(
@@ -73,7 +73,7 @@ namespace ShopManagement.Application
 
             if (courseGroup == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 
-            var imgName = $"{DateTime.Now.ToFileName()}-{command.Picture?.FileName}";
+            var imgName = $"{DateTime.Now.Date.ToFileName()}-{command.Picture?.FileName}";
             if (command.Picture != null)
             {
                 //resize to 500 X 600

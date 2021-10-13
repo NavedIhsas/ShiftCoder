@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using ShiftCoderQuery.Contract.CourseGroup;
 
 namespace WebHost.Pages.ViewComponent
@@ -14,7 +15,7 @@ namespace WebHost.Pages.ViewComponent
 
         public IViewComponentResult Invoke()
         {
-            var courseGroup = _courseGroup.GetAllCourseGroup();
+            var courseGroup = _courseGroup.LatestCourseGroup().Take(12);
             return View("Default", courseGroup);
         }
     }

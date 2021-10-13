@@ -24,7 +24,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="CourseId" class="control-label">دوره <span class="text-danger">*</span></label>
-                        <select type="text" class="form-control" asp-for="CourseId" asp-items="@(new SelectList(Model.CoursesSelectList,"Id","Name"))"></select>
+                        <select type="text" class="form-control" asp-for="CourseId" asp-items="@(new SelectList(Model.CoursesSelectList, "Id", "Name"))">
+                            <option selected="" dis>--انتخاب کنید--</option>
+                        </select>
                         <span class="text-danger" asp-validation-for="CourseId"></span>
                     </div>
                 </div>
@@ -53,13 +55,11 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label asp-for="IsFree" class="checkbox-inline control-label">ایا رایگان است؟ <span class="text-danger">*</span></label>
-                        <input  type="checkbox" class="checkbox-inline" asp-for="IsFree" >
+                        <input  type="checkbox" class="checkbox-inline" asp-for="IsFree" checked="" >
                         <span class="text-danger" asp-validation-for="IsFree"></span>
                     </div>
                 </div>
             </div>
-
-
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>

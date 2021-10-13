@@ -23,6 +23,9 @@ namespace ShiftCoderQuery.Contract.CourseGroup
 
     public class LatestCourseGroupViewModel
     {
+        public string Picture { get; set; }
+        public string PictureTitle { get; set; }
+        public string PictureAlt { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
         public int CourseCount { get; set; }
