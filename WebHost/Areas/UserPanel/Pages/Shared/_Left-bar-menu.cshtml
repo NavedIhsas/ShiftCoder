@@ -1,34 +1,56 @@
-﻿<aside id="aside-container" class="col-12 col-lg-4">
-    <div class="condition-course condition-course-mb">
-        <div id="container-profile-teacher">
-            <div id="container-img-name-job-teacher">
-                <img src="~/images/avatar-login.png" alt="Photo Teacher" id="img-info-user">
+﻿@model ShiftCoderQuery.Contract.Account.UserInformationQueryModel
 
+<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 pull-left">
+    <div class="card h-100">
+        <div class="card-body">
+            <div class="account-settings">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        @if (Model.AvatarName != null)
+                        {
+                            <img src="/FileUploader/UserAvatar/@Model.AvatarName" alt="@Model.FullName">
+                        }
+                        else
+                        {
+                        <img src="/img/DefaultImg/avatar.png" alt="@Model.FullName">
+
+                        }
+                    </div>
+                    <h5 class="user-name">@Model.FullName</h5>
+                    <h6 class="user-email">@Model.Email</h6>
+                </div>
+                <div class="container-info-teacher">
+                    <div class="container-line-info-line margin-container-line-info-line">
+                        <div class="line-info-aside"></div>
+                        <p class="title-info-teacher">تنظیمات حساب کاربری</p>
+                    </div>
+                    <ul id="ul-courses-teacher" class="mr-4">
+                        <li class="listitem-courses-teacher">
+                            <a href="/UserPanel/DashBoard" class="anchor-courses-teacher"> داشبورد</a>
+                        </li>
+
+                        <li class="listitem-courses-teacher">
+                            <a href="/UserPanel/DashBoard?handler=Edit"  class="anchor-courses-teacher"> ویرایش حساب کاربری</a>
+                        </li>
+
+                        <li class="listitem-courses-teacher">
+                            <a href="/UserPanel/ChangePassword"  class="anchor-courses-teacher"> تغییر رمز عبور</a>
+                        </li>
+
+                        <li class="listitem-courses-teacher">
+                            <a href="/UserPanel/Order/Index" class="anchor-courses-teacher">فاکتور ها</a>
+                        </li>
+
+                        <li class="listitem-courses-teacher">
+                            <a href="/UserPanel/DashBoard?handler=Comments" class="anchor-courses-teacher">نظرات</a>
+                        </li>
+                        <li class="listitem-courses-teacher">
+                            <a asp-page="/Account" asp-page-handler="Logout" class="anchor-courses-teacher">خروج از سایت</a>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        <div class="container-info-teacher">
-            <div class="container-line-info-line margin-container-line-info-line">
-                <div class="line-info-aside"></div>
-                <p class="title-info-teacher">تنظیمات حساب کاربری</p>
-            </div>
-            <ul id="ul-courses-teacher">
-                <li class="listitem-courses-teacher">
-                    <a asp-page="/Index" asp-area="UserPanel" class="anchor-courses-teacher"> مشاهده حساب کاربری</a>
-                </li>
-
-                <li class="listitem-courses-teacher">
-                    <a asp-page="Order/Index" class="anchor-courses-teacher">فاکتور ها</a>
-                </li>
-
-                <li class="listitem-courses-teacher">
-                    <a asp-page="Index" asp-page-handler="Comments" asp-area="UserPanel" class="anchor-courses-teacher">نظرات</a>
-                </li>
-                <li class="listitem-courses-teacher">
-                    <a asp-page="/Account" asp-page-handler="Logout" class="anchor-courses-teacher">خروج از سایت</a>
-                </li>
-
-            </ul>
         </div>
     </div>
-</aside>
+</div>

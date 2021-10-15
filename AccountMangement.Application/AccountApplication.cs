@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
 using _0_FrameWork.Application;
@@ -30,14 +32,38 @@ namespace AccountManagement.Application
         {
             var operation = new OperationResult();
 
-            //---check for IsExist--//
-            if (_repository.IsExist(x => x.Email == FixedText.FixEmail(command.Email)))
+            //check for IsExist
+            if ( _repository.IsExist(x => x.Email == FixedText.FixEmail(command.Email)))
                 return operation.Failed(ApplicationMessage.DuplicatedEmailAddress);
 
-            //---get path for save avatar--//
-            var fileName = _fileUploader.Uploader(command.Avatar, "UserAvatar");
 
-            //---register user----//
+            // save avatar
+            var fileName = command.Avatar?.FileName ?? "avatar.png";
+            if (command.Avatar != null)
+            {
+                //check for image
+                if (command.Avatar.IsImage())
+                {
+                    //resize to 315 X 315
+                    #region 315 X 315
+                    var image = Image.FromStream(command.Avatar.OpenReadStream());
+                    var resized = new Bitmap(image, new Size(315, 315));
+
+                    await using var imageStream = new MemoryStream();
+                    resized.Save(imageStream, ImageFormat.Jpeg);
+                    var imageBytes = imageStream.ToArray();
+
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/UserAvatar/", fileName);
+                    await using var streamImg = new FileStream(
+                        path, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
+                    streamImg.Write(imageBytes, 0, imageBytes.Length);
+                    #endregion
+                }
+
+            }
+
+
+            //register user
             if (command.RoleId == 3)
             {
                 var create = new Account(command.FullName, FixedText.FixEmail(command.Email), command.Phone,
@@ -46,7 +72,7 @@ namespace AccountManagement.Application
                     {
                         new("", "", "", command.Id, ThisType.Teacher)
                     });
-                _repository.Create(create);
+                 _repository.Create(create);
             }
             else if (command.RoleId == 2)
             {
@@ -62,19 +88,19 @@ namespace AccountManagement.Application
             {
                 var create = new Account(command.FullName, FixedText.FixEmail(command.Email), command.Phone,
                     command.Password, fileName,
-                    command.RoleId, NameGenerator.UniqCode(), command.ProvinceId, command.Gander, command.BirthDate,command.AboutMe);
+                    command.RoleId, NameGenerator.UniqCode());
                 _repository.Create(create);
 
                 //var body = await _renderer.RenderPartialToStringAsync("_SentActivityEmail", create);
                 //SendEmail.Send(create.Email, "تائید ایمیل", body);
             }
 
-            //---create notification--//
+            //create notification
             var notification = new Notification($"کاربری جدید با نام ({command.FullName}) در سایت ثبت نام کرد",
                 ThisType.Account, command.Id);
             _notification.Create(notification);
             _notification.SaveChanges();
-            _repository.SaveChanges();
+             _repository.SaveChanges();
             return operation.Succeeded();
         }
 

@@ -11,11 +11,11 @@ namespace AccountManagement.Infrastructure.EfCore.Mapping
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).HasMaxLength(50);
             builder.HasMany(x => x.Cities).WithOne(x => x.Province).HasForeignKey(x => x.ProvinceId);
-            builder.HasData(new Province("کابل",1));
-            builder.HasData(new Province("هرات", 2));
-            builder.HasData(new Province("بلخ", 3));
-            builder.HasData(new Province("غزنی", 4));
-            builder.HasData(new Province("قندهار", 5));
+            builder.HasData(new Province("انتخاب کنید",1));
+            builder.HasData(new Province("کابل", 2));
+            builder.HasData(new Province("هرات", 3));
+            builder.HasData(new Province("بلخ", 4));
+            builder.HasData(new Province("غزنی", 5));
             builder.HasData(new Province("بامیان", 6));
             builder.HasData(new Province("بادغیس", 7));
             builder.HasData(new Province("دایکندی", 8));
@@ -43,7 +43,7 @@ namespace AccountManagement.Infrastructure.EfCore.Mapping
             builder.HasData(new Province("ننگرهار", 32));
             builder.HasData(new Province("کنر", 33));
             builder.HasData(new Province("کندز", 34));
-         
+            builder.HasData(new Province("قندهار", 35));
         }
     }
 
@@ -55,7 +55,7 @@ namespace AccountManagement.Infrastructure.EfCore.Mapping
            builder.Property(x => x.Name).HasMaxLength(70);
            builder.HasOne(x => x.Province).WithMany(x => x.Cities).HasForeignKey(x => x.ProvinceId);
            builder.HasMany(x => x.Accounts).WithOne(x => x.City).HasForeignKey(x => x.CityId);
-
+           builder.HasData(new City(1,1,"انتخاب کنید"));
         }
     }
 }

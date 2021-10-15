@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using _0_FrameWork.Application;
+using Microsoft.AspNetCore.Http;
 
 namespace ShiftCoderQuery.Contract.Account
 {
@@ -30,6 +31,7 @@ namespace ShiftCoderQuery.Contract.Account
         public long Id { get; set; }
         public string ActiveCode { get; set; }
         public string AvatarName { get; set; }
+        public IFormFile Avatar { get; set; }
         public long? CityId { get; set; }
         public long ProvinceId { get; set; }
         public string Gander { get; set; }
@@ -37,6 +39,7 @@ namespace ShiftCoderQuery.Contract.Account
         public string AboutMe { get; set; }
         public List<ProvinceViewModel> ProvinceSelectList { get; set; }
         public List<CityViewModel> CitySelectList { get; set; }
+        public UserInformationQueryModel UserInformation { get; set; }
     }
 
    public class UserInformationQueryModel

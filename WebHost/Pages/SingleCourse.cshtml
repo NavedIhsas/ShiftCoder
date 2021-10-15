@@ -194,7 +194,7 @@
         <br/>
         <!-- Author Bio -->
         <div class="d-flex flex-column bg-aliceblue text-center text-dark rounded mb-5 py-5 px-4">
-            <img src="~/FileUploader/@Model.Course.TeacherAvatar" alt="@Model.Course.TeacherName" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px; height: 100px">
+            <img src="~/FileUploader/UserAvatar/@Model.Course.TeacherAvatar" alt="@Model.Course.TeacherName" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px; height: 100px">
             <h3 class="text-primary mb-3">@Model.Course.TeacherName</h3>
             <h6 class="text-uppercase mb-4">@Model.Course.TeacherSkills</h6>
             <p class="m-0">
@@ -407,7 +407,7 @@
             <div id="comment-@comment.Id" class="media mb-4">
                 @if (!string.IsNullOrEmpty(comment.Picture))
                 {
-                    <img src="~/FileUploader/@comment.Picture" alt="@comment.Name" title="@comment.Name"  class="img-fluid rounded-circle mr-3 mt-1"
+                    <img src="~/FileUploader/UserAvatar/@comment.Picture" alt="@comment.Name" title="@comment.Name"  class="img-fluid rounded-circle mr-3 mt-1"
                          style="width: 45px;">
                 }
 
@@ -432,7 +432,7 @@
 
                                 @if (!string.IsNullOrEmpty(sub.Picture))
                                 {
-                                    <img src="~/FileUploader/@sub.Picture"  alt="@sub.Name" title="@sub.Name"  class="img-fluid rounded-circle mr-3 mt-1"
+                                    <img src="~/FileUploader/UserAvatar/@sub.Picture"  alt="@sub.Name" title="@sub.Name"  class="img-fluid rounded-circle mr-3 mt-1"
                                          style="width: 45px;">
                                 }
 

@@ -29,7 +29,7 @@ namespace AccountManagement.Application.Contract.Account
         [Compare("Password", ErrorMessage = "کلمه های عبور مغایرت دارند")]
         public string RePassword { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         [MaxLength(10, ErrorMessage = Validate.MaxLength)]
         public string Gander { get; set; }

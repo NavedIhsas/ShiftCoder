@@ -12,5 +12,6 @@ namespace AccountManagement.Application.Contract.Account
         public string NewPassword { get; set; }
 
         public long Id { get; set; }
+
     }
 }

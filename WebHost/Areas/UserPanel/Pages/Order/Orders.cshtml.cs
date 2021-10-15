@@ -3,6 +3,7 @@ using _0_Framework.Application.ZarinPal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ShiftCoderQuery.Contract.Account;
 using ShiftCoderQuery.Contract.Discount;
 using Shop.Management.Application.Contract.Order;
 using ShopManagement.Domain.OrderAgg;
@@ -16,21 +17,25 @@ namespace WebHost.Areas.UserPanel.Pages.Order
 
         private readonly IOrderRepository _order;
         private readonly IZarinPalFactory _zarinPal;
+        private readonly IAccountQuery _user;
         public OrderViewModel List;
-
+        public UserInformationQueryModel UserInformation { get; set; }
         public string Message;
 
-        public OrdersModel(IOrderRepository order, IDiscountQuery discount, IZarinPalFactory zarinPal)
+        public OrdersModel(IOrderRepository order, IDiscountQuery discount, IZarinPalFactory zarinPal, IAccountQuery user)
         {
             _order = order;
             _discount = discount;
             _zarinPal = zarinPal;
+            _user = user;
         }
 
         public void OnGet(long id, string type = "")
         {
+            var currentUser = User.Identity.Name;
             ViewData["discountType"] = type;
-            List = _order.GetOrderUser(User.Identity.Name, id);
+            List = _order.GetOrderUser(currentUser, id);
+            UserInformation = _user.UserInformation(currentUser);
         }
 
         public IActionResult OnGetFinallyOrder(long id)

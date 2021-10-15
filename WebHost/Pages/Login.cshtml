@@ -25,7 +25,8 @@
                 <script>
                     // milliseconds
                     var delay = 2000;
-                    setTimeout(function() { window.location = "/Index"; }, delay);
+                    setTimeout(function () {
+                        window.location = "/UserPanel/Dashboard?handler=Edit"} , delay);
                 </script>
             }
 
@@ -34,7 +35,6 @@
                 <span class="text-danger float-right mr-5 mb-3">رمز عبور و یا ایمیل شما درست نمیباشد</span>
             }
             <form method="post" class="signin-form">
-
                 <div class="form-group">
                     <input type="email" asp-for="Login.Email" class="form-control" placeholder="ایمیل" required oninvalid="this.setCustomValidity('لطفا ایمیلی خود را وارد کنید')"
                            oninput="setCustomValidity('')">

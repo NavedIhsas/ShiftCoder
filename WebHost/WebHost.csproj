@@ -13,6 +13,13 @@
   </PropertyGroup>
 	
   <ItemGroup>
+    <Compile Remove="wwwroot\FileUploader\UserAvatar\Thump\**" />
+    <Content Remove="wwwroot\FileUploader\UserAvatar\Thump\**" />
+    <EmbeddedResource Remove="wwwroot\FileUploader\UserAvatar\Thump\**" />
+    <None Remove="wwwroot\FileUploader\UserAvatar\Thump\**" />
+  </ItemGroup>
+	
+  <ItemGroup>
     <None Remove="Pages\Shared\PartialViews\_SocialSharing.cshtml~RF82eb0b9.TMP" />
   </ItemGroup>
 	
@@ -44,12 +51,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\UserPanel\Pages\Account\" />
     <Folder Include="wwwroot\FileUploader\Articles\برنامه-نویسی\" />
     <Folder Include="wwwroot\FileUploader\CKEditorImages\" />
     <Folder Include="wwwroot\FileUploader\CourseGroup\" />
     <Folder Include="wwwroot\FileUploader\Courses\" />
     <Folder Include="wwwroot\FileUploader\Thumb\80X80\" />
-    <Folder Include="wwwroot\FileUploader\UserAvatar\Thump\" />
   </ItemGroup>
 
   <ItemGroup>

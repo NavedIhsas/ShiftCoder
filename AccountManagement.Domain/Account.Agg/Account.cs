@@ -32,17 +32,17 @@ namespace AccountManagement.Domain.Account.Agg
         }
 
         public Account(string fullName, string email, string phone, string password,
-            string avatar, long roleId, string activeCode, long? cityId, string gander, DateTime birthDate, string aboutMe)
+            string avatar, long roleId, string activeCode)
         {
             FullName = fullName;
             Email = email;
             Phone = phone;
             Password = password;
             ActiveCode = activeCode;
-            CityId = cityId;
-            Gander = gander;
-            BirthDate = birthDate;
-            AboutMe = aboutMe;
+            CityId = 1;
+            Gander = null;
+            BirthDate = null;
+            AboutMe = "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است";
             if (!string.IsNullOrWhiteSpace(avatar))
                 Avatar = avatar;
             RoleId = roleId == 0 ? 10005 : roleId;
@@ -60,7 +60,7 @@ namespace AccountManagement.Domain.Account.Agg
         public bool EmailConfirm { get; private set; }
         public bool IsDelete { get; private set; }
         public string Gander { get;private set; }
-        public DateTime BirthDate { get; private set; }
+        public DateTime? BirthDate { get; private set; }
         public long? CityId { get; private set; }
         public long RoleId { get; private set; }
         public string AboutMe { get; private set; }
@@ -84,7 +84,7 @@ namespace AccountManagement.Domain.Account.Agg
            
         }
 
-        public void Edit(string fullName, string email, string phone, string avatar, long roleId, long? cityId, string gander, DateTime birthDate, string aboutMe)
+        public void Edit(string fullName, string email, string phone, string avatar, long roleId, long? cityId, string gander, DateTime? birthDate, string aboutMe)
         {
             FullName = fullName;
             Email = email;

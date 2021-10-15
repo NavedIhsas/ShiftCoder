@@ -90,3 +90,7 @@ a:hover {
     text-decoration: none;
 }
 
+.avatar-input {
+    width: 100px !important;
+}
+

@@ -1,0 +1,135 @@
+﻿@page 
+@using _0_Framework.Application
+@model WebHost.Areas.UserPanel.Pages.Account.IndexModel
+@{
+}
+<div class="container mt-lg-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="top-breadcrumb">
+                <nav aria-label="breadcrumb ">
+                    <ol class="breadcrumb nav-userpanel">
+                        <li class="breadcrumb-item nave-userpanel-mirgin-right"><a href="/Index">لرن هاب</a></li>
+                        <li class="breadcrumb-item nave-userpanel-mirgin-right active" aria-current="page">حساب کاربری</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="img cover-img"></div>
+    <div class="card social-prof">
+        <div class="card-body">
+            <div class="wrapper">
+                <img src="~/FileUploader/UserAvatar/@Model.Information.AvatarName" alt="@Model.Information.FullName" class="user-profile">
+                <h3>@Model.Information.FullName</h3>
+                <p>@Model.Information.Skill</p>
+            </div>
+            <div class="row ">
+                <div class="col-lg-12">
+                  <strong>@Model.Information.AboutMe</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <partial name="Shared/_Left-bar-menu" model="Model.Information" />
+        <div class="col-lg-9 pull-left">
+            <div class="card">
+                <div class="card-body info-card social-about">
+                    <h2 class="text-blue text-center">مشخصات من</h2>
+                    @if (Model.Information.AboutMe == null || Model.Information.BirthDate == null || Model.Information.City == null || Model.Information.Gander == null || Model.Information.AvatarName == null)
+                    {
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>@Model.Information.FullName عزیز!</strong> اطلاعات شما کامل وارد نشده است، لطفا حسا خود را <a asp-page="DashBoard" asp-page-handler="Edit" asp-area="UserPanel" target="_blank" class="text-blue">ویرایش</a> کنید
+                            <button type="button" class="close" data-dismiss="alert" dir="ltr" aria-label="Close">
+                                <span dir="ltr" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+
+                    <h4><strong>بیوگرافی </strong></h4>
+
+                    <p>@(!string.IsNullOrEmpty( Model.Information.AboutMe)?$"{Model.Information.AboutMe}":$"درباره من") </p>
+
+
+                    <hr />
+                    <h4 class="mb-3"><strong>اطلاعات شخصی</strong></h4>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="social-info">
+                                <i class="fas fa-birthday-cake mr-2"></i>
+                                <span>@(!string.IsNullOrEmpty(Model.Information.BirthDate)?$"{Model.Information.BirthDate}":$"تاریخ تولد من")</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="social-info">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                <span>@(!string.IsNullOrEmpty( Model.Information.City)?$"{Model.Information.Province + "-" + Model.Information.City}":$"آدرس")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="social-info">
+                                <i class="fas fas fa-users mr-2"></i>
+                                <span>@(!string.IsNullOrEmpty(Model.Information.Gander)?$"{Model.Information.Gander}":"جنسیت")</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="social-info">
+                                <i class="fas fa-briefcase mr-2"></i>
+                                <span> @Model.Information.Skill</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="social-info">
+                                <i class="fas fas fa-mobile mr-2"></i>
+                                <span>@(!string.IsNullOrEmpty(Model.Information.Phone)?$"{Model.Information.Phone}":"شماره تلفن")</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="social-info">
+                                <i class="fas fas fa-envelope mr-2"></i>
+                                <span>@Model.Information.Email</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-12 pull-left">
+                <div class="card info-card">
+                    <div class="card-body">
+                        <h2 class="text-blue">دوره های مورد علاقۀ شما</h2>
+                        <hr />
+                        <table class="table table-striped">
+                            <tbody>
+                                @foreach (var item in Model.UserCourse)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a class="text-dark" asp-page="SingleCourse" asp-route-id="@item.CourseSlug">@item.CourseName</a>
+                                            <a class="text-danger bg-warning">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash float-left" viewBox="0 0 16 16">
+                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                </svg> 
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+
+    </div>
+</div>

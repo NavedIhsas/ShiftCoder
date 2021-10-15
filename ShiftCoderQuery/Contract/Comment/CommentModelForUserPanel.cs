@@ -1,4 +1,6 @@
-﻿namespace ShiftCoderQuery.Contract.Comment
+﻿using ShiftCoderQuery.Contract.Account;
+
+namespace ShiftCoderQuery.Contract.Comment
 {
     public class CommentModelForUserPanel
     {

@@ -37,7 +37,7 @@ namespace WebHost.Pages
 
         public IActionResult OnGetNotFountPage()
         {
-            return NotFound();
+            return Redirect(StatusCode(404).ToString());
         }
 
         public async Task<JsonResult> OnPostUploadImage([FromForm] IFormFile upload)

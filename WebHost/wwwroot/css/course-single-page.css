@@ -348,7 +348,10 @@ input[type=number] { -webkit-appearance: textfield }
     transition: all 0.2s;
 }
 
-.anchor-courses-teacher:hover { color: #50b826; }
+    .anchor-courses-teacher:hover {
+        color: #1e90ff;
+
+    }
 
 .condition-course-mb { padding-bottom: 12px !important; }
 
