@@ -91,8 +91,8 @@ namespace AccountManagement.Application
                     command.RoleId, NameGenerator.UniqCode());
                 _repository.Create(create);
 
-                //var body = await _renderer.RenderPartialToStringAsync("_SentActivityEmail", create);
-                //SendEmail.Send(create.Email, "تائید ایمیل", body);
+                var body = await _renderer.RenderPartialToStringAsync("_SentActivityEmail", create);
+                SendEmail.Send(create.Email, "تائید ایمیل", body);
             }
 
             //create notification
@@ -111,18 +111,38 @@ namespace AccountManagement.Application
             if (_repository.IsExist(x => x.Email == FixedText.FixEmail(command.Email) && x.Id != command.Id))
                 return operation.Failed(ApplicationMessage.DuplicatedRecord);
 
-            var fileName = _fileUploader.Uploader(command.Avatar, "UserAvatar");
-
             var getUser = _repository.GetById(command.Id);
 
-
+            var fileName = command.Avatar?.FileName ?? "avatar.png";
             if (command.Avatar != null)
             {
-                //delete image
-                var deletePath = $"wwwroot/FileUploader/{getUser.Avatar}";
-                if (File.Exists(deletePath))
-                    File.Delete(deletePath);
+                //check for image
+                if (command.Avatar.IsImage())
+                {
+                    //delete image
+                    var deletePath = $"wwwroot/FileUploader/UserAvatar/{getUser.Avatar}";
+                    if (File.Exists(deletePath))
+                        File.Delete(deletePath);
+
+                    //resize to 315 X 315
+                    #region 315 X 315
+                    var image = Image.FromStream(command.Avatar.OpenReadStream());
+                    var resized = new Bitmap(image, new Size(315, 315));
+
+                    using var imageStream = new MemoryStream();
+                    resized.Save(imageStream, ImageFormat.Jpeg);
+                    var imageBytes = imageStream.ToArray();
+
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/FileUploader/UserAvatar/", fileName);
+                    using var streamImg = new FileStream(
+                        path, FileMode.Create, FileAccess.Write, FileShare.Write, 4096);
+                    streamImg.Write(imageBytes, 0, imageBytes.Length);
+                    #endregion
+                }
+
             }
+
+
 
             if (getUser == null) return operation.Failed(ApplicationMessage.RecordNotFount);
 

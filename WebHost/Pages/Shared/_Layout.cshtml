@@ -9,13 +9,13 @@
 
     @if (ViewData["description"] != null)
     {
-        <meta content="@ViewData["metaDescription"]" name="description">
-
-    }else
-     {
-            <meta content="لرن هاب مجمتمع برنامه نویسان و دانش آموزان از سراسر کشور، لرن هاب به شما آموزش میدهد که
+<meta content="@ViewData["metaDescription"]" name="description">
+ }
+else
+{
+<meta content="لرن هاب مجمتمع برنامه نویسان و دانش آموزان از سراسر کشور، لرن هاب به شما آموزش میدهد که
               چگونه یک برنامه نویس حرفه یی شوی " name="description">
-    }
+}
 
     <link rel="canonical" href="@ViewData["CanonicalAddress"]" />
     <meta content="@ViewData["keyWords"]" name="keywords">
@@ -23,9 +23,9 @@
     <meta property="og:type" content="@ViewData["Type"]" />
     <meta property="og:title" content="@ViewData["Title"]" />
     <meta property="og:description" content="@ViewData["metaDescription"]" />
-   
+
     <meta property="og:image" content="https://ihsasdevelopment.ir/FileUploader/@ViewData["image"]" />
-  
+
 
     <meta property="og:url" content="https://ihsasdevelopment.ir/@ViewData["Url"]" />
     <meta property="og:site_name" content="لرن هاب" />
@@ -38,17 +38,31 @@
     <meta name="author" content="@ViewData["author"]">
     <meta name="owner" content="@ViewData["owner"]">
 
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    
+   
+  
+  
+  
     <partial name="PartialViews/_Styles" />
 
 </head>
 
 <body dir="rtl">
 
-    <partial name="PartialViews/_Header" />
-
+    @*<partial name="PartialViews/_Header" />*@
     @await Component.InvokeAsync("Menu")
 
     @RenderBody()
+    
+  
+    <!-- Template Main JS File -->
+   
 
     <partial name="PartialViews/_Footer" />
 

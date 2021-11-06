@@ -1,6 +1,7 @@
 ﻿@using _0_FrameWork.Application
 @model IEnumerable<ShiftCoderQuery.Contract.CourseGroup.CourseGroupQueryModel>
-<div class="container-fluid">
+@inject IAuthHelper _authHelper;
+@*<div class="container-fluid">
     <div class="row border-top px-xl-5">
         <div class="col-lg-3 d-none d-lg-block">
             <a class="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none" data-toggle="collapse" href="#navbar-vertical" style="height: 67px; padding: 0 30px;">
@@ -12,24 +13,24 @@
 
                     @foreach (var group in Model.Where(x => x.SubGroupId == null))
                     {
-                        <div class="nav-item dropdown">
-                            <a asp-page="/Courses" asp-route-id="@group.Slug" class="nav-link" data-toggle=@(Model.Any(x => x.SubGroupId == group.Id) ? "dropdown" : "")>
-                                @group.Title
-                                <i class="@(Model.Any(x => x.SubGroupId == group.Id) ? "fa fa-angle-down " : "") float-left mt-1"></i>
-                            </a>
+                        
+                     <div class="nav-item dropdown">
+                        <a asp-page="/Courses" asp-route-id="@group.Slug" class="nav-link" data-toggle=@(Model.Any(x => x.SubGroupId == group.Id) ? "dropdown" : "")>
+                          @group.Title
+                           <i class="@(Model.Any(x => x.SubGroupId == group.Id) ? "fa fa-angle-down " : "") float-left mt-1"></i>
+                         </a>
+                         <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                             @if (Model.Any(x => x.SubGroupId == group.Id))
+                             {
+                                 @foreach (var sub in Model.Where(x => x.SubGroupId == group.Id))
+                                 {
+                                     <a asp-page="/Courses" asp-route-id="@sub.Slug" class="dropdown-item">@sub.Title</a>}}
+                         </div>
 
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                @if (Model.Any(x => x.SubGroupId == group.Id))
-                                {
-                                    @foreach (var sub in Model.Where(x => x.SubGroupId == group.Id))
-                                    {
-                                        <a asp-page="/Courses" asp-route-id="@sub.Slug" class="dropdown-item">@sub.Title</a>
-                                    }
-                                }
-                            </div>
-                        </div>
+                    </div>
+
                     }
-                  
+
                 </div>
             </nav>
         </div>
@@ -53,18 +54,97 @@
                             <a asp-page="Index" asp-area="Administration" class="nav-link" data-toggle="dropdown">پنل ادمین <i class="fa fa-angle-down float-left mt-1  @Html.ActiveClass("/AllCourses")"></i></a>
                             <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                 <a asp-page="/Index" asp-area="Administration" class="dropdown-item">صفحه اصلی</a>
-                                <a asp-page="/Courses/Course/Index" asp-area="Administration"  class="dropdown-item">کورس ها</a>
+                                <a asp-page="/Courses/Course/Index" asp-area="Administration" class="dropdown-item">کورس ها</a>
                                 <a asp-page="/Blog/Article/Index" asp-area="Administration" class="dropdown-item">مقاله ها</a>
-                                <a asp-page="/Account/Users/Index" asp-area="Administration"  class="dropdown-item">کاربران</a>
+                                <a asp-page="/Account/Users/Index" asp-area="Administration" class="dropdown-item">کاربران</a>
                             </div>
                         </div>
                     </div>
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <a class="btn btn-primary py-2 px-4 ml-auto " asp-page="/Account" asp-page-handler="Register">همین حالا ثبت نام کن</a>
-                    }
+        <a class="btn btn-primary py-2 px-4 ml-auto " asp-page="/Account" asp-page-handler="Register">همین حالا ثبت نام کن</a>}
                 </div>
             </nav>
         </div>
     </div>
-</div>
+</div>*@
+
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+       
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a asp-page="/Index" class="nav-link scrollto  @Html.ActiveClass("/Index")">صفحه اصلی</a> </li>
+                
+                <li class="dropdown">
+                    <a href="#"><span>دسته بندی ها</span> <i class="bi bi-chevron-down"></i></a>
+
+                    <ul>
+                        @foreach (var group in Model.Where(x => x.SubGroupId == null))
+                        {
+                            <li class="dropdown">
+                                <a asp-page="/Courses" asp-route-id="@group.Slug"><span>@group.Title</span> <i class=" @(Model.Any(x => x.SubGroupId == group.Id) ? "bi bi-chevron-left" : "")"></i></a>
+                                <ul >
+                                    @if (Model.Any(x => x.SubGroupId == group.Id))
+                                    {
+                                        @foreach (var sub in Model.Where(x => x.SubGroupId == group.Id))
+                                        {
+                                            <li><a asp-page="/Courses" asp-route-id="@sub.Slug">@sub.Title</a></li>
+
+                                        }
+
+                                    }
+                                </ul>
+                            </li>
+
+                        }
+                    </ul>
+                </li>
+                
+                <li> <a asp-page="/AboutUs" class="nav-link scrollto  @Html.ActiveClass("/AboutUs")">در باره ما</a> </li>
+                <li> <a asp-page="/AllCourses" class="nav-link scrollto  @Html.ActiveClass("/AllCourses")"> دوره ها</a> </li>
+                <li><a asp-page="/Articles" class="nav-link scrollto  @Html.ActiveClass("/Articles")">وبلاگ</a></li>
+                <li><a asp-page="/ContactUs" class="nav-link scrollto  @Html.ActiveClass("/ContactUs")">تماس با ما</a> </li>
+                
+                
+                <li class="dropdown" permission="@Permission.AdministrationHomepage">
+                    <a href="#"><span>پنل ادمین</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li> <a asp-page="/Index" asp-area="Administration" class="dropdown-item">کورس ها</a></li>
+                        <li> <a asp-page="/Courses/Course/Index" asp-area="Administration" class="dropdown-item">کورس ها</a></li>
+                        <li> <a asp-page="/Blog/Article/Index" asp-area="Administration" class="dropdown-item">مقاله ها</a></li>
+                        <li> <a asp-page="/Account/Users/Index" asp-area="Administration" class="dropdown-item">کاربران</a></li>
+                    </ul>
+                </li>
+                
+
+                @if (!_authHelper.IsAuthenticated())
+            {
+                <li>
+                    <a class="getstarted scrollto" asp-page="Account">
+                        <i class="fa fa-user"></i>
+                        عضویت و ورود
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a class="getstarted scrollto" href="/UserPanel/Dashboard">
+                        حساب کاربری
+                    </a>
+                </li>
+            }
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+        <h1 class="logo me-auto">
+            <a asp-page="Index">
+                <span class="text-primary">Learn</span>hub
+            </a>
+        </h1>
+    </div>
+</header><!-- End Header -->
+

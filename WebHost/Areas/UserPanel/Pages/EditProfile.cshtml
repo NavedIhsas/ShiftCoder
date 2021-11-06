@@ -24,11 +24,10 @@
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
                 <div class="card-body">
-                    <form asp-page="/Account/Index" asp-page-handler="Edit" method="post" enctype="multipart/form-data">
+                    <form asp-page="/DashBoard" asp-page-handler="Edit" method="post" enctype="multipart/form-data">
                         <input type="hidden" asp-for="Email" value="@Model.Email" />
                         <input type="hidden" asp-for="RoleId" value="@Model.RoleId" />
                         <input type="hidden" asp-for="Id" value="@Model.Id" />
-
 
                         <div class="row gutters">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -57,7 +56,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="website">تاریخ تولد</label>
-                                    <input dir="ltr" type="text" asp-for="BirthDate" class="form-control PersianDateInput" id="InputBirthDate" placeholder="تاریخ تولد">
+                                    <input  type="date" asp-for="BirthDate" class="form-control" id="InputBirthDate" required>
                                     <p class="help-block">یک تاریخ معتبر به صورت دستی و یا از جدول انتخاب کنید</p>
                                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                                 </div>
@@ -144,13 +143,12 @@
     <script>
         $("#province").change(function () {
             $("#city").empty();
-            $.getJSON(`Account?id=${$("#province :selected").val()}&handler=ChangeSubGroup`,
+            $.getJSON(`/UserPanel/Dashboard?id=${$("#province :selected").val()}&handler=ChangeSubGroup`,
                 function (data) {
 
                     $.each(data,
                         function () {
                             $("#city").append('<option value=' + this.value + '>' + this.text + '</option>');
-
                         });
 
                 });
@@ -158,36 +156,7 @@
         });
 
         $(document).ready(function () {
-            //Persian character and numbers (and space!)
-            Inputmask.extendDefinitions({
-                'f': {
-                    validator: "[۰-۹\u060C-\u0638\u0639-\u0648\u06A9\u06AF\u06CC\u067E\u0686\u064A\u0649\u0626\u0698 ]",
-                    cardinality: 1
-                },
-
-                'n':
-                {
-                    validator: "[1-9]",
-                },
-
-                'm':
-                {
-                    validator: "[۰-۹]",
-                },
-
-                'z':
-                {
-                    validator: "[۱-۹]",
-                }
-            });
-
-            $("#InputBirthDate").inputmask("(n999|zmmm)/(0n|10|11|12|۰z|۱۰|۱۱|۱۲)/(0n|19|29|30|31|۰z|۱m|۲m|۳۰|۳۱)", { "placeholder": "_" });
-        });
-
-
-        $('.PersianDateInput').persianDatepicker({
-            autoClose: true,
-            format: 'YYYY/MM/DD',
+            $("#InputBirthDate").inputmask("9999/99/99", { "placeholder": "_" });
         });
 
         function readURL(input) {

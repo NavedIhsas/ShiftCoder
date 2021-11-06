@@ -12,14 +12,14 @@
         <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
             @if (!_authHelper.IsAuthenticated())
             {
-                <h3 class="text-primary text-uppercase text-left account-link" style="margin-bottom: 8rem !important">
+                <h3 class="text-primary text-uppercase text-left account-link" style="margin-bottom: 2rem !important">
                     <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a style="font-size:13px">/</a>
                     <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
                 </h3>
             }
             else
             {
-                <h3 class="text-primary  text-left account-link" style="margin-bottom: 8rem !important">
+                <h3 class="text-primary  text-left account-link" style="margin-bottom: 2rem !important">
                     <a class=" text-primary" style="font-size:15px" asp-page="Login"><i class="fas fa-user-tie"></i> @_authHelper.CurrentAccountFullName()، خوش آمدی </a>
                     <a class="text-primary text-uppercase" style="font-size:15px">/</a> <a class="text-primary text-uppercase" style="font-size:13px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
                 </h3>

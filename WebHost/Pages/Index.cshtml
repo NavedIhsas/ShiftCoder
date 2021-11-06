@@ -9,39 +9,58 @@
     ViewData["author"] = "Qudrat Ihsas";
     ViewData["owner"] = "Qudrat Ihsas";
     ViewData["metaDescription"] = " مجموعۀ لرن با استادان متخصص و مجرب با ارابه خدمات رایگان در خدمت تمام محصلین و دانش آموزان عزیز قرار دارد ";
-    ViewData["Type"] = "مجموعه آموزشی";
-
-}
+    ViewData["Type"] = "مجموعه آموزشی"; }
 
 <!-- Carousel Start -->
-<div class="container-fluid p-0 pb-5 mb-5">
-    <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#header-carousel" data-slide-to="1"></li>
-            <li data-target="#header-carousel" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            @foreach (var slid in Model.Sliders)
-            {
-                ViewData["image"] = slid.Picture;
-<div class="men-height carousel-item @(slid == Model.Sliders.First() ? "active" : "")">
-    <img class="position-relative w-100 men-heightCover" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt">
-    <div class="carousel-caption d-flex align-items-center justify-content-center">
-        <div class="p-5 set-WithHeight">
-            <h5 class="text-white text-uppercase mb-md-3">@slid.ShortTitle</h5>
+@*<div class="container-fluid p-0 pb-5 mb-5">
+        <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#header-carousel" data-slide-to="1"></li>
+                <li data-target="#header-carousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                @foreach (var slid in Model.Sliders)
+                {
+                    ViewData["image"] = slid.Picture;
+    <div class="men-height carousel-item @(slid == Model.Sliders.First() ? "active" : "")">
+        <img class="position-relative w-100 men-heightCover" src="~/FileUploader/@slid.Picture" title="@slid.PictureTitle" alt="@slid.PictureAlt">
+        <div class="carousel-caption d-flex align-items-center justify-content-center">
+            <div class="p-5 set-WithHeight">
+                <h5 class="text-white text-uppercase mb-md-3">@slid.ShortTitle</h5>
 
-            <h1 class="display-3 text-white mb-md-4">@slid.Title</h1>
+                <h1 class="display-3 text-white mb-md-4">@slid.Title</h1>
 
-            <a href="@slid.ButtonLink" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">@slid.ButtonText</a>
+                <a href="@slid.ButtonLink" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">@slid.ButtonText</a>
+            </div>
         </div>
-    </div>
-</div>      }
+    </div>      }
 
+            </div>
         </div>
-    </div>
-</div>
+    </div>*@
 <!-- Carousel End -->
+<!-- ======= Hero Section ======= -->
+<section id="hero-section" class="d-flex align-items-center">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+                <h1>لرن هاب ابتکاری برای یادگیری</h1>
+                <br/>
+                <h2>ما تیمی از برنامه نویسان با استعداد هستیم که برای شما خدمات ارایه میدهیم</h2>
+                <div class="d-flex justify-content-center justify-content-lg-start">
+                    <a href="#about" class="btn-get-started scrollto">Get Started</a>
+                    <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+                </div>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                <img src="~/img/hero-img.png" class="img-fluid animated" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- About Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">

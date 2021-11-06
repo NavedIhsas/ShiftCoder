@@ -117,7 +117,7 @@ namespace WebHost
             });
 
 
-           
+
 
             //  این میدیلویر برای چک کردن اینه که کاربر نتواند با استفاده از یوآرال به فایل ها  دسترسی داشته باشد
             //app.Use(async (context, next) =>
@@ -131,7 +131,7 @@ namespace WebHost
             //                                 callingUrl.StartsWith("http://ihsasdevelopment.ir/")))
             //        {
             //            await next.Invoke();
-            //        } 
+            //        }
             //        else
             //        {
             //            context.Response.Redirect("/Login");
@@ -152,9 +152,8 @@ namespace WebHost
             }
             else
             {
-                app.UseDeveloperExceptionPage();
-                //app.UseExceptionHandler("/Error");
-                //app.UseHsts();
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             app.UseXMLSitemap(env.ContentRootPath);

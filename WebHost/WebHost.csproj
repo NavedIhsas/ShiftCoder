@@ -14,9 +14,13 @@
 	
   <ItemGroup>
     <Compile Remove="wwwroot\FileUploader\UserAvatar\Thump\**" />
+    <Compile Remove="wwwroot\sass\**" />
     <Content Remove="wwwroot\FileUploader\UserAvatar\Thump\**" />
+    <Content Remove="wwwroot\sass\**" />
     <EmbeddedResource Remove="wwwroot\FileUploader\UserAvatar\Thump\**" />
+    <EmbeddedResource Remove="wwwroot\sass\**" />
     <None Remove="wwwroot\FileUploader\UserAvatar\Thump\**" />
+    <None Remove="wwwroot\sass\**" />
   </ItemGroup>
 	
   <ItemGroup>
@@ -60,6 +64,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\vendor\bootstrap-icons\fonts\bootstrap-icons.woff2" />
+    <None Include="wwwroot\error-page\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\error-page\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\error-page\js\bootstrap.min.js" />
+    <None Include="wwwroot\error-page\js\jquery.min.js" />
+    <None Include="wwwroot\error-page\js\script.js" />
+    <None Include="wwwroot\frameworks\bootstrap\bootstrap.js" />
+    <None Include="wwwroot\frameworks\bootstrap\bootstrap.min.js" />
+    <None Include="wwwroot\frameworks\FontAwesome\js\all.js" />
+    <None Include="wwwroot\frameworks\FontAwesome\js\all.min.js" />
     <None Include="wwwroot\sitemap.xml" />
   </ItemGroup>
 

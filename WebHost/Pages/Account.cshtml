@@ -51,10 +51,6 @@
                     <span asp-validation-for="Register.Email" class="text-danger pull-right"></span></div>
 
                 <div class="form-group">
-                    <input type="tel" asp-for="Register.Phone" class="form-control" placeholder=" موبایل (اختیاری)" >
-                </div>
-
-                <div class="form-group">
                     <input  asp-for="Register.Password" id="password-field" type="password" class="form-control" placeholder="رمز عبور" required oninvalid="this.setCustomValidity('@(Validate.Required)')"
                            oninput="setCustomValidity('')">
                     <span toggle="#password-field" class="  fa fa-fw fa-eye field-icon toggle-password"></span>

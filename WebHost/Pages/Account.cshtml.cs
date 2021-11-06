@@ -93,8 +93,8 @@ namespace WebHost.Pages
         {
             var user = _account.ResetPassword(command);
             if (user == false) return NotFound();
-            Success = $"رمز عبور شما با موفقیت تغییر کرد لطفا وارد شوید";
-            return this.OnGetForgotPassword();
+            Success = $"رمز عبور شما با موفقیت تغییر کرد لطفا وارد سایت شوید";
+            return Redirect("/Login");
         }
     }
 }

@@ -1,8 +1,35 @@
-﻿@page 
+﻿@page
+
 @using _0_Framework.Application
-@model WebHost.Areas.UserPanel.Pages.Account.IndexModel
+@using _0_FrameWork.Application
+@model WebHost.Areas.UserPanel.Pages.IndexModel
+@inject IAuthHelper _authHelper
 @{
+    ViewData["Title"] = "داشبورد";
 }
+
+
+<div class="container-fluid page-header" style="margin-bottom: 90px;">
+    <div class="container">
+        <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+            @if (!_authHelper.IsAuthenticated())
+            {
+                <h3 class="text-primary text-uppercase text-left account-link" style="margin-bottom: 2rem !important">
+                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Login"> ورود </a> <a style="font-size:13px">/</a>
+                    <a class="text-primary text-uppercase" style="font-size:15px" asp-page="Account" asp-page-handler="Register"> عضویت </a>
+                </h3>
+            }
+            else
+            {
+                <h3 class="text-primary  text-left account-link" style="margin-bottom: 2rem !important">
+                    <a class=" text-primary" style="font-size:15px" asp-page="Login"><i class="fas fa-user-tie"></i> @_authHelper.CurrentAccountFullName()، خوش آمدی </a>
+                    <a class="text-primary text-uppercase" style="font-size:15px">/</a> <a class="text-primary text-uppercase" style="font-size:13px" asp-page="Account" asp-page-handler="Logout"> خروج </a>
+                </h3>
+            }
+            <h6 class="display-4 text-white">حساب کاربری @Model.Information.FullName</h6>
+        </div>
+    </div>
+</div>
 <div class="container mt-lg-5">
     <div class="row">
         <div class="col-md-12">
@@ -16,21 +43,7 @@
             </div>
         </div>
     </div>
-    <div class="img cover-img"></div>
-    <div class="card social-prof">
-        <div class="card-body">
-            <div class="wrapper">
-                <img src="~/FileUploader/UserAvatar/@Model.Information.AvatarName" alt="@Model.Information.FullName" class="user-profile">
-                <h3>@Model.Information.FullName</h3>
-                <p>@Model.Information.Skill</p>
-            </div>
-            <div class="row ">
-                <div class="col-lg-12">
-                  <strong>@Model.Information.AboutMe</strong>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <div class="row">
         <partial name="Shared/_Left-bar-menu" model="Model.Information" />
@@ -116,7 +129,7 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash float-left" viewBox="0 0 16 16">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                </svg> 
+                                                </svg>
                                             </a>
                                         </td>
                                     </tr>

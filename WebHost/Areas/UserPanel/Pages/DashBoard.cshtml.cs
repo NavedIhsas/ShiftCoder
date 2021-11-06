@@ -7,10 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ShiftCoderQuery.Contract.Account;
 using ShiftCoderQuery.Contract.Comment;
 using ShiftCoderQuery.Contract.Course;
-using Shop.Management.Application.Contract.Order;
 using Shop.Management.Application.Contract.UserCourse;
 
-namespace WebHost.Areas.UserPanel.Pages.Account
+namespace WebHost.Areas.UserPanel.Pages
 {
     [Authorize]
     public class IndexModel : PageModel
@@ -49,7 +48,7 @@ namespace WebHost.Areas.UserPanel.Pages.Account
         public IActionResult OnPostEdit()
         {
            _user.EditProfile(Edit);
-          return RedirectToPage("/Account/DashBoard");
+          return Redirect("/UserPanel/DashBoard");
         }
 
         public IActionResult OnGetComments()

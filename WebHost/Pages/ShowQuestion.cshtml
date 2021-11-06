@@ -32,16 +32,16 @@
                     </div>
                 </div>
             </section>
-            <!-----lg display-->
+       
             <section class="container row ">
                 @foreach (var answer in Model.Pagination.Answers)
                 {
                     <br class="d-lg-block d-none" />
                     <br class="d-lg-block d-none" />
                     <div id="container-img-name-job-teacher " class="col-md-2 d-lg-block d-none mt-lg-5">
-                        <img src="~/img/DefaultImg/girl-question.jpg" alt="@Model.Name" class="img-responsive" id="img-info-teacher">
+                        <img src="~/img/DefaultImg/girl-question.jpg" alt="@answer.Name" class="img-responsive" id="img-info-teacher">
                         <h4 id="name-info-teacher">
-                            <a class="text-success">@Model.Name</a>
+                            <a class="text-success">@answer.Name</a>
                         </h4>
                     </div>
                     <div class="condition-course condition-course-mb col-md-10 d-lg-block d-none">
@@ -52,7 +52,6 @@
                     </div>
                 }
             </section>
-            <!----md and sm display-->
             <section class="container row d-lg-none d-sm-block d-md-block">
                 @foreach (var answer in Model.Pagination.Answers)
                 {
@@ -75,9 +74,7 @@
                     </div>
                 }
             </section>
-            <!----md and sm display-->
-            
-            <!----pagination-->
+
             @if (Model.Pagination.PageCount > 1)
             {
                 <div class="col-12 mt-lg-4">
@@ -137,8 +134,6 @@
         </div>
     </div>
 </div>
-
-
 @section Scripts
 {
     <script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>

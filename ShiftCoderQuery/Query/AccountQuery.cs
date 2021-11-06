@@ -96,7 +96,7 @@ namespace ShiftCoderQuery.Query
                 ActiveCode = x.ActiveCode,
                 AvatarName = x.Avatar,
                 CityId = x.CityId,
-                BirthDate = x.BirthDate.ToString(),
+                BirthDate = x.BirthDate.ToFarsi(),
                 ProvinceId = x.City.Province.Id,
                 AboutMe = x.AboutMe
             }).FirstOrDefault();
